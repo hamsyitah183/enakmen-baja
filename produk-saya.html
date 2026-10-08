@@ -1,0 +1,1040 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <!-- DataTables (Bootstrap 5 theme) -->
+    <link
+      href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/components.css" rel="stylesheet" />
+    <link href="css/dashboard.css" rel="stylesheet" />
+    <link href="css/datatable.css" rel="stylesheet" />
+    <title>Senarai Produk | Portal Pendaftaran Baja</title>
+  </head>
+  <body>
+    <div class="app">
+      <script>
+        try {
+          if (localStorage.getItem("sidebar-collapsed") === "1")
+            document.querySelector(".app").classList.add("is-collapsed");
+        } catch (e) {}
+      </script>
+
+      <!-- Bar sisi -->
+      <aside
+        class="sidebar offcanvas-lg offcanvas-start"
+        tabindex="-1"
+        id="sidebar"
+        aria-label="Navigasi utama"
+      >
+        <div class="sidebar-inner">
+          <div class="sidebar-head border-bottom pb-2">
+            <a href="#" class="brand" aria-label="Enakmen Baja Sabah">
+              <span class="brand-mark brand-mark--img">
+                <img src="logo/image.png" alt="" width="40" height="40" />
+              </span>
+              <span class="brand-text">Enakmen Baja Sabah</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-icon sidebar-toggle d-none d-lg-inline-grid"
+              id="sidebar-toggle"
+              aria-controls="sidebar"
+              aria-expanded="true"
+              aria-label="Tutup bar sisi"
+              title="Tutup bar sisi"
+            >
+              <i class="bi bi-layout-sidebar"></i>
+            </button>
+            <button
+              type="button"
+              class="btn-close d-lg-none"
+              data-bs-dismiss="offcanvas"
+              data-bs-target="#sidebar"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <nav class="d-grid gap-1">
+            <a
+              href="filled-dashboard.html"
+              class="side-link"
+              title="Papan pemuka"
+              ><i class="bi bi-house-door"></i
+              ><span class="side-label">Papan pemuka</span></a
+            >
+            <a href="#" class="side-link active" title="Produk saya"
+              ><i class="bi bi-box-seam"></i
+              ><span class="side-label">Produk saya</span></a
+            >
+            <a href="#" class="side-link" title="Lesen"
+              ><i class="bi bi-patch-check"></i
+              ><span class="side-label">Lesen</span></a
+            >
+            <a href="#" class="side-link" title="Permit import"
+              ><i class="bi bi-truck"></i
+              ><span class="side-label">Permit import</span></a
+            >
+            <a href="#" class="side-link" title="Pembayaran"
+              ><i class="bi bi-receipt"></i
+              ><span class="side-label">Pembayaran</span></a
+            >
+            <a href="#" class="side-link" title="Notis dan rayuan"
+              ><i class="bi bi-envelope-exclamation"></i
+              ><span class="side-label">Notis dan rayuan</span
+              ><span class="count pill pill-danger">0</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Bantuan</div>
+          <nav class="d-grid gap-1">
+            <a href="#" class="side-link" title="Daftar awam"
+              ><i class="bi bi-search"></i
+              ><span class="side-label">Daftar awam</span></a
+            >
+            <a href="#" class="side-link" title="Panduan dan fi"
+              ><i class="bi bi-book"></i
+              ><span class="side-label">Panduan dan fi</span></a
+            >
+            <a href="#" class="side-link" title="Sokongan"
+              ><i class="bi bi-headset"></i
+              ><span class="side-label">Sokongan</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Akaun</div>
+          <nav class="d-grid gap-1 mb-3">
+            <a
+              href="company-profile.html"
+              class="side-link"
+              title="Profil organisasi"
+              ><i class="bi bi-building"></i
+              ><span class="side-label">Profil organisasi</span></a
+            >
+            <a href="#" class="side-link" title="Tetapan"
+              ><i class="bi bi-gear"></i
+              ><span class="side-label">Tetapan</span></a
+            >
+            <a href="index.html" class="side-link" title="Log keluar"
+              ><i class="bi bi-box-arrow-right"></i
+              ><span class="side-label">Log keluar</span></a
+            >
+          </nav>
+
+          <div class="side-user">
+            <span class="avatar">AH</span>
+            <div class="lh-sm side-user-text">
+              <div class="fw-semibold">Aisyah Hassan</div>
+              <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Utama -->
+      <div class="app-main">
+        <header class="topbar border-bottom">
+          <button
+            class="btn btn-icon d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebar"
+            aria-controls="sidebar"
+            aria-label="Buka menu"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+          <h1 class="h5 mb-0 me-2">Produk saya</h1>
+          <div class="topbar-search d-none d-md-block input-icon">
+            <i class="bi bi-search"></i>
+            <input
+              type="search"
+              class="form-control"
+              placeholder="Cari produk, lesen atau permit"
+              aria-label="Cari"
+            />
+          </div>
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <button
+              class="btn btn-icon position-relative"
+              type="button"
+              aria-label="Pemberitahuan"
+            >
+              <i class="bi bi-bell"></i><span class="notif-dot"></span>
+            </button>
+
+            <div class="dropdown">
+              <button
+                type="button"
+                class="avatar avatar-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Menu pengguna"
+              >
+                AH
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end user-menu">
+                <li class="user-menu-head">
+                  <div class="fw-semibold">Aisyah Hassan</div>
+                  <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="company-profile.html"
+                    ><i class="bi bi-building me-2"></i>Profil organisasi</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-gear me-2"></i>Tetapan</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="index.html"
+                    ><i class="bi bi-box-arrow-right me-2"></i>Log keluar</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <main class="app-content p-3 p-md-5">
+          <!-- Hero -->
+          <div class="list-hero">
+            <span class="hero-icon">
+              <i class="bi bi-box-seam"></i>
+            </span>
+            <div class="flex-grow-1">
+              <h2>Senarai produk berdaftar</h2>
+              <p>
+                Urus semua produk baja, baja tambahan, dan bahan mentah yang
+                berdaftar di bawah Enakmen Baja Sabah. Gunakan carian, tapisan,
+                dan susunan untuk mencari produk dengan cepat.
+              </p>
+            </div>
+            <a href="complete-account.html" class="btn btn-light-contrast">
+              <i class="bi bi-plus-lg"></i>Daftar produk
+            </a>
+          </div>
+
+          <!-- Stat chips -->
+          <div class="stat-chips">
+            <div class="stat-chip">
+              <span class="chip-icon"><i class="bi bi-box-seam"></i></span>
+              <div>
+                <div class="chip-value" id="stat-total">0</div>
+                <div class="chip-label">Jumlah produk</div>
+              </div>
+            </div>
+            <div class="stat-chip is-green">
+              <span class="chip-icon"
+                ><i class="bi bi-patch-check-fill"></i
+              ></span>
+              <div>
+                <div class="chip-value" id="stat-registered">0</div>
+                <div class="chip-label">Berdaftar</div>
+              </div>
+            </div>
+            <div class="stat-chip is-amber">
+              <span class="chip-icon"
+                ><i class="bi bi-hourglass-split"></i
+              ></span>
+              <div>
+                <div class="chip-value" id="stat-pending">0</div>
+                <div class="chip-label">Dalam semakan</div>
+              </div>
+            </div>
+            <div class="stat-chip is-blue">
+              <span class="chip-icon"><i class="bi bi-pencil"></i></span>
+              <div>
+                <div class="chip-value" id="stat-draft">0</div>
+                <div class="chip-label">Draf</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filters -->
+          <div class="filter-bar mt-4">
+            <!-- Left column: filters (label + 3 selects + reset) -->
+            <div
+              class="row g-2 g-md-3 align-items-md-end flex-grow-1 w-100 w-md-auto"
+            >
+              <!-- Label: full width on mobile, auto on md+ -->
+              <div class="col-12 col-md-auto">
+                <span class="filter-label d-block mb-1 mb-md-2">
+                  <i class="bi bi-funnel me-1"></i>Tapis:
+                </span>
+              </div>
+
+              <!-- Kategori -->
+              <div class="col-12 col-sm-6 col-lg-3">
+                <label class="form-label visually-hidden" for="filter-category"
+                  >Kategori</label
+                >
+                <select class="form-select" id="filter-category">
+                  <option value="">Semua kategori</option>
+                  <option>Baja</option>
+                  <option>Baja Tunggal</option>
+                  <option>Baja Campuran</option>
+                  <option>Baja Sebatian</option>
+                  <option>Baja Organik</option>
+                  <option>Baja Mikronutrien</option>
+                  <option>Baja Tambahan</option>
+                  <option>Bahan Mentah</option>
+                </select>
+              </div>
+
+              <!-- Status -->
+              <div class="col-12 col-sm-6 col-lg-3">
+                <label class="form-label visually-hidden" for="filter-status"
+                  >Status</label
+                >
+                <select class="form-select" id="filter-status">
+                  <option value="">Semua status</option>
+                  <option>Berdaftar</option>
+                  <option>Dalam semakan</option>
+                  <option>Draf</option>
+                  <option>Ditolak</option>
+                </select>
+              </div>
+
+              <!-- Bentuk -->
+              <div class="col-12 col-sm-6 col-lg-3">
+                <label class="form-label visually-hidden" for="filter-form"
+                  >Bentuk</label
+                >
+                <select class="form-select" id="filter-form">
+                  <option value="">Semua bentuk</option>
+                  <option>Butiran (Granular)</option>
+                  <option>Serbuk (Powder)</option>
+                  <option>Cecair (Liquid)</option>
+                  <option>Tablet</option>
+                </select>
+              </div>
+
+              <!-- Reset -->
+              <div class="col-12 col-sm-6 col-lg-auto">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary w-100"
+                  id="filter-reset"
+                >
+                  <i class="bi bi-x-lg me-1"></i>Set semula
+                </button>
+              </div>
+
+              <!-- Export: mobile = full width row, md+ = pushed to the right -->
+              <div class="col-12 d-md-none">
+                <button
+                  type="button"
+                  class="btn btn-outline-primary w-100"
+                  id="btn-export-mobile"
+                >
+                  <i class="bi bi-download me-1"></i>Eksport CSV
+                </button>
+              </div>
+            </div>
+
+            <!-- Desktop export (right-aligned) -->
+            <div class="d-none d-md-flex ms-md-auto">
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                id="btn-export"
+              >
+                <i class="bi bi-download me-1"></i>Eksport CSV
+              </button>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="table-surface">
+            <table
+              id="product-table"
+              class="table align-middle nowrap"
+              style="width: 100%"
+            >
+              <thead>
+                <tr>
+                  <th>Produk</th>
+                  <th>Kategori</th>
+                  <th>Bentuk</th>
+                  <th>Pengilang</th>
+                  <th>Status</th>
+                  <th class="text-end">Tindakan</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <div class="cell-product">
+                      <span class="product-icon"
+                        ><i class="bi bi-flower2"></i
+                      ></span>
+                      <div>
+                        <p class="product-title">Baja Sawit Premium</p>
+                        <p class="product-sub">N 15%, P2O5 15%, K2O 15%</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Baja Sebatian</td>
+                  <td>Butiran (Granular)</td>
+                  <td>Borneo Agro Sdn Bhd</td>
+                  <td>
+                    <span class="status-pill is-registered">
+                      <i class="bi bi-patch-check-fill"></i>Berdaftar
+                    </span>
+                  </td>
+                  <td>
+                    <div class="row-actions">
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Lihat"
+                        data-action="view"
+                      >
+                        <i class="bi bi-eye"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Edit"
+                        data-action="edit"
+                      >
+                        <i class="bi bi-pencil"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Padam"
+                        data-action="delete"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="cell-product">
+                      <span class="product-icon"
+                        ><i class="bi bi-flower2"></i
+                      ></span>
+                      <div>
+                        <p class="product-title">Baja Organik Plus</p>
+                        <p class="product-sub">
+                          Bahan organik 60%, N 3%, P 2%, K 2%
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Baja Organik</td>
+                  <td>Serbuk (Powder)</td>
+                  <td>GreenLife Organics</td>
+                  <td>
+                    <span class="status-pill is-registered">
+                      <i class="bi bi-patch-check-fill"></i>Berdaftar
+                    </span>
+                  </td>
+                  <td>
+                    <div class="row-actions">
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Lihat"
+                        data-action="view"
+                      >
+                        <i class="bi bi-eye"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Edit"
+                        data-action="edit"
+                      >
+                        <i class="bi bi-pencil"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Padam"
+                        data-action="delete"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="cell-product">
+                      <span class="product-icon"
+                        ><i class="bi bi-flower2"></i
+                      ></span>
+                      <div>
+                        <p class="product-title">Baja Mikro N</p>
+                        <p class="product-sub">Zn 5%, B 2%, Cu 1%</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Baja Mikronutrien</td>
+                  <td>Cecair (Liquid)</td>
+                  <td>AgriChem Supplies</td>
+                  <td>
+                    <span class="status-pill is-registered">
+                      <i class="bi bi-patch-check-fill"></i>Berdaftar
+                    </span>
+                  </td>
+                  <td>
+                    <div class="row-actions">
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Lihat"
+                        data-action="view"
+                      >
+                        <i class="bi bi-eye"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Edit"
+                        data-action="edit"
+                      >
+                        <i class="bi bi-pencil"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Padam"
+                        data-action="delete"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="cell-product">
+                      <span class="product-icon"
+                        ><i class="bi bi-flower2"></i
+                      ></span>
+                      <div>
+                        <p class="product-title">Baja Kelapa Organik</p>
+                        <p class="product-sub">
+                          Bahan organik 55%, K 5%, Mg 1%
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Baja Organik</td>
+                  <td>Butiran (Granular)</td>
+                  <td>Sabah Organic Fertilizers</td>
+                  <td>
+                    <span class="status-pill is-pending">
+                      <i class="bi bi-hourglass-split"></i>Dalam semakan
+                    </span>
+                  </td>
+                  <td>
+                    <div class="row-actions">
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Lihat"
+                        data-action="view"
+                      >
+                        <i class="bi bi-eye"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Edit"
+                        data-action="edit"
+                      >
+                        <i class="bi bi-pencil"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Padam"
+                        data-action="delete"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="cell-product">
+                      <span class="product-icon"
+                        ><i class="bi bi-flower2"></i
+                      ></span>
+                      <div>
+                        <p class="product-title">Baja Padi Super</p>
+                        <p class="product-sub">N 20%, P2O5 10%, K2O 10%</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Baja Campuran</td>
+                  <td>Butiran (Granular)</td>
+                  <td>PadiTech Industries</td>
+                  <td>
+                    <span class="status-pill is-pending">
+                      <i class="bi bi-hourglass-split"></i>Dalam semakan
+                    </span>
+                  </td>
+                  <td>
+                    <div class="row-actions">
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Lihat"
+                        data-action="view"
+                      >
+                        <i class="bi bi-eye"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Edit"
+                        data-action="edit"
+                      >
+                        <i class="bi bi-pencil"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Padam"
+                        data-action="delete"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="cell-product">
+                      <span class="product-icon"
+                        ><i class="bi bi-flower2"></i
+                      ></span>
+                      <div>
+                        <p class="product-title">Baja Getah Tahan Lama</p>
+                        <p class="product-sub">N 12%, P 6%, K 18%, Mg 2%</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Baja Sebatian</td>
+                  <td>Butiran (Granular)</td>
+                  <td>RubberCare Sdn Bhd</td>
+                  <td>
+                    <span class="status-pill is-draft">
+                      <i class="bi bi-pencil"></i>Draf
+                    </span>
+                  </td>
+                  <td>
+                    <div class="row-actions">
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Lihat"
+                        data-action="view"
+                      >
+                        <i class="bi bi-eye"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Edit"
+                        data-action="edit"
+                      >
+                        <i class="bi bi-pencil"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Padam"
+                        data-action="delete"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="cell-product">
+                      <span class="product-icon"
+                        ><i class="bi bi-flower2"></i
+                      ></span>
+                      <div>
+                        <p class="product-title">Baja Sawit K2</p>
+                        <p class="product-sub">K 25%, Mg 5%, B 1%</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Baja Tunggal</td>
+                  <td>Butiran (Granular)</td>
+                  <td>PalmNutrients Bhd</td>
+                  <td>
+                    <span class="status-pill is-registered">
+                      <i class="bi bi-patch-check-fill"></i>Berdaftar
+                    </span>
+                  </td>
+                  <td>
+                    <div class="row-actions">
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Lihat"
+                        data-action="view"
+                      >
+                        <i class="bi bi-eye"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Edit"
+                        data-action="edit"
+                      >
+                        <i class="bi bi-pencil"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Padam"
+                        data-action="delete"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="cell-product">
+                      <span class="product-icon"
+                        ><i class="bi bi-flower2"></i
+                      ></span>
+                      <div>
+                        <p class="product-title">Baja Organik Sayur</p>
+                        <p class="product-sub">Bahan organik 70%</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Baja Organik</td>
+                  <td>Serbuk (Powder)</td>
+                  <td>GreenLife Organics</td>
+                  <td>
+                    <span class="status-pill is-rejected">
+                      <i class="bi bi-x-circle-fill"></i>Ditolak
+                    </span>
+                  </td>
+                  <td>
+                    <div class="row-actions">
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Lihat"
+                        data-action="view"
+                      >
+                        <i class="bi bi-eye"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Edit"
+                        data-action="edit"
+                      >
+                        <i class="bi bi-pencil"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Padam"
+                        data-action="delete"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <div class="cell-product">
+                      <span class="product-icon"
+                        ><i class="bi bi-flower2"></i
+                      ></span>
+                      <div>
+                        <p class="product-title">Bahan Mentah Urea</p>
+                        <p class="product-sub">N 46%</p>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Bahan Mentah</td>
+                  <td>Butiran (Granular)</td>
+                  <td>Chemical Supplies Sabah</td>
+                  <td>
+                    <span class="status-pill is-registered">
+                      <i class="bi bi-patch-check-fill"></i>Berdaftar
+                    </span>
+                  </td>
+                  <td>
+                    <div class="row-actions">
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Lihat"
+                        data-action="view"
+                      >
+                        <i class="bi bi-eye"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Edit"
+                        data-action="edit"
+                      >
+                        <i class="bi bi-pencil"></i>
+                      </button>
+                      <button
+                        type="button"
+                        class="btn btn-icon"
+                        title="Padam"
+                        data-action="delete"
+                      >
+                        <i class="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- jQuery + DataTables -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+
+    <!-- Bootstrap bundle (for sidebar & user menu) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      /* ===== Sidebar toggle ===== */
+      (function () {
+        var app = document.querySelector(".app");
+        var btn = app.querySelector("#sidebar-toggle");
+        var KEY = "sidebar-collapsed";
+
+        function sync() {
+          var collapsed = app.classList.contains("is-collapsed");
+          var label = collapsed ? "Buka bar sisi" : "Tutup bar sisi";
+          btn.setAttribute("aria-expanded", String(!collapsed));
+          btn.setAttribute("aria-label", label);
+          btn.title = label;
+        }
+
+        btn.addEventListener("click", function () {
+          app.classList.toggle("is-collapsed");
+          sync();
+          try {
+            localStorage.setItem(
+              KEY,
+              app.classList.contains("is-collapsed") ? "1" : "0",
+            );
+          } catch (e) {}
+        });
+
+        sync();
+      })();
+
+      /* ===== DataTables init ===== */
+      $(function () {
+        /* Custom filter that reads the three <select> filters */
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+          var category = $("#filter-category").val();
+          var status = $("#filter-status").val();
+          var form = $("#filter-form").val();
+
+          var rowCategory = data[1] || "";
+          var rowForm = data[2] || "";
+          var rowStatus = (data[4] || "").replace(/<[^>]*>/g, "").trim();
+
+          if (category && rowCategory.indexOf(category) === -1) return false;
+          if (form && rowForm.indexOf(form) === -1) return false;
+          if (status && rowStatus.indexOf(status) === -1) return false;
+          return true;
+        });
+
+        var table = $("#product-table").DataTable({
+          responsive: {
+            details: {
+              type: "inline",
+              target: "tr",
+            },
+          },
+          order: [[0, "asc"]],
+          columnDefs: [
+            { orderable: false, targets: [5] },
+            { className: "text-end", targets: [5] },
+          ],
+          language: {
+            search: "",
+            searchPlaceholder: "Cari produk…",
+            lengthMenu: "Tunjuk _MENU_ baris",
+            info: "Menunjukkan _START_–_END_ daripada _TOTAL_",
+            infoEmpty: "Tiada rekod",
+            infoFiltered: "(ditapis daripada _MAX_ rekod)",
+            zeroRecords: "Tiada produk sepadan dijumpai",
+            emptyTable: "Belum ada produk didaftarkan",
+            paginate: {
+              first: "Pertama",
+              last: "Akhir",
+              next: "Seterusnya",
+              previous: "Sebelum",
+            },
+          },
+        });
+
+        /* Apply filters on select change */
+        $("#filter-category, #filter-status, #filter-form").on(
+          "change",
+          function () {
+            table.draw();
+            updateStats(table);
+          },
+        );
+
+        /* Reset filters */
+        $("#filter-reset").on("click", function () {
+          $("#filter-category").val("");
+          $("#filter-status").val("");
+          $("#filter-form").val("");
+          $("#product-table_filter input").val("");
+          table.search("").draw();
+          updateStats(table);
+        });
+
+        /* Update stats after each draw */
+        table.on("draw", function () {
+          updateStats(table);
+        });
+
+        /* ---------- Stat chips ---------- */
+        function updateStats(t) {
+          var rows = t.rows({ search: "applied" }).data();
+          var total = rows.length;
+          var registered = 0;
+          var pending = 0;
+          var draft = 0;
+
+          rows.each(function (row) {
+            var status = (row[4] || "").replace(/<[^>]*>/g, "").trim();
+            if (status.indexOf("Berdaftar") !== -1) registered++;
+            else if (status.indexOf("Dalam semakan") !== -1) pending++;
+            else if (status.indexOf("Draf") !== -1) draft++;
+          });
+
+          $("#stat-total").text(total);
+          $("#stat-registered").text(registered);
+          $("#stat-pending").text(pending);
+          $("#stat-draft").text(draft);
+        }
+
+        /* Initial stats */
+        updateStats(table);
+
+        /* ---------- Export CSV ---------- */
+        /* ---------- Export CSV ---------- */
+        $("#btn-export, #btn-export-mobile").on("click", function () {
+          var rows = table.rows({ search: "applied" }).data();
+          var csv = [
+            ["Nama Produk", "Kategori", "Bentuk", "Pengilang", "Status"],
+          ];
+
+          rows.each(function (row) {
+            var name = $(row[0]).find(".product-title").text().trim();
+            var category = row[1];
+            var form = row[2];
+            var supplier = row[3];
+            var status = (row[4] || "").replace(/<[^>]*>/g, "").trim();
+            csv.push([name, category, form, supplier, status]);
+          });
+
+          var csvStr = csv
+            .map(function (r) {
+              return r
+                .map(function (c) {
+                  return '"' + String(c).replace(/"/g, '""') + '"';
+                })
+                .join(",");
+            })
+            .join("\n");
+
+          var blob = new Blob([csvStr], { type: "text/csv;charset=utf-8;" });
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement("a");
+          a.href = url;
+          a.download = "senarai-produk.csv";
+          a.click();
+          URL.revokeObjectURL(url);
+        });
+
+        /* ---------- Row actions ---------- */
+        $("#product-table tbody").on("click", "[data-action]", function () {
+          var action = $(this).data("action");
+          var $row = $(this).closest("tr");
+          var name = $row.find(".product-title").text().trim();
+
+          if (action === "view") {
+            alert("Lihat: " + name);
+          } else if (action === "edit") {
+            alert("Edit: " + name);
+          } else if (action === "delete") {
+            if (confirm("Padam produk ini?\n\n" + name)) {
+              table.row($row).remove().draw();
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

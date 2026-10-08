@@ -1,0 +1,607 @@
+/* ==========================================================
+   datatable.css — custom DataTables theme
+   Matches the Enakmen Baja Sabah palette (deep emerald + cream).
+   Requires: DataTables 1.13.x, Bootstrap 5 theme, Responsive 2.5
+   ========================================================== */
+
+/* ==========================================================
+   1. TABLE BASE
+   ========================================================== */
+table.dataTable {
+  width: 100% !important;
+  margin: 0 !important;
+  border-collapse: separate !important;
+  border-spacing: 0;
+}
+
+/* ==========================================================
+   2. HEADER
+   ========================================================== */
+table.dataTable thead th {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-muted);
+  border-bottom: 1px solid var(--color-border) !important;
+  padding: 0.75rem 0.9rem;
+  background: var(--color-surface-2);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+/* Sort indicators (Bootstrap 5 theme uses ::before/::after) */
+table.dataTable thead th.sorting,
+table.dataTable thead th.sorting_asc,
+table.dataTable thead th.sorting_desc {
+  cursor: pointer;
+  user-select: none;
+}
+
+table.dataTable thead th.sorting::before,
+table.dataTable thead th.sorting::after,
+table.dataTable thead th.sorting_asc::before,
+table.dataTable thead th.sorting_asc::after,
+table.dataTable thead th.sorting_desc::before,
+table.dataTable thead th.sorting_desc::after {
+  opacity: 0.35;
+  right: 0.6rem;
+}
+
+table.dataTable thead th.sorting_asc::after,
+table.dataTable thead th.sorting_desc::after {
+  opacity: 1;
+  color: var(--color-primary-600);
+}
+
+/* Rounded top corners */
+table.dataTable thead th:first-child {
+  border-top-left-radius: var(--radius-sm);
+}
+table.dataTable thead th:last-child {
+  border-top-right-radius: var(--radius-sm);
+}
+
+/* ==========================================================
+   3. BODY
+   ========================================================== */
+table.dataTable tbody td {
+  font-size: 0.82rem;
+  padding: 0.85rem 0.9rem;
+  vertical-align: middle;
+  border-color: var(--color-border) !important;
+  color: var(--color-text);
+}
+
+table.dataTable tbody tr:hover > * {
+  background: var(--color-primary-50) !important;
+}
+
+table.dataTable tbody tr.selected > * {
+  background: var(--color-primary-100) !important;
+  color: var(--color-text);
+  box-shadow: none !important;
+}
+
+/* Zebra striping (optional — uncomment to enable)
+table.dataTable tbody tr:nth-child(even) > * {
+  background: var(--color-surface-2);
+}
+*/
+
+/* Remove default DataTables bottom border on last row */
+table.dataTable tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+/* ==========================================================
+   4. CONTROLS (length, filter, info, paginate)
+   ========================================================== */
+
+/* Spacing above the table */
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter {
+  margin-bottom: 0.85rem;
+}
+
+/* Length dropdown */
+.dataTables_wrapper .dataTables_length {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.dataTables_wrapper .dataTables_length select {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 1.6rem 0.35rem 0.6rem;
+  font-size: 0.8rem;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  background-position: right 0.4rem center;
+}
+
+.dataTables_wrapper .dataTables_length select:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 0.2rem rgba(34, 166, 90, 0.18);
+}
+
+/* Search box */
+.dataTables_wrapper .dataTables_filter {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+.dataTables_wrapper .dataTables_filter input {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.42rem 0.7rem;
+  font-size: 0.8rem;
+  min-width: 220px;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+}
+
+.dataTables_wrapper .dataTables_filter input:focus {
+  outline: none;
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 0.2rem rgba(34, 166, 90, 0.18);
+}
+
+.dataTables_wrapper .dataTables_filter input::placeholder {
+  color: var(--color-muted);
+  opacity: 0.7;
+}
+
+/* Info line */
+.dataTables_wrapper .dataTables_info {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  padding-top: 0.85rem;
+}
+
+/* ==========================================================
+   5. PAGINATION
+   ========================================================== */
+.dataTables_wrapper .pagination {
+  margin: 0.5rem 0 0;
+  gap: 0.15rem;
+  flex-wrap: wrap;
+}
+
+.dataTables_wrapper .page-link {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-primary-700);
+  font-size: 0.8rem;
+  padding: 0.35rem 0.65rem;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s;
+}
+
+.dataTables_wrapper .page-link:hover {
+  background: var(--color-primary-50);
+  color: var(--color-primary-800);
+  border-color: var(--color-primary-200);
+}
+
+.dataTables_wrapper .page-item.active .page-link {
+  background: var(--color-primary-600);
+  border-color: var(--color-primary-600);
+  color: #fff;
+  font-weight: 600;
+}
+
+.dataTables_wrapper .page-item.disabled .page-link {
+  color: var(--color-muted);
+  background: var(--color-surface-2);
+  border-color: var(--color-border);
+  opacity: 0.6;
+}
+
+.dataTables_wrapper .page-item:first-child .page-link,
+.dataTables_wrapper .page-item:last-child .page-link {
+  border-radius: var(--radius-sm);
+}
+
+/* ==========================================================
+   6. PROCESSING INDICATOR
+   ========================================================== */
+.dataTables_wrapper .dataTables_processing {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  color: var(--color-text);
+  font-size: 0.85rem;
+  padding: 0.75rem 1.25rem;
+  top: 50%;
+}
+
+/* ==========================================================
+   7. RESPONSIVE (expandable rows)
+   ========================================================== */
+table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control:before,
+table.dataTable.dtr-inline.collapsed > tbody > tr > th.dtr-control:before {
+  /* background: var(--color-primary-600) !important; */
+  box-shadow: none !important;
+  border: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%);
+  left: 0.6rem !important;
+  color: var(--color-primary-600);
+  font-weight: 700;
+}
+
+table.dataTable.dtr-inline.collapsed
+  > tbody
+  > tr.parent
+  > td.dtr-control:before,
+table.dataTable.dtr-inline.collapsed
+  > tbody
+  > tr.parent
+  > th.dtr-control:before {
+  /* background: var(--color-primary-800) !important; */
+}
+
+/* Child row content */
+table.dataTable > tbody > tr.child ul.dtr-details {
+  width: 100%;
+  padding: 0.4rem 0;
+}
+
+table.dataTable > tbody > tr.child ul.dtr-details > li {
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+table.dataTable > tbody > tr.child ul.dtr-details > li:last-child {
+  border-bottom: 0;
+}
+
+table.dataTable > tbody > tr.child span.dtr-title {
+  font-weight: 600;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-muted);
+  min-width: 120px;
+}
+
+table.dataTable > tbody > tr.child span.dtr-data {
+  font-size: 0.82rem;
+  color: var(--color-text);
+  text-align: right;
+}
+
+/* ==========================================================
+   8. RESPONSIVE BREAKPOINTS
+   ========================================================== */
+@media (max-width: 767.98px) {
+  .dataTables_wrapper .dataTables_filter,
+  .dataTables_wrapper .dataTables_length {
+    text-align: left !important;
+    float: none !important;
+    width: 100%;
+  }
+
+  .dataTables_wrapper .dataTables_filter input {
+    min-width: 0;
+    width: 100%;
+    margin-left: 0 !important;
+  }
+
+  .dataTables_wrapper .dataTables_length select {
+    width: auto;
+  }
+
+  .dataTables_wrapper .dataTables_info,
+  .dataTables_wrapper .dataTables_paginate {
+    text-align: center !important;
+    float: none !important;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .dataTables_wrapper .pagination {
+    justify-content: center;
+  }
+
+  table.dataTable tbody td {
+    padding: 0.7rem 0.75rem;
+  }
+
+  table.dataTable thead th {
+    padding: 0.65rem 0.75rem;
+  }
+}
+
+/* ==========================================================
+   9. DARK-MODE / REDUCED MOTION (optional hooks)
+   ========================================================== */
+@media (prefers-reduced-motion: reduce) {
+  table.dataTable,
+  table.dataTable *,
+  .dataTables_wrapper * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* ==========================================================
+         PRODUCT LIST — page-specific styles only
+         (DataTables chrome lives in css/datatable.css)
+         ========================================================== */
+
+/* ---- Page hero ---- */
+.list-hero {
+  position: relative;
+  border-radius: var(--radius-lg);
+  padding: 1.35rem 1.5rem;
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-600) 0%,
+    var(--color-primary-800) 100%
+  );
+  color: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.1rem;
+  margin-bottom: 1.25rem;
+}
+.list-hero::after {
+  content: "";
+  position: absolute;
+  right: -70px;
+  top: -70px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+}
+.list-hero > * {
+  position: relative;
+  z-index: 1;
+}
+.list-hero .hero-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.18);
+  font-size: 1.45rem;
+  flex: none;
+}
+.list-hero h2 {
+  font-size: 1.15rem;
+  margin: 0 0 0.3rem;
+  color: #fff;
+  font-weight: 600;
+}
+.list-hero p {
+  font-size: 0.82rem;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 62ch;
+}
+.list-hero .btn-light-contrast {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1rem;
+  font-weight: 600;
+  flex: none;
+}
+
+/* ---- Stat chips ---- */
+.stat-chips {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+.stat-chip {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.stat-chip .chip-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: var(--color-primary-50);
+  color: var(--color-primary-600);
+  font-size: 1.05rem;
+  flex: none;
+}
+.stat-chip.is-amber .chip-icon {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+.stat-chip.is-blue .chip-icon {
+  background: var(--color-info-bg);
+  color: var(--color-info);
+}
+.stat-chip.is-green .chip-icon {
+  background: var(--color-primary-100);
+  color: var(--color-primary-700);
+}
+.stat-chip .chip-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-text);
+}
+.stat-chip .chip-label {
+  font-size: 0.72rem;
+  color: var(--color-muted);
+  margin-top: 0.15rem;
+}
+
+/* ---- Filter bar ---- */
+/* ---- Filter bar (Bootstrap-driven) ---- */
+.filter-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* On md+, lay the "filters" row and the "export" button side by side */
+@media (min-width: 768px) {
+  .filter-bar {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+
+/* Tidy up the label */
+.filter-bar .filter-label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--color-muted);
+  margin: 0;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+/* Make selects a consistent height and font */
+.filter-bar .form-select {
+  font-size: 0.8rem;
+  padding: 0.42rem 2rem 0.42rem 0.7rem; /* extra right space for the caret */
+  min-width: 0; /* let flex shrink */
+}
+
+/* Buttons keep their natural height */
+.filter-bar .btn {
+  font-size: 0.8rem;
+  padding: 0.42rem 0.9rem;
+  white-space: nowrap;
+}
+
+/* Make the reset button auto-width on mobile, so it doesn't span the row alone */
+@media (max-width: 575.98px) {
+  .filter-bar .btn {
+    width: 100%;
+  }
+}
+
+/* ---- Table surface (card wrapper) ---- */
+.table-surface {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 1px 2px rgba(15, 58, 36, 0.04);
+  padding: 0.75rem 0.5rem 0.5rem;
+}
+
+/* ---- Cell helpers ---- */
+.cell-product {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+}
+.cell-product .product-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: var(--color-primary-50);
+  color: var(--color-primary-600);
+  font-size: 0.9rem;
+  flex: none;
+}
+.cell-product .product-title {
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.25;
+}
+.cell-product .product-sub {
+  font-size: 0.7rem;
+  color: var(--color-muted);
+  margin: 0.1rem 0 0;
+}
+
+/* ---- Status pills ---- */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.22rem 0.6rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.status-pill.is-registered {
+  background: var(--color-primary-100);
+  color: var(--color-primary-800);
+}
+.status-pill.is-pending {
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+.status-pill.is-draft {
+  background: var(--color-surface-2);
+  color: var(--color-muted);
+  border: 1px solid var(--color-border);
+}
+.status-pill.is-rejected {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+/* ---- Row actions ---- */
+.row-actions {
+  display: flex;
+  gap: 0.3rem;
+  justify-content: flex-end;
+}
+.row-actions .btn-icon {
+  width: 32px;
+  height: 32px;
+  font-size: 0.85rem;
+}
+
+/* ---- Mobile tweaks (page-level) ---- */
+@media (max-width: 767.98px) {
+  .list-hero {
+    padding: 1.1rem 1.15rem;
+    gap: 0.85rem;
+  }
+  .list-hero .hero-icon {
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+  }
+  .list-hero h2 {
+    font-size: 1rem;
+  }
+  .filter-bar {
+    gap: 0.4rem;
+  }
+  .filter-bar .form-control,
+  .filter-bar .form-select {
+    min-width: 0;
+    flex: 1;
+  }
+}

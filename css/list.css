@@ -1,0 +1,223 @@
+/* ==========================================================
+   list.css — reusable list patterns
+   Used by: cawangan, produk, aktiviti lesen, wakil syarikat,
+   and any other set of items displayed as rows.
+   ========================================================== */
+
+/* ---------- Container ---------- */
+.list {
+  display: grid;
+  gap: 0.6rem;
+}
+
+/* ---------- Item ---------- */
+.list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.list-item:hover {
+  border-color: var(--color-primary-200);
+}
+
+/* ---------- Body (main content) ---------- */
+.list-item-body {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---------- Title + subtitle ---------- */
+.list-item-title {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--color-text);
+  margin: 0;
+  line-height: 1.35;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.list-item-sub {
+  font-size: 0.72rem;
+  color: var(--color-muted);
+  margin: 0.15rem 0 0;
+  line-height: 1.4;
+}
+
+/* ---------- Side (badges + actions, right-aligned) ---------- */
+.list-item-side {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: none;
+  align-self: center;
+}
+
+/* ---------- Head (top row inside detailed items) ---------- */
+.list-item-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+/* ---------- Avatar (optional) ---------- */
+.list-item-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--color-primary-100);
+  color: var(--color-primary-800);
+  font-weight: 600;
+  font-size: 0.82rem;
+  flex: none;
+}
+
+/* ---------- Meta grid (optional) ---------- */
+.list-item-meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem 1rem;
+  margin: 0;
+  padding-top: 0.6rem;
+  border-top: 1px dashed var(--color-border);
+}
+.list-item-meta dt {
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-muted);
+  margin-bottom: 0.1rem;
+}
+.list-item-meta dd {
+  font-size: 0.78rem;
+  margin: 0;
+  color: var(--color-text);
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 575.98px) {
+  .list-item {
+    padding: 0.75rem 0.85rem;
+    gap: 0.7rem;
+  }
+  .list-item-meta {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+  .list-item-avatar {
+    width: 38px;
+    height: 38px;
+    font-size: 0.72rem;
+  }
+}
+
+
+/* ==========================================================
+   Additional patterns + backward-compat aliases
+   ========================================================== */
+
+/* ---------- Empty state (used inside list containers) ---------- */
+.reps-empty {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  color: var(--color-muted);
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+}
+.reps-empty i {
+  font-size: 1.4rem;
+  color: var(--color-primary-500);
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+/* ---------- Mobile: stack side actions under item body ---------- */
+@media (max-width: 575.98px) {
+  .list-item {
+    flex-wrap: wrap;
+  }
+  .list-item-side {
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 0.4rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed var(--color-border);
+    align-self: stretch;
+  }
+  .reps-empty {
+    padding: 1.15rem 0.85rem;
+  }
+  .reps-empty i {
+    font-size: 1.15rem;
+  }
+}
+
+/* ---------- Backward-compat aliases ----------
+   Keeps old markup (profile-list, item-title, item-sub, item-side)
+   working without changes. Remove once all templates are updated. */
+.profile-list {
+  display: grid;
+  gap: 0.6rem;
+}
+.profile-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 0.95rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  transition: border-color 0.15s;
+}
+.profile-list-item:hover {
+  border-color: var(--color-primary-200);
+}
+.profile-list-item .item-title {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--color-text);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.profile-list-item .item-sub {
+  font-size: 0.72rem;
+  color: var(--color-muted);
+  margin: 0.15rem 0 0;
+}
+.profile-list-item .item-side {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: none;
+}
+@media (max-width: 575.98px) {
+  .profile-list-item {
+    flex-wrap: wrap;
+    padding: 0.7rem 0.85rem;
+  }
+  .profile-list-item .item-side {
+    width: 100%;
+    justify-content: flex-end;
+    margin-top: 0.4rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed var(--color-border);
+  }
+}

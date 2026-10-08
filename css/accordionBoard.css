@@ -1,0 +1,25 @@
+/* ---- Accordion rows inside the onboard card ---- */
+.onboard-row.as-button {
+  width: 100%;
+  background: none;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+}
+.onboard-row.as-button:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: -2px;
+  border-radius: var(--radius-md);
+}
+.accordion-chevron {
+  transition: transform 0.2s ease;
+}
+.onboard-item.is-open .accordion-chevron {
+  transform: rotate(180deg);
+}
+.onboard-item.is-open {
+  background: var(--color-surface-2);
+}
+.onboard-item.is-open .onboard-row:hover {
+  background: transparent;
+}

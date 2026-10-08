@@ -20,171 +20,15 @@
     <link href="css/components.css" rel="stylesheet" />
     <link href="css/dashboard.css" rel="stylesheet" />
     <link href="css/complete-account.css" rel="stylesheet" />
+    <link href="css/list.css" rel="stylesheet" />
+    <link href="css/viewModal.css" rel="stylesheet" />
+    <link href="css/accordionBoard.css" rel="stylesheet" />
+    <link href="css/detailBoard.css" rel="stylesheet" />
     <title>Profil Organisasi | Portal Pendaftaran Baja</title>
 
     <style>
-      /* ---- Accordion rows inside the onboard card ---- */
-      .onboard-row.as-button {
-        width: 100%;
-        background: none;
-        border: 0;
-        text-align: left;
-        cursor: pointer;
-      }
-      .onboard-row.as-button:focus-visible {
-        outline: 2px solid var(--color-primary-500);
-        outline-offset: -2px;
-        border-radius: var(--radius-md);
-      }
-      .accordion-chevron {
-        transition: transform 0.2s ease;
-      }
-      .onboard-item.is-open .accordion-chevron {
-        transform: rotate(180deg);
-      }
-      .onboard-item.is-open {
-        background: var(--color-surface-2);
-      }
-      .onboard-item.is-open .onboard-row:hover {
-        background: transparent;
-      }
+   
 
-      /* ---- Detail list (read-only accordion) ---- */
-      .detail-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 1rem 1.5rem;
-        margin: 0;
-      }
-      @media (max-width: 575.98px) {
-        .detail-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-      .detail-grid .full {
-        grid-column: 1 / -1;
-      }
-      .detail-grid dt {
-        font-size: 0.68rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--color-muted);
-        margin-bottom: 0.25rem;
-      }
-      .detail-grid dd {
-        font-size: 0.85rem;
-        margin: 0;
-        color: var(--color-text);
-        line-height: 1.5;
-        white-space: pre-line;
-      }
-
-      /* ---- Attachment cards (documents) ---- */
-      .attach-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 0.75rem;
-      }
-      .attach-card {
-        border: 1px solid var(--color-border);
-        border-radius: var(--radius-md);
-        padding: 0.9rem;
-        display: flex;
-        flex-direction: column;
-        gap: 0.4rem;
-        transition: 0.15s;
-        position: relative;
-        background: var(--color-surface);
-        text-decoration: none;
-        color: inherit;
-      }
-      .attach-card:hover {
-        border-color: var(--color-primary-500);
-        box-shadow: var(--shadow-sm);
-        text-decoration: none;
-        color: inherit;
-      }
-      .attach-card .attach-icon {
-        width: 34px;
-        height: 34px;
-        border-radius: 10px;
-        display: grid;
-        place-items: center;
-        background: var(--color-primary-50);
-        color: var(--color-primary-600);
-        font-size: 1rem;
-      }
-      .attach-card .attach-name {
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: var(--color-text);
-      }
-      .attach-card .attach-file {
-        font-size: 0.7rem;
-        color: var(--color-muted);
-        word-break: break-all;
-      }
-      .attach-card .attach-open {
-        position: absolute;
-        top: 0.55rem;
-        right: 0.55rem;
-        color: var(--color-muted);
-        font-size: 0.85rem;
-      }
-      .attach-card.is-empty {
-        background: var(--color-surface-2);
-        border-style: dashed;
-        cursor: default;
-      }
-      .attach-card.is-empty:hover {
-        border-color: var(--color-border);
-        box-shadow: none;
-      }
-      .attach-card.is-empty .attach-icon {
-        background: var(--color-surface);
-        color: var(--color-muted);
-      }
-
-      /* ---- Generic list of items (cawangan / produk / lesen) ---- */
-      .profile-list {
-        display: grid;
-        gap: 0.55rem;
-      }
-      .profile-list-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0.75rem;
-        padding: 0.75rem 0.95rem;
-        border: 1px solid var(--color-border);
-        border-radius: var(--radius-sm);
-        background: var(--color-surface);
-        transition: border-color 0.15s;
-      }
-      .profile-list-item:hover {
-        border-color: var(--color-primary-200);
-      }
-      .profile-list-item .item-title {
-        font-weight: 600;
-        font-size: 0.85rem;
-        color: var(--color-text);
-        margin: 0;
-        display: flex;
-        align-items: center;
-        gap: 0.4rem;
-      }
-      .profile-list-item .item-sub {
-        font-size: 0.72rem;
-        color: var(--color-muted);
-        margin: 0.15rem 0 0;
-      }
-      .profile-list-item .item-side {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        flex: none;
-      }
 
       /* ---- Right column: meta info card ---- */
       .meta-card {
@@ -236,143 +80,7 @@
         margin-top: 0.5rem;
       }
 
-      /* ==========================================================
-         VIEW MODAL (shared: product + branch) — same as onboarding
-         ========================================================== */
-      .view-product {
-        border: 0;
-        border-radius: var(--radius-lg);
-        overflow: hidden;
-      }
-      .view-hero {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: 1.25rem 1.5rem;
-        background: linear-gradient(
-          135deg,
-          var(--color-primary-50) 0%,
-          #eef2ff 100%
-        );
-        position: relative;
-      }
-      .view-hero::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background-image: linear-gradient(
-            rgba(255, 255, 255, 0.35) 1px,
-            transparent 1px
-          ),
-          linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.35) 1px,
-            transparent 1px
-          );
-        background-size: 22px 22px;
-        opacity: 0.5;
-        pointer-events: none;
-      }
-      .view-hero > * {
-        position: relative;
-        z-index: 1;
-      }
-      .view-hero-icon {
-        width: 52px;
-        height: 52px;
-        border-radius: 14px;
-        display: grid;
-        place-items: center;
-        background: #fff;
-        color: var(--color-primary-600);
-        font-size: 1.5rem;
-        box-shadow: var(--shadow-sm);
-        flex: none;
-      }
-      .view-hero-title {
-        font-size: 1.05rem;
-        font-weight: 700;
-        margin: 0 0 0.15rem;
-        letter-spacing: -0.01em;
-      }
-      .view-hero-sub {
-        font-size: 0.78rem;
-        color: var(--color-muted);
-      }
 
-      .view-tabs {
-        padding: 0 1.5rem;
-        border-bottom: 1px solid var(--color-border);
-        gap: 0.25rem;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        scrollbar-width: none;
-      }
-      .view-tabs::-webkit-scrollbar {
-        display: none;
-      }
-      .view-tabs .nav-link {
-        border: 0;
-        border-bottom: 2px solid transparent;
-        border-radius: 0;
-        color: var(--color-muted);
-        font-size: 0.82rem;
-        font-weight: 500;
-        padding: 0.85rem 0.75rem;
-        white-space: nowrap;
-      }
-      .view-tabs .nav-link.active {
-        color: var(--color-primary-700);
-        border-bottom-color: var(--color-primary-600);
-        background: none;
-      }
-      .view-product .tab-content {
-        padding: 1.25rem 1.5rem 1.5rem;
-        max-height: 60vh;
-        overflow-y: auto;
-      }
-
-      .detail-list {
-        display: grid;
-        gap: 1rem;
-        margin: 0;
-      }
-      .detail-list dt {
-        font-size: 0.68rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: var(--color-muted);
-        margin-bottom: 0.25rem;
-      }
-      .detail-list dd {
-        font-size: 0.85rem;
-        margin: 0;
-        color: var(--color-text);
-        line-height: 1.5;
-        white-space: pre-line;
-      }
-      .detail-pair {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-      }
-      @media (max-width: 575.98px) {
-        .detail-pair {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      /* Smaller attach cards inside modal */
-      .view-product .attach-card {
-        padding: 1rem;
-        gap: 0.5rem;
-      }
-      .view-product .attach-card .attach-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 1rem;
-      }
     </style>
   </head>
   <body>
@@ -644,6 +352,7 @@
                   </div>
                 </div>
 
+                <!-- ===== Wakil syarikat ===== -->
                 <div class="onboard-item" data-accordion="rep">
                   <button
                     type="button"
@@ -656,33 +365,80 @@
                     </span>
                     <div class="onboard-main">
                       <h3 class="onboard-title">Wakil syarikat</h3>
-                      <p class="onboard-desc">
-                        Aisyah Hassan &middot; Pengarah Urusan
-                      </p>
+                      <p class="onboard-desc">2 wakil syarikat didaftarkan</p>
                     </div>
                     <span class="onboard-action accordion-chevron">
                       <i class="bi bi-chevron-down"></i>
                     </span>
                   </button>
                   <div class="onboard-body" id="body-rep" hidden>
-                    <dl class="detail-grid">
-                      <div>
-                        <dt>Nama Wakil Syarikat</dt>
-                        <dd>Aisyah Hassan</dd>
+                    <p class="text-muted-2 small mb-3">
+                      Individu yang bertanggungjawab ke atas permohonan.
+                      Pengarah dan pengurus boleh dipertanggungjawabkan atas
+                      kesalahan di bawah Enakmen.
+                    </p>
+
+                    <div class="list">
+                      <!-- Representative 1 -->
+                      <div class="list-item">
+                        <div class="list-item-avatar">AH</div>
+                        <div class="list-item-body">
+                          <div class="list-item-head">
+                            <div>
+                              <p class="list-item-title">Aisyah Hassan</p>
+                              <p class="list-item-sub">Pengarah Urusan</p>
+                            </div>
+                            <span class="pill pill-success">
+                              <i class="bi bi-patch-check-fill"></i>Disahkan
+                            </span>
+                          </div>
+                          <dl class="list-item-meta">
+                            <div>
+                              <dt>No. KP</dt>
+                              <dd>900101-12-3456</dd>
+                            </div>
+                            <div>
+                              <dt>Telefon</dt>
+                              <dd>+60 12 345 6789</dd>
+                            </div>
+                            <div>
+                              <dt>E-mel</dt>
+                              <dd>aisyah@borneoagro.com.my</dd>
+                            </div>
+                          </dl>
+                        </div>
                       </div>
-                      <div>
-                        <dt>No. KP Wakil Syarikat</dt>
-                        <dd>900101-12-3456</dd>
+
+                      <!-- Representative 2 -->
+                      <div class="list-item">
+                        <div class="list-item-avatar">LM</div>
+                        <div class="list-item-body">
+                          <div class="list-item-head">
+                            <div>
+                              <p class="list-item-title">Lim Wei Ming</p>
+                              <p class="list-item-sub">Pengurus Operasi</p>
+                            </div>
+                            <span class="pill pill-warning">
+                              <i class="bi bi-hourglass-split"></i>Dalam semakan
+                            </span>
+                          </div>
+                          <dl class="list-item-meta">
+                            <div>
+                              <dt>No. KP</dt>
+                              <dd>880202-12-5566</dd>
+                            </div>
+                            <div>
+                              <dt>Telefon</dt>
+                              <dd>+60 13 888 9999</dd>
+                            </div>
+                            <div>
+                              <dt>E-mel</dt>
+                              <dd>weiming@borneoagro.com.my</dd>
+                            </div>
+                          </dl>
+                        </div>
                       </div>
-                      <div>
-                        <dt>Jawatan Wakil Syarikat</dt>
-                        <dd>Pengarah Urusan</dd>
-                      </div>
-                      <div>
-                        <dt>Nombor Telefon Wakil Syarikat</dt>
-                        <dd>+60 12 345 6789</dd>
-                      </div>
-                    </dl>
+                    </div>
                   </div>
                 </div>
 
@@ -796,19 +552,19 @@
                     </span>
                   </button>
                   <div class="onboard-body" id="body-branches" hidden>
-                    <div class="profile-list">
-                      <div class="profile-list-item">
-                        <div>
-                          <div class="item-title">
+                    <div class="list">
+                      <div class="list-item">
+                        <div class="list-item-body">
+                          <div class="list-item-title">
                             <i class="bi bi-building text-muted-2"></i>
                             Cawangan Kota Kinabalu
                           </div>
-                          <div class="item-sub">
+                          <div class="list-item-sub">
                             Syarikat &middot; Lot 10, Jalan Industri 5, 88450
                             Kota Kinabalu
                           </div>
                         </div>
-                        <div class="item-side">
+                        <div class="list-item-side">
                           <span class="pill pill-success">Aktif</span>
                           <button
                             type="button"
@@ -821,18 +577,18 @@
                         </div>
                       </div>
 
-                      <div class="profile-list-item">
-                        <div>
-                          <div class="item-title">
+                      <div class="list-item">
+                        <div class="list-item-body">
+                          <div class="list-item-title">
                             <i class="bi bi-person text-muted-2"></i>
                             Cawangan Sandakan
                           </div>
-                          <div class="item-sub">
+                          <div class="list-item-sub">
                             Individu &middot; Lot 5, Jalan Pelabuhan, 90000
                             Sandakan
                           </div>
                         </div>
-                        <div class="item-side">
+                        <div class="list-item-side">
                           <span class="pill pill-success">Aktif</span>
                           <button
                             type="button"
@@ -870,15 +626,15 @@
                     </span>
                   </button>
                   <div class="onboard-body" id="body-products" hidden>
-                    <div class="profile-list">
-                      <div class="profile-list-item">
-                        <div>
-                          <div class="item-title">Baja Sawit Premium</div>
-                          <div class="item-sub">
+                    <div class="list">
+                      <div class="list-item">
+                        <div class="list-item-body">
+                          <div class="list-item-title">Baja Sawit Premium</div>
+                          <div class="list-item-sub">
                             Baja Sebatian &middot; Butiran (Granular)
                           </div>
                         </div>
-                        <div class="item-side">
+                        <div class="list-item-side">
                           <span class="pill pill-success">Berdaftar</span>
                           <button
                             type="button"
@@ -891,14 +647,14 @@
                         </div>
                       </div>
 
-                      <div class="profile-list-item">
-                        <div>
-                          <div class="item-title">Baja Organik Plus</div>
-                          <div class="item-sub">
+                      <div class="list-item">
+                        <div class="list-item-body">
+                          <div class="list-item-title">Baja Organik Plus</div>
+                          <div class="list-item-sub">
                             Baja Organik &middot; Serbuk (Powder)
                           </div>
                         </div>
-                        <div class="item-side">
+                        <div class="list-item-side">
                           <span class="pill pill-success">Berdaftar</span>
                           <button
                             type="button"
@@ -911,14 +667,14 @@
                         </div>
                       </div>
 
-                      <div class="profile-list-item">
-                        <div>
-                          <div class="item-title">Baja Mikro N</div>
-                          <div class="item-sub">
+                      <div class="list-item">
+                        <div class="list-item-body">
+                          <div class="list-item-title">Baja Mikro N</div>
+                          <div class="list-item-sub">
                             Baja Mikronutrien &middot; Cecair (Liquid)
                           </div>
                         </div>
-                        <div class="item-side">
+                        <div class="list-item-side">
                           <span class="pill pill-success">Berdaftar</span>
                           <button
                             type="button"
@@ -956,59 +712,59 @@
                     </span>
                   </button>
                   <div class="onboard-body" id="body-licenses" hidden>
-                    <div class="profile-list">
-                      <div class="profile-list-item">
-                        <div>
-                          <div class="item-title">
+                    <div class="list">
+                      <div class="list-item">
+                        <div class="list-item-body">
+                          <div class="list-item-title">
                             <i class="bi bi-box-arrow-in-down text-muted-2"></i>
                             Pengimport
                           </div>
-                          <div class="item-sub">2 fail dilampirkan</div>
+                          <div class="list-item-sub">2 fail dilampirkan</div>
                         </div>
-                        <div class="item-side">
+                        <div class="list-item-side">
                           <span class="pill pill-success">Aktif</span>
                         </div>
                       </div>
 
-                      <div class="profile-list-item">
-                        <div>
-                          <div class="item-title">
+                      <div class="list-item">
+                        <div class="list-item-body">
+                          <div class="list-item-title">
                             <i
                               class="bi bi-box-arrow-up-right text-muted-2"
                             ></i>
                             Pengeksport
                           </div>
-                          <div class="item-sub">1 fail dilampirkan</div>
+                          <div class="list-item-sub">1 fail dilampirkan</div>
                         </div>
-                        <div class="item-side">
+                        <div class="list-item-side">
                           <span class="pill pill-success">Aktif</span>
                         </div>
                       </div>
 
-                      <div class="profile-list-item">
-                        <div>
-                          <div class="item-title">
+                      <div class="list-item">
+                        <div class="list-item-body">
+                          <div class="list-item-title">
                             <i
                               class="bi bi-gear-wide-connected text-muted-2"
                             ></i>
                             Pengilang
                           </div>
-                          <div class="item-sub">3 fail dilampirkan</div>
+                          <div class="list-item-sub">3 fail dilampirkan</div>
                         </div>
-                        <div class="item-side">
+                        <div class="list-item-side">
                           <span class="pill pill-success">Aktif</span>
                         </div>
                       </div>
 
-                      <div class="profile-list-item">
-                        <div>
-                          <div class="item-title">
+                      <div class="list-item">
+                        <div class="list-item-body">
+                          <div class="list-item-title">
                             <i class="bi bi-shop text-muted-2"></i>
                             Penjual
                           </div>
-                          <div class="item-sub">2 fail dilampirkan</div>
+                          <div class="list-item-sub">2 fail dilampirkan</div>
                         </div>
-                        <div class="item-side">
+                        <div class="list-item-side">
                           <span class="pill pill-success">Aktif</span>
                         </div>
                       </div>
@@ -1067,9 +823,7 @@
               </div>
 
               <div class="help-box">
-                <span class="help-icon"
-                  ><i class="bi bi-question-lg"></i
-                ></span>
+                <span class="help-icon"><i class="bi bi-question-lg"></i></span>
                 <h4>Menghadapi masalah?</h4>
                 <p>
                   Hubungi kami dan kami akan membantu anda sepanjang proses
@@ -1295,7 +1049,6 @@
           });
         });
 
-        // Open the first section of the first card by default
         var firstCard = document.querySelector(".onboard-card");
         if (firstCard) {
           var firstBtn = firstCard.querySelector(".onboard-row.as-button");
@@ -1305,7 +1058,6 @@
 
       /* ===== View product / branch modals ===== */
       (function () {
-        // Static demo data — replace with real data later
         var productsData = [
           {
             name: "Baja Sawit Premium",
@@ -1378,7 +1130,6 @@
           },
         ];
 
-        /* ---- Helpers ---- */
         function escapeHtml(s) {
           return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
             return {
@@ -1409,7 +1160,6 @@
           return "bi-file-earmark";
         }
 
-        /* ---- View product modal ---- */
         function openViewProduct(index) {
           var p = productsData[index];
           if (!p) return;
@@ -1426,9 +1176,7 @@
             ["Kategori Item", p.category],
             ["Bentuk Baja", p.form],
           ];
-          var single = [
-            ["Formulasi / Komposisi Kandungan Nutrien", p.formula],
-          ];
+          var single = [["Formulasi / Komposisi Kandungan Nutrien", p.formula]];
           if (p.category === "Baja Organik" && p.micro) {
             single.push(["Jenis Mikroorganisma", p.micro]);
           }
@@ -1504,7 +1252,6 @@
           ).show();
         }
 
-        /* ---- View branch modal ---- */
         function openViewBranch(index) {
           var b = branchesData[index];
           if (!b) return;
@@ -1545,9 +1292,7 @@
 
           var addrRow = document.createElement("div");
           addrRow.innerHTML =
-            "<dt>Alamat</dt><dd>" +
-            escapeHtml(b.address || "-") +
-            "</dd>";
+            "<dt>Alamat</dt><dd>" + escapeHtml(b.address || "-") + "</dd>";
           dl.appendChild(addrRow);
 
           var att = document.getElementById("vb-attachments-list");
@@ -1589,7 +1334,6 @@
           ).show();
         }
 
-        /* ---- Wire up eye buttons ---- */
         document.addEventListener("click", function (e) {
           var vp = e.target.closest("[data-view-product]");
           if (vp) {
