@@ -1,0 +1,18 @@
+/* signup.css — only sign-up page layout */
+.signup-wrap { min-height: 100vh; padding: 2rem 1rem; display: flex; align-items: flex-start; justify-content: center; }
+.signup-box { width: 100%; max-width: 760px; }
+.signup-head { text-align: center; margin-bottom: 1.5rem; }
+.signup-head h1 { font-size: 1.6rem; margin-top: 1rem; }
+
+.type-choice .btn-check + label {
+  display: flex; gap: .75rem; align-items: center; height: 100%;
+  border: 1px solid var(--color-border); border-radius: var(--radius-md);
+  padding: .85rem 1rem; background: var(--color-surface); cursor: pointer;
+}
+.type-choice .btn-check:checked + label { border-color: var(--color-primary-500); background: var(--color-primary-50); box-shadow: 0 0 0 1px var(--color-primary-500); }
+.type-choice .btn-check:focus-visible + label { outline: 2px solid var(--color-primary-500); outline-offset: 2px; }
+
+.form-section + .form-section { border-top: 1px solid var(--color-border); }
+.form-section-title { font-size: .95rem; margin-bottom: .15rem; }
+.upload-box { border: 1.5px dashed var(--color-primary-200); border-radius: var(--radius-md); padding: .9rem 1rem; background: var(--color-surface-2); }
+.upload-box:hover { border-color: var(--color-primary-500); }

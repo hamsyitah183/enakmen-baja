@@ -1,0 +1,19 @@
+/* login.css — only login page layout */
+.auth-split { min-height: 100vh; }
+.login-aside {
+  background: linear-gradient(160deg, var(--color-primary-800), var(--color-primary-900));
+  color: #fff; padding: 3rem; display: flex; flex-direction: column; justify-content: space-between;
+}
+.login-aside .brand { color: #fff; }
+.login-aside .brand-mark { background: rgba(255,255,255,.14); }
+.login-aside h2 { font-size: 1.9rem; max-width: 18ch; line-height: 1.2; }
+.login-aside p { color: var(--color-primary-100); max-width: 42ch; }
+.login-points { list-style: none; padding: 0; margin: 1.5rem 0 0; display: grid; gap: .75rem; }
+.login-points li { display: flex; gap: .6rem; align-items: flex-start; color: var(--color-primary-100); }
+.login-points .bi { color: var(--color-primary-200); margin-top: .1rem; }
+
+.login-main { display: flex; align-items: center; justify-content: center; padding: 2rem 1.25rem; background: var(--color-surface); }
+.login-box { width: 100%; max-width: 400px; }
+.login-box h1 { font-size: 1.5rem; }
+.login-divider { display: flex; align-items: center; gap: .75rem; color: var(--color-muted); font-size: .8rem; margin: 1.25rem 0; }
+.login-divider::before, .login-divider::after { content: ""; flex: 1; height: 1px; background: var(--color-border); }

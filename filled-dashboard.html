@@ -1,0 +1,1606 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/components.css" rel="stylesheet" />
+    <link href="css/dashboard.css" rel="stylesheet" />
+    <link href="css/complete-account.css" rel="stylesheet" />
+    <title>Papan Pemuka | Portal Pendaftaran Baja</title>
+
+    <style>
+      /* ---- Dashboard-specific polish ---- */
+      .welcome-card {
+        background: linear-gradient(
+          135deg,
+          var(--color-primary-600) 0%,
+          var(--color-primary-800) 100%
+        );
+        color: #fff;
+        border-radius: var(--radius-lg);
+        padding: 1.5rem 1.75rem;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1.25rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .welcome-card::after {
+        content: "";
+        position: absolute;
+        right: -60px;
+        top: -60px;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .welcome-card::before {
+        content: "";
+        position: absolute;
+        right: 60px;
+        bottom: -80px;
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+      }
+      .welcome-card > * {
+        position: relative;
+        z-index: 1;
+      }
+      .welcome-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: rgba(255, 255, 255, 0.15);
+        color: #fff;
+        font-size: 1.4rem;
+        flex: none;
+      }
+      .welcome-text h2 {
+        font-size: 1.15rem;
+        margin: 0 0 0.25rem;
+        color: #fff;
+      }
+      .welcome-text p {
+        font-size: 0.82rem;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.85);
+      }
+
+      .stat-trend {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 0.15rem 0.45rem;
+        border-radius: 999px;
+        margin-left: 0.5rem;
+      }
+      .stat-trend.up {
+        background: var(--color-primary-100);
+        color: var(--color-primary-800);
+      }
+      .stat-trend.down {
+        background: var(--color-danger-bg);
+        color: var(--color-danger);
+      }
+
+      /* ---- Product / cawangan rows ---- */
+      .list-row {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        padding: 0.85rem 1.15rem;
+        border-bottom: 1px solid var(--color-border);
+        transition: background 0.15s;
+      }
+      .list-row:last-child {
+        border-bottom: 0;
+      }
+      .list-row:hover {
+        background: var(--color-surface-2);
+      }
+      .list-row-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-50);
+        color: var(--color-primary-600);
+        font-size: 1.05rem;
+        flex: none;
+      }
+      .list-row-icon.is-blue {
+        background: #e6f0fb;
+        color: #2b6cb0;
+      }
+      .list-row-icon.is-amber {
+        background: #fdf3dc;
+        color: #b7791f;
+      }
+      .list-row-main {
+        flex: 1;
+        min-width: 0;
+      }
+      .list-row-title {
+        font-weight: 600;
+        font-size: 0.88rem;
+        color: var(--color-text);
+        margin: 0;
+      }
+      .list-row-sub {
+        font-size: 0.74rem;
+        color: var(--color-muted);
+        margin: 0.1rem 0 0;
+      }
+      .list-row-side {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex: none;
+      }
+
+      /* ---- Lesen type chips ---- */
+      .license-summary {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.6rem;
+      }
+      @media (min-width: 576px) {
+        .license-summary {
+          grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+      }
+      .license-chip {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 0.75rem 0.9rem;
+        background: var(--color-surface);
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        transition: 0.15s;
+      }
+      .license-chip:hover {
+        border-color: var(--color-primary-500);
+        box-shadow: var(--shadow-sm);
+      }
+      .license-chip .chip-label {
+        font-size: 0.72rem;
+        color: var(--color-muted);
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .license-chip .chip-value {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: var(--color-text);
+        line-height: 1.1;
+      }
+
+      /* ---- Activity feed ---- */
+      .activity-item {
+        display: grid;
+        grid-template-columns: 34px 1fr;
+        gap: 0.75rem;
+        padding: 0.7rem 0;
+        position: relative;
+      }
+      .activity-item + .activity-item {
+        border-top: 1px solid var(--color-border);
+      }
+      .activity-dot {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-50);
+        color: var(--color-primary-600);
+        font-size: 0.9rem;
+        flex: none;
+      }
+      .activity-dot.is-blue {
+        background: #e6f0fb;
+        color: #2b6cb0;
+      }
+      .activity-dot.is-amber {
+        background: #fdf3dc;
+        color: #b7791f;
+      }
+      .activity-title {
+        font-size: 0.8rem;
+        color: var(--color-text);
+        margin: 0;
+        line-height: 1.4;
+      }
+      .activity-title strong {
+        font-weight: 600;
+      }
+      .activity-time {
+        font-size: 0.7rem;
+        color: var(--color-muted);
+        margin: 0.1rem 0 0;
+      }
+
+      /* ---- Notification items ---- */
+      .notif-item {
+        display: flex;
+        gap: 0.75rem;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--color-border);
+      }
+      .notif-item:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+      .notif-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-50);
+        color: var(--color-primary-600);
+        flex: none;
+        font-size: 0.9rem;
+      }
+      .notif-icon.is-warning {
+        background: #fdf3dc;
+        color: #b7791f;
+      }
+      .notif-title {
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin: 0;
+        color: var(--color-text);
+      }
+      .notif-sub {
+        font-size: 0.74rem;
+        color: var(--color-muted);
+        margin: 0.1rem 0 0;
+        line-height: 1.4;
+      }
+      .notif-time {
+        font-size: 0.68rem;
+        color: var(--color-muted);
+        margin-top: 0.25rem;
+      }
+
+      /* ==========================================================
+         VIEW MODAL — reused from complete-account
+         ========================================================== */
+      .view-product {
+        border: 0;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+      }
+      .view-hero {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.25rem 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--color-primary-50) 0%,
+          #eef2ff 100%
+        );
+        position: relative;
+      }
+      .view-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(
+            rgba(255, 255, 255, 0.35) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.35) 1px,
+            transparent 1px
+          );
+        background-size: 22px 22px;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      .view-hero > * {
+        position: relative;
+        z-index: 1;
+      }
+      .view-hero-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: #fff;
+        color: var(--color-primary-600);
+        font-size: 1.5rem;
+        box-shadow: var(--shadow-sm);
+        flex: none;
+      }
+      .view-hero-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin: 0 0 0.15rem;
+        letter-spacing: -0.01em;
+      }
+      .view-hero-sub {
+        font-size: 0.78rem;
+        color: var(--color-muted);
+      }
+
+      .view-tabs {
+        padding: 0 1.5rem;
+        border-bottom: 1px solid var(--color-border);
+        gap: 0.25rem;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      .view-tabs::-webkit-scrollbar {
+        display: none;
+      }
+      .view-tabs .nav-link {
+        border: 0;
+        border-bottom: 2px solid transparent;
+        border-radius: 0;
+        color: var(--color-muted);
+        font-size: 0.82rem;
+        font-weight: 500;
+        padding: 0.85rem 0.75rem;
+        white-space: nowrap;
+      }
+      .view-tabs .nav-link.active {
+        color: var(--color-primary-700);
+        border-bottom-color: var(--color-primary-600);
+        background: none;
+      }
+      .view-product .tab-content {
+        padding: 1.25rem 1.5rem 1.5rem;
+        max-height: 60vh;
+        overflow-y: auto;
+      }
+
+      .detail-list {
+        display: grid;
+        gap: 1rem;
+        margin: 0;
+      }
+      .detail-list dt {
+        font-size: 0.68rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-muted);
+        margin-bottom: 0.25rem;
+      }
+      .detail-list dd {
+        font-size: 0.85rem;
+        margin: 0;
+        color: var(--color-text);
+        line-height: 1.5;
+        white-space: pre-line;
+      }
+      .detail-pair {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      @media (max-width: 575.98px) {
+        .detail-pair {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .attach-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+        gap: 0.75rem;
+      }
+      .attach-card {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        transition: 0.15s;
+        position: relative;
+        background: var(--color-surface);
+      }
+      .attach-card:hover {
+        border-color: var(--color-primary-500);
+        box-shadow: var(--shadow-sm);
+      }
+      .attach-card .attach-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-50);
+        color: var(--color-primary-600);
+        font-size: 1rem;
+      }
+      .attach-card .attach-name {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--color-text);
+      }
+      .attach-card .attach-file {
+        font-size: 0.7rem;
+        color: var(--color-muted);
+        word-break: break-all;
+      }
+      .attach-card .attach-open {
+        position: absolute;
+        top: 0.55rem;
+        right: 0.55rem;
+        color: var(--color-muted);
+        font-size: 0.85rem;
+      }
+      .attach-card.is-empty {
+        background: var(--color-surface-2);
+        border-style: dashed;
+      }
+      .attach-card.is-empty .attach-icon {
+        background: var(--color-surface);
+        color: var(--color-muted);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <script>
+        try {
+          if (localStorage.getItem("sidebar-collapsed") === "1")
+            document.querySelector(".app").classList.add("is-collapsed");
+        } catch (e) {}
+      </script>
+
+      <!-- Bar sisi -->
+      <aside
+        class="sidebar offcanvas-lg offcanvas-start"
+        tabindex="-1"
+        id="sidebar"
+        aria-label="Navigasi utama"
+      >
+        <div class="sidebar-inner">
+          <div class="sidebar-head border-bottom pb-2">
+            <a href="#" class="brand" aria-label="Enakmen Baja Sabah">
+              <span class="brand-mark brand-mark--img">
+                <img src="logo/image.png" alt="" width="40" height="40" />
+              </span>
+              <span class="brand-text">Enakmen Baja Sabah</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-icon sidebar-toggle d-none d-lg-inline-grid"
+              id="sidebar-toggle"
+              aria-controls="sidebar"
+              aria-expanded="true"
+              aria-label="Tutup bar sisi"
+              title="Tutup bar sisi"
+            >
+              <i class="bi bi-layout-sidebar"></i>
+            </button>
+            <button
+              type="button"
+              class="btn-close d-lg-none"
+              data-bs-dismiss="offcanvas"
+              data-bs-target="#sidebar"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <nav class="d-grid gap-1">
+            <a href="#" class="side-link active" title="Papan pemuka"
+              ><i class="bi bi-house-door"></i
+              ><span class="side-label">Papan pemuka</span></a
+            >
+            <a href="#" class="side-link" title="Produk saya"
+              ><i class="bi bi-box-seam"></i
+              ><span class="side-label">Produk saya</span></a
+            >
+            <a href="#" class="side-link" title="Lesen"
+              ><i class="bi bi-patch-check"></i
+              ><span class="side-label">Lesen</span></a
+            >
+            <a href="#" class="side-link" title="Permit import"
+              ><i class="bi bi-truck"></i
+              ><span class="side-label">Permit import</span></a
+            >
+            <a href="#" class="side-link" title="Pembayaran"
+              ><i class="bi bi-receipt"></i
+              ><span class="side-label">Pembayaran</span></a
+            >
+            <a href="#" class="side-link" title="Notis dan rayuan"
+              ><i class="bi bi-envelope-exclamation"></i
+              ><span class="side-label">Notis dan rayuan</span
+              ><span class="count pill pill-danger">2</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Bantuan</div>
+          <nav class="d-grid gap-1">
+            <a href="#" class="side-link" title="Daftar awam"
+              ><i class="bi bi-search"></i
+              ><span class="side-label">Daftar awam</span></a
+            >
+            <a href="#" class="side-link" title="Panduan dan fi"
+              ><i class="bi bi-book"></i
+              ><span class="side-label">Panduan dan fi</span></a
+            >
+            <a href="#" class="side-link" title="Sokongan"
+              ><i class="bi bi-headset"></i
+              ><span class="side-label">Sokongan</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Akaun</div>
+          <nav class="d-grid gap-1 mb-3">
+            <a href="#" class="side-link" title="Profil organisasi"
+              ><i class="bi bi-building"></i
+              ><span class="side-label">Profil organisasi</span></a
+            >
+            <a href="#" class="side-link" title="Tetapan"
+              ><i class="bi bi-gear"></i
+              ><span class="side-label">Tetapan</span></a
+            >
+            <a href="login.html" class="side-link" title="Log keluar"
+              ><i class="bi bi-box-arrow-right"></i
+              ><span class="side-label">Log keluar</span></a
+            >
+          </nav>
+
+          <div class="side-user">
+            <span class="avatar">AH</span>
+            <div class="lh-sm side-user-text">
+              <div class="fw-semibold">Aisyah Hassan</div>
+              <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Utama -->
+      <div class="app-main">
+        <header class="topbar border-bottom">
+          <button
+            class="btn btn-icon d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebar"
+            aria-controls="sidebar"
+            aria-label="Buka menu"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+          <h1 class="h5 mb-0 me-2">Papan pemuka</h1>
+          <div class="topbar-search d-none d-md-block input-icon">
+            <i class="bi bi-search"></i>
+            <input
+              type="search"
+              class="form-control"
+              placeholder="Cari produk, lesen atau permit"
+              aria-label="Cari"
+            />
+          </div>
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <button
+              class="btn btn-icon position-relative"
+              type="button"
+              aria-label="Pemberitahuan"
+            >
+              <i class="bi bi-bell"></i><span class="notif-dot"></span>
+            </button>
+
+            <div class="dropdown">
+              <button
+                type="button"
+                class="avatar avatar-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Menu pengguna"
+              >
+                AH
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end user-menu">
+                <li class="user-menu-head">
+                  <div class="fw-semibold">Aisyah Hassan</div>
+                  <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-building me-2"></i>Profil organisasi</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-gear me-2"></i>Tetapan</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="login.html"
+                    ><i class="bi bi-box-arrow-right me-2"></i>Log keluar</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <main class="app-content p-5">
+          <!-- Welcome -->
+          <div class="welcome-card mb-4">
+            <span class="welcome-icon">
+              <i class="bi bi-flower3"></i>
+            </span>
+            <div class="welcome-text flex-grow-1">
+              <h2>Selamat kembali, Aisyah!</h2>
+              <p>
+                Borneo Agro Sdn Bhd &middot; 3 produk berdaftar &middot; 4
+                aktiviti lesen aktif
+              </p>
+            </div>
+            <a
+              href="#"
+              class="btn btn-light-contrast d-inline-flex align-items-center"
+            >
+              <i class="bi bi-plus-lg me-1"></i>Daftar produk
+            </a>
+          </div>
+
+          <!-- Statistik -->
+          <div class="row g-3 mb-3">
+            <div class="col-6 col-xl-3">
+              <div class="surface stat">
+                <div class="stat-top">
+                  <span>Produk</span><i class="bi bi-box-seam"></i>
+                </div>
+                <div class="stat-value">
+                  3<span class="stat-trend up"
+                    ><i class="bi bi-arrow-up-short"></i>+1</span
+                  >
+                </div>
+                <div class="stat-note">Semua berdaftar dan aktif</div>
+              </div>
+            </div>
+            <div class="col-6 col-xl-3">
+              <div class="surface stat">
+                <div class="stat-top">
+                  <span>Lesen</span><i class="bi bi-patch-check"></i>
+                </div>
+                <div class="stat-value">
+                  4<span class="stat-trend up"
+                    ><i class="bi bi-arrow-up-short"></i>+2</span
+                  >
+                </div>
+                <div class="stat-note">Pengimport, Pengeksport, Pengilang, Penjual</div>
+              </div>
+            </div>
+            <div class="col-6 col-xl-3">
+              <div class="surface stat">
+                <div class="stat-top">
+                  <span>Cawangan</span><i class="bi bi-shop-window"></i>
+                </div>
+                <div class="stat-value">2</div>
+                <div class="stat-note">Kota Kinabalu &amp; Sandakan</div>
+              </div>
+            </div>
+            <div class="col-6 col-xl-3">
+              <div class="surface stat">
+                <div class="stat-top">
+                  <span>Tindakan tertunggak</span
+                  ><i class="bi bi-exclamation-circle"></i>
+                </div>
+                <div class="stat-value">2</div>
+                <div class="stat-note">Lesen hampir tamat tempoh</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lesen ringkas -->
+          <div class="surface mb-3">
+            <div class="surface-header">
+              <h2 class="h6 mb-0">Ringkasan aktiviti lesen</h2>
+              <a href="#" class="small text-muted-2">Urus lesen</a>
+            </div>
+            <div class="surface-body">
+              <div class="license-summary">
+                <div class="license-chip">
+                  <div class="chip-label">
+                    <i class="bi bi-box-arrow-in-down text-primary"></i>
+                    Pengimport
+                  </div>
+                  <div class="chip-value">1</div>
+                </div>
+                <div class="license-chip">
+                  <div class="chip-label">
+                    <i class="bi bi-box-arrow-up-right text-primary"></i>
+                    Pengeksport
+                  </div>
+                  <div class="chip-value">1</div>
+                </div>
+                <div class="license-chip">
+                  <div class="chip-label">
+                    <i class="bi bi-gear-wide-connected text-primary"></i>
+                    Pengilang
+                  </div>
+                  <div class="chip-value">1</div>
+                </div>
+                <div class="license-chip">
+                  <div class="chip-label">
+                    <i class="bi bi-shop text-primary"></i>
+                    Penjual
+                  </div>
+                  <div class="chip-value">1</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Main content grid -->
+          <div class="row g-3">
+            <!-- LEFT column -->
+            <div class="col-xl-8">
+              <!-- Produk saya -->
+              <section class="surface mb-3">
+                <div class="surface-header">
+                  <h2 class="h6 mb-0">Produk saya</h2>
+                  <div class="d-flex gap-2">
+                    <select
+                      class="form-select form-select-sm"
+                      aria-label="Tapis mengikut status"
+                      style="width: auto"
+                    >
+                      <option>Semua status</option>
+                      <option>Aktif</option>
+                      <option>Dalam semakan</option>
+                      <option>Draf</option>
+                    </select>
+                    <a
+                      href="#"
+                      class="btn btn-primary btn-sm d-flex text-center align-items-center"
+                      ><i class="bi bi-plus-lg me-1"></i>Baharu</a
+                    >
+                  </div>
+                </div>
+
+                <div class="list-row">
+                  <span class="list-row-icon">
+                    <i class="bi bi-flower2"></i>
+                  </span>
+                  <div class="list-row-main">
+                    <p class="list-row-title">Baja Sawit Premium</p>
+                    <p class="list-row-sub">
+                      Baja Sebatian &middot; Butiran (Granular) &middot; N 15%,
+                      P2O5 15%, K2O 15%
+                    </p>
+                  </div>
+                  <div class="list-row-side">
+                    <span class="pill pill-success">Berdaftar</span>
+                    <button
+                      type="button"
+                      class="btn btn-icon"
+                      data-view-product="0"
+                      aria-label="Lihat produk"
+                    >
+                      <i class="bi bi-eye"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="list-row">
+                  <span class="list-row-icon">
+                    <i class="bi bi-flower2"></i>
+                  </span>
+                  <div class="list-row-main">
+                    <p class="list-row-title">Baja Organik Plus</p>
+                    <p class="list-row-sub">
+                      Baja Organik &middot; Serbuk (Powder) &middot;
+                      Azotobacter, Rhizobium
+                    </p>
+                  </div>
+                  <div class="list-row-side">
+                    <span class="pill pill-success">Berdaftar</span>
+                    <button
+                      type="button"
+                      class="btn btn-icon"
+                      data-view-product="1"
+                      aria-label="Lihat produk"
+                    >
+                      <i class="bi bi-eye"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="list-row">
+                  <span class="list-row-icon">
+                    <i class="bi bi-flower2"></i>
+                  </span>
+                  <div class="list-row-main">
+                    <p class="list-row-title">Baja Mikro N</p>
+                    <p class="list-row-sub">
+                      Baja Mikronutrien &middot; Cecair (Liquid) &middot; Zn 5%,
+                      B 2%, Cu 1%
+                    </p>
+                  </div>
+                  <div class="list-row-side">
+                    <span class="pill pill-success">Berdaftar</span>
+                    <button
+                      type="button"
+                      class="btn btn-icon"
+                      data-view-product="2"
+                      aria-label="Lihat produk"
+                    >
+                      <i class="bi bi-eye"></i>
+                    </button>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Cawangan -->
+              <section class="surface mb-3">
+                <div class="surface-header">
+                  <h2 class="h6 mb-0">Cawangan</h2>
+                  <a
+                    href="#"
+                    class="btn btn-outline-primary btn-sm d-flex align-items-center"
+                    ><i class="bi bi-plus-lg me-1"></i>Tambah cawangan</a
+                  >
+                </div>
+
+                <div class="list-row">
+                  <span class="list-row-icon is-blue">
+                    <i class="bi bi-building"></i>
+                  </span>
+                  <div class="list-row-main">
+                    <p class="list-row-title">Cawangan Kota Kinabalu</p>
+                    <p class="list-row-sub">
+                      Syarikat &middot; Lot 10, Jalan Industri 5, 88450 Kota
+                      Kinabalu &middot; +60 88 456 789
+                    </p>
+                  </div>
+                  <div class="list-row-side">
+                    <span class="pill pill-success">Aktif</span>
+                    <button
+                      type="button"
+                      class="btn btn-icon"
+                      data-view-branch="0"
+                      aria-label="Lihat cawangan"
+                    >
+                      <i class="bi bi-eye"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="list-row">
+                  <span class="list-row-icon is-blue">
+                    <i class="bi bi-person"></i>
+                  </span>
+                  <div class="list-row-main">
+                    <p class="list-row-title">Cawangan Sandakan</p>
+                    <p class="list-row-sub">
+                      Individu &middot; Lot 5, Jalan Pelabuhan, 90000 Sandakan
+                      &middot; +60 89 222 333
+                    </p>
+                  </div>
+                  <div class="list-row-side">
+                    <span class="pill pill-success">Aktif</span>
+                    <button
+                      type="button"
+                      class="btn btn-icon"
+                      data-view-branch="1"
+                      aria-label="Lihat cawangan"
+                    >
+                      <i class="bi bi-eye"></i>
+                    </button>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Aktiviti terkini -->
+              <section class="surface">
+                <div class="surface-header">
+                  <h2 class="h6 mb-0">Aktiviti terkini</h2>
+                  <a href="#" class="small">Lihat semua</a>
+                </div>
+                <div class="surface-body pt-0">
+                  <div class="activity-item">
+                    <span class="activity-dot is-blue">
+                      <i class="bi bi-patch-check"></i>
+                    </span>
+                    <div>
+                      <p class="activity-title">
+                        <strong>Lesen Penjual</strong> telah diluluskan oleh DOA
+                      </p>
+                      <p class="activity-time">2 jam lalu</p>
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <span class="activity-dot">
+                      <i class="bi bi-box-seam"></i>
+                    </span>
+                    <div>
+                      <p class="activity-title">
+                        <strong>Baja Mikro N</strong> berjaya didaftarkan
+                      </p>
+                      <p class="activity-time">Semalam, 4:15 PM</p>
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <span class="activity-dot is-amber">
+                      <i class="bi bi-shop-window"></i>
+                    </span>
+                    <div>
+                      <p class="activity-title">
+                        <strong>Cawangan Sandakan</strong> dikemas kini
+                      </p>
+                      <p class="activity-time">20 Februari 2024, 3:45 PM</p>
+                    </div>
+                  </div>
+                  <div class="activity-item">
+                    <span class="activity-dot">
+                      <i class="bi bi-file-earmark-text"></i>
+                    </span>
+                    <div>
+                      <p class="activity-title">
+                        <strong>3 dokumen sokongan</strong> dimuat naik untuk
+                        Baja Sawit Premium
+                      </p>
+                      <p class="activity-time">18 Februari 2024, 11:30 AM</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <!-- RIGHT column -->
+            <div class="col-xl-4">
+              <!-- Progress -->
+              <section class="surface mb-3">
+                <div class="surface-header pb-0">
+                  <h2 class="h6 mb-0">Kemajuan akaun</h2>
+                  <small class="text-muted-2">4 daripada 4</small>
+                </div>
+                <div class="surface-body">
+                  <div
+                    class="progress mb-2"
+                    style="height: 6px"
+                    role="progressbar"
+                    aria-valuenow="100"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                  >
+                    <div class="progress-bar" style="width: 100%"></div>
+                  </div>
+                  <div class="step done">
+                    <span class="step-mark"
+                      ><i class="bi bi-check-lg"></i
+                    ></span>
+                    <div>
+                      <div class="fw-medium">Profil organisasi</div>
+                      <small class="text-muted-2">Selesai</small>
+                    </div>
+                  </div>
+                  <div class="step done">
+                    <span class="step-mark"
+                      ><i class="bi bi-check-lg"></i
+                    ></span>
+                    <div>
+                      <div class="fw-medium">Semakan DOA</div>
+                      <small class="text-muted-2">Diluluskan</small>
+                    </div>
+                  </div>
+                  <div class="step done">
+                    <span class="step-mark"
+                      ><i class="bi bi-check-lg"></i
+                    ></span>
+                    <div>
+                      <div class="fw-medium">Daftarkan produk</div>
+                      <small class="text-muted-2">3 produk</small>
+                    </div>
+                  </div>
+                  <div class="step done">
+                    <span class="step-mark"
+                      ><i class="bi bi-check-lg"></i
+                    ></span>
+                    <div>
+                      <div class="fw-medium">Mohon lesen</div>
+                      <small class="text-muted-2">4 aktiviti</small>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Notifications -->
+              <section class="surface mb-3">
+                <div class="surface-header">
+                  <h2 class="h6 mb-0">Pemberitahuan</h2>
+                  <a href="#" class="small">Lihat semua</a>
+                </div>
+                <div class="surface-body pt-0">
+                  <div class="notif-item">
+                    <span class="notif-icon is-warning">
+                      <i class="bi bi-exclamation-triangle"></i>
+                    </span>
+                    <div class="flex-grow-1">
+                      <p class="notif-title">Lesen Pengeksport hampir tamat</p>
+                      <p class="notif-sub">
+                        Lesen akan tamat tempoh dalam 14 hari. Sila perbaharui.
+                      </p>
+                      <p class="notif-time">Hari ini, 9:15 AM</p>
+                    </div>
+                  </div>
+                  <div class="notif-item">
+                    <span class="notif-icon">
+                      <i class="bi bi-patch-check"></i>
+                    </span>
+                    <div class="flex-grow-1">
+                      <p class="notif-title">Lesen Penjual diluluskan</p>
+                      <p class="notif-sub">
+                        Permohonan Lesen Penjual anda telah diluluskan oleh DOA.
+                      </p>
+                      <p class="notif-time">Hari ini, 7:42 AM</p>
+                    </div>
+                  </div>
+                  <div class="notif-item">
+                    <span class="notif-icon">
+                      <i class="bi bi-megaphone"></i>
+                    </span>
+                    <div class="flex-grow-1">
+                      <p class="notif-title">Pembaharuan Enakmen Baja 2024</p>
+                      <p class="notif-sub">
+                        Terdapat kemas kini pada keperluan dokumen sokongan.
+                      </p>
+                      <p class="notif-time">22 Februari 2024</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Quick links -->
+              <section class="surface">
+                <div class="surface-header">
+                  <h2 class="h6 mb-0">Tindakan pantas</h2>
+                </div>
+                <div class="surface-body pt-0">
+                  <div class="d-grid gap-2">
+                    <a
+                      href="#"
+                      class="btn btn-outline-primary btn-sm d-flex align-items-center"
+                    >
+                      <i class="bi bi-box-seam me-2"></i>Daftar produk baharu
+                    </a>
+                    <a
+                      href="#"
+                      class="btn btn-outline-primary btn-sm d-flex align-items-center"
+                    >
+                      <i class="bi bi-shop-window me-2"></i>Tambah cawangan
+                    </a>
+                    <a
+                      href="#"
+                      class="btn btn-outline-primary btn-sm d-flex align-items-center"
+                    >
+                      <i class="bi bi-patch-check me-2"></i>Mohon lesen
+                    </a>
+                    <a
+                      href="#"
+                      class="btn btn-outline-primary btn-sm d-flex align-items-center"
+                    >
+                      <i class="bi bi-receipt me-2"></i>Lihat pembayaran
+                    </a>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         Modal: Lihat produk (tab: Butiran Baja | Lampiran)
+         ========================================================= -->
+    <div
+      class="modal fade"
+      id="viewProductModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div class="modal-content view-product">
+          <div class="view-hero">
+            <span class="view-hero-icon">
+              <i class="bi bi-flower2"></i>
+            </span>
+            <div class="flex-grow-1 min-w-0">
+              <h5 class="view-hero-title" id="vp_title">Nama Produk</h5>
+              <div class="view-hero-sub" id="vp_category">Kategori</div>
+            </div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <ul class="nav view-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="vp-tab-details"
+                data-bs-toggle="tab"
+                data-bs-target="#vp-details-pane"
+                type="button"
+                role="tab"
+              >
+                <i class="bi bi-info-circle me-1"></i>Butiran Baja
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="vp-tab-attachments"
+                data-bs-toggle="tab"
+                data-bs-target="#vp-attachments-pane"
+                type="button"
+                role="tab"
+              >
+                <i class="bi bi-paperclip me-1"></i>Lampiran
+              </button>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div
+              class="tab-pane fade show active"
+              id="vp-details-pane"
+              role="tabpanel"
+            >
+              <dl class="detail-list" id="vp-details-list"></dl>
+            </div>
+
+            <div class="tab-pane fade" id="vp-attachments-pane" role="tabpanel">
+              <div class="attach-grid" id="vp-attachments-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         Modal: Lihat cawangan (tab: Butiran Cawangan | Lampiran)
+         ========================================================= -->
+    <div
+      class="modal fade"
+      id="viewBranchModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div class="modal-content view-product">
+          <div class="view-hero">
+            <span class="view-hero-icon">
+              <i class="bi bi-shop-window"></i>
+            </span>
+            <div class="flex-grow-1 min-w-0">
+              <h5 class="view-hero-title" id="vb_title">Nama Cawangan</h5>
+              <div class="view-hero-sub" id="vb_type">Jenis</div>
+            </div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <ul class="nav view-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="vb-tab-details"
+                data-bs-toggle="tab"
+                data-bs-target="#vb-details-pane"
+                type="button"
+                role="tab"
+              >
+                <i class="bi bi-info-circle me-1"></i>Butiran Cawangan
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="vb-tab-attachments"
+                data-bs-toggle="tab"
+                data-bs-target="#vb-attachments-pane"
+                type="button"
+                role="tab"
+              >
+                <i class="bi bi-paperclip me-1"></i>Lampiran
+              </button>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div
+              class="tab-pane fade show active"
+              id="vb-details-pane"
+              role="tabpanel"
+            >
+              <dl class="detail-list" id="vb-details-list"></dl>
+            </div>
+
+            <div class="tab-pane fade" id="vb-attachments-pane" role="tabpanel">
+              <div class="attach-grid" id="vb-attachments-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /* ===== Sidebar toggle ===== */
+      (function () {
+        var app = document.querySelector(".app");
+        var btn = app.querySelector("#sidebar-toggle");
+        var KEY = "sidebar-collapsed";
+
+        function sync() {
+          var collapsed = app.classList.contains("is-collapsed");
+          var label = collapsed ? "Buka bar sisi" : "Tutup bar sisi";
+          btn.setAttribute("aria-expanded", String(!collapsed));
+          btn.setAttribute("aria-label", label);
+          btn.title = label;
+        }
+
+        btn.addEventListener("click", function () {
+          app.classList.toggle("is-collapsed");
+          sync();
+          try {
+            localStorage.setItem(
+              KEY,
+              app.classList.contains("is-collapsed") ? "1" : "0",
+            );
+          } catch (e) {}
+        });
+
+        sync();
+      })();
+
+      /* ===== View product / branch modals ===== */
+      (function () {
+        // Demo data — replace with real data later
+        var productsData = [
+          {
+            name: "Baja Sawit Premium",
+            category: "Baja Sebatian",
+            form: "Butiran (Granular)",
+            formula: "N 15%, P2O5 15%, K2O 15% + unsur mikro (B, Cu, Zn)",
+            micro: "",
+            supplier: "Borneo Agro Sdn Bhd",
+            supplierAddr:
+              "Lot 5, Jalan Industri 3, Kawasan Perindustrian Kota Kinabalu, 88450 Kota Kinabalu, Sabah",
+            msds: "msds_baja_sawit.pdf",
+            coa: "coa_baja_sawit.pdf",
+            packaging: "packaging_baja_sawit.jpg",
+          },
+          {
+            name: "Baja Organik Plus",
+            category: "Baja Organik",
+            form: "Serbuk (Powder)",
+            formula: "Bahan organik 60%, N 3%, P 2%, K 2%",
+            micro: "Azotobacter, Rhizobium, Trichoderma",
+            supplier: "GreenLife Organics",
+            supplierAddr: "No. 12, Jalan Tani 4, 89000 Sandakan, Sabah",
+            msds: "msds_baja_organik.pdf",
+            coa: "coa_baja_organik.pdf",
+            packaging: "packaging_baja_organik.png",
+          },
+          {
+            name: "Baja Mikro N",
+            category: "Baja Mikronutrien",
+            form: "Cecair (Liquid)",
+            formula: "Zn 5%, B 2%, Cu 1%, Fe 1%, Mn 0.5%",
+            micro: "",
+            supplier: "AgriChem Supplies",
+            supplierAddr: "Lot 22, Jalan Perindustrian, 90000 Sandakan, Sabah",
+            msds: "msds_mikro_n.pdf",
+            coa: "coa_mikro_n.pdf",
+            packaging: "packaging_mikro_n.jpg",
+          },
+        ];
+
+        var branchesData = [
+          {
+            type: "Syarikat",
+            name: "Cawangan Kota Kinabalu",
+            ownerName: "",
+            ownerIc: "",
+            companyName: "Borneo Agro Sdn Bhd",
+            companySsm: "202301012345",
+            address:
+              "Lot 10, Jalan Industri 5, Kawasan Perindustrian Kota Kinabalu, 88450 Kota Kinabalu, Sabah",
+            phone: "+60 88 456 789",
+            email: "kk@borneoagro.com.my",
+            files: [
+              { name: "sijil_ssm_cawangan_kk.pdf", size: 245000 },
+              { name: "gambar_premis_kk.jpg", size: 1240000 },
+            ],
+          },
+          {
+            type: "Individu",
+            name: "Cawangan Sandakan",
+            ownerName: "Lim Wei Ming",
+            ownerIc: "880202-12-5566",
+            companyName: "",
+            companySsm: "",
+            address:
+              "Lot 5, Jalan Pelabuhan, Pusat Bandar Sandakan, 90000 Sandakan, Sabah",
+            phone: "+60 89 222 333",
+            email: "sandakan@borneoagro.com.my",
+            files: [{ name: "kad_pengenalan.pdf", size: 180000 }],
+          },
+        ];
+
+        /* ---- Helpers ---- */
+        function escapeHtml(s) {
+          return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+            return {
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            }[c];
+          });
+        }
+
+        function formatBytes(bytes) {
+          if (!bytes) return "0 B";
+          var k = 1024;
+          var sizes = ["B", "KB", "MB", "GB"];
+          var i = Math.floor(Math.log(bytes) / Math.log(k));
+          return (
+            (bytes / Math.pow(k, i)).toFixed(i === 0 ? 0 : 1) + " " + sizes[i]
+          );
+        }
+
+        function iconForFile(name) {
+          var ext = (name || "").split(".").pop().toLowerCase();
+          if (ext === "pdf") return "bi-file-earmark-pdf";
+          if (["jpg", "jpeg", "png", "gif", "webp"].indexOf(ext) !== -1)
+            return "bi-file-earmark-image";
+          return "bi-file-earmark";
+        }
+
+        /* ---- View product modal ---- */
+        function openViewProduct(index) {
+          var p = productsData[index];
+          if (!p) return;
+
+          document.getElementById("vp_title").textContent = p.name;
+          document.getElementById("vp_category").textContent =
+            p.category + (p.form ? " \u00b7 " + p.form : "");
+
+          var dl = document.getElementById("vp-details-list");
+          dl.innerHTML = "";
+
+          var pairs = [
+            ["Nama Dagangan (Jenama)", p.name],
+            ["Kategori Item", p.category],
+            ["Bentuk Baja", p.form],
+          ];
+          var single = [
+            ["Formulasi / Komposisi Kandungan Nutrien", p.formula],
+          ];
+          if (p.category === "Baja Organik" && p.micro) {
+            single.push(["Jenis Mikroorganisma", p.micro]);
+          }
+          single.push(["Nama Pengilang / Pembekal Asal", p.supplier]);
+          single.push(["Alamat Pengilang / Pembekal Asal", p.supplierAddr]);
+
+          var pairRow = document.createElement("div");
+          pairRow.className = "detail-pair";
+          pairs.forEach(function (item) {
+            var cell = document.createElement("div");
+            cell.innerHTML =
+              "<dt>" +
+              escapeHtml(item[0]) +
+              "</dt><dd>" +
+              escapeHtml(item[1] || "-") +
+              "</dd>";
+            pairRow.appendChild(cell);
+          });
+          dl.appendChild(pairRow);
+
+          single.forEach(function (item) {
+            var row = document.createElement("div");
+            row.innerHTML =
+              "<dt>" +
+              escapeHtml(item[0]) +
+              "</dt><dd>" +
+              escapeHtml(item[1] || "-") +
+              "</dd>";
+            dl.appendChild(row);
+          });
+
+          var att = document.getElementById("vp-attachments-list");
+          att.innerHTML = "";
+
+          [
+            {
+              label: "MSDS / SDS",
+              file: p.msds,
+              icon: "bi-file-earmark-medical",
+            },
+            {
+              label: "Certificate of Analysis (CoA)",
+              file: p.coa,
+              icon: "bi-file-earmark-check",
+            },
+            {
+              label: "Gambar Pembungkusan",
+              file: p.packaging,
+              icon: "bi-image",
+            },
+          ].forEach(function (a) {
+            var card = document.createElement("div");
+            card.className = "attach-card" + (a.file ? "" : " is-empty");
+            card.innerHTML =
+              '<span class="attach-open"><i class="bi bi-box-arrow-up-right"></i></span>' +
+              '<span class="attach-icon"><i class="bi ' +
+              a.icon +
+              '"></i></span>' +
+              '<div class="attach-name">' +
+              escapeHtml(a.label) +
+              "</div>" +
+              '<div class="attach-file">' +
+              (a.file ? escapeHtml(a.file) : "Tiada fail dilampirkan") +
+              "</div>";
+            att.appendChild(card);
+          });
+
+          var tab = document.getElementById("vp-tab-details");
+          if (tab) bootstrap.Tab.getOrCreateInstance(tab).show();
+
+          bootstrap.Modal.getOrCreateInstance(
+            document.getElementById("viewProductModal"),
+          ).show();
+        }
+
+        /* ---- View branch modal ---- */
+        function openViewBranch(index) {
+          var b = branchesData[index];
+          if (!b) return;
+
+          document.getElementById("vb_title").textContent = b.name;
+          document.getElementById("vb_type").textContent = "Jenis: " + b.type;
+
+          var dl = document.getElementById("vb-details-list");
+          dl.innerHTML = "";
+
+          var pairs = [
+            ["Jenis Cawangan", b.type],
+            ["Nama Cawangan", b.name],
+            ["Nombor Telefon", b.phone],
+            ["Alamat E-mel", b.email],
+          ];
+          if (b.type === "Individu") {
+            pairs.push(["Nama Penuh Pemilik", b.ownerName]);
+            pairs.push(["No. Kad Pengenalan", b.ownerIc]);
+          } else {
+            pairs.push(["Nama Syarikat", b.companyName]);
+            pairs.push(["No. Pendaftaran SSM", b.companySsm]);
+          }
+
+          var pairRow = document.createElement("div");
+          pairRow.className = "detail-pair";
+          pairs.forEach(function (item) {
+            var cell = document.createElement("div");
+            cell.innerHTML =
+              "<dt>" +
+              escapeHtml(item[0]) +
+              "</dt><dd>" +
+              escapeHtml(item[1] || "-") +
+              "</dd>";
+            pairRow.appendChild(cell);
+          });
+          dl.appendChild(pairRow);
+
+          var addrRow = document.createElement("div");
+          addrRow.innerHTML =
+            "<dt>Alamat</dt><dd>" +
+            escapeHtml(b.address || "-") +
+            "</dd>";
+          dl.appendChild(addrRow);
+
+          var att = document.getElementById("vb-attachments-list");
+          att.innerHTML = "";
+
+          var files = b.files || [];
+          if (files.length === 0) {
+            var empty = document.createElement("div");
+            empty.className = "attach-card is-empty";
+            empty.innerHTML =
+              '<span class="attach-icon"><i class="bi bi-paperclip"></i></span>' +
+              '<div class="attach-name">Tiada lampiran</div>' +
+              '<div class="attach-file">Belum ada dokumen dimuat naik</div>';
+            att.appendChild(empty);
+          } else {
+            files.forEach(function (f) {
+              var card = document.createElement("div");
+              card.className = "attach-card";
+              card.innerHTML =
+                '<span class="attach-open"><i class="bi bi-box-arrow-up-right"></i></span>' +
+                '<span class="attach-icon"><i class="bi ' +
+                iconForFile(f.name) +
+                '"></i></span>' +
+                '<div class="attach-name">' +
+                escapeHtml(f.name) +
+                "</div>" +
+                '<div class="attach-file">' +
+                formatBytes(f.size) +
+                "</div>";
+              att.appendChild(card);
+            });
+          }
+
+          var tab = document.getElementById("vb-tab-details");
+          if (tab) bootstrap.Tab.getOrCreateInstance(tab).show();
+
+          bootstrap.Modal.getOrCreateInstance(
+            document.getElementById("viewBranchModal"),
+          ).show();
+        }
+
+        /* ---- Wire up eye buttons ---- */
+        document.addEventListener("click", function (e) {
+          var vp = e.target.closest("[data-view-product]");
+          if (vp) {
+            openViewProduct(parseInt(vp.getAttribute("data-view-product"), 10));
+            return;
+          }
+          var vb = e.target.closest("[data-view-branch]");
+          if (vb) {
+            openViewBranch(parseInt(vb.getAttribute("data-view-branch"), 10));
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
