@@ -1,0 +1,1243 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/components.css" rel="stylesheet" />
+    <link href="css/dashboard.css" rel="stylesheet" />
+    <link href="css/complete-account.css" rel="stylesheet" />
+    <title>Penilaian Teknikal DOA | Portal Pendaftaran Baja</title>
+
+    <style>
+      /* ---- Accordion rows ---- */
+      .onboard-row.as-button {
+        width: 100%;
+        background: none;
+        border: 0;
+        text-align: left;
+        cursor: pointer;
+      }
+      .onboard-row.as-button:focus-visible {
+        outline: 2px solid var(--color-primary-500);
+        outline-offset: -2px;
+        border-radius: var(--radius-md);
+      }
+      .accordion-chevron {
+        transition: transform 0.2s ease;
+      }
+      .onboard-item.is-open .accordion-chevron {
+        transform: rotate(180deg);
+      }
+      .onboard-item.is-open {
+        background: var(--color-surface-2);
+      }
+      .onboard-item.is-open .onboard-row:hover {
+        background: transparent;
+      }
+
+      /* ---- Detail grid ---- */
+      .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem 1.5rem;
+        margin: 0;
+      }
+      @media (max-width: 575.98px) {
+        .detail-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .detail-grid .full {
+        grid-column: 1 / -1;
+      }
+      .detail-grid dt {
+        font-size: 0.68rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-muted);
+        margin-bottom: 0.25rem;
+      }
+      .detail-grid dd {
+        font-size: 0.85rem;
+        margin: 0;
+        color: var(--color-text);
+        line-height: 1.5;
+        white-space: pre-line;
+      }
+
+      /* ---- Attachment cards ---- */
+      .attach-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 0.75rem;
+      }
+      .attach-card {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 0.9rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        position: relative;
+        background: var(--color-surface);
+        text-decoration: none;
+        color: inherit;
+        transition: 0.15s;
+      }
+      .attach-card:hover {
+        border-color: var(--color-primary-500);
+        box-shadow: var(--shadow-sm);
+        text-decoration: none;
+        color: inherit;
+      }
+      .attach-card .attach-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-50);
+        color: var(--color-primary-600);
+        font-size: 1rem;
+      }
+      .attach-card .attach-name {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--color-text);
+      }
+      .attach-card .attach-file {
+        font-size: 0.7rem;
+        color: var(--color-muted);
+        word-break: break-all;
+      }
+      .attach-card .attach-open {
+        position: absolute;
+        top: 0.55rem;
+        right: 0.55rem;
+        color: var(--color-muted);
+        font-size: 0.85rem;
+      }
+
+      /* ---- Profile list ---- */
+      .profile-list {
+        display: grid;
+        gap: 0.55rem;
+      }
+      .profile-list-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.75rem 0.95rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        background: var(--color-surface);
+      }
+      .profile-list-item .item-title {
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: var(--color-text);
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .profile-list-item .item-sub {
+        font-size: 0.72rem;
+        color: var(--color-muted);
+        margin: 0.15rem 0 0;
+      }
+      .profile-list-item .item-side {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex: none;
+      }
+
+      /* ---- Meta card ---- */
+      .meta-card {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        padding: 1.25rem;
+        box-shadow: 0 1px 2px rgba(15, 58, 36, 0.04);
+      }
+      .meta-card h4 {
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin: 0 0 0.75rem;
+      }
+      .meta-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.6rem;
+        font-size: 0.78rem;
+        color: var(--color-muted);
+        padding: 0.5rem 0;
+      }
+      .meta-row + .meta-row {
+        border-top: 1px solid var(--color-border);
+      }
+      .meta-row i {
+        color: var(--color-primary-600);
+        font-size: 0.95rem;
+        margin-top: 0.05rem;
+      }
+      .meta-row strong {
+        color: var(--color-text);
+        font-weight: 500;
+        display: block;
+        margin-bottom: 0.1rem;
+      }
+
+      /* ==========================================================
+         ONGOING ASSESSMENT BANNER
+         ========================================================== */
+      .assess-banner {
+        position: relative;
+        border-radius: var(--radius-lg);
+        padding: 1.5rem 1.75rem;
+        color: #fff;
+        background: linear-gradient(135deg, #b7791f 0%, #975a16 100%);
+        overflow: hidden;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1.25rem;
+      }
+      .assess-banner::after {
+        content: "";
+        position: absolute;
+        right: -70px;
+        top: -70px;
+        width: 240px;
+        height: 240px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .assess-banner::before {
+        content: "";
+        position: absolute;
+        right: 70px;
+        bottom: -90px;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.05);
+      }
+      .assess-banner > * {
+        position: relative;
+        z-index: 1;
+      }
+      .assess-banner .assess-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: rgba(255, 255, 255, 0.18);
+        font-size: 1.6rem;
+        flex: none;
+      }
+      .assess-banner h2 {
+        font-size: 1.15rem;
+        margin: 0 0 0.3rem;
+        color: #fff;
+      }
+      .assess-banner p {
+        font-size: 0.85rem;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.9);
+        max-width: 60ch;
+      }
+      .assess-banner .assess-meta {
+        display: flex;
+        align-items: center;
+        gap: 1.25rem;
+        flex-wrap: wrap;
+        margin-top: 0.75rem;
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .assess-banner .assess-meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .assess-banner .assess-pulse {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #ffe08a;
+        box-shadow: 0 0 0 0 rgba(255, 224, 138, 0.7);
+        animation: pulse 1.8s infinite;
+      }
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(255, 224, 138, 0.7);
+        }
+        70% {
+          box-shadow: 0 0 0 12px rgba(255, 224, 138, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(255, 224, 138, 0);
+        }
+      }
+
+      /* ---- Assessment stage progress ---- */
+      .stage-track {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+      @media (max-width: 767.98px) {
+        .stage-track {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      .stage-cell {
+        border-radius: var(--radius-sm);
+        padding: 0.6rem 0.75rem;
+        background: rgba(255, 255, 255, 0.12);
+        font-size: 0.72rem;
+        color: rgba(255, 255, 255, 0.75);
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+      }
+      .stage-cell .stage-name {
+        font-weight: 600;
+        color: #fff;
+        font-size: 0.78rem;
+      }
+      .stage-cell.is-done {
+        background: rgba(255, 255, 255, 0.22);
+      }
+      .stage-cell.is-active {
+        background: rgba(255, 255, 255, 0.3);
+        border-color: #ffe08a;
+        box-shadow: 0 0 0 2px rgba(255, 224, 138, 0.35);
+      }
+      .stage-cell.is-pending {
+        opacity: 0.65;
+      }
+
+      /* ---- Stage card (checklist) ---- */
+      .stage-step {
+        display: grid;
+        grid-template-columns: 34px 1fr auto;
+        gap: 0.9rem;
+        align-items: start;
+        padding: 0.9rem 0;
+        border-bottom: 1px solid var(--color-border);
+      }
+      .stage-step:last-child {
+        border-bottom: 0;
+      }
+      .stage-badge {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--color-surface-2);
+        border: 2px solid var(--color-border);
+        color: var(--color-muted);
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      .stage-step.is-done .stage-badge {
+        background: var(--color-primary-600);
+        border-color: var(--color-primary-600);
+        color: #fff;
+      }
+      .stage-step.is-active .stage-badge {
+        background: #fff;
+        border-color: var(--color-warning);
+        color: var(--color-warning);
+        box-shadow: 0 0 0 4px var(--color-warning-bg);
+      }
+      .stage-step .stage-title {
+        font-weight: 600;
+        font-size: 0.88rem;
+        margin: 0.15rem 0 0.15rem;
+        color: var(--color-text);
+      }
+      .stage-step .stage-desc {
+        font-size: 0.76rem;
+        color: var(--color-muted);
+        margin: 0;
+        line-height: 1.45;
+      }
+      .stage-step .stage-note {
+        font-size: 0.72rem;
+        color: var(--color-muted);
+        margin: 0.25rem 0 0;
+      }
+
+      /* ---- Status chip ---- */
+      .status-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 0.28rem 0.65rem;
+        border-radius: 999px;
+        background: var(--color-warning-bg);
+        color: var(--color-warning);
+        margin-top: 0.5rem;
+      }
+
+      /* ---- Reviewer card ---- */
+      .reviewer-card {
+        display: flex;
+        gap: 0.9rem;
+        align-items: center;
+        padding: 0.85rem 0;
+      }
+      .reviewer-avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-100);
+        color: var(--color-primary-800);
+        font-weight: 600;
+        font-size: 0.85rem;
+        flex: none;
+      }
+      .reviewer-name {
+        font-weight: 600;
+        font-size: 0.88rem;
+        margin: 0;
+        color: var(--color-text);
+      }
+      .reviewer-role {
+        font-size: 0.75rem;
+        color: var(--color-muted);
+        margin: 0.1rem 0 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <script>
+        try {
+          if (localStorage.getItem("sidebar-collapsed") === "1")
+            document.querySelector(".app").classList.add("is-collapsed");
+        } catch (e) {}
+      </script>
+
+      <!-- Bar sisi -->
+      <aside
+        class="sidebar offcanvas-lg offcanvas-start"
+        tabindex="-1"
+        id="sidebar"
+        aria-label="Navigasi utama"
+      >
+        <div class="sidebar-inner">
+          <div class="sidebar-head border-bottom pb-2">
+            <a href="#" class="brand" aria-label="Enakmen Baja Sabah">
+              <span class="brand-mark brand-mark--img">
+                <img src="logo/image.png" alt="" width="40" height="40" />
+              </span>
+              <span class="brand-text">Enakmen Baja Sabah</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-icon sidebar-toggle d-none d-lg-inline-grid"
+              id="sidebar-toggle"
+              aria-controls="sidebar"
+              aria-expanded="true"
+              aria-label="Tutup bar sisi"
+              title="Tutup bar sisi"
+            >
+              <i class="bi bi-layout-sidebar"></i>
+            </button>
+            <button
+              type="button"
+              class="btn-close d-lg-none"
+              data-bs-dismiss="offcanvas"
+              data-bs-target="#sidebar"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <nav class="d-grid gap-1">
+            <a href="#" class="side-link" title="Papan pemuka"
+              ><i class="bi bi-house-door"></i
+              ><span class="side-label">Papan pemuka</span></a
+            >
+            <a href="#" class="side-link" title="Produk saya"
+              ><i class="bi bi-box-seam"></i
+              ><span class="side-label">Produk saya</span></a
+            >
+            <a href="#" class="side-link" title="Lesen"
+              ><i class="bi bi-patch-check"></i
+              ><span class="side-label">Lesen</span></a
+            >
+            <a href="#" class="side-link" title="Permit import"
+              ><i class="bi bi-truck"></i
+              ><span class="side-label">Permit import</span></a
+            >
+            <a href="#" class="side-link" title="Pembayaran"
+              ><i class="bi bi-receipt"></i
+              ><span class="side-label">Pembayaran</span></a
+            >
+            <a href="#" class="side-link" title="Notis dan rayuan"
+              ><i class="bi bi-envelope-exclamation"></i
+              ><span class="side-label">Notis dan rayuan</span
+              ><span class="count pill pill-danger">0</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Bantuan</div>
+          <nav class="d-grid gap-1">
+            <a href="#" class="side-link" title="Daftar awam"
+              ><i class="bi bi-search"></i
+              ><span class="side-label">Daftar awam</span></a
+            >
+            <a href="#" class="side-link" title="Panduan dan fi"
+              ><i class="bi bi-book"></i
+              ><span class="side-label">Panduan dan fi</span></a
+            >
+            <a href="#" class="side-link" title="Sokongan"
+              ><i class="bi bi-headset"></i
+              ><span class="side-label">Sokongan</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Akaun</div>
+          <nav class="d-grid gap-1 mb-3">
+            <a href="#" class="side-link" title="Profil organisasi"
+              ><i class="bi bi-building"></i
+              ><span class="side-label">Profil organisasi</span></a
+            >
+            <a href="#" class="side-link active" title="Penilaian teknikal DOA"
+              ><i class="bi bi-clipboard2-check"></i
+              ><span class="side-label">Penilaian teknikal</span></a
+            >
+            <a href="#" class="side-link" title="Tetapan"
+              ><i class="bi bi-gear"></i
+              ><span class="side-label">Tetapan</span></a
+            >
+            <a href="index.html" class="side-link" title="Log keluar"
+              ><i class="bi bi-box-arrow-right"></i
+              ><span class="side-label">Log keluar</span></a
+            >
+          </nav>
+
+          <div class="side-user">
+            <span class="avatar">AH</span>
+            <div class="lh-sm side-user-text">
+              <div class="fw-semibold">Aisyah Hassan</div>
+              <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Utama -->
+      <div class="app-main">
+        <header class="topbar border-bottom">
+          <button
+            class="btn btn-icon d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebar"
+            aria-controls="sidebar"
+            aria-label="Buka menu"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+          <h1 class="h5 mb-0 me-2">Penilaian teknikal DOA</h1>
+          <div class="topbar-search d-none d-md-block input-icon">
+            <i class="bi bi-search"></i>
+            <input
+              type="search"
+              class="form-control"
+              placeholder="Cari produk, lesen atau permit"
+              aria-label="Cari"
+            />
+          </div>
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <button
+              class="btn btn-icon position-relative"
+              type="button"
+              aria-label="Pemberitahuan"
+            >
+              <i class="bi bi-bell"></i><span class="notif-dot"></span>
+            </button>
+
+            <div class="dropdown">
+              <button
+                type="button"
+                class="avatar avatar-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Menu pengguna"
+              >
+                AH
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end user-menu">
+                <li class="user-menu-head">
+                  <div class="fw-semibold">Aisyah Hassan</div>
+                  <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-building me-2"></i>Profil organisasi</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-clipboard2-check me-2"></i>Penilaian
+                    teknikal</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-gear me-2"></i>Tetapan</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="index.html"
+                    ><i class="bi bi-box-arrow-right me-2"></i>Log keluar</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <main class="app-content p-5">
+          <div class="complete-layout">
+            <!-- ============ LEFT ============ -->
+            <div class="complete-main">
+              <!-- ===== Ongoing assessment banner ===== -->
+              <div class="assess-banner mb-4">
+                <span class="assess-icon">
+                  <i class="bi bi-clipboard2-pulse"></i>
+                </span>
+                <div class="flex-grow-1">
+                  <h2>
+                    Penilaian teknikal sedang dijalankan
+                    <span class="assess-pulse ms-2"></span>
+                  </h2>
+                  <p>
+                    Permohonan anda kini berada di peringkat penilaian teknikal
+                    oleh pegawai DOA. Sila semak status dari semasa ke semasa.
+                    Anda tidak perlu menghantar semula permohonan.
+                  </p>
+                  <div class="assess-meta">
+                    <span>
+                      <i class="bi bi-hash"></i>
+                      No. Rujukan: <strong>TECH-2026-00042</strong>
+                    </span>
+                    <span>
+                      <i class="bi bi-calendar-event"></i>
+                      Diambil: <strong>18 Oktober 2026</strong>
+                    </span>
+                    <span>
+                      <i class="bi bi-hourglass-split"></i>
+                      Anggaran: <strong>7–14 hari bekerja</strong>
+                    </span>
+                  </div>
+
+                  <!-- Stage track -->
+                  <div class="stage-track">
+                    <div class="stage-cell is-done">
+                      <span class="stage-name">Semakan dokumen</span>
+                      <span>Selesai</span>
+                    </div>
+                    <div class="stage-cell is-active">
+                      <span class="stage-name">Penilaian teknikal</span>
+                      <span>Sedang dijalankan</span>
+                    </div>
+                    <div class="stage-cell is-pending">
+                      <span class="stage-name">Lawatan tapak</span>
+                      <span>Belum bermula</span>
+                    </div>
+                    <div class="stage-cell is-pending">
+                      <span class="stage-name">Keputusan</span>
+                      <span>Belum bermula</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ===== Hero (small) ===== -->
+              <div class="complete-hero">
+                <h2>Butiran penilaian</h2>
+                <p>
+                  Berikut adalah ringkasan maklumat yang sedang dinilai oleh
+                  pegawai teknikal DOA. Klik setiap seksyen untuk melihat
+                  butiran.
+                </p>
+                <span class="status-chip">
+                  <i class="bi bi-hourglass-split"></i>Dalam penilaian
+                </span>
+              </div>
+
+              <!-- ===== CARD 1: Ringkasan penilaian ===== -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item" data-accordion="progress">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="false"
+                    aria-controls="body-progress"
+                  >
+                    <span class="onboard-icon is-amber">
+                      <i class="bi bi-list-check"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">Kemajuan penilaian</h3>
+                      <p class="onboard-desc">
+                        Peringkat 2 daripada 4 &middot; Penilaian teknikal
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-progress" hidden>
+                    <!-- Step timeline -->
+                    <div class="stage-step is-done">
+                      <span class="stage-badge">
+                        <i class="bi bi-check-lg"></i>
+                      </span>
+                      <div>
+                        <div class="stage-title">Semakan dokumen sokongan</div>
+                        <p class="stage-desc">
+                          Semua dokumen sokongan telah disemak dan lengkap.
+                        </p>
+                        <p class="stage-note">
+                          Selesai pada 19 Oktober 2026, 10:13 AM
+                        </p>
+                      </div>
+                      <span class="pill pill-success">Selesai</span>
+                    </div>
+
+                    <div class="stage-step is-active">
+                      <span class="stage-badge">2</span>
+                      <div>
+                        <div class="stage-title">
+                          Penilaian teknikal kandungan produk
+                        </div>
+                        <p class="stage-desc">
+                          Pegawai teknikal sedang menilai formulasi, kandungan
+                          nutrien, dan kesesuaian label pada setiap produk yang
+                          didaftarkan.
+                        </p>
+                        <p class="stage-note">
+                          Sedang dijalankan &middot; Pegawai: Zaba binti Ahmad
+                        </p>
+                      </div>
+                      <span class="pill pill-warning">Dalam proses</span>
+                    </div>
+
+                    <div class="stage-step">
+                      <span class="stage-badge">3</span>
+                      <div>
+                        <div class="stage-title">
+                          Lawatan tapak premis (jika perlu)
+                        </div>
+                        <p class="stage-desc">
+                          Lawatan tapak akan dijalankan sekiranya diperlukan
+                          untuk mengesahkan premis operasi dan penyimpanan
+                          produk.
+                        </p>
+                        <p class="stage-note">Belum bermula</p>
+                      </div>
+                      <span class="pill pill-muted">Belum bermula</span>
+                    </div>
+
+                    <div class="stage-step">
+                      <span class="stage-badge">4</span>
+                      <div>
+                        <div class="stage-title">
+                          Keputusan penilaian teknikal
+                        </div>
+                        <p class="stage-desc">
+                          Keputusan rasmi akan dimaklumkan melalui e-mel dan
+                          papan pemuka anda.
+                        </p>
+                        <p class="stage-note">Belum bermula</p>
+                      </div>
+                      <span class="pill pill-muted">Belum bermula</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ===== CARD 2: Profil syarikat (semakan) ===== -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item" data-accordion="company">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="false"
+                    aria-controls="body-company"
+                  >
+                    <span class="onboard-icon is-green">
+                      <i class="bi bi-building"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">Butiran syarikat</h3>
+                      <p class="onboard-desc">
+                        Borneo Agro Sdn Bhd &middot; SSM 202301012345
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-company" hidden>
+                    <dl class="detail-grid">
+                      <div>
+                        <dt>Nama Syarikat</dt>
+                        <dd>Borneo Agro Sdn Bhd</dd>
+                      </div>
+                      <div>
+                        <dt>Nombor Pendaftaran Syarikat (SSM)</dt>
+                        <dd>202301012345</dd>
+                      </div>
+                      <div>
+                        <dt>Tamat Tempoh SSM</dt>
+                        <dd>31 Disember 2026</dd>
+                      </div>
+                      <div>
+                        <dt>Nombor Lesen Berniaga</dt>
+                        <dd>BL-2023-7890</dd>
+                      </div>
+                      <div>
+                        <dt>Tamat Tempoh Lesen Berniaga</dt>
+                        <dd>31 Disember</dd>
+                      </div>
+                      <div>
+                        <dt>Nombor Lesen Pengilang (MIDA)</dt>
+                        <dd>MIDA/2023/4567</dd>
+                      </div>
+                      <div>
+                        <dt>Nombor Surat Pengecualian (ICA 10)</dt>
+                        <dd>ICA10/2023/001</dd>
+                      </div>
+                      <div>
+                        <dt>Nombor Telefon Syarikat</dt>
+                        <dd>+60 88 123 456</dd>
+                      </div>
+                      <div class="full">
+                        <dt>Alamat E-mel Syarikat</dt>
+                        <dd>info@borneoagro.com.my</dd>
+                      </div>
+                      <div class="full">
+                        <dt>Alamat Premis Berdaftar / Operasi</dt>
+                        <dd>
+                          Lot 5, Jalan Industri 3, Kawasan Perindustrian Kota
+                          Kinabalu, 88450 Kota Kinabalu, Sabah
+                        </dd>
+                      </div>
+                    </dl>
+                  </div>
+                </div>
+
+                <div class="onboard-item" data-accordion="rep">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="false"
+                    aria-controls="body-rep"
+                  >
+                    <span class="onboard-icon is-blue">
+                      <i class="bi bi-person-badge"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">Wakil syarikat</h3>
+                      <p class="onboard-desc">
+                        Aisyah Hassan &middot; Pengarah Urusan
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-rep" hidden>
+                    <dl class="detail-grid">
+                      <div>
+                        <dt>Nama Wakil Syarikat</dt>
+                        <dd>Aisyah Hassan</dd>
+                      </div>
+                      <div>
+                        <dt>No. KP Wakil Syarikat</dt>
+                        <dd>900101-12-3456</dd>
+                      </div>
+                      <div>
+                        <dt>Jawatan Wakil Syarikat</dt>
+                        <dd>Pengarah Urusan</dd>
+                      </div>
+                      <div>
+                        <dt>Nombor Telefon Wakil Syarikat</dt>
+                        <dd>+60 12 345 6789</dd>
+                      </div>
+                    </dl>
+                  </div>
+                </div>
+
+                <div class="onboard-item" data-accordion="docs">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="false"
+                    aria-controls="body-docs"
+                  >
+                    <span class="onboard-icon is-amber">
+                      <i class="bi bi-folder2-open"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">Dokumen sokongan</h3>
+                      <p class="onboard-desc">6 dokumen telah disemak</p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-docs" hidden>
+                    <div class="attach-grid">
+                      <a href="#" class="attach-card">
+                        <span class="attach-open"
+                          ><i class="bi bi-box-arrow-up-right"></i
+                        ></span>
+                        <span class="attach-icon"
+                          ><i class="bi bi-file-earmark-text"></i
+                        ></span>
+                        <div class="attach-name">
+                          Sijil Pendaftaran Syarikat
+                        </div>
+                        <div class="attach-file">ssm_cert.pdf</div>
+                      </a>
+                      <a href="#" class="attach-card">
+                        <span class="attach-open"
+                          ><i class="bi bi-box-arrow-up-right"></i
+                        ></span>
+                        <span class="attach-icon"
+                          ><i class="bi bi-file-earmark-text"></i
+                        ></span>
+                        <div class="attach-name">Lesen Perniagaan</div>
+                        <div class="attach-file">business_license.pdf</div>
+                      </a>
+                      <a href="#" class="attach-card">
+                        <span class="attach-open"
+                          ><i class="bi bi-box-arrow-up-right"></i
+                        ></span>
+                        <span class="attach-icon"
+                          ><i class="bi bi-file-earmark-text"></i
+                        ></span>
+                        <div class="attach-name">Lesen Pengilang (MIDA)</div>
+                        <div class="attach-file">mida_license.pdf</div>
+                      </a>
+                      <a href="#" class="attach-card">
+                        <span class="attach-open"
+                          ><i class="bi bi-box-arrow-up-right"></i
+                        ></span>
+                        <span class="attach-icon"
+                          ><i class="bi bi-file-earmark-text"></i
+                        ></span>
+                        <div class="attach-name">
+                          Surat Pengecualian (ICA 10)
+                        </div>
+                        <div class="attach-file">ica10.pdf</div>
+                      </a>
+                      <a href="#" class="attach-card">
+                        <span class="attach-open"
+                          ><i class="bi bi-box-arrow-up-right"></i
+                        ></span>
+                        <span class="attach-icon"
+                          ><i class="bi bi-file-earmark-text"></i
+                        ></span>
+                        <div class="attach-name">Kad Pengenalan Wakil</div>
+                        <div class="attach-file">rep_ic.pdf</div>
+                      </a>
+                      <a href="#" class="attach-card">
+                        <span class="attach-open"
+                          ><i class="bi bi-box-arrow-up-right"></i
+                        ></span>
+                        <span class="attach-icon"
+                          ><i class="bi bi-file-earmark-text"></i
+                        ></span>
+                        <div class="attach-name">Surat Kuasa Wakil</div>
+                        <div class="attach-file">authority_letter.pdf</div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ===== CARD 3: Produk yang dinilai ===== -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item" data-accordion="products">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="false"
+                    aria-controls="body-products"
+                  >
+                    <span class="onboard-icon is-amber">
+                      <i class="bi bi-box-seam"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">Produk dalam penilaian</h3>
+                      <p class="onboard-desc">
+                        3 produk &middot; sedang dinilai
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-products" hidden>
+                    <div class="profile-list">
+                      <div class="profile-list-item">
+                        <div>
+                          <div class="item-title">Baja Sawit Premium</div>
+                          <div class="item-sub">
+                            Baja Sebatian &middot; Butiran (Granular)
+                          </div>
+                        </div>
+                        <div class="item-side">
+                          <span class="pill pill-warning">Dalam penilaian</span>
+                        </div>
+                      </div>
+
+                      <div class="profile-list-item">
+                        <div>
+                          <div class="item-title">Baja Organik Plus</div>
+                          <div class="item-sub">
+                            Baja Organik &middot; Serbuk (Powder)
+                          </div>
+                        </div>
+                        <div class="item-side">
+                          <span class="pill pill-warning">Dalam penilaian</span>
+                        </div>
+                      </div>
+
+                      <div class="profile-list-item">
+                        <div>
+                          <div class="item-title">Baja Mikro N</div>
+                          <div class="item-sub">
+                            Baja Mikronutrien &middot; Cecair (Liquid)
+                          </div>
+                        </div>
+                        <div class="item-side">
+                          <span class="pill pill-success">Lulus penilaian</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="mt-3">
+                      <div class="modal-section-title">Catatan pegawai</div>
+                      <div
+                        class="d-flex gap-2 align-items-start p-3 rounded"
+                        style="
+                          background: var(--color-warning-bg);
+                          color: var(--color-warning);
+                          font-size: 0.82rem;
+                          line-height: 1.5;
+                        "
+                      >
+                        <i class="bi bi-info-circle-fill mt-1"></i>
+                        <div>
+                          Sila pastikan
+                          <strong>Certificate of Analysis (CoA)</strong> bagi
+                          Baja Sawit Premium dan Baja Organik Plus adalah versi
+                          terkini (2026). Dokumen lama boleh dikemas kini
+                          melalui halaman Profil Organisasi.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ============ RIGHT: Reviewer info + help ============ -->
+            <aside class="stepper-aside">
+              <div class="meta-card mb-3">
+                <h4>Pegawai penilai</h4>
+                <div class="reviewer-card">
+                  <span class="reviewer-avatar">ZA</span>
+                  <div>
+                    <p class="reviewer-name">Zaba binti Ahmad</p>
+                    <p class="reviewer-role">
+                      Pegawai Teknikal &middot; Jabatan Pertanian Sabah
+                    </p>
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-envelope"></i>
+                  <div>
+                    <strong>E-mel</strong>
+                    zaba.ahmad@doa.sabah.gov.my
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-telephone"></i>
+                  <div>
+                    <strong>Telefon</strong>
+                    +60 88 234 567
+                  </div>
+                </div>
+              </div>
+
+              <div class="meta-card mb-3">
+                <h4>Maklumat penilaian</h4>
+                <div class="meta-row">
+                  <i class="bi bi-hash"></i>
+                  <div>
+                    <strong>No. rujukan</strong>
+                    TECH-2026-00042
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-calendar-event"></i>
+                  <div>
+                    <strong>Tarikh diambil</strong>
+                    18 Oktober 2026, 9:00 AM
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-clock-history"></i>
+                  <div>
+                    <strong>Kemas kini terakhir</strong>
+                    19 Oktober 2026, 10:13 AM
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-hourglass-split"></i>
+                  <div>
+                    <strong>Anggaran selesai</strong>
+                    1–8 November 2026
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-flag"></i>
+                  <div>
+                    <strong>Status</strong>
+                    <span class="pill pill-warning mt-1">Dalam penilaian</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="help-box">
+                <span class="help-icon"><i class="bi bi-question-lg"></i></span>
+                <h4>Ada pertanyaan?</h4>
+                <p>
+                  Hubungi pegawai penilai anda atau pasukan sokongan DOA untuk
+                  pertanyaan lanjut berkenaan penilaian teknikal.
+                </p>
+                <button type="button" class="btn btn-outline-primary btn-sm">
+                  Hubungi pegawai
+                </button>
+              </div>
+            </aside>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /* ===== Sidebar toggle ===== */
+      (function () {
+        var app = document.querySelector(".app");
+        var btn = app.querySelector("#sidebar-toggle");
+        var KEY = "sidebar-collapsed";
+
+        function sync() {
+          var collapsed = app.classList.contains("is-collapsed");
+          var label = collapsed ? "Buka bar sisi" : "Tutup bar sisi";
+          btn.setAttribute("aria-expanded", String(!collapsed));
+          btn.setAttribute("aria-label", label);
+          btn.title = label;
+        }
+
+        btn.addEventListener("click", function () {
+          app.classList.toggle("is-collapsed");
+          sync();
+          try {
+            localStorage.setItem(
+              KEY,
+              app.classList.contains("is-collapsed") ? "1" : "0",
+            );
+          } catch (e) {}
+        });
+
+        sync();
+      })();
+
+      /* ===== Accordion behaviour (scoped per card) ===== */
+      (function () {
+        document.querySelectorAll(".onboard-card").forEach(function (card) {
+          var items = card.querySelectorAll(".onboard-item[data-accordion]");
+
+          items.forEach(function (item) {
+            var toggle = item.querySelector(".onboard-row.as-button");
+            var body = item.querySelector(".onboard-body");
+
+            toggle.addEventListener("click", function () {
+              var isOpen = item.classList.contains("is-open");
+
+              items.forEach(function (other) {
+                if (other === item) return;
+                other.classList.remove("is-open");
+                var t = other.querySelector(".onboard-row.as-button");
+                var b = other.querySelector(".onboard-body");
+                if (t) t.setAttribute("aria-expanded", "false");
+                if (b) b.hidden = true;
+              });
+
+              if (isOpen) {
+                item.classList.remove("is-open");
+                toggle.setAttribute("aria-expanded", "false");
+                if (body) body.hidden = true;
+              } else {
+                item.classList.add("is-open");
+                toggle.setAttribute("aria-expanded", "true");
+                if (body) body.hidden = false;
+              }
+            });
+          });
+        });
+
+        // Open the first section (Kemajuan penilaian) by default
+        var firstCard = document.querySelector(".onboard-card");
+        if (firstCard) {
+          var firstBtn = firstCard.querySelector(".onboard-row.as-button");
+          if (firstBtn) firstBtn.click();
+        }
+      })();
+    </script>
+  </body>
+</html>
