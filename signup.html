@@ -20,6 +20,7 @@
     <link href="css/components.css" rel="stylesheet" />
     <link href="css/signup.css" rel="stylesheet" />
     <link href="css/signup-wizard.css" rel="stylesheet" />
+    <link href="css/verify-email.css" rel="stylesheet" />
     <title>Cipta akaun | Portal Pendaftaran Baja</title>
   </head>
   <body>
@@ -34,15 +35,21 @@
               </span>
               <span class="brand-text">Enakmen Baja Sabah</span>
             </a>
-            <span class="wizard-count" id="wizard-count">Langkah 1 daripada 4</span>
+            <span class="wizard-count" id="wizard-count"
+              >Langkah 1 daripada 4</span
+            >
           </div>
-          <div class="wizard-progress" id="wizard-progress" role="progressbar" aria-label="Kemajuan pendaftaran"></div>
+          <div
+            class="wizard-progress"
+            id="wizard-progress"
+            role="progressbar"
+            aria-label="Kemajuan pendaftaran"
+          ></div>
         </div>
 
         <!-- ===================== FORM ===================== -->
         <form id="signup-form" action="index.html" novalidate>
           <div class="wizard-body">
-
             <!-- STEP 1 — Jenis akaun + Butiran -->
             <section class="wizard-step is-active" data-step="type">
               <h2 class="wizard-title">Siapa yang memohon?</h2>
@@ -53,9 +60,18 @@
 
               <div class="row g-3 type-choice mb-4">
                 <div class="col-sm-6">
-                  <input type="radio" class="btn-check" name="account_type" id="type-company" value="company" checked />
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="account_type"
+                    id="type-company"
+                    value="company"
+                    checked
+                  />
                   <label for="type-company">
-                    <span class="icon-chip"><i class="bi bi-building"></i></span>
+                    <span class="icon-chip"
+                      ><i class="bi bi-building"></i
+                    ></span>
                     <span>
                       <strong class="d-block">Syarikat</strong>
                       <small class="text-muted-2">Berdaftar dengan SSM</small>
@@ -63,12 +79,20 @@
                   </label>
                 </div>
                 <div class="col-sm-6">
-                  <input type="radio" class="btn-check" name="account_type" id="type-individual" value="individual" />
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="account_type"
+                    id="type-individual"
+                    value="individual"
+                  />
                   <label for="type-individual">
                     <span class="icon-chip"><i class="bi bi-person"></i></span>
                     <span>
                       <strong class="d-block">Individu</strong>
-                      <small class="text-muted-2">Memohon atas nama sendiri</small>
+                      <small class="text-muted-2"
+                        >Memohon atas nama sendiri</small
+                      >
                     </span>
                   </label>
                 </div>
@@ -78,29 +102,65 @@
               <div class="wizard-section" data-for="company">
                 <h3 class="wizard-section-title">Butiran syarikat</h3>
                 <p class="wizard-section-hint">
-                  Masukkan maklumat syarikat seperti yang didaftarkan dengan SSM.
+                  Masukkan maklumat syarikat seperti yang didaftarkan dengan
+                  SSM.
                 </p>
 
                 <div class="row g-3">
                   <div class="col-md-6">
-                    <label class="form-label" for="company_name">Nama Syarikat</label>
-                    <input class="form-control" id="company_name" name="company_name" required />
+                    <label class="form-label" for="company_name"
+                      >Nama Syarikat</label
+                    >
+                    <input
+                      class="form-control"
+                      id="company_name"
+                      name="company_name"
+                      required
+                    />
                   </div>
                   <div class="col-md-6">
-                    <label class="form-label" for="ssm_no">Nombor Pendaftaran Syarikat (SSM)</label>
-                    <input class="form-control" id="ssm_no" name="ssm_no" required />
+                    <label class="form-label" for="ssm_no"
+                      >Nombor Pendaftaran Syarikat (SSM)</label
+                    >
+                    <input
+                      class="form-control"
+                      id="ssm_no"
+                      name="ssm_no"
+                      required
+                    />
                   </div>
                   <div class="col-md-6">
-                    <label class="form-label" for="ssm_expiry">Tamat Tempoh SSM</label>
-                    <input type="date" class="form-control" id="ssm_expiry" name="ssm_expiry" />
+                    <label class="form-label" for="ssm_expiry"
+                      >Tamat Tempoh SSM</label
+                    >
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="ssm_expiry"
+                      name="ssm_expiry"
+                    />
                   </div>
                   <div class="col-md-6">
-                    <label class="form-label" for="business_license_no">Nombor Lesen Berniaga</label>
-                    <input class="form-control" id="business_license_no" name="business_license_no" />
+                    <label class="form-label" for="business_license_no"
+                      >Nombor Lesen Berniaga</label
+                    >
+                    <input
+                      class="form-control"
+                      id="business_license_no"
+                      name="business_license_no"
+                    />
                   </div>
                   <div class="col-md-12">
-                    <label class="form-label" for="business_license_expiry">Tamat Tempoh Lesen Berniaga</label>
-                    <input class="form-control" id="business_license_expiry" name="business_license_expiry" value="31 Disember" readonly />
+                    <label class="form-label" for="business_license_expiry"
+                      >Tamat Tempoh Lesen Berniaga</label
+                    >
+                    <input
+                      class="form-control"
+                      id="business_license_expiry"
+                      name="business_license_expiry"
+                      value="31 Disember"
+                      readonly
+                    />
                     <div class="form-text">Setiap 31 Disember.</div>
                   </div>
                   <div class="col-md-12">
@@ -111,20 +171,47 @@
                     <input class="form-control" id="mida_no" name="mida_no" />
                   </div>
                   <div class="col-md-12">
-                    <label class="form-label" for="ica10_no">Nombor Surat Pengecualian (ICA 10)</label>
+                    <label class="form-label" for="ica10_no"
+                      >Nombor Surat Pengecualian (ICA 10)</label
+                    >
                     <input class="form-control" id="ica10_no" name="ica10_no" />
                   </div>
                   <div class="col-12">
-                    <label class="form-label" for="premises_address">Alamat Premis Berdaftar / Operasi</label>
-                    <textarea class="form-control" id="premises_address" name="premises_address" rows="2" required></textarea>
+                    <label class="form-label" for="premises_address"
+                      >Alamat Premis Berdaftar / Operasi</label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="premises_address"
+                      name="premises_address"
+                      rows="2"
+                      required
+                    ></textarea>
                   </div>
                   <div class="col-md-6">
-                    <label class="form-label" for="company_phone">Nombor Telefon Syarikat</label>
-                    <input type="tel" class="form-control" id="company_phone" name="company_phone" placeholder="+60" required />
+                    <label class="form-label" for="company_phone"
+                      >Nombor Telefon Syarikat</label
+                    >
+                    <input
+                      type="tel"
+                      class="form-control"
+                      id="company_phone"
+                      name="company_phone"
+                      placeholder="+60"
+                      required
+                    />
                   </div>
                   <div class="col-md-6">
-                    <label class="form-label" for="company_email">Alamat E-mel Syarikat</label>
-                    <input type="email" class="form-control" id="company_email" name="company_email" required />
+                    <label class="form-label" for="company_email"
+                      >Alamat E-mel Syarikat</label
+                    >
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="company_email"
+                      name="company_email"
+                      required
+                    />
                   </div>
                 </div>
               </div>
@@ -138,28 +225,73 @@
 
                 <div class="row g-3">
                   <div class="col-md-6">
-                    <label class="form-label" for="full_name">Nama Penuh Pemohon</label>
-                    <input class="form-control" id="full_name" name="full_name" required />
+                    <label class="form-label" for="full_name"
+                      >Nama Penuh Pemohon</label
+                    >
+                    <input
+                      class="form-control"
+                      id="full_name"
+                      name="full_name"
+                      required
+                    />
                   </div>
                   <div class="col-md-6">
-                    <label class="form-label" for="ic_no">Nombor Kad Pengenalan</label>
-                    <input class="form-control" id="ic_no" name="ic_no" required />
+                    <label class="form-label" for="ic_no"
+                      >Nombor Kad Pengenalan</label
+                    >
+                    <input
+                      class="form-control"
+                      id="ic_no"
+                      name="ic_no"
+                      required
+                    />
                   </div>
                   <div class="col-md-6">
-                    <label class="form-label" for="correspondence_address">Alamat Surat-menyurat</label>
-                    <textarea class="form-control" id="correspondence_address" name="correspondence_address" rows="2"></textarea>
+                    <label class="form-label" for="correspondence_address"
+                      >Alamat Surat-menyurat</label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="correspondence_address"
+                      name="correspondence_address"
+                      rows="2"
+                    ></textarea>
                   </div>
                   <div class="col-md-6">
-                    <label class="form-label" for="residential_address">Alamat Kediaman</label>
-                    <textarea class="form-control" id="residential_address" name="residential_address" rows="2"></textarea>
+                    <label class="form-label" for="residential_address"
+                      >Alamat Kediaman</label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="residential_address"
+                      name="residential_address"
+                      rows="2"
+                    ></textarea>
                   </div>
                   <div class="col-md-6">
-                    <label class="form-label" for="mobile_phone">Nombor Telefon Bimbit</label>
-                    <input type="tel" class="form-control" id="mobile_phone" name="mobile_phone" placeholder="+60" required />
+                    <label class="form-label" for="mobile_phone"
+                      >Nombor Telefon Bimbit</label
+                    >
+                    <input
+                      type="tel"
+                      class="form-control"
+                      id="mobile_phone"
+                      name="mobile_phone"
+                      placeholder="+60"
+                      required
+                    />
                   </div>
                   <div class="col-md-6">
-                    <label class="form-label" for="individual_email">Alamat E-mel</label>
-                    <input type="email" class="form-control" id="individual_email" name="individual_email" required />
+                    <label class="form-label" for="individual_email"
+                      >Alamat E-mel</label
+                    >
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="individual_email"
+                      name="individual_email"
+                      required
+                    />
                   </div>
                 </div>
               </div>
@@ -175,20 +307,50 @@
 
               <div class="row g-3">
                 <div class="col-md-6">
-                  <label class="form-label" for="pic_name">Nama Wakil Syarikat</label>
-                  <input class="form-control" id="pic_name" name="pic_name" required />
+                  <label class="form-label" for="pic_name"
+                    >Nama Wakil Syarikat</label
+                  >
+                  <input
+                    class="form-control"
+                    id="pic_name"
+                    name="pic_name"
+                    required
+                  />
                 </div>
                 <div class="col-md-6">
-                  <label class="form-label" for="pic_ic">No. KP Wakil Syarikat</label>
-                  <input class="form-control" id="pic_ic" name="pic_ic" required />
+                  <label class="form-label" for="pic_ic"
+                    >No. KP Wakil Syarikat</label
+                  >
+                  <input
+                    class="form-control"
+                    id="pic_ic"
+                    name="pic_ic"
+                    required
+                  />
                 </div>
                 <div class="col-md-6">
-                  <label class="form-label" for="pic_role">Jawatan Wakil Syarikat</label>
-                  <input class="form-control" id="pic_role" name="pic_role" placeholder="cth. Pengarah" required />
+                  <label class="form-label" for="pic_role"
+                    >Jawatan Wakil Syarikat</label
+                  >
+                  <input
+                    class="form-control"
+                    id="pic_role"
+                    name="pic_role"
+                    placeholder="cth. Pengarah"
+                    required
+                  />
                 </div>
                 <div class="col-md-6">
-                  <label class="form-label" for="pic_phone">Nombor Telefon Wakil Syarikat</label>
-                  <input type="tel" class="form-control" id="pic_phone" name="pic_phone" placeholder="+60" />
+                  <label class="form-label" for="pic_phone"
+                    >Nombor Telefon Wakil Syarikat</label
+                  >
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="pic_phone"
+                    name="pic_phone"
+                    placeholder="+60"
+                  />
                 </div>
               </div>
             </section>
@@ -214,37 +376,75 @@
                 <div class="upload-field">
                   <label for="doc_ssm_cert">Sijil Pendaftaran Syarikat</label>
                   <div class="upload-box">
-                    <input type="file" class="form-control" id="doc_ssm_cert" name="doc_ssm_cert" accept=".pdf,.jpg,.png" />
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="doc_ssm_cert"
+                      name="doc_ssm_cert"
+                      accept=".pdf,.jpg,.png"
+                    />
                   </div>
                 </div>
                 <div class="upload-field">
                   <label for="doc_business_license">Lesen Perniagaan</label>
                   <div class="upload-box">
-                    <input type="file" class="form-control" id="doc_business_license" name="doc_business_license" accept=".pdf,.jpg,.png" />
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="doc_business_license"
+                      name="doc_business_license"
+                      accept=".pdf,.jpg,.png"
+                    />
                   </div>
                 </div>
                 <div class="upload-field">
                   <label for="doc_mida">Lesen Pengilang (MIDA)</label>
                   <div class="upload-box">
-                    <input type="file" class="form-control" id="doc_mida" name="doc_mida" accept=".pdf,.jpg,.png" />
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="doc_mida"
+                      name="doc_mida"
+                      accept=".pdf,.jpg,.png"
+                    />
                   </div>
                 </div>
                 <div class="upload-field">
                   <label for="doc_ica10">Surat Pengecualian (ICA 10)</label>
                   <div class="upload-box">
-                    <input type="file" class="form-control" id="doc_ica10" name="doc_ica10" accept=".pdf,.jpg,.png" />
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="doc_ica10"
+                      name="doc_ica10"
+                      accept=".pdf,.jpg,.png"
+                    />
                   </div>
                 </div>
                 <div class="upload-field">
                   <label for="doc_rep_ic">Kad Pengenalan Wakil</label>
                   <div class="upload-box">
-                    <input type="file" class="form-control" id="doc_rep_ic" name="doc_rep_ic" accept=".pdf,.jpg,.png" />
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="doc_rep_ic"
+                      name="doc_rep_ic"
+                      accept=".pdf,.jpg,.png"
+                    />
                   </div>
                 </div>
                 <div class="upload-field">
-                  <label for="doc_rep_authority">Surat Kuasa Wakil Syarikat</label>
+                  <label for="doc_rep_authority"
+                    >Surat Kuasa Wakil Syarikat</label
+                  >
                   <div class="upload-box">
-                    <input type="file" class="form-control" id="doc_rep_authority" name="doc_rep_authority" accept=".pdf,.jpg,.png" />
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="doc_rep_authority"
+                      name="doc_rep_authority"
+                      accept=".pdf,.jpg,.png"
+                    />
                   </div>
                 </div>
               </div>
@@ -254,13 +454,27 @@
                 <div class="upload-field">
                   <label for="doc_ic">Salinan Kad Pengenalan</label>
                   <div class="upload-box">
-                    <input type="file" class="form-control" id="doc_ic" name="doc_ic" accept=".pdf,.jpg,.png" />
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="doc_ic"
+                      name="doc_ic"
+                      accept=".pdf,.jpg,.png"
+                    />
                   </div>
                 </div>
                 <div class="upload-field">
-                  <label for="doc_business_license_ind">Salinan Lesen Perniagaan</label>
+                  <label for="doc_business_license_ind"
+                    >Salinan Lesen Perniagaan</label
+                  >
                   <div class="upload-box">
-                    <input type="file" class="form-control" id="doc_business_license_ind" name="doc_business_license_ind" accept=".pdf,.jpg,.png" />
+                    <input
+                      type="file"
+                      class="form-control"
+                      id="doc_business_license_ind"
+                      name="doc_business_license_ind"
+                      accept=".pdf,.jpg,.png"
+                    />
                   </div>
                 </div>
               </div>
@@ -277,40 +491,83 @@
               <div class="row g-3">
                 <div class="col-12">
                   <label class="form-label" for="s_email">E-mel</label>
-                  <input type="email" class="form-control" id="s_email" name="s_email" autocomplete="email" required />
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="s_email"
+                    name="s_email"
+                    autocomplete="email"
+                    required
+                  />
                 </div>
                 <div class="col-md-6">
                   <label class="form-label" for="s_pass">Kata laluan</label>
                   <div class="input-icon">
-                    <input type="password" class="form-control" id="s_pass" name="s_pass" autocomplete="new-password" minlength="8" required />
-                    <button type="button" class="toggle-pass" aria-label="Tunjukkan kata laluan" data-toggle-pass="#s_pass">
+                    <input
+                      type="password"
+                      class="form-control"
+                      id="s_pass"
+                      name="s_pass"
+                      autocomplete="new-password"
+                      minlength="8"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="toggle-pass"
+                      aria-label="Tunjukkan kata laluan"
+                      data-toggle-pass="#s_pass"
+                    >
                       <i class="bi bi-eye"></i>
                     </button>
                   </div>
                   <div class="form-text">Sekurang-kurangnya 8 aksara.</div>
                 </div>
                 <div class="col-md-6">
-                  <label class="form-label" for="s_pass2">Sahkan kata laluan</label>
-                  <input type="password" class="form-control" id="s_pass2" name="s_pass2" autocomplete="new-password" minlength="8" required />
+                  <label class="form-label" for="s_pass2"
+                    >Sahkan kata laluan</label
+                  >
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="s_pass2"
+                    name="s_pass2"
+                    autocomplete="new-password"
+                    minlength="8"
+                    required
+                  />
                 </div>
               </div>
 
               <div class="wizard-section">
                 <h3 class="wizard-section-title">Perakuan</h3>
                 <p class="wizard-section-hint">
-                  Sila baca dan setuju dengan perakuan di bawah sebelum menghantar.
+                  Sila baca dan setuju dengan perakuan di bawah sebelum
+                  menghantar.
                 </p>
 
                 <div class="form-check mb-2">
-                  <input class="form-check-input" type="checkbox" id="decl" name="decl" required />
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="decl"
+                    name="decl"
+                    required
+                  />
                   <label class="form-check-label" for="decl">
-                    Saya mengaku bahawa maklumat di atas adalah benar. Saya faham
-                    bahawa memberikan maklumat palsu adalah suatu kesalahan di
-                    bawah Enakmen.
+                    Saya mengaku bahawa maklumat di atas adalah benar. Saya
+                    faham bahawa memberikan maklumat palsu adalah suatu
+                    kesalahan di bawah Enakmen.
                   </label>
                 </div>
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="terms" name="terms" required />
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="terms"
+                    name="terms"
+                    required
+                  />
                   <label class="form-check-label" for="terms">
                     Saya bersetuju dengan <a href="#">terma penggunaan</a> dan
                     <a href="#">notis privasi</a>.
@@ -318,22 +575,36 @@
                 </div>
               </div>
             </section>
-
           </div>
 
           <!-- FOOTER -->
           <div class="wizard-foot">
-            <button type="button" class="wizard-skip" id="wizard-skip" hidden>
+            <button type="button" class="wizard-skip btn-secondary" id="wizard-skip" hidden>
               Langkau langkah ini
             </button>
+            <div class="" >
+              <span style = "color: var(--color-muted); font-size: 0.82rem;">Ingat Akaun?</span>
+              <a href="index.html" class = "form-label" style = "color: var(--bs-body-color); ">Log masuk</a>
+             
+            </div>
             <div class="wizard-actions">
-              <button type="button" class="btn btn-outline-primary" id="wizard-prev" hidden>
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                id="wizard-prev"
+                hidden
+              >
                 <i class="bi bi-arrow-left"></i>Kembali
               </button>
               <button type="button" class="btn btn-primary" id="wizard-next">
                 Seterusnya<i class="bi bi-arrow-right"></i>
               </button>
-              <button type="submit" class="btn btn-primary" id="wizard-submit" hidden>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                id="wizard-submit"
+                hidden
+              >
                 Cipta akaun<i class="bi bi-check-lg"></i>
               </button>
             </div>
@@ -481,6 +752,8 @@
           renderStep();
         });
 
+      
+
         /* ---------- Type switch ---------- */
         form
           .querySelectorAll('[name="account_type"]')
@@ -488,7 +761,8 @@
             radio.addEventListener("change", function () {
               syncTypeSections();
               var active = getActiveSteps();
-              if (currentIndex >= active.length) currentIndex = active.length - 1;
+              if (currentIndex >= active.length)
+                currentIndex = active.length - 1;
               renderStep();
             });
           });
@@ -506,12 +780,19 @@
         });
 
         /* ---------- Submit ---------- */
-        form.addEventListener("submit", function (e) {
-          e.preventDefault();
-          if (!validateCurrentStep()) return;
+       form.addEventListener("submit", function (e) {
+        e.preventDefault();
 
-          // TODO: send to backend here. For now, just navigate.
-          window.location.href = "index.html";
+        // Validate only the current step
+        if (!validateCurrentStep()) return;
+
+        // Read the signup email (works whether you're on the login step or not)
+        var email = (form.elements.s_email && form.elements.s_email.value) || "";
+
+        // TODO: send payload to backend here before navigating.
+
+        window.location.href =
+            "verify-email.html?email=" + encodeURIComponent(email);
         });
 
         /* ---------- Init ---------- */

@@ -35,6 +35,71 @@
   background: var(--color-surface-2); border: 1px solid var(--color-border); color: var(--color-muted); }
 .btn-icon:hover { background: var(--color-primary-50); color: var(--color-primary-700); }
 
+
+/* Secondary buttons — warm neutral, sits alongside primary */
+.btn-secondary {
+  --bs-btn-bg: var(--color-primary-100);
+  --bs-btn-border-color: var(--color-primary-100);
+  --bs-btn-color: var(--color-primary-800);
+  --bs-btn-hover-bg: var(--color-primary-200);
+  --bs-btn-hover-border-color: var(--color-primary-200);
+  --bs-btn-hover-color: var(--color-primary-900);
+  --bs-btn-active-bg: var(--color-primary-200);
+  --bs-btn-active-border-color: var(--color-primary-200);
+  --bs-btn-active-color: var(--color-primary-900);
+  --bs-btn-disabled-bg: var(--color-primary-100);
+  --bs-btn-disabled-border-color: var(--color-primary-100);
+  --bs-btn-disabled-color: var(--color-primary-800);
+}
+
+.btn-outline-secondary {
+  --bs-btn-color: var(--color-text);
+  --bs-btn-border-color: var(--color-border);
+  --bs-btn-bg: var(--color-surface);
+  --bs-btn-hover-bg: var(--color-surface-2);
+  --bs-btn-hover-color: var(--color-text);
+  --bs-btn-hover-border-color: var(--color-primary-200);
+  --bs-btn-active-bg: var(--color-surface-2);
+  --bs-btn-active-color: var(--color-text);
+  --bs-btn-active-border-color: var(--color-primary-500);
+  --bs-btn-disabled-color: var(--color-muted);
+  --bs-btn-disabled-border-color: var(--color-border);
+}
+
+/* Ghost — text-only, for tertiary actions */
+.btn-ghost {
+  background: transparent;
+  border: 0;
+  color: var(--color-muted);
+  padding-inline: 0.5rem;
+}
+.btn-ghost:hover {
+  background: var(--color-surface-2);
+  color: var(--color-text);
+}
+.btn-ghost:focus-visible {
+  outline: 2px solid var(--color-primary-500);
+  outline-offset: 2px;
+}
+
+/* Soft variants — lighter background pills for secondary actions */
+.btn-soft {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+.btn-soft:hover {
+  background: var(--color-primary-50);
+  border-color: var(--color-primary-200);
+  color: var(--color-primary-800);
+}
+
+/* Small buttons keep the same radius but tighter padding */
+.btn-sm {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.78rem;
+}
+
 /* Forms */
 .form-label { font-weight: 500; font-size: .78rem; margin-bottom: .35rem; }
 .form-control, .form-select {

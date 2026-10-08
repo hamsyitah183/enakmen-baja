@@ -1,0 +1,2312 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/components.css" rel="stylesheet" />
+    <link href="css/dashboard.css" rel="stylesheet" />
+    <link href="css/complete-account.css" rel="stylesheet" />
+    <title>Edit Profil | Portal Pendaftaran Baja</title>
+
+    <style>
+      /* ---- Accordion rows ---- */
+      .onboard-row.as-button {
+        width: 100%;
+        background: none;
+        border: 0;
+        text-align: left;
+        cursor: pointer;
+      }
+      .onboard-row.as-button:focus-visible {
+        outline: 2px solid var(--color-primary-500);
+        outline-offset: -2px;
+        border-radius: var(--radius-md);
+      }
+      .accordion-chevron {
+        transition: transform 0.2s ease;
+      }
+      .onboard-item.is-open .accordion-chevron {
+        transform: rotate(180deg);
+      }
+      .onboard-item.is-open {
+        background: var(--color-surface-2);
+      }
+      .onboard-item.is-open .onboard-row:hover {
+        background: transparent;
+      }
+
+      /* ---- Detail grid (read-only) ---- */
+      .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem 1.5rem;
+        margin: 0;
+      }
+      @media (max-width: 575.98px) {
+        .detail-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .detail-grid .full {
+        grid-column: 1 / -1;
+      }
+      .detail-grid dt {
+        font-size: 0.68rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-muted);
+        margin-bottom: 0.25rem;
+      }
+      .detail-grid dd {
+        font-size: 0.85rem;
+        margin: 0;
+        color: var(--color-text);
+        line-height: 1.5;
+        white-space: pre-line;
+      }
+
+      /* Locked field hint */
+      .locked-note {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.72rem;
+        color: var(--color-muted);
+        background: var(--color-surface-2);
+        border: 1px solid var(--color-border);
+        padding: 0.25rem 0.6rem;
+        border-radius: 999px;
+        margin-bottom: 1rem;
+      }
+      .locked-note i {
+        color: var(--color-warning);
+      }
+
+      /* Editable highlight */
+      .editable-field {
+        border: 1px solid var(--color-primary-200);
+        border-radius: var(--radius-md);
+        padding: 0.9rem 1rem;
+        background: var(--color-primary-50);
+      }
+      .editable-field .form-label {
+        color: var(--color-primary-800);
+      }
+
+      /* Attachment cards (view modal) */
+      .attach-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+        gap: 0.75rem;
+      }
+      .attach-card {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        position: relative;
+        background: var(--color-surface);
+        transition: 0.15s;
+        text-decoration: none;
+        color: inherit;
+      }
+      .attach-card:hover {
+        border-color: var(--color-primary-500);
+        box-shadow: var(--shadow-sm);
+        text-decoration: none;
+        color: inherit;
+      }
+      .attach-card .attach-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-50);
+        color: var(--color-primary-600);
+        font-size: 1rem;
+      }
+      .attach-card .attach-name {
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--color-text);
+      }
+      .attach-card .attach-file {
+        font-size: 0.7rem;
+        color: var(--color-muted);
+        word-break: break-all;
+      }
+      .attach-card .attach-open {
+        position: absolute;
+        top: 0.55rem;
+        right: 0.55rem;
+        color: var(--color-muted);
+        font-size: 0.85rem;
+      }
+      .attach-card.is-empty {
+        background: var(--color-surface-2);
+        border-style: dashed;
+      }
+      .attach-card.is-empty .attach-icon {
+        background: var(--color-surface);
+        color: var(--color-muted);
+      }
+
+      /* Profile list (cawangan / lesen / wakil) */
+      .profile-list {
+        display: grid;
+        gap: 0.55rem;
+      }
+      .profile-list-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.75rem 0.95rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        background: var(--color-surface);
+      }
+      .profile-list-item .item-title {
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: var(--color-text);
+        margin: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .profile-list-item .item-sub {
+        font-size: 0.72rem;
+        color: var(--color-muted);
+        margin: 0.15rem 0 0;
+      }
+      .profile-list-item .item-side {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex: none;
+      }
+
+      /* Meta card */
+      .meta-card {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        padding: 1.25rem;
+        box-shadow: 0 1px 2px rgba(15, 58, 36, 0.04);
+      }
+      .meta-card h4 {
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin: 0 0 0.75rem;
+      }
+      .meta-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.6rem;
+        font-size: 0.78rem;
+        color: var(--color-muted);
+        padding: 0.5rem 0;
+      }
+      .meta-row + .meta-row {
+        border-top: 1px solid var(--color-border);
+      }
+      .meta-row i {
+        color: var(--color-primary-600);
+        font-size: 0.95rem;
+        margin-top: 0.05rem;
+      }
+      .meta-row strong {
+        color: var(--color-text);
+        font-weight: 500;
+        display: block;
+        margin-bottom: 0.1rem;
+      }
+
+      /* Save bar */
+      .save-bar {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 1rem 1.15rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        background: var(--color-surface);
+        box-shadow: 0 1px 2px rgba(15, 58, 36, 0.04);
+        margin-bottom: 1.5rem;
+      }
+      .save-bar .save-text {
+        font-size: 0.8rem;
+        color: var(--color-muted);
+      }
+      .save-bar .save-text.is-dirty {
+        color: var(--color-warning);
+        font-weight: 500;
+      }
+      .save-bar .save-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-left: auto;
+      }
+
+      /* Banner */
+      .edit-banner {
+        position: relative;
+        border-radius: var(--radius-lg);
+        padding: 1.35rem 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--color-primary-600) 0%,
+          var(--color-primary-800) 100%
+        );
+        color: #fff;
+        overflow: hidden;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1.1rem;
+        margin-bottom: 1.25rem;
+      }
+      .edit-banner::after {
+        content: "";
+        position: absolute;
+        right: -70px;
+        top: -70px;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .edit-banner > * {
+        position: relative;
+        z-index: 1;
+      }
+      .edit-banner .edit-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: rgba(255, 255, 255, 0.18);
+        font-size: 1.45rem;
+        flex: none;
+      }
+      .edit-banner h2 {
+        font-size: 1.1rem;
+        margin: 0 0 0.3rem;
+        color: #fff;
+      }
+      .edit-banner p {
+        font-size: 0.82rem;
+        margin: 0;
+        color: rgba(255, 255, 255, 0.9);
+        max-width: 60ch;
+      }
+
+      /* Upload placeholder */
+      .upload-placeholder {
+        border: 1.5px dashed var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 1.25rem 1rem;
+        background: var(--color-surface-2);
+        text-align: center;
+        cursor: pointer;
+        transition: 0.15s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .upload-placeholder:hover {
+        border-color: var(--color-primary-500);
+        background: var(--color-primary-50);
+      }
+      .upload-placeholder .upload-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--color-surface);
+        color: var(--color-primary-600);
+        font-size: 1.05rem;
+      }
+      .upload-placeholder .upload-text {
+        font-size: 0.82rem;
+        color: var(--color-text);
+      }
+      .upload-placeholder .upload-text strong {
+        color: var(--color-primary-700);
+      }
+      .upload-placeholder .upload-hint {
+        font-size: 0.7rem;
+        color: var(--color-muted);
+      }
+
+      .file-list {
+        display: grid;
+        gap: 0.4rem;
+        margin-top: 0.6rem;
+      }
+      .file-list:empty {
+        display: none;
+      }
+      .file-item {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.5rem 0.7rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        background: var(--color-surface);
+        font-size: 0.78rem;
+      }
+      .file-item .file-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-50);
+        color: var(--color-primary-600);
+        flex: none;
+      }
+      .file-item .file-name {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .file-item .file-size {
+        color: var(--color-muted);
+        font-size: 0.7rem;
+        flex: none;
+      }
+      .file-item .file-remove {
+        color: var(--color-muted);
+        background: none;
+        border: 0;
+        padding: 0.15rem 0.3rem;
+        border-radius: 4px;
+      }
+      .file-item .file-remove:hover {
+        color: var(--color-danger);
+        background: var(--color-danger-bg);
+      }
+
+      /* Empty state for reps */
+      .reps-empty {
+        text-align: center;
+        padding: 1.5rem 1rem;
+        color: var(--color-muted);
+        border: 1.5px dashed var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface-2);
+      }
+      .reps-empty i {
+        font-size: 1.4rem;
+        color: var(--color-primary-500);
+        display: block;
+        margin-bottom: 0.35rem;
+      }
+
+      /* ==========================================================
+         VIEW MODAL (branch) — same as complete-account
+         ========================================================== */
+      .view-product {
+        border: 0;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+      }
+      .view-hero {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.25rem 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--color-primary-50) 0%,
+          #eef2ff 100%
+        );
+        position: relative;
+      }
+      .view-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(
+            rgba(255, 255, 255, 0.35) 1px,
+            transparent 1px
+          ),
+          linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.35) 1px,
+            transparent 1px
+          );
+        background-size: 22px 22px;
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      .view-hero > * {
+        position: relative;
+        z-index: 1;
+      }
+      .view-hero-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: #fff;
+        color: var(--color-primary-600);
+        font-size: 1.5rem;
+        box-shadow: var(--shadow-sm);
+        flex: none;
+      }
+      .view-hero-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin: 0 0 0.15rem;
+        letter-spacing: -0.01em;
+      }
+      .view-hero-sub {
+        font-size: 0.78rem;
+        color: var(--color-muted);
+      }
+
+      .view-tabs {
+        padding: 0 1.5rem;
+        border-bottom: 1px solid var(--color-border);
+        gap: 0.25rem;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+      .view-tabs::-webkit-scrollbar {
+        display: none;
+      }
+      .view-tabs .nav-link {
+        border: 0;
+        border-bottom: 2px solid transparent;
+        border-radius: 0;
+        color: var(--color-muted);
+        font-size: 0.82rem;
+        font-weight: 500;
+        padding: 0.85rem 0.75rem;
+        white-space: nowrap;
+      }
+      .view-tabs .nav-link.active {
+        color: var(--color-primary-700);
+        border-bottom-color: var(--color-primary-600);
+        background: none;
+      }
+      .view-product .tab-content {
+        padding: 1.25rem 1.5rem 1.5rem;
+        max-height: 60vh;
+        overflow-y: auto;
+      }
+
+      .detail-list {
+        display: grid;
+        gap: 1rem;
+        margin: 0;
+      }
+      .detail-list dt {
+        font-size: 0.68rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-muted);
+        margin-bottom: 0.25rem;
+      }
+      .detail-list dd {
+        font-size: 0.85rem;
+        margin: 0;
+        color: var(--color-text);
+        line-height: 1.5;
+        white-space: pre-line;
+      }
+      .detail-pair {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      @media (max-width: 575.98px) {
+        .detail-pair {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <script>
+        try {
+          if (localStorage.getItem("sidebar-collapsed") === "1")
+            document.querySelector(".app").classList.add("is-collapsed");
+        } catch (e) {}
+      </script>
+
+      <!-- Bar sisi -->
+      <aside
+        class="sidebar offcanvas-lg offcanvas-start"
+        tabindex="-1"
+        id="sidebar"
+        aria-label="Navigasi utama"
+      >
+        <div class="sidebar-inner">
+          <div class="sidebar-head border-bottom pb-2">
+            <a href="#" class="brand" aria-label="Enakmen Baja Sabah">
+              <span class="brand-mark brand-mark--img">
+                <img src="logo/image.png" alt="" width="40" height="40" />
+              </span>
+              <span class="brand-text">Enakmen Baja Sabah</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-icon sidebar-toggle d-none d-lg-inline-grid"
+              id="sidebar-toggle"
+              aria-controls="sidebar"
+              aria-expanded="true"
+              aria-label="Tutup bar sisi"
+              title="Tutup bar sisi"
+            >
+              <i class="bi bi-layout-sidebar"></i>
+            </button>
+            <button
+              type="button"
+              class="btn-close d-lg-none"
+              data-bs-dismiss="offcanvas"
+              data-bs-target="#sidebar"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <nav class="d-grid gap-1">
+            <a href="#" class="side-link" title="Papan pemuka"
+              ><i class="bi bi-house-door"></i
+              ><span class="side-label">Papan pemuka</span></a
+            >
+            <a href="#" class="side-link" title="Produk saya"
+              ><i class="bi bi-box-seam"></i
+              ><span class="side-label">Produk saya</span></a
+            >
+            <a href="#" class="side-link" title="Lesen"
+              ><i class="bi bi-patch-check"></i
+              ><span class="side-label">Lesen</span></a
+            >
+            <a href="#" class="side-link" title="Permit import"
+              ><i class="bi bi-truck"></i
+              ><span class="side-label">Permit import</span></a
+            >
+            <a href="#" class="side-link" title="Pembayaran"
+              ><i class="bi bi-receipt"></i
+              ><span class="side-label">Pembayaran</span></a
+            >
+            <a href="#" class="side-link" title="Notis dan rayuan"
+              ><i class="bi bi-envelope-exclamation"></i
+              ><span class="side-label">Notis dan rayuan</span
+              ><span class="count pill pill-danger">0</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Bantuan</div>
+          <nav class="d-grid gap-1">
+            <a href="#" class="side-link" title="Daftar awam"
+              ><i class="bi bi-search"></i
+              ><span class="side-label">Daftar awam</span></a
+            >
+            <a href="#" class="side-link" title="Panduan dan fi"
+              ><i class="bi bi-book"></i
+              ><span class="side-label">Panduan dan fi</span></a
+            >
+            <a href="#" class="side-link" title="Sokongan"
+              ><i class="bi bi-headset"></i
+              ><span class="side-label">Sokongan</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Akaun</div>
+          <nav class="d-grid gap-1 mb-3">
+            <a href="#" class="side-link active" title="Profil organisasi"
+              ><i class="bi bi-building"></i
+              ><span class="side-label">Profil organisasi</span></a
+            >
+            <a href="#" class="side-link" title="Tetapan"
+              ><i class="bi bi-gear"></i
+              ><span class="side-label">Tetapan</span></a
+            >
+            <a href="index.html" class="side-link" title="Log keluar"
+              ><i class="bi bi-box-arrow-right"></i
+              ><span class="side-label">Log keluar</span></a
+            >
+          </nav>
+
+          <div class="side-user">
+            <span class="avatar">AH</span>
+            <div class="lh-sm side-user-text">
+              <div class="fw-semibold">Aisyah Hassan</div>
+              <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Utama -->
+      <div class="app-main">
+        <header class="topbar border-bottom">
+          <button
+            class="btn btn-icon d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebar"
+            aria-controls="sidebar"
+            aria-label="Buka menu"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+          <h1 class="h5 mb-0 me-2">Edit profil organisasi</h1>
+          <div class="topbar-search d-none d-md-block input-icon">
+            <i class="bi bi-search"></i>
+            <input
+              type="search"
+              class="form-control"
+              placeholder="Cari produk, lesen atau permit"
+              aria-label="Cari"
+            />
+          </div>
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <button
+              class="btn btn-icon position-relative"
+              type="button"
+              aria-label="Pemberitahuan"
+            >
+              <i class="bi bi-bell"></i><span class="notif-dot"></span>
+            </button>
+
+            <div class="dropdown">
+              <button
+                type="button"
+                class="avatar avatar-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Menu pengguna"
+              >
+                AH
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end user-menu">
+                <li class="user-menu-head">
+                  <div class="fw-semibold">Aisyah Hassan</div>
+                  <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-building me-2"></i>Profil organisasi</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-gear me-2"></i>Tetapan</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="index.html"
+                    ><i class="bi bi-box-arrow-right me-2"></i>Log keluar</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <main class="app-content p-5">
+          <div class="complete-layout">
+            <!-- ============ LEFT ============ -->
+            <div class="complete-main">
+              <!-- ===== Edit banner ===== -->
+              <div class="edit-banner">
+                <span class="edit-icon">
+                  <i class="bi bi-pencil-square"></i>
+                </span>
+                <div class="flex-grow-1">
+                  <h2>Edit maklumat yang dibenarkan sahaja</h2>
+                  <p>
+                    Anda boleh mengemas kini <strong>alamat premis</strong>,
+                    <strong>wakil syarikat</strong>, dan
+                    <strong>cawangan</strong>. Untuk perubahan pada butiran
+                    syarikat, aktiviti lesen atau dokumen sokongan, sila
+                    hubungi DOA.
+                  </p>
+                </div>
+              </div>
+
+              <!-- ===== Save bar (top) ===== -->
+              <div class="save-bar" id="save-bar">
+                <span class="save-text" id="save-text">
+                  Tiada perubahan untuk disimpan.
+                </span>
+                <div class="save-actions">
+                  <button type="button" class="btn btn-outline-secondary btn-sm" id="reset-btn" disabled>
+                    Set semula
+                  </button>
+                  <button type="button" class="btn btn-primary btn-sm" id="save-btn" disabled>
+                    <i class="bi bi-check-lg me-1"></i>Simpan perubahan
+                  </button>
+                </div>
+              </div>
+
+              <!-- ===== CARD 1: Butiran syarikat ===== -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item is-open" data-accordion="company">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="true"
+                    aria-controls="body-company"
+                  >
+                    <span class="onboard-icon is-green">
+                      <i class="bi bi-building"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">Butiran syarikat</h3>
+                      <p class="onboard-desc">
+                        Hanya alamat premis boleh dikemas kini.
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-company">
+                    <span class="locked-note">
+                      <i class="bi bi-lock-fill"></i>
+                      Medan bertanda kunci tidak boleh diubah
+                    </span>
+
+                    <dl class="detail-grid mb-3">
+                      <div>
+                        <dt>Nama Syarikat <i class="bi bi-lock-fill ms-1 text-muted-2"></i></dt>
+                        <dd>Borneo Agro Sdn Bhd</dd>
+                      </div>
+                      <div>
+                        <dt>Nombor Pendaftaran Syarikat (SSM) <i class="bi bi-lock-fill ms-1 text-muted-2"></i></dt>
+                        <dd>202301012345</dd>
+                      </div>
+                      <div>
+                        <dt>Tamat Tempoh SSM <i class="bi bi-lock-fill ms-1 text-muted-2"></i></dt>
+                        <dd>31 Disember 2026</dd>
+                      </div>
+                      <div>
+                        <dt>Nombor Lesen Berniaga <i class="bi bi-lock-fill ms-1 text-muted-2"></i></dt>
+                        <dd>BL-2023-7890</dd>
+                      </div>
+                      <div>
+                        <dt>Tamat Tempoh Lesen Berniaga <i class="bi bi-lock-fill ms-1 text-muted-2"></i></dt>
+                        <dd>31 Disember</dd>
+                      </div>
+                      <div>
+                        <dt>Nombor Lesen Pengilang (MIDA) <i class="bi bi-lock-fill ms-1 text-muted-2"></i></dt>
+                        <dd>MIDA/2023/4567</dd>
+                      </div>
+                      <div>
+                        <dt>Nombor Surat Pengecualian (ICA 10) <i class="bi bi-lock-fill ms-1 text-muted-2"></i></dt>
+                        <dd>ICA10/2023/001</dd>
+                      </div>
+                      <div>
+                        <dt>Nombor Telefon Syarikat <i class="bi bi-lock-fill ms-1 text-muted-2"></i></dt>
+                        <dd>+60 88 123 456</dd>
+                      </div>
+                      <div class="full">
+                        <dt>Alamat E-mel Syarikat <i class="bi bi-lock-fill ms-1 text-muted-2"></i></dt>
+                        <dd>info@borneoagro.com.my</dd>
+                      </div>
+                    </dl>
+
+                    <div class="editable-field">
+                      <label class="form-label" for="premises_address">
+                        <i class="bi bi-pencil-square me-1"></i>
+                        Alamat Premis Berdaftar / Operasi
+                      </label>
+                      <textarea
+                        class="form-control"
+                        id="premises_address"
+                        rows="2"
+                      >Lot 5, Jalan Industri 3, Kawasan Perindustrian Kota Kinabalu, 88450 Kota Kinabalu, Sabah</textarea>
+                      <div class="form-text">
+                        Alamat ini digunakan untuk semua surat-menyurat rasmi
+                        dan lawatan tapak oleh DOA.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ===== CARD 2: Wakil syarikat (can add) ===== -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item is-open" data-accordion="reps">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="true"
+                    aria-controls="body-reps"
+                  >
+                    <span class="onboard-icon is-blue">
+                      <i class="bi bi-person-badge"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">Wakil syarikat</h3>
+                      <p class="onboard-desc" id="reps-desc">
+                        1 wakil syarikat berdaftar
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-reps">
+                    <p class="text-muted-2 small mb-3">
+                      Anda boleh menambah lebih daripada satu wakil syarikat.
+                      Wakil yang telah sedia ada tidak boleh dipadam, tetapi
+                      wakil baharu boleh ditambah.
+                    </p>
+
+                    <div class="d-flex justify-content-end mb-2">
+                      <button
+                        type="button"
+                        class="btn btn-primary btn-sm d-flex align-items-center"
+                        data-bs-toggle="modal"
+                        data-bs-target="#addRepModal"
+                      >
+                        <i class="bi bi-plus-lg me-1"></i>Tambah wakil syarikat
+                      </button>
+                    </div>
+
+                    <div class="profile-list" id="reps-list"></div>
+
+                    <div class="reps-empty" id="reps-empty" hidden>
+                      <i class="bi bi-person-plus"></i>
+                      <p class="mb-0 small">
+                        Belum ada wakil syarikat tambahan.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ===== CARD 3: Cawangan (EDITABLE) ===== -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item is-open" data-accordion="branches">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="true"
+                    aria-controls="body-branches"
+                  >
+                    <span class="onboard-icon is-blue">
+                      <i class="bi bi-shop-window"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">Cawangan</h3>
+                      <p class="onboard-desc" id="branch-desc">
+                        2 cawangan berdaftar
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-branches">
+                    <p class="text-muted-2 small mb-3">
+                      Anda boleh menambah, mengemas kini, atau memadam cawangan
+                      di sini. Perubahan akan dihantar untuk semakan DOA.
+                    </p>
+
+                    <div class="d-flex justify-content-end mb-2">
+                      <button
+                        type="button"
+                        class="btn btn-primary btn-sm d-flex align-items-center"
+                        data-bs-toggle="modal"
+                        data-bs-target="#addBranchModal"
+                      >
+                        <i class="bi bi-plus-lg me-1"></i>Tambah cawangan
+                      </button>
+                    </div>
+
+                    <div class="profile-list" id="branches-list"></div>
+
+                    <div class="reps-empty" id="branches-empty" hidden>
+                      <i class="bi bi-shop"></i>
+                      <p class="mb-0 small">Belum ada cawangan didaftarkan.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ===== CARD 4: Aktiviti lesen (locked) ===== -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item" data-accordion="licenses">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="false"
+                    aria-controls="body-licenses"
+                  >
+                    <span class="onboard-icon">
+                      <i class="bi bi-patch-check"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">
+                        Aktiviti lesen
+                        <span class="pill pill-muted ms-2">
+                          <i class="bi bi-lock-fill"></i>Tidak boleh diubah
+                        </span>
+                      </h3>
+                      <p class="onboard-desc">4 aktiviti lesen didaftarkan</p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-licenses" hidden>
+                    <span class="locked-note">
+                      <i class="bi bi-lock-fill"></i>
+                      Aktiviti lesen tidak boleh diubah selepas didaftarkan
+                    </span>
+
+                    <div class="profile-list">
+                      <div class="profile-list-item">
+                        <div>
+                          <div class="item-title">
+                            <i class="bi bi-box-arrow-in-down text-muted-2"></i>
+                            Pengimport
+                          </div>
+                          <div class="item-sub">2 fail dilampirkan</div>
+                        </div>
+                        <div class="item-side">
+                          <span class="pill pill-success">Aktif</span>
+                        </div>
+                      </div>
+
+                      <div class="profile-list-item">
+                        <div>
+                          <div class="item-title">
+                            <i class="bi bi-box-arrow-up-right text-muted-2"></i>
+                            Pengeksport
+                          </div>
+                          <div class="item-sub">1 fail dilampirkan</div>
+                        </div>
+                        <div class="item-side">
+                          <span class="pill pill-success">Aktif</span>
+                        </div>
+                      </div>
+
+                      <div class="profile-list-item">
+                        <div>
+                          <div class="item-title">
+                            <i class="bi bi-gear-wide-connected text-muted-2"></i>
+                            Pengilang
+                          </div>
+                          <div class="item-sub">3 fail dilampirkan</div>
+                        </div>
+                        <div class="item-side">
+                          <span class="pill pill-success">Aktif</span>
+                        </div>
+                      </div>
+
+                      <div class="profile-list-item">
+                        <div>
+                          <div class="item-title">
+                            <i class="bi bi-shop text-muted-2"></i>
+                            Penjual
+                          </div>
+                          <div class="item-sub">2 fail dilampirkan</div>
+                        </div>
+                        <div class="item-side">
+                          <span class="pill pill-success">Aktif</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ===== CARD 5: Dokumen sokongan (locked) ===== -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item" data-accordion="docs">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="false"
+                    aria-controls="body-docs"
+                  >
+                    <span class="onboard-icon is-amber">
+                      <i class="bi bi-folder2-open"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">
+                        Dokumen sokongan
+                        <span class="pill pill-muted ms-2">
+                          <i class="bi bi-lock-fill"></i>Tidak boleh diubah
+                        </span>
+                      </h3>
+                      <p class="onboard-desc">6 dokumen telah dimuat naik</p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-docs" hidden>
+                    <span class="locked-note">
+                      <i class="bi bi-lock-fill"></i>
+                      Dokumen sokongan tidak boleh dipadam atau ditukar
+                    </span>
+
+                    <div class="attach-grid">
+                      <a href="#" class="attach-card">
+                        <span class="attach-open"><i class="bi bi-box-arrow-up-right"></i></span>
+                        <span class="attach-icon"><i class="bi bi-file-earmark-text"></i></span>
+                        <div class="attach-name">Sijil Pendaftaran Syarikat</div>
+                        <div class="attach-file">ssm_cert.pdf</div>
+                      </a>
+                      <a href="#" class="attach-card">
+                        <span class="attach-open"><i class="bi bi-box-arrow-up-right"></i></span>
+                        <span class="attach-icon"><i class="bi bi-file-earmark-text"></i></span>
+                        <div class="attach-name">Lesen Perniagaan</div>
+                        <div class="attach-file">business_license.pdf</div>
+                      </a>
+                      <a href="#" class="attach-card">
+                        <span class="attach-open"><i class="bi bi-box-arrow-up-right"></i></span>
+                        <span class="attach-icon"><i class="bi bi-file-earmark-text"></i></span>
+                        <div class="attach-name">Lesen Pengilang (MIDA)</div>
+                        <div class="attach-file">mida_license.pdf</div>
+                      </a>
+                      <a href="#" class="attach-card">
+                        <span class="attach-open"><i class="bi bi-box-arrow-up-right"></i></span>
+                        <span class="attach-icon"><i class="bi bi-file-earmark-text"></i></span>
+                        <div class="attach-name">Surat Pengecualian (ICA 10)</div>
+                        <div class="attach-file">ica10.pdf</div>
+                      </a>
+                      <a href="#" class="attach-card">
+                        <span class="attach-open"><i class="bi bi-box-arrow-up-right"></i></span>
+                        <span class="attach-icon"><i class="bi bi-file-earmark-text"></i></span>
+                        <div class="attach-name">Kad Pengenalan Wakil</div>
+                        <div class="attach-file">rep_ic.pdf</div>
+                      </a>
+                      <a href="#" class="attach-card">
+                        <span class="attach-open"><i class="bi bi-box-arrow-up-right"></i></span>
+                        <span class="attach-icon"><i class="bi bi-file-earmark-text"></i></span>
+                        <div class="attach-name">Surat Kuasa Wakil</div>
+                        <div class="attach-file">authority_letter.pdf</div>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Save bar (bottom) -->
+              <div class="save-bar" id="save-bar-bottom">
+                <span class="save-text" id="save-text-bottom">
+                  Tiada perubahan untuk disimpan.
+                </span>
+                <div class="save-actions">
+                  <button
+                    type="button"
+                    class="btn btn-outline-secondary btn-sm"
+                    id="reset-btn-bottom"
+                    disabled
+                  >
+                    Set semula
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-sm"
+                    id="save-btn-bottom"
+                    disabled
+                  >
+                    <i class="bi bi-check-lg me-1"></i>Simpan perubahan
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ============ RIGHT: Info ============ -->
+            <aside class="stepper-aside">
+              <div class="meta-card mb-3">
+                <h4>Had penyuntingan</h4>
+                <div class="meta-row">
+                  <i class="bi bi-check-circle-fill" style="color: var(--color-primary-600)"></i>
+                  <div>
+                    <strong>Alamat premis</strong>
+                    Boleh dikemas kini
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-check-circle-fill" style="color: var(--color-primary-600)"></i>
+                  <div>
+                    <strong>Wakil syarikat</strong>
+                    Boleh tambah wakil baharu
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-check-circle-fill" style="color: var(--color-primary-600)"></i>
+                  <div>
+                    <strong>Cawangan</strong>
+                    Boleh tambah, edit, dan padam
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-lock-fill" style="color: var(--color-warning)"></i>
+                  <div>
+                    <strong>Butiran syarikat</strong>
+                    Tidak boleh diubah
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-lock-fill" style="color: var(--color-warning)"></i>
+                  <div>
+                    <strong>Aktiviti lesen</strong>
+                    Tidak boleh diubah
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-lock-fill" style="color: var(--color-warning)"></i>
+                  <div>
+                    <strong>Dokumen sokongan</strong>
+                    Tidak boleh diubah
+                  </div>
+                </div>
+              </div>
+
+              <div class="meta-card mb-3">
+                <h4>Maklumat rekod</h4>
+                <div class="meta-row">
+                  <i class="bi bi-calendar-check"></i>
+                  <div>
+                    <strong>Didaftarkan pada</strong>
+                    15 Januari 2024, 10:30 AM
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-clock-history"></i>
+                  <div>
+                    <strong>Kemas kini terakhir</strong>
+                    20 Februari 2024, 3:45 PM
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-patch-check-fill"></i>
+                  <div>
+                    <strong>Status</strong>
+                    Disahkan oleh DOA
+                  </div>
+                </div>
+              </div>
+
+              <div class="help-box">
+                <span class="help-icon"><i class="bi bi-question-lg"></i></span>
+                <h4>Perlukan perubahan lain?</h4>
+                <p>
+                  Untuk mengemas kini butiran syarikat, aktiviti lesen atau
+                  dokumen sokongan, sila hubungi DOA secara terus.
+                </p>
+                <button type="button" class="btn btn-outline-primary btn-sm">
+                  Hubungi DOA
+                </button>
+              </div>
+            </aside>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         Modal: Tambah / Edit wakil syarikat
+         ========================================================= -->
+    <div class="modal fade" id="addRepModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <form id="add-rep-form">
+            <div class="modal-header">
+              <h5 class="modal-title" id="rep-modal-title">Tambah wakil syarikat</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <p class="text-muted-2 small mb-3">
+                Semua medan bertanda <strong>*</strong> adalah wajib. Maklumat
+                wakil akan disemak semula oleh DOA.
+              </p>
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="r_name">Nama Wakil Syarikat <span class="text-danger">*</span></label>
+                  <input class="form-control" id="r_name" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="r_ic">No. KP Wakil Syarikat <span class="text-danger">*</span></label>
+                  <input class="form-control" id="r_ic" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="r_role">Jawatan <span class="text-danger">*</span></label>
+                  <input class="form-control" id="r_role" placeholder="cth. Pengarah" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="r_phone">Nombor Telefon</label>
+                  <input type="tel" class="form-control" id="r_phone" placeholder="+60" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="r_email">Alamat E-mel</label>
+                  <input type="email" class="form-control" id="r_email" />
+                </div>
+              </div>
+
+              <div class="mt-3">
+                <label class="form-label">Lampiran</label>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="upload-placeholder" for="r_ic_file">
+                      <input type="file" id="r_ic_file" accept=".pdf,.jpg,.jpeg,.png" hidden />
+                      <span class="upload-icon"><i class="bi bi-cloud-arrow-up"></i></span>
+                      <div class="upload-text">
+                        <strong>Kad Pengenalan</strong>
+                        <span class="d-block text-muted-2 small">PDF, JPG, PNG</span>
+                      </div>
+                    </label>
+                    <div class="file-list" data-list-for="r_ic_file"></div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="upload-placeholder" for="r_auth_file">
+                      <input type="file" id="r_auth_file" accept=".pdf,.jpg,.jpeg,.png" hidden />
+                      <span class="upload-icon"><i class="bi bi-cloud-arrow-up"></i></span>
+                      <div class="upload-text">
+                        <strong>Surat Kuasa Wakil</strong>
+                        <span class="d-block text-muted-2 small">PDF, JPG, PNG</span>
+                      </div>
+                    </label>
+                    <div class="file-list" data-list-for="r_auth_file"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
+                Batal
+              </button>
+              <button type="submit" class="btn btn-primary" id="rep-submit-btn">
+                <i class="bi bi-plus-lg me-1"></i>Tambah wakil
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         Modal: Tambah / Edit cawangan
+         ========================================================= -->
+    <div class="modal fade" id="addBranchModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+          <form id="add-branch-form">
+            <div class="modal-header">
+              <h5 class="modal-title" id="branch-modal-title">Tambah cawangan</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Jenis cawangan</label>
+                <div class="row g-2">
+                  <div class="col-6">
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="b_type"
+                      id="bt-individual"
+                      value="Individu"
+                      checked
+                    />
+                    <label class="btn btn-outline-primary w-100" for="bt-individual">
+                      <i class="bi bi-person me-1"></i>Individu
+                    </label>
+                  </div>
+                  <div class="col-6">
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="b_type"
+                      id="bt-company"
+                      value="Syarikat"
+                    />
+                    <label class="btn btn-outline-primary w-100" for="bt-company">
+                      <i class="bi bi-building me-1"></i>Syarikat
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-section-title">Butiran cawangan</div>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="b_name">Nama cawangan <span class="text-danger">*</span></label>
+                  <input class="form-control" id="b_name" required />
+                </div>
+
+                <div class="col-md-6" data-branch-for="Individu">
+                  <label class="form-label" for="b_owner_name">Nama penuh pemilik</label>
+                  <input class="form-control" id="b_owner_name" />
+                </div>
+                <div class="col-md-6" data-branch-for="Individu">
+                  <label class="form-label" for="b_owner_ic">No. kad pengenalan</label>
+                  <input class="form-control" id="b_owner_ic" />
+                </div>
+
+                <div class="col-md-6" data-branch-for="Syarikat" hidden>
+                  <label class="form-label" for="b_company_name">Nama syarikat</label>
+                  <input class="form-control" id="b_company_name" />
+                </div>
+                <div class="col-md-6" data-branch-for="Syarikat" hidden>
+                  <label class="form-label" for="b_company_ssm">No. pendaftaran SSM</label>
+                  <input class="form-control" id="b_company_ssm" />
+                </div>
+
+                <div class="col-12">
+                  <label class="form-label" for="b_address">Alamat <span class="text-danger">*</span></label>
+                  <textarea class="form-control" id="b_address" rows="2" required></textarea>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="b_phone">Nombor telefon</label>
+                  <input type="tel" class="form-control" id="b_phone" />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="b_email">Alamat e-mel</label>
+                  <input type="email" class="form-control" id="b_email" />
+                </div>
+              </div>
+
+              <div class="modal-section-title">Lampiran</div>
+              <div class="mb-2">
+                <label class="form-label" for="b_files">Dokumen sokongan cawangan</label>
+                <label class="upload-placeholder" for="b_files" id="b_upload_box">
+                  <input type="file" id="b_files" multiple accept=".pdf,.jpg,.jpeg,.png" hidden />
+                  <span class="upload-icon"><i class="bi bi-cloud-arrow-up"></i></span>
+                  <div class="upload-text">
+                    <strong>Klik untuk muat naik</strong>
+                    <span> atau seret fail ke sini</span>
+                  </div>
+                  <div class="upload-hint">
+                    Cth. salinan kad pengenalan / sijil SSM, lesen perniagaan, gambar premis
+                  </div>
+                </label>
+                <div class="file-list" id="b_file_list"></div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">
+                Batal
+              </button>
+              <button type="submit" class="btn btn-primary" id="branch-submit-btn">
+                <i class="bi bi-plus-lg me-1"></i>Tambah cawangan
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         Modal: Lihat cawangan (tabs)
+         ========================================================= -->
+    <div class="modal fade" id="viewBranchModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content view-product">
+          <div class="view-hero">
+            <span class="view-hero-icon">
+              <i class="bi bi-shop-window"></i>
+            </span>
+            <div class="flex-grow-1 min-w-0">
+              <h5 class="view-hero-title" id="vb_title">Nama Cawangan</h5>
+              <div class="view-hero-sub" id="vb_type">Jenis</div>
+            </div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <ul class="nav view-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="vb-tab-details"
+                data-bs-toggle="tab"
+                data-bs-target="#vb-details-pane"
+                type="button"
+                role="tab"
+              >
+                <i class="bi bi-info-circle me-1"></i>Butiran Cawangan
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="vb-tab-attachments"
+                data-bs-toggle="tab"
+                data-bs-target="#vb-attachments-pane"
+                type="button"
+                role="tab"
+              >
+                <i class="bi bi-paperclip me-1"></i>Lampiran
+              </button>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div
+              class="tab-pane fade show active"
+              id="vb-details-pane"
+              role="tabpanel"
+            >
+              <dl class="detail-list" id="vb-details-list"></dl>
+            </div>
+
+            <div class="tab-pane fade" id="vb-attachments-pane" role="tabpanel">
+              <div class="attach-grid" id="vb-attachments-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /* ===== Sidebar toggle ===== */
+      (function () {
+        var app = document.querySelector(".app");
+        var btn = app.querySelector("#sidebar-toggle");
+        var KEY = "sidebar-collapsed";
+
+        function sync() {
+          var collapsed = app.classList.contains("is-collapsed");
+          var label = collapsed ? "Buka bar sisi" : "Tutup bar sisi";
+          btn.setAttribute("aria-expanded", String(!collapsed));
+          btn.setAttribute("aria-label", label);
+          btn.title = label;
+        }
+
+        btn.addEventListener("click", function () {
+          app.classList.toggle("is-collapsed");
+          sync();
+          try {
+            localStorage.setItem(
+              KEY,
+              app.classList.contains("is-collapsed") ? "1" : "0",
+            );
+          } catch (e) {}
+        });
+
+        sync();
+      })();
+
+      /* ===== Accordion ===== */
+      (function () {
+        document.querySelectorAll(".onboard-card").forEach(function (card) {
+          var items = card.querySelectorAll(".onboard-item[data-accordion]");
+
+          items.forEach(function (item) {
+            var toggle = item.querySelector(".onboard-row.as-button");
+            var body = item.querySelector(".onboard-body");
+            if (!toggle) return;
+
+            toggle.addEventListener("click", function () {
+              var isOpen = item.classList.contains("is-open");
+
+              items.forEach(function (other) {
+                if (other === item) return;
+                other.classList.remove("is-open");
+                var t = other.querySelector(".onboard-row.as-button");
+                var b = other.querySelector(".onboard-body");
+                if (t) t.setAttribute("aria-expanded", "false");
+                if (b) b.hidden = true;
+              });
+
+              if (isOpen) {
+                item.classList.remove("is-open");
+                toggle.setAttribute("aria-expanded", "false");
+                if (body) body.hidden = true;
+              } else {
+                item.classList.add("is-open");
+                toggle.setAttribute("aria-expanded", "true");
+                if (body) body.hidden = false;
+              }
+            });
+          });
+        });
+      })();
+
+      /* ===== Shared helpers ===== */
+      function escapeHtml(s) {
+        return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+          return {
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;",
+          }[c];
+        });
+      }
+
+      function formatBytes(bytes) {
+        if (!bytes) return "0 B";
+        var k = 1024;
+        var sizes = ["B", "KB", "MB", "GB"];
+        var i = Math.floor(Math.log(bytes) / Math.log(k));
+        return (
+          (bytes / Math.pow(k, i)).toFixed(i === 0 ? 0 : 1) + " " + sizes[i]
+        );
+      }
+
+      function iconForFile(name) {
+        var ext = (name || "").split(".").pop().toLowerCase();
+        if (ext === "pdf") return "bi-file-earmark-pdf";
+        if (["jpg", "jpeg", "png", "gif", "webp"].indexOf(ext) !== -1)
+          return "bi-file-earmark-image";
+        return "bi-file-earmark";
+      }
+
+      /* ===== Upload helper (drag & drop, multi-file) ===== */
+      function bindUpload(opts) {
+        var box = document.getElementById(opts.boxId);
+        var input = document.getElementById(opts.inputId);
+        var list = document.getElementById(opts.listId);
+        var files = [];
+
+        function render() {
+          list.innerHTML = "";
+          files.forEach(function (f, i) {
+            var row = document.createElement("div");
+            row.className = "file-item";
+            row.innerHTML =
+              '<span class="file-icon"><i class="bi ' +
+              iconForFile(f.name) +
+              '"></i></span>' +
+              '<span class="file-name" title="' +
+              escapeHtml(f.name) +
+              '">' +
+              escapeHtml(f.name) +
+              "</span>" +
+              '<span class="file-size">' +
+              formatBytes(f.size) +
+              "</span>" +
+              '<button type="button" class="file-remove" data-remove-file="' +
+              i +
+              '" aria-label="Buang"><i class="bi bi-x-lg"></i></button>';
+            list.appendChild(row);
+          });
+        }
+
+        function add(fileList) {
+          Array.prototype.forEach.call(fileList, function (file) {
+            files.push({ file: file, name: file.name, size: file.size });
+          });
+          render();
+        }
+
+        input.addEventListener("change", function () {
+          add(this.files);
+          this.value = "";
+        });
+
+        ["dragenter", "dragover"].forEach(function (evt) {
+          box.addEventListener(evt, function (e) {
+            e.preventDefault();
+            box.classList.add("is-dragover");
+          });
+        });
+        ["dragleave", "drop"].forEach(function (evt) {
+          box.addEventListener(evt, function (e) {
+            e.preventDefault();
+            box.classList.remove("is-dragover");
+          });
+        });
+        box.addEventListener("drop", function (e) {
+          if (e.dataTransfer && e.dataTransfer.files)
+            add(e.dataTransfer.files);
+        });
+
+        list.addEventListener("click", function (e) {
+          var b = e.target.closest("[data-remove-file]");
+          if (!b) return;
+          files.splice(parseInt(b.getAttribute("data-remove-file"), 10), 1);
+          render();
+        });
+
+        return {
+          get: function () {
+            return files.map(function (f) {
+              return { name: f.name, size: f.size };
+            });
+          },
+          reset: function () {
+            files = [];
+            render();
+          },
+        };
+      }
+
+      /* ===== Edit state & save bar ===== */
+      (function () {
+        var premisesInput = document.getElementById("premises_address");
+        var originalPremises = premisesInput.value;
+
+        // Seed: existing rep (read-only)
+        var existingReps = [
+          {
+            id: "existing-1",
+            name: "Aisyah Hassan",
+            ic: "900101-12-3456",
+            role: "Pengarah Urusan",
+            phone: "+60 12 345 6789",
+            email: "aisyah@borneoagro.com.my",
+            isNew: false,
+          },
+        ];
+        var newReps = [];
+
+        // Seed: existing branches
+        var existingBranches = [
+          {
+            id: "br-1",
+            type: "Syarikat",
+            name: "Cawangan Kota Kinabalu",
+            ownerName: "",
+            ownerIc: "",
+            companyName: "Borneo Agro Sdn Bhd",
+            companySsm: "202301012345",
+            address:
+              "Lot 10, Jalan Industri 5, Kawasan Perindustrian Kota Kinabalu, 88450 Kota Kinabalu, Sabah",
+            phone: "+60 88 456 789",
+            email: "kk@borneoagro.com.my",
+            files: [
+              { name: "sijil_ssm_cawangan_kk.pdf", size: 245000 },
+              { name: "gambar_premis_kk.jpg", size: 1240000 },
+            ],
+            isNew: false,
+            isDeleted: false,
+            isEdited: false,
+          },
+          {
+            id: "br-2",
+            type: "Individu",
+            name: "Cawangan Sandakan",
+            ownerName: "Lim Wei Ming",
+            ownerIc: "880202-12-5566",
+            companyName: "",
+            companySsm: "",
+            address:
+              "Lot 5, Jalan Pelabuhan, Pusat Bandar Sandakan, 90000 Sandakan, Sabah",
+            phone: "+60 89 222 333",
+            email: "sandakan@borneoagro.com.my",
+            files: [{ name: "kad_pengenalan.pdf", size: 180000 }],
+            isNew: false,
+            isDeleted: false,
+            isEdited: false,
+          },
+        ];
+        var newBranches = [];
+
+        /* ---------- DOM refs ---------- */
+        var repsListEl = document.getElementById("reps-list");
+        var repsEmptyEl = document.getElementById("reps-empty");
+        var repsDescEl = document.getElementById("reps-desc");
+
+        var branchesListEl = document.getElementById("branches-list");
+        var branchesEmptyEl = document.getElementById("branches-empty");
+        var branchesDescEl = document.getElementById("branch-desc");
+
+        var saveBtns = [
+          document.getElementById("save-btn"),
+          document.getElementById("save-btn-bottom"),
+        ];
+        var resetBtns = [
+          document.getElementById("reset-btn"),
+          document.getElementById("reset-btn-bottom"),
+        ];
+        var saveTexts = [
+          document.getElementById("save-text"),
+          document.getElementById("save-text-bottom"),
+        ];
+
+        /* ---------- Reps render ---------- */
+        function renderReps() {
+          repsListEl.innerHTML = "";
+
+          var allReps = existingReps.concat(newReps);
+          if (allReps.length === 0) {
+            repsEmptyEl.hidden = false;
+            repsDescEl.textContent = "Belum ada wakil syarikat didaftarkan.";
+            return;
+          }
+          repsEmptyEl.hidden = true;
+          repsDescEl.textContent = allReps.length + " wakil syarikat berdaftar";
+
+          allReps.forEach(function (r) {
+            var row = document.createElement("div");
+            row.className = "profile-list-item";
+            row.innerHTML =
+              '<div class="flex-grow-1 min-w-0">' +
+              '<div class="item-title">' +
+              escapeHtml(r.name) +
+              "</div>" +
+              '<div class="item-sub">' +
+              escapeHtml(r.role) +
+              " &middot; " +
+              escapeHtml(r.ic) +
+              (r.phone ? " &middot; " + escapeHtml(r.phone) : "") +
+              "</div>" +
+              "</div>" +
+              '<div class="item-side">' +
+              (r.isNew
+                ? '<span class="pill pill-warning">Baharu</span>' +
+                  '<button type="button" class="btn btn-icon" data-remove-rep="' +
+                  r.id +
+                  '" aria-label="Buang"><i class="bi bi-trash"></i></button>'
+                : '<span class="pill pill-success">Disahkan</span>') +
+              "</div>";
+            repsListEl.appendChild(row);
+          });
+        }
+
+        /* ---------- Branches render ---------- */
+        function visibleBranches() {
+          return existingBranches
+            .filter(function (b) {
+              return !b.isDeleted;
+            })
+            .concat(newBranches);
+        }
+
+        function renderBranches() {
+          branchesListEl.innerHTML = "";
+          var list = visibleBranches();
+
+          if (list.length === 0) {
+            branchesEmptyEl.hidden = false;
+            branchesDescEl.textContent = "Belum ada cawangan didaftarkan.";
+            return;
+          }
+          branchesEmptyEl.hidden = true;
+          branchesDescEl.textContent = list.length + " cawangan berdaftar";
+
+          list.forEach(function (b) {
+            var row = document.createElement("div");
+            row.className = "profile-list-item";
+
+            var badges = "";
+            if (b.isNew) badges += '<span class="pill pill-warning">Baharu</span>';
+            else if (b.isEdited) badges += '<span class="pill pill-info">Dikemas kini</span>';
+            else badges += '<span class="pill pill-success">Aktif</span>';
+
+            row.innerHTML =
+              '<div class="flex-grow-1 min-w-0">' +
+              '<div class="item-title">' +
+              '<i class="bi ' +
+              (b.type === "Syarikat" ? "bi-building" : "bi-person") +
+              ' text-muted-2"></i>' +
+              escapeHtml(b.name) +
+              "</div>" +
+              '<div class="item-sub">' +
+              escapeHtml(b.type) +
+              " &middot; " +
+              escapeHtml(b.address) +
+              "</div>" +
+              "</div>" +
+              '<div class="item-side">' +
+              badges +
+              '<button type="button" class="btn btn-icon" data-view-branch="' +
+              b.id +
+              '" aria-label="Lihat"><i class="bi bi-eye"></i></button>' +
+              '<button type="button" class="btn btn-icon" data-edit-branch="' +
+              b.id +
+              '" aria-label="Edit"><i class="bi bi-pencil"></i></button>' +
+              '<button type="button" class="btn btn-icon" data-delete-branch="' +
+              b.id +
+              '" aria-label="Padam"><i class="bi bi-trash"></i></button>' +
+              "</div>";
+            branchesListEl.appendChild(row);
+          });
+        }
+
+        function findBranch(id) {
+          var b = existingBranches.find(function (x) {
+            return x.id === id;
+          });
+          if (b) return b;
+          return newBranches.find(function (x) {
+            return x.id === id;
+          });
+        }
+
+        /* ---------- Save bar state ---------- */
+        function isDirty() {
+          var premisesDirty =
+            premisesInput.value.trim() !== originalPremises.trim();
+          var repsDirty = newReps.length > 0;
+          var branchesDirty =
+            newBranches.length > 0 ||
+            existingBranches.some(function (b) {
+              return b.isDeleted || b.isEdited;
+            });
+          return premisesDirty || repsDirty || branchesDirty;
+        }
+
+        function updateSaveBar() {
+          var dirty = isDirty();
+
+          saveBtns.forEach(function (b) {
+            b.disabled = !dirty;
+          });
+          resetBtns.forEach(function (b) {
+            b.disabled = !dirty;
+          });
+          saveTexts.forEach(function (t) {
+            if (dirty) {
+              t.textContent = "Anda mempunyai perubahan yang belum disimpan.";
+              t.classList.add("is-dirty");
+            } else {
+              t.textContent = "Tiada perubahan untuk disimpan.";
+              t.classList.remove("is-dirty");
+            }
+          });
+        }
+
+        premisesInput.addEventListener("input", updateSaveBar);
+
+        /* ---------- Reps: add / remove ---------- */
+        repsListEl.addEventListener("click", function (e) {
+          var b = e.target.closest("[data-remove-rep]");
+          if (!b) return;
+          var id = b.getAttribute("data-remove-rep");
+          newReps = newReps.filter(function (r) {
+            return r.id !== id;
+          });
+          renderReps();
+          updateSaveBar();
+        });
+
+        var addRepForm = document.getElementById("add-rep-form");
+        var addRepModalEl = document.getElementById("addRepModal");
+
+        addRepForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          newReps.push({
+            id: "new-rep-" + Date.now(),
+            name: document.getElementById("r_name").value.trim(),
+            ic: document.getElementById("r_ic").value.trim(),
+            role: document.getElementById("r_role").value.trim(),
+            phone: document.getElementById("r_phone").value.trim(),
+            email: document.getElementById("r_email").value.trim(),
+            isNew: true,
+          });
+
+          addRepForm.reset();
+          addRepForm.querySelectorAll(".file-list").forEach(function (el) {
+            el.innerHTML = "";
+          });
+
+          bootstrap.Modal.getInstance(addRepModalEl).hide();
+          renderReps();
+          updateSaveBar();
+        });
+
+        /* ---------- Branches: add / edit / view / delete ---------- */
+        var branchUpload = bindUpload({
+          boxId: "b_upload_box",
+          inputId: "b_files",
+          listId: "b_file_list",
+        });
+
+        var addBranchForm = document.getElementById("add-branch-form");
+        var addBranchModalEl = document.getElementById("addBranchModal");
+        var branchModalTitle = document.getElementById("branch-modal-title");
+        var branchSubmitBtn = document.getElementById("branch-submit-btn");
+        var editingBranchId = null; // null = adding new
+
+        function syncBranchTypeFields() {
+          var type = document.querySelector(
+            'input[name="b_type"]:checked',
+          ).value;
+          addBranchForm
+            .querySelectorAll("[data-branch-for]")
+            .forEach(function (el) {
+              el.hidden = el.getAttribute("data-branch-for") !== type;
+            });
+        }
+
+        addBranchForm
+          .querySelectorAll('input[name="b_type"]')
+          .forEach(function (r) {
+            r.addEventListener("change", syncBranchTypeFields);
+          });
+        syncBranchTypeFields();
+
+        function resetBranchForm() {
+          addBranchForm.reset();
+          branchUpload.reset();
+          document.getElementById("b_file_list").innerHTML = "";
+          editingBranchId = null;
+          branchModalTitle.textContent = "Tambah cawangan";
+          branchSubmitBtn.innerHTML =
+            '<i class="bi bi-plus-lg me-1"></i>Tambah cawangan';
+          syncBranchTypeFields();
+        }
+
+        addBranchModalEl.addEventListener("hidden.bs.modal", resetBranchForm);
+
+        addBranchForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var type = addBranchForm.querySelector(
+            'input[name="b_type"]:checked',
+          ).value;
+
+          var payload = {
+            type: type,
+            name: document.getElementById("b_name").value.trim(),
+            ownerName:
+              type === "Individu"
+                ? document.getElementById("b_owner_name").value.trim()
+                : "",
+            ownerIc:
+              type === "Individu"
+                ? document.getElementById("b_owner_ic").value.trim()
+                : "",
+            companyName:
+              type === "Syarikat"
+                ? document.getElementById("b_company_name").value.trim()
+                : "",
+            companySsm:
+              type === "Syarikat"
+                ? document.getElementById("b_company_ssm").value.trim()
+                : "",
+            address: document.getElementById("b_address").value.trim(),
+            phone: document.getElementById("b_phone").value.trim(),
+            email: document.getElementById("b_email").value.trim(),
+            files: branchUpload.get(),
+          };
+
+          if (editingBranchId) {
+            // Edit existing (or new, if it was already added)
+            var target = findBranch(editingBranchId);
+            if (target) {
+              Object.assign(target, payload);
+              if (!target.isNew) target.isEdited = true;
+              if (payload.files.length) target.files = payload.files;
+            }
+          } else {
+            // Add new
+            newBranches.push(
+              Object.assign(
+                {
+                  id: "new-br-" + Date.now(),
+                  isNew: true,
+                  isDeleted: false,
+                  isEdited: false,
+                },
+                payload,
+              ),
+            );
+          }
+
+          bootstrap.Modal.getInstance(addBranchModalEl).hide();
+          renderBranches();
+          updateSaveBar();
+        });
+
+        branchesListEl.addEventListener("click", function (e) {
+          var viewBtn = e.target.closest("[data-view-branch]");
+          var editBtn = e.target.closest("[data-edit-branch]");
+          var delBtn = e.target.closest("[data-delete-branch]");
+
+          if (viewBtn) {
+            openViewBranch(viewBtn.getAttribute("data-view-branch"));
+            return;
+          }
+
+          if (editBtn) {
+            var id = editBtn.getAttribute("data-edit-branch");
+            var b = findBranch(id);
+            if (!b) return;
+
+            editingBranchId = id;
+            branchModalTitle.textContent = "Edit cawangan";
+            branchSubmitBtn.innerHTML =
+              '<i class="bi bi-check-lg me-1"></i>Simpan perubahan';
+
+            // Fill form
+            var radio = addBranchForm.querySelector(
+              'input[name="b_type"][value="' + b.type + '"]',
+            );
+            if (radio) radio.checked = true;
+            syncBranchTypeFields();
+
+            document.getElementById("b_name").value = b.name || "";
+            document.getElementById("b_owner_name").value = b.ownerName || "";
+            document.getElementById("b_owner_ic").value = b.ownerIc || "";
+            document.getElementById("b_company_name").value =
+              b.companyName || "";
+            document.getElementById("b_company_ssm").value = b.companySsm || "";
+            document.getElementById("b_address").value = b.address || "";
+            document.getElementById("b_phone").value = b.phone || "";
+            document.getElementById("b_email").value = b.email || "";
+
+            // Show existing files (info only)
+            var listEl = document.getElementById("b_file_list");
+            listEl.innerHTML = "";
+            (b.files || []).forEach(function (f) {
+              var row = document.createElement("div");
+              row.className = "file-item";
+              row.innerHTML =
+                '<span class="file-icon"><i class="bi ' +
+                iconForFile(f.name) +
+                '"></i></span>' +
+                '<span class="file-name" title="' +
+                escapeHtml(f.name) +
+                '">' +
+                escapeHtml(f.name) +
+                "</span>" +
+                '<span class="file-size">' +
+                formatBytes(f.size) +
+                "</span>";
+              listEl.appendChild(row);
+            });
+
+            bootstrap.Modal.getOrCreateInstance(addBranchModalEl).show();
+            return;
+          }
+
+          if (delBtn) {
+            var did = delBtn.getAttribute("data-delete-branch");
+            if (!confirm("Padam cawangan ini?")) return;
+
+            var existing = existingBranches.find(function (x) {
+              return x.id === did;
+            });
+            if (existing) {
+              existing.isDeleted = true;
+            } else {
+              newBranches = newBranches.filter(function (x) {
+                return x.id !== did;
+              });
+            }
+            renderBranches();
+            updateSaveBar();
+          }
+        });
+
+        /* ---------- View branch (modal with tabs) ---------- */
+        function openViewBranch(id) {
+          var b = findBranch(id);
+          if (!b) return;
+
+          document.getElementById("vb_title").textContent = b.name;
+          document.getElementById("vb_type").textContent = "Jenis: " + b.type;
+
+          var dl = document.getElementById("vb-details-list");
+          dl.innerHTML = "";
+
+          var pairs = [
+            ["Jenis Cawangan", b.type],
+            ["Nama Cawangan", b.name],
+            ["Nombor Telefon", b.phone],
+            ["Alamat E-mel", b.email],
+          ];
+          if (b.type === "Individu") {
+            pairs.push(["Nama Penuh Pemilik", b.ownerName]);
+            pairs.push(["No. Kad Pengenalan", b.ownerIc]);
+          } else {
+            pairs.push(["Nama Syarikat", b.companyName]);
+            pairs.push(["No. Pendaftaran SSM", b.companySsm]);
+          }
+
+          var pairRow = document.createElement("div");
+          pairRow.className = "detail-pair";
+          pairs.forEach(function (item) {
+            var cell = document.createElement("div");
+            cell.innerHTML =
+              "<dt>" +
+              escapeHtml(item[0]) +
+              "</dt><dd>" +
+              escapeHtml(item[1] || "-") +
+              "</dd>";
+            pairRow.appendChild(cell);
+          });
+          dl.appendChild(pairRow);
+
+          var addrRow = document.createElement("div");
+          addrRow.innerHTML =
+            "<dt>Alamat</dt><dd>" + escapeHtml(b.address || "-") + "</dd>";
+          dl.appendChild(addrRow);
+
+          var att = document.getElementById("vb-attachments-list");
+          att.innerHTML = "";
+
+          var files = b.files || [];
+          if (files.length === 0) {
+            var empty = document.createElement("div");
+            empty.className = "attach-card is-empty";
+            empty.innerHTML =
+              '<span class="attach-icon"><i class="bi bi-paperclip"></i></span>' +
+              '<div class="attach-name">Tiada lampiran</div>' +
+              '<div class="attach-file">Belum ada dokumen dimuat naik</div>';
+            att.appendChild(empty);
+          } else {
+            files.forEach(function (f) {
+              var card = document.createElement("div");
+              card.className = "attach-card";
+              card.innerHTML =
+                '<span class="attach-open"><i class="bi bi-box-arrow-up-right"></i></span>' +
+                '<span class="attach-icon"><i class="bi ' +
+                iconForFile(f.name) +
+                '"></i></span>' +
+                '<div class="attach-name">' +
+                escapeHtml(f.name) +
+                "</div>" +
+                '<div class="attach-file">' +
+                formatBytes(f.size) +
+                "</div>";
+              att.appendChild(card);
+            });
+          }
+
+          var tab = document.getElementById("vb-tab-details");
+          if (tab) bootstrap.Tab.getOrCreateInstance(tab).show();
+
+          bootstrap.Modal.getOrCreateInstance(
+            document.getElementById("viewBranchModal"),
+          ).show();
+        }
+
+        /* ---------- Reset ---------- */
+        resetBtns.forEach(function (b) {
+          b.addEventListener("click", function () {
+            premisesInput.value = originalPremises;
+            newReps = [];
+            newBranches = [];
+            existingBranches.forEach(function (br) {
+              br.isDeleted = false;
+              br.isEdited = false;
+            });
+            renderReps();
+            renderBranches();
+            updateSaveBar();
+          });
+        });
+
+        /* ---------- Save ---------- */
+        saveBtns.forEach(function (b) {
+          b.addEventListener("click", function () {
+            if (!isDirty()) return;
+
+            // TODO: POST to backend here.
+            originalPremises = premisesInput.value;
+            newReps = [];
+            // Keep existing branches as "confirmed", drop deleted ones, mark new as existing
+            existingBranches = existingBranches
+              .filter(function (br) {
+                return !br.isDeleted;
+              })
+              .map(function (br) {
+                br.isEdited = false;
+                return br;
+              })
+              .concat(
+                newBranches.map(function (br) {
+                  br.isNew = false;
+                  br.isEdited = false;
+                  return br;
+                }),
+              );
+            newBranches = [];
+
+            renderReps();
+            renderBranches();
+            updateSaveBar();
+
+            saveTexts.forEach(function (t) {
+              t.textContent = "Perubahan disimpan. Menunggu semakan DOA.";
+              t.classList.remove("is-dirty");
+            });
+          });
+        });
+
+        /* ---------- Rep upload previews (single-file) ---------- */
+        addRepForm
+          .querySelectorAll('.upload-placeholder input[type="file"]')
+          .forEach(function (input) {
+            input.addEventListener("change", function () {
+              var listEl = document.querySelector(
+                '[data-list-for="' + input.id + '"]',
+              );
+              if (!listEl) return;
+              listEl.innerHTML = "";
+              if (!input.files || !input.files.length) return;
+
+              var f = input.files[0];
+              var row = document.createElement("div");
+              row.className = "file-item";
+              row.innerHTML =
+                '<span class="file-icon"><i class="bi ' +
+                iconForFile(f.name) +
+                '"></i></span>' +
+                '<span class="file-name" title="' +
+                f.name +
+                '">' +
+                f.name +
+                "</span>" +
+                '<button type="button" class="file-remove" aria-label="Buang">' +
+                '<i class="bi bi-x-lg"></i></button>';
+
+              row
+                .querySelector(".file-remove")
+                .addEventListener("click", function () {
+                  input.value = "";
+                  listEl.innerHTML = "";
+                });
+
+              listEl.appendChild(row);
+            });
+          });
+
+        /* ---------- Init ---------- */
+        renderReps();
+        renderBranches();
+        updateSaveBar();
+      })();
+    </script>
+  </body>
+</html>
