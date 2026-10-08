@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/components.css" rel="stylesheet" />
+    <link href="css/signup.css" rel="stylesheet" />
+    <title>Sahkan e-mel anda | Portal Pendaftaran Baja</title>
+
+    <style>
+      /* ---- Verify email page ---- */
+      .verify-card {
+        width: 100%;
+        max-width: clamp(560px, 46vw, 720px);
+        margin-inline: auto;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg, 1.25rem);
+        box-shadow: 0 1px 2px rgba(15, 58, 36, 0.04),
+          0 18px 44px -22px rgba(15, 58, 36, 0.22);
+        overflow: hidden;
+        text-align: center;
+      }
+
+      .verify-head {
+        padding: clamp(1.25rem, 2.2vw, 1.75rem) clamp(1.25rem, 2.5vw, 2.25rem) 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      .verify-head .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--color-text);
+      }
+      .verify-head .brand:hover {
+        text-decoration: none;
+      }
+
+      .verify-body {
+        padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 3vw, 2.75rem)
+          clamp(1.75rem, 3vw, 2.5rem);
+      }
+
+      .verify-icon {
+        width: 72px;
+        height: 72px;
+        border-radius: 20px;
+        display: grid;
+        place-items: center;
+        margin: 0 auto 1.25rem;
+        background: var(--color-primary-50);
+        color: var(--color-primary-600);
+        font-size: 2rem;
+        position: relative;
+      }
+      .verify-icon::after {
+        content: "";
+        position: absolute;
+        inset: -8px;
+        border-radius: 26px;
+        border: 1px dashed var(--color-primary-200);
+        animation: verifyPulse 2.4s ease-in-out infinite;
+        pointer-events: none;
+      }
+      @keyframes verifyPulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.85;
+        }
+        50% {
+          transform: scale(1.04);
+          opacity: 0.4;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .verify-icon::after {
+          animation: none;
+        }
+      }
+
+      .verify-title {
+        font-size: clamp(1.2rem, 1rem + 0.7vw, 1.5rem);
+        font-weight: 700;
+        letter-spacing: -0.015em;
+        margin: 0 0 0.5rem;
+        color: var(--color-text);
+      }
+
+      .verify-subtitle {
+        font-size: 0.88rem;
+        color: var(--color-muted);
+        margin: 0 auto 1.5rem;
+        max-width: 44ch;
+        line-height: 1.6;
+      }
+
+      .verify-email-box {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.55rem 0.9rem;
+        border-radius: 999px;
+        background: var(--color-surface-2);
+        border: 1px solid var(--color-border);
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: var(--color-text);
+        margin-bottom: 1.75rem;
+        word-break: break-all;
+      }
+      .verify-email-box i {
+        color: var(--color-primary-600);
+        flex: none;
+      }
+
+      .verify-steps {
+        text-align: left;
+        background: var(--color-surface-2);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 1rem 1.15rem;
+        margin-bottom: 1.5rem;
+      }
+      .verify-steps h4 {
+        font-size: 0.78rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-muted);
+        margin: 0 0 0.75rem;
+      }
+      .verify-steps ol {
+        margin: 0;
+        padding-left: 1.25rem;
+        font-size: 0.82rem;
+        color: var(--color-text);
+        line-height: 1.6;
+      }
+      .verify-steps ol li + li {
+        margin-top: 0.4rem;
+      }
+      .verify-steps ol li::marker {
+        color: var(--color-primary-600);
+        font-weight: 600;
+      }
+
+      .verify-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        justify-content: center;
+        margin-bottom: 1.25rem;
+      }
+      .verify-actions .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+
+      .verify-hint {
+        font-size: 0.75rem;
+        color: var(--color-muted);
+        margin: 0;
+        line-height: 1.55;
+      }
+      .verify-hint a {
+        color: var(--color-primary-700);
+      }
+
+      .verify-divider {
+        border-top: 1px solid var(--color-border);
+        margin: 1.5rem 0 1.25rem;
+      }
+
+      .verify-foot {
+        padding: 1rem 1.5rem;
+        background: var(--color-surface-2);
+        border-top: 1px solid var(--color-border);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem 1.25rem;
+        font-size: 0.78rem;
+        color: var(--color-muted);
+      }
+      .verify-foot a {
+        color: var(--color-primary-700);
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="signup-wrap">
+      <div class="verify-card">
+        <!-- Head: brand -->
+        <div class="verify-head">
+          <a href="#" class="brand" aria-label="Enakmen Baja Sabah">
+            <span class="brand-mark brand-mark--img">
+              <img src="logo/image.png" alt="" width="36" height="36" />
+            </span>
+            <span class="brand-text">Enakmen Baja Sabah</span>
+          </a>
+          <a href="#" class="small text-muted-2">Bantuan</a>
+        </div>
+
+        <!-- Body -->
+        <div class="verify-body">
+          <div class="verify-icon">
+            <i class="bi bi-envelope-paper"></i>
+          </div>
+
+          <h1 class="verify-title">Sahkan e-mel anda</h1>
+          <p class="verify-subtitle">
+            Kami telah menghantar pautan pengesahan ke alamat e-mel anda. Sila
+            buka e-mel tersebut dan klik pautan untuk mengaktifkan akaun anda.
+          </p>
+
+          <div class="verify-email-box">
+            <i class="bi bi-envelope-at"></i>
+            <span id="verify-email">aisyah.hassan@borneoagro.com.my</span>
+          </div>
+
+          <!-- Steps -->
+          <div class="verify-steps">
+            <h4>Langkah seterusnya</h4>
+            <ol>
+              <li>
+                Buka peti masuk e-mel anda (termasuk folder
+                <strong>Spam</strong> atau <strong>Promosi</strong>).
+              </li>
+              <li>
+                Cari e-mel daripada
+                <strong>Enakmen Baja Sabah</strong> dengan tajuk
+                <em>"Sahkan e-mel anda"</em>.
+              </li>
+              <li>
+                Klik butang <strong>Sahkan e-mel</strong> dalam e-mel tersebut.
+              </li>
+              <li>
+                Anda akan dibawa semula ke portal untuk melengkapkan profil
+                organisasi anda.
+              </li>
+            </ol>
+          </div>
+
+          <!-- Actions -->
+          <div class="verify-actions">
+            <button type="button" class="btn btn-primary" id="resend-btn">
+              <i class="bi bi-arrow-repeat"></i>Hantar semula e-mel
+            </button>
+            <a href="mailto:" class="btn btn-outline-primary">
+              <i class="bi bi-envelope"></i>Buka aplikasi e-mel
+            </a>
+          </div>
+
+          <div
+            class="alert alert-success d-none py-2 px-3 small"
+            id="resend-success"
+            role="alert"
+          >
+            <i class="bi bi-check-circle-fill me-1"></i>
+            E-mel pengesahan telah dihantar semula. Sila semak peti masuk anda
+            dalam beberapa minit.
+          </div>
+
+          <div class="verify-divider"></div>
+
+          <p class="verify-hint">
+            Tidak menerima e-mel? Sahkan alamat e-mel anda betul, atau hubungi
+            <a href="#">pasukan sokongan</a> kami. Pautan pengesahan akan
+            tamat tempoh dalam <strong>24 jam</strong>.
+          </p>
+        </div>
+
+        <!-- Foot -->
+        <div class="verify-foot">
+          <span>Sudah sahkan e-mel?</span>
+          <a href="index.html">Log masuk</a>
+          <span>&middot;</span>
+          <a href="signup.html">Daftar akaun baharu</a>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      (function () {
+        var resendBtn = document.getElementById("resend-btn");
+        var successEl = document.getElementById("resend-success");
+        var emailEl = document.getElementById("verify-email");
+
+        /* Show the email the user signed up with.
+           Reads ?email=... from the URL if present. */
+        try {
+          var params = new URLSearchParams(window.location.search);
+          var email = params.get("email");
+          if (email) emailEl.textContent = email;
+        } catch (e) {}
+
+        /* Resend button: demo only. Replace with a real API call. */
+        var cooldown = 0;
+        var cooldownTimer = null;
+
+        resendBtn.addEventListener("click", function () {
+          if (cooldown > 0) return;
+
+          // TODO: POST to /api/resend-verification with the user's email.
+          // For now, just show the success message.
+
+          successEl.classList.remove("d-none");
+
+          // Cooldown to prevent spamming
+          cooldown = 60;
+          resendBtn.disabled = true;
+          updateResendLabel();
+          cooldownTimer = setInterval(function () {
+            cooldown--;
+            if (cooldown <= 0) {
+              clearInterval(cooldownTimer);
+              cooldownTimer = null;
+              resendBtn.disabled = false;
+              resendBtn.innerHTML =
+                '<i class="bi bi-arrow-repeat"></i>Hantar semula e-mel';
+              return;
+            }
+            updateResendLabel();
+          }, 1000);
+        });
+
+        function updateResendLabel() {
+          resendBtn.innerHTML =
+            '<i class="bi bi-hourglass-split"></i>Hantar semula dalam ' +
+            cooldown +
+            "s";
+        }
+      })();
+    </script>
+  </body>
+</html>

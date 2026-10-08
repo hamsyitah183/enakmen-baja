@@ -1,0 +1,1548 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/components.css" rel="stylesheet" />
+    <link href="css/signup.css" rel="stylesheet" />
+    <link href="css/signup-wizard.css" rel="stylesheet" />
+    <title>Permohonan Permit Import Khas | Portal Pendaftaran Baja</title>
+
+    <style>
+      /* ---- Permit-specific additions on top of the wizard ---- */
+
+      /* Subsection heading inside a wizard step */
+      .permit-subhead {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin: 0 0 0.15rem;
+        color: var(--color-text);
+      }
+      .permit-subhint {
+        font-size: 0.78rem;
+        color: var(--color-muted);
+        margin: 0 0 1rem;
+        line-height: 1.5;
+      }
+      .permit-divider {
+        margin: 1.5rem 0;
+        border-top: 1px solid var(--color-border);
+      }
+
+      /* Item list */
+      .permit-item-list {
+        display: grid;
+        gap: 0.55rem;
+      }
+      .permit-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.75rem 0.95rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        background: var(--color-surface);
+      }
+      .permit-item .item-title {
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: var(--color-text);
+        margin: 0;
+      }
+      .permit-item .item-sub {
+        font-size: 0.72rem;
+        color: var(--color-muted);
+        margin: 0.15rem 0 0;
+      }
+      .permit-item .item-side {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex: none;
+      }
+      .permit-empty {
+        text-align: center;
+        padding: 1.75rem 1rem;
+        color: var(--color-muted);
+        border: 1.5px dashed var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface-2);
+      }
+      .permit-empty i {
+        font-size: 1.6rem;
+        color: var(--color-primary-500);
+        display: block;
+        margin-bottom: 0.35rem;
+      }
+
+      /* Notice card */
+      .permit-notice {
+        border: 1px solid var(--color-warning-bg);
+        background: var(--color-warning-bg);
+        border-radius: var(--radius-md);
+        padding: 1rem 1.15rem;
+        display: flex;
+        gap: 0.75rem;
+        align-items: flex-start;
+      }
+      .permit-notice i {
+        color: var(--color-warning);
+        font-size: 1.15rem;
+        flex: none;
+        margin-top: 0.05rem;
+      }
+      .permit-notice h4 {
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin: 0 0 0.3rem;
+        color: var(--color-warning);
+      }
+      .permit-notice p {
+        font-size: 0.78rem;
+        margin: 0;
+        color: var(--color-text);
+        line-height: 1.5;
+      }
+
+      /* Upload placeholder */
+      .upload-placeholder {
+        border: 1.5px dashed var(--color-primary-200);
+        border-radius: var(--radius-md);
+        padding: 1.1rem 1rem;
+        background: var(--color-surface-2);
+        text-align: center;
+        cursor: pointer;
+        transition: 0.15s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.3rem;
+        margin: 0;
+      }
+      .upload-placeholder:hover,
+      .upload-placeholder.is-dragover {
+        border-color: var(--color-primary-500);
+        background: var(--color-primary-50);
+      }
+      .upload-placeholder .upload-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--color-surface);
+        color: var(--color-primary-600);
+        font-size: 1.05rem;
+      }
+      .upload-placeholder .upload-text {
+        font-size: 0.8rem;
+        color: var(--color-text);
+      }
+      .upload-placeholder .upload-text strong {
+        color: var(--color-primary-700);
+      }
+      .upload-placeholder .upload-hint {
+        font-size: 0.7rem;
+        color: var(--color-muted);
+      }
+      .upload-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+      .upload-field > .form-label {
+        margin: 0;
+      }
+
+      .file-list {
+        display: grid;
+        gap: 0.4rem;
+        margin-top: 0.5rem;
+      }
+      .file-list:empty {
+        display: none;
+      }
+      .file-item {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.5rem 0.7rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        background: var(--color-surface);
+        font-size: 0.78rem;
+      }
+      .file-item .file-icon {
+        width: 26px;
+        height: 26px;
+        border-radius: 6px;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-50);
+        color: var(--color-primary-600);
+        flex: none;
+      }
+      .file-item .file-name {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .file-item .file-size {
+        color: var(--color-muted);
+        font-size: 0.7rem;
+        flex: none;
+      }
+      .file-item .file-remove {
+        color: var(--color-muted);
+        background: none;
+        border: 0;
+        padding: 0.15rem 0.3rem;
+        border-radius: 4px;
+      }
+      .file-item .file-remove:hover {
+        color: var(--color-danger);
+        background: var(--color-danger-bg);
+      }
+
+      /* Disclaimer */
+      .permit-disclaimer {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface-2);
+        padding: 1rem 1.15rem;
+        font-size: 0.82rem;
+        color: var(--color-text);
+        line-height: 1.55;
+        max-height: 220px;
+        overflow-y: auto;
+        margin-bottom: 1rem;
+      }
+      .permit-disclaimer ol {
+        margin: 0;
+        padding-left: 1.25rem;
+      }
+      .permit-disclaimer li + li {
+        margin-top: 0.4rem;
+      }
+      .permit-disclaimer li::marker {
+        color: var(--color-primary-600);
+        font-weight: 600;
+      }
+
+      /* Purpose radio tiles */
+      .purpose-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 0.6rem;
+      }
+      .purpose-tile {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        align-items: flex-start;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 0.9rem 1rem;
+        background: var(--color-surface);
+        cursor: pointer;
+        transition: 0.15s;
+        height: 100%;
+      }
+      .purpose-tile:hover {
+        border-color: var(--color-primary-200);
+        background: var(--color-surface-2);
+      }
+      .purpose-tile .icon-chip {
+        width: 34px;
+        height: 34px;
+        font-size: 0.9rem;
+      }
+      .purpose-tile .tile-title {
+        font-weight: 600;
+        font-size: 0.82rem;
+        color: var(--color-text);
+      }
+      .btn-check:checked + .purpose-tile {
+        border-color: var(--color-primary-500);
+        background: var(--color-primary-50);
+        box-shadow: 0 0 0 1px var(--color-primary-500);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="signup-wrap">
+      
+      <div class="wizard" id="permit-wizard">
+        <!-- ===================== HEAD ===================== -->
+        <div class="wizard-head">
+        <h2 class="wizard-title mb-3">Permohonan Permit Import Khas</h2>
+          <div class="wizard-topline">
+            <a href="#" class="brand" aria-label="Enakmen Baja Sabah">
+              <span class="brand-mark brand-mark--img">
+                <img src="logo/image.png" alt="" width="36" height="36" />
+              </span>
+              <span class="brand-text">Enakmen Baja Sabah</span>
+            </a>
+            <span class="wizard-count" id="wizard-count"
+              >Langkah 1 daripada 5</span
+            >
+          </div>
+          <div
+            class="wizard-progress"
+            id="wizard-progress"
+            role="progressbar"
+            aria-label="Kemajuan permohonan"
+          ></div>
+        </div>
+
+        <!-- ===================== FORM ===================== -->
+        <form id="permit-form" novalidate>
+          <div class="wizard-body">
+            <!-- ============================================================
+                 STEP 1 — Maklumat pemohon
+                 ============================================================ -->
+            <section class="wizard-step is-active" data-step="applicant">
+              <h2 class="wizard-title">Maklumat pemohon</h2>
+              <p class="wizard-subtitle">
+                Pilih jenis pemohon dan lengkapkan butiran. Semua ruangan
+                bertanda <strong>*</strong> adalah wajib.
+              </p>
+
+              <div class="mb-3">
+                <label class="form-label">Jenis pemohon</label>
+                <div class="row g-2">
+                  <div class="col-sm-6">
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="applicant_type"
+                      id="at-company"
+                      value="company"
+                      checked
+                    />
+                    <label
+                      class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center gap-2"
+                      for="at-company"
+                    >
+                      <i class="bi bi-building"></i>Syarikat
+                    </label>
+                  </div>
+                  <div class="col-sm-6">
+                    <input
+                      type="radio"
+                      class="btn-check"
+                      name="applicant_type"
+                      id="at-individual"
+                      value="individual"
+                    />
+                    <label
+                      class="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center gap-2"
+                      for="at-individual"
+                    >
+                      <i class="bi bi-person"></i>Individu
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Syarikat -->
+              <div data-for="company">
+                <div class="permit-divider"></div>
+                <h3 class="permit-subhead">Butiran syarikat</h3>
+                <p class="permit-subhint">
+                  Seperti yang didaftarkan dengan SSM.
+                </p>
+
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label" for="company_name"
+                      >Nama Syarikat <span class="text-danger">*</span></label
+                    >
+                    <input class="form-control" id="company_name" required />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="ssm_no"
+                      >Nombor Pendaftaran Syarikat (SSM)
+                      <span class="text-danger">*</span></label
+                    >
+                    <input class="form-control" id="ssm_no" required />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="ssm_expiry"
+                      >Tamat Tempoh SSM</label
+                    >
+                    <input type="date" class="form-control" id="ssm_expiry" />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="business_license_no"
+                      >Nombor Lesen Berniaga</label
+                    >
+                    <input class="form-control" id="business_license_no" />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="business_license_expiry"
+                      >Tamat Tempoh Lesen Berniaga</label
+                    >
+                    <input
+                      class="form-control"
+                      id="business_license_expiry"
+                      value="31 Disember"
+                      readonly
+                    />
+                    <div class="form-text">Setiap 31 Disember.</div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="mida_no"
+                      >Nombor Lesen Pengilang (MIDA)
+                      <span class="text-muted-2">– jika berkaitan</span></label
+                    >
+                    <input class="form-control" id="mida_no" />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="ica10_no"
+                      >Nombor Surat Pengecualian (ICA 10)</label
+                    >
+                    <input class="form-control" id="ica10_no" />
+                  </div>
+                  <div class="col-12">
+                    <label class="form-label" for="premises_address"
+                      >Alamat Premis Berdaftar / Operasi
+                      <span class="text-danger">*</span></label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="premises_address"
+                      rows="2"
+                      required
+                    ></textarea>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="company_phone"
+                      >Nombor Telefon Syarikat
+                      <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="tel"
+                      class="form-control"
+                      id="company_phone"
+                      placeholder="+60"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="company_email"
+                      >Alamat E-mel Syarikat
+                      <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="company_email"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="permit-divider"></div>
+                <h3 class="permit-subhead">Wakil syarikat</h3>
+                <p class="permit-subhint">
+                  Individu yang bertanggungjawab ke atas permohonan ini.
+                </p>
+
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label" for="pic_name"
+                      >Nama Wakil Syarikat
+                      <span class="text-danger">*</span></label
+                    >
+                    <input class="form-control" id="pic_name" required />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="pic_ic"
+                      >No. KP Wakil Syarikat
+                      <span class="text-danger">*</span></label
+                    >
+                    <input class="form-control" id="pic_ic" required />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="pic_role"
+                      >Jawatan Wakil Syarikat
+                      <span class="text-danger">*</span></label
+                    >
+                    <input
+                      class="form-control"
+                      id="pic_role"
+                      placeholder="cth. Pengarah"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="pic_phone"
+                      >Nombor Telefon Wakil Syarikat</label
+                    >
+                    <input
+                      type="tel"
+                      class="form-control"
+                      id="pic_phone"
+                      placeholder="+60"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Individu -->
+              <div data-for="individual" hidden>
+                <div class="permit-divider"></div>
+                <h3 class="permit-subhead">Butiran pemohon</h3>
+                <p class="permit-subhint">
+                  Maklumat peribadi seperti dalam kad pengenalan.
+                </p>
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label" for="full_name"
+                      >Nama Penuh Pemohon
+                      <span class="text-danger">*</span></label
+                    >
+                    <input class="form-control" id="full_name" required />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="ic_no"
+                      >Nombor Kad Pengenalan
+                      <span class="text-danger">*</span></label
+                    >
+                    <input class="form-control" id="ic_no" required />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="correspondence_address"
+                      >Alamat Surat-menyurat</label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="correspondence_address"
+                      rows="2"
+                    ></textarea>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="residential_address"
+                      >Alamat Kediaman</label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="residential_address"
+                      rows="2"
+                    ></textarea>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="mobile_phone"
+                      >Nombor Telefon Bimbit
+                      <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="tel"
+                      class="form-control"
+                      id="mobile_phone"
+                      placeholder="+60"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label" for="individual_email"
+                      >Alamat E-mel <span class="text-danger">*</span></label
+                    >
+                    <input
+                      type="email"
+                      class="form-control"
+                      id="individual_email"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============================================================
+                 STEP 2 — Item untuk diimport
+                 ============================================================ -->
+            <section class="wizard-step" data-step="items">
+              <h2 class="wizard-title">Item untuk diimport</h2>
+              <p class="wizard-subtitle">
+                Tambah setiap item baja, baja tambahan atau bahan mentah yang
+                ingin diimport di bawah permit ini.
+              </p>
+
+              <div
+                class="d-flex justify-content-between align-items-center mb-3"
+              >
+                <p class="permit-subhint mb-0" id="item-desc">
+                  Belum ada item ditambah.
+                </p>
+                <button
+                  type="button"
+                  class="btn btn-primary btn-sm d-flex align-items-center flex-shrink-0"
+                  data-bs-toggle="modal"
+                  data-bs-target="#itemModal"
+                >
+                  <i class="bi bi-plus-lg me-1"></i>Tambah item
+                </button>
+              </div>
+
+              <div class="permit-item-list" id="item-list"></div>
+
+              <div class="permit-empty" id="item-empty">
+                <i class="bi bi-inbox"></i>
+                <p class="mb-0 small">Belum ada item ditambah.</p>
+              </div>
+            </section>
+
+            <!-- ============================================================
+                 STEP 3 — Tujuan pengimportan
+                 ============================================================ -->
+            <section class="wizard-step" data-step="purpose">
+              <h2 class="wizard-title">Pengisytiharan tujuan pengimportan</h2>
+              <p class="wizard-subtitle">
+                Nyatakan tujuan import dan kaedah pelupusan lebihan bahan.
+                Permit ini sah untuk <strong>satu (1) konsainan</strong> dalam
+                tempoh <strong>tiga (3) bulan</strong> sahaja.
+              </p>
+
+              <label class="form-label">
+                Tujuan import <span class="text-danger">*</span>
+              </label>
+              <div class="purpose-grid mb-3">
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="import_purpose"
+                  id="p-education"
+                  value="Pendidikan"
+                  checked
+                />
+                <label class="purpose-tile" for="p-education">
+                  <span class="icon-chip"
+                    ><i class="bi bi-mortarboard"></i
+                  ></span>
+                  <span class="tile-title">Pendidikan</span>
+                </label>
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="import_purpose"
+                  id="p-research"
+                  value="Penyelidikan"
+                />
+                <label class="purpose-tile" for="p-research">
+                  <span class="icon-chip"><i class="bi bi-search"></i></span>
+                  <span class="tile-title">Penyelidikan</span>
+                </label>
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="import_purpose"
+                  id="p-sample"
+                  value="Sampel Pendaftaran"
+                />
+                <label class="purpose-tile" for="p-sample">
+                  <span class="icon-chip"
+                    ><i class="bi bi-file-earmark-medical"></i
+                  ></span>
+                  <span class="tile-title">Sampel Pendaftaran</span>
+                </label>
+
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="import_purpose"
+                  id="p-reference"
+                  value="Bahan Rujukan"
+                />
+                <label class="purpose-tile" for="p-reference">
+                  <span class="icon-chip"><i class="bi bi-journals"></i></span>
+                  <span class="tile-title">Bahan Rujukan</span>
+                </label>
+              </div>
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="disposal_method">
+                    Kaedah pelupusan lebihan bahan
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input
+                    class="form-control"
+                    id="disposal_method"
+                    placeholder="cth. Pelupusan oleh pihak berkuasa"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="disposal_location">
+                    Lokasi pelupusan lebihan bahan
+                    <span class="text-danger">*</span>
+                  </label>
+                  <input
+                    class="form-control"
+                    id="disposal_location"
+                    placeholder="cth. Nama institusi / premis"
+                    required
+                  />
+                </div>
+                <div class="col-12">
+                  <div class="permit-notice">
+                    <i class="bi bi-info-circle-fill"></i>
+                    <div>
+                      <h4>Nota penting</h4>
+                      <p>
+                        Permit ini sah untuk
+                        <strong>satu (1) konsainan sahaja</strong> dalam tempoh
+                        <strong>tiga (3) bulan</strong>. Pemohon
+                        bertanggungjawab mematuhi semua syarat di bawah Enakmen
+                        Baja Sabah dan tidak boleh memindahkan bahan kepada
+                        pihak ketiga.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============================================================
+                 STEP 4 — Dokumen sokongan
+                 ============================================================ -->
+            <section class="wizard-step" data-step="docs">
+              <h2 class="wizard-title">Dokumen sokongan</h2>
+              <p class="wizard-subtitle">
+                Muat naik dokumen sokongan yang berkaitan. Semua dokumen akan
+                disemak oleh Pegawai Pertanian.
+              </p>
+
+              <!-- Company docs -->
+              <div data-for="company">
+                <h3 class="permit-subhead">Dokumen syarikat</h3>
+                <p class="permit-subhint">
+                  Sijil SSM, lesen perniagaan, dan dokumen wakil.
+                </p>
+
+                <div class="wizard-upload-grid mb-3">
+                  <div class="upload-field">
+                    <label class="form-label">Sijil Pendaftaran Syarikat</label>
+                    <label class="upload-placeholder" for="doc_ssm_cert">
+                      <input
+                        type="file"
+                        id="doc_ssm_cert"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        hidden
+                      />
+                      <span class="upload-icon"
+                        ><i class="bi bi-cloud-arrow-up"></i
+                      ></span>
+                      <div class="upload-text">
+                        <strong>Klik untuk muat naik</strong>
+                      </div>
+                      <div class="upload-hint">PDF, JPG, PNG</div>
+                    </label>
+                    <div class="file-list" data-list-for="doc_ssm_cert"></div>
+                  </div>
+                  <div class="upload-field">
+                    <label class="form-label">Lesen Perniagaan</label>
+                    <label
+                      class="upload-placeholder"
+                      for="doc_business_license"
+                    >
+                      <input
+                        type="file"
+                        id="doc_business_license"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        hidden
+                      />
+                      <span class="upload-icon"
+                        ><i class="bi bi-cloud-arrow-up"></i
+                      ></span>
+                      <div class="upload-text">
+                        <strong>Klik untuk muat naik</strong>
+                      </div>
+                      <div class="upload-hint">PDF, JPG, PNG</div>
+                    </label>
+                    <div
+                      class="file-list"
+                      data-list-for="doc_business_license"
+                    ></div>
+                  </div>
+                  <div class="upload-field">
+                    <label class="form-label">Lesen Pengilang (MIDA)</label>
+                    <label class="upload-placeholder" for="doc_mida">
+                      <input
+                        type="file"
+                        id="doc_mida"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        hidden
+                      />
+                      <span class="upload-icon"
+                        ><i class="bi bi-cloud-arrow-up"></i
+                      ></span>
+                      <div class="upload-text">
+                        <strong>Klik untuk muat naik</strong>
+                      </div>
+                      <div class="upload-hint">PDF, JPG, PNG</div>
+                    </label>
+                    <div class="file-list" data-list-for="doc_mida"></div>
+                  </div>
+                  <div class="upload-field">
+                    <label class="form-label"
+                      >Surat Pengecualian (ICA 10)
+                      <span class="text-muted-2">– jika ada</span></label
+                    >
+                    <label class="upload-placeholder" for="doc_ica10">
+                      <input
+                        type="file"
+                        id="doc_ica10"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        hidden
+                      />
+                      <span class="upload-icon"
+                        ><i class="bi bi-cloud-arrow-up"></i
+                      ></span>
+                      <div class="upload-text">
+                        <strong>Klik untuk muat naik</strong>
+                      </div>
+                      <div class="upload-hint">PDF, JPG, PNG</div>
+                    </label>
+                    <div class="file-list" data-list-for="doc_ica10"></div>
+                  </div>
+                  <div class="upload-field">
+                    <label class="form-label"
+                      >Kad Pengenalan Wakil Syarikat</label
+                    >
+                    <label class="upload-placeholder" for="doc_rep_ic">
+                      <input
+                        type="file"
+                        id="doc_rep_ic"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        hidden
+                      />
+                      <span class="upload-icon"
+                        ><i class="bi bi-cloud-arrow-up"></i
+                      ></span>
+                      <div class="upload-text">
+                        <strong>Klik untuk muat naik</strong>
+                      </div>
+                      <div class="upload-hint">PDF, JPG, PNG</div>
+                    </label>
+                    <div class="file-list" data-list-for="doc_rep_ic"></div>
+                  </div>
+                  <div class="upload-field">
+                    <label class="form-label">Surat Kuasa Wakil Syarikat</label>
+                    <label class="upload-placeholder" for="doc_rep_authority">
+                      <input
+                        type="file"
+                        id="doc_rep_authority"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        hidden
+                      />
+                      <span class="upload-icon"
+                        ><i class="bi bi-cloud-arrow-up"></i
+                      ></span>
+                      <div class="upload-text">
+                        <strong>Klik untuk muat naik</strong>
+                      </div>
+                      <div class="upload-hint">PDF, JPG, PNG</div>
+                    </label>
+                    <div
+                      class="file-list"
+                      data-list-for="doc_rep_authority"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Individual docs -->
+              <div data-for="individual" hidden>
+                <h3 class="permit-subhead">Dokumen pemohon</h3>
+                <p class="permit-subhint">
+                  Kad pengenalan dan lesen perniagaan.
+                </p>
+
+                <div class="wizard-upload-grid mb-3">
+                  <div class="upload-field">
+                    <label class="form-label">Salinan Kad Pengenalan</label>
+                    <label class="upload-placeholder" for="doc_ic">
+                      <input
+                        type="file"
+                        id="doc_ic"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        hidden
+                      />
+                      <span class="upload-icon"
+                        ><i class="bi bi-cloud-arrow-up"></i
+                      ></span>
+                      <div class="upload-text">
+                        <strong>Klik untuk muat naik</strong>
+                      </div>
+                      <div class="upload-hint">PDF, JPG, PNG</div>
+                    </label>
+                    <div class="file-list" data-list-for="doc_ic"></div>
+                  </div>
+                  <div class="upload-field">
+                    <label class="form-label">Salinan Lesen Perniagaan</label>
+                    <label
+                      class="upload-placeholder"
+                      for="doc_business_license_ind"
+                    >
+                      <input
+                        type="file"
+                        id="doc_business_license_ind"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        hidden
+                      />
+                      <span class="upload-icon"
+                        ><i class="bi bi-cloud-arrow-up"></i
+                      ></span>
+                      <div class="upload-text">
+                        <strong>Klik untuk muat naik</strong>
+                      </div>
+                      <div class="upload-hint">PDF, JPG, PNG</div>
+                    </label>
+                    <div
+                      class="file-list"
+                      data-list-for="doc_business_license_ind"
+                    ></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="permit-divider"></div>
+              <h3 class="permit-subhead">Dokumen tujuan pengimportan</h3>
+              <p class="permit-subhint">
+                Wajib untuk semua permohonan permit import khas.
+              </p>
+
+              <div class="wizard-upload-grid">
+                <div class="upload-field">
+                  <label class="form-label">Surat Pengesahan Institusi</label>
+                  <label
+                    class="upload-placeholder"
+                    for="doc_institution_letter"
+                  >
+                    <input
+                      type="file"
+                      id="doc_institution_letter"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      hidden
+                    />
+                    <span class="upload-icon"
+                      ><i class="bi bi-cloud-arrow-up"></i
+                    ></span>
+                    <div class="upload-text">
+                      <strong>Klik untuk muat naik</strong>
+                    </div>
+                    <div class="upload-hint">PDF, JPG, PNG</div>
+                  </label>
+                  <div
+                    class="file-list"
+                    data-list-for="doc_institution_letter"
+                  ></div>
+                </div>
+                <div class="upload-field">
+                  <label class="form-label">Proposal Penyelidikan</label>
+                  <label class="upload-placeholder" for="doc_research_proposal">
+                    <input
+                      type="file"
+                      id="doc_research_proposal"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      hidden
+                    />
+                    <span class="upload-icon"
+                      ><i class="bi bi-cloud-arrow-up"></i
+                    ></span>
+                    <div class="upload-text">
+                      <strong>Klik untuk muat naik</strong>
+                    </div>
+                    <div class="upload-hint">PDF, JPG, PNG</div>
+                  </label>
+                  <div
+                    class="file-list"
+                    data-list-for="doc_research_proposal"
+                  ></div>
+                </div>
+                <div class="upload-field">
+                  <label class="form-label">Surat Aku Janji Pelupusan</label>
+                  <label class="upload-placeholder" for="doc_disposal_letter">
+                    <input
+                      type="file"
+                      id="doc_disposal_letter"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      hidden
+                    />
+                    <span class="upload-icon"
+                      ><i class="bi bi-cloud-arrow-up"></i
+                    ></span>
+                    <div class="upload-text">
+                      <strong>Klik untuk muat naik</strong>
+                    </div>
+                    <div class="upload-hint">PDF, JPG, PNG</div>
+                  </label>
+                  <div
+                    class="file-list"
+                    data-list-for="doc_disposal_letter"
+                  ></div>
+                </div>
+              </div>
+            </section>
+
+            <!-- ============================================================
+                 STEP 5 — Perakuan & hantar
+                 ============================================================ -->
+            <section class="wizard-step" data-step="declaration">
+              <h2 class="wizard-title">Perakuan pemohon</h2>
+              <p class="wizard-subtitle">
+                Sila baca dan setuju dengan pengakuan di bawah sebelum
+                menghantar permohonan anda.
+              </p>
+
+              <div class="permit-disclaimer">
+                <p><strong>Pengakuan Pemohon Permit Import Khas</strong></p>
+                <ol>
+                  <li>
+                    Saya mengaku bahawa semua maklumat yang diberikan adalah
+                    <strong>benar, tepat dan lengkap</strong>.
+                  </li>
+                  <li>
+                    Saya faham bahawa permit ini hanya sah untuk
+                    <strong>satu (1) konsainan</strong> dalam tempoh
+                    <strong>tiga (3) bulan</strong> dan tidak boleh dipindah
+                    milik.
+                  </li>
+                  <li>
+                    Saya bersetuju mematuhi semua syarat dan peraturan di bawah
+                    Enakmen Baja Sabah, termasuk kaedah pelupusan lebihan bahan
+                    yang dinyatakan.
+                  </li>
+                  <li>
+                    Saya faham bahawa memberikan maklumat palsu atau
+                    menyalahgunakan permit ini adalah suatu
+                    <strong>kesalahan</strong>
+                    di bawah Enakmen.
+                  </li>
+                  <li>
+                    Saya bersetuju dengan <a href="#">terma penggunaan</a> dan
+                    <a href="#">notis privasi</a> portal ini.
+                  </li>
+                </ol>
+              </div>
+
+              <div class="form-check mb-2">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="decl_truth"
+                  required
+                />
+                <label class="form-check-label" for="decl_truth">
+                  Saya mengaku semua maklumat adalah benar.
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="decl_terms"
+                  required
+                />
+                <label class="form-check-label" for="decl_terms">
+                  Saya bersetuju dengan terma dan syarat permit.
+                </label>
+              </div>
+            </section>
+          </div>
+
+          <!-- ===================== FOOTER ===================== -->
+          <div class="wizard-foot">
+            <button type="button" class="wizard-skip" id="wizard-save" hidden>
+              Simpan draf
+            </button>
+            <div class="wizard-actions">
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                id="wizard-prev"
+                hidden
+              >
+                <i class="bi bi-arrow-left"></i>Kembali
+              </button>
+              <button type="button" class="btn btn-primary" id="wizard-next">
+                Seterusnya<i class="bi bi-arrow-right"></i>
+              </button>
+              <button
+                type="submit"
+                class="btn btn-primary"
+                id="wizard-submit"
+                hidden
+              >
+                <i class="bi bi-send me-1"></i>Hantar permohonan
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         Modal: Tambah item
+         ========================================================= -->
+    <div class="modal fade" id="itemModal" tabindex="-1" aria-hidden="true">
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div class="modal-content">
+          <form id="item-form">
+            <div class="modal-header">
+              <h5 class="modal-title">Tambah item</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="i_name"
+                    >Nama Dagangan (Jenama)
+                    <span class="text-danger">*</span></label
+                  >
+                  <input class="form-control" id="i_name" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="i_category"
+                    >Kategori Item <span class="text-danger">*</span></label
+                  >
+                  <select class="form-select" id="i_category" required>
+                    <option value="">Pilih kategori</option>
+                    <option>Baja</option>
+                    <option>Baja Tunggal</option>
+                    <option>Baja Campuran</option>
+                    <option>Baja Sebatian</option>
+                    <option>Baja Organik</option>
+                    <option>Baja Mikronutrien</option>
+                    <option>Baja Tambahan</option>
+                    <option>Bahan Mentah</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="i_formula"
+                    >Formulasi / Komposisi Kandungan Nutrien</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="i_formula"
+                    rows="2"
+                    placeholder="cth. N 15%, P2O5 15%, K2O 15%"
+                  ></textarea>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="i_form">Bentuk Baja</label>
+                  <select class="form-select" id="i_form">
+                    <option value="">Pilih bentuk</option>
+                    <option>Butiran (Granular)</option>
+                    <option>Serbuk (Powder)</option>
+                    <option>Cecair (Liquid)</option>
+                    <option>Tablet</option>
+                    <option>Lain-lain</option>
+                  </select>
+                </div>
+                <div class="col-md-6" id="i_micro_group" hidden>
+                  <label class="form-label" for="i_micro"
+                    >Jenis Mikroorganisma
+                    <span class="text-muted-2">(Baja Organik)</span></label
+                  >
+                  <input
+                    class="form-control"
+                    id="i_micro"
+                    placeholder="cth. Azotobacter, Rhizobium"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="i_supplier"
+                    >Nama Pengilang / Pembekal Asal</label
+                  >
+                  <input class="form-control" id="i_supplier" />
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="i_supplier_addr"
+                    >Alamat Pengilang / Pembekal Asal</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="i_supplier_addr"
+                    rows="2"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="permit-divider"></div>
+              <h3 class="permit-subhead">Lampiran item</h3>
+              <p class="permit-subhint">
+                MSDS/SDS, CoA, dan gambar pembungkusan.
+              </p>
+
+              <div class="wizard-upload-grid">
+                <div class="upload-field">
+                  <label class="form-label">MSDS / SDS</label>
+                  <label class="upload-placeholder" for="i_msds">
+                    <input
+                      type="file"
+                      id="i_msds"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      hidden
+                    />
+                    <span class="upload-icon"
+                      ><i class="bi bi-cloud-arrow-up"></i
+                    ></span>
+                    <div class="upload-text"><strong>Muat naik</strong></div>
+                    <div class="upload-hint">PDF, JPG, PNG</div>
+                  </label>
+                  <div class="file-list" data-list-for="i_msds"></div>
+                </div>
+                <div class="upload-field">
+                  <label class="form-label"
+                    >Certificate of Analysis (CoA)</label
+                  >
+                  <label class="upload-placeholder" for="i_coa">
+                    <input
+                      type="file"
+                      id="i_coa"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      hidden
+                    />
+                    <span class="upload-icon"
+                      ><i class="bi bi-cloud-arrow-up"></i
+                    ></span>
+                    <div class="upload-text"><strong>Muat naik</strong></div>
+                    <div class="upload-hint">PDF, JPG, PNG</div>
+                  </label>
+                  <div class="file-list" data-list-for="i_coa"></div>
+                </div>
+                <div class="upload-field">
+                  <label class="form-label">Gambar Pembungkusan</label>
+                  <label class="upload-placeholder" for="i_packaging">
+                    <input
+                      type="file"
+                      id="i_packaging"
+                      accept=".jpg,.jpeg,.png,.pdf"
+                      hidden
+                    />
+                    <span class="upload-icon"
+                      ><i class="bi bi-cloud-arrow-up"></i
+                    ></span>
+                    <div class="upload-text"><strong>Muat naik</strong></div>
+                    <div class="upload-hint">JPG, PNG, PDF</div>
+                  </label>
+                  <div class="file-list" data-list-for="i_packaging"></div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                data-bs-dismiss="modal"
+              >
+                Batal
+              </button>
+              <button type="submit" class="btn btn-primary">Tambah item</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /* ===== Wizard: step navigation ===== */
+      (function () {
+        var wizard = document.getElementById("permit-wizard");
+        var form = document.getElementById("permit-form");
+        var steps = Array.prototype.slice.call(
+          wizard.querySelectorAll(".wizard-step"),
+        );
+        var progressBar = document.getElementById("wizard-progress");
+        var countEl = document.getElementById("wizard-count");
+        var prevBtn = document.getElementById("wizard-prev");
+        var nextBtn = document.getElementById("wizard-next");
+        var submitBtn = document.getElementById("wizard-submit");
+        var saveBtn = document.getElementById("wizard-save");
+
+        var currentIndex = 0;
+
+        /* ----- Applicant type ----- */
+        function getType() {
+          return form.querySelector('[name="applicant_type"]:checked').value;
+        }
+
+        function syncTypeSections() {
+          var type = getType();
+          form.querySelectorAll("[data-for]").forEach(function (el) {
+            el.hidden = el.dataset.for !== type;
+          });
+        }
+
+        /* ----- Visibility helper (for validation) ----- */
+        function isVisible(el) {
+          if (el.closest("[hidden]")) return false;
+          if (el.closest(".wizard-step:not(.is-active)")) return false;
+          return true;
+        }
+
+        /* ----- Validation for the current step ----- */
+        function validateCurrentStep() {
+          var step = steps[currentIndex];
+          if (!step) return true;
+
+          var inputs = step.querySelectorAll(
+            "input[required], select[required], textarea[required]",
+          );
+          for (var i = 0; i < inputs.length; i++) {
+            var el = inputs[i];
+            if (!isVisible(el)) continue;
+            if (el.type === "checkbox" || el.type === "radio") {
+              if (!el.checked) {
+                el.reportValidity();
+                return false;
+              }
+            } else if (!el.checkValidity()) {
+              el.reportValidity();
+              return false;
+            }
+          }
+          return true;
+        }
+
+        /* ----- Progress ----- */
+        function renderProgress() {
+          var total = steps.length;
+          progressBar.style.setProperty("--wizard-steps", total);
+          progressBar.innerHTML = "";
+          for (var i = 0; i < total; i++) {
+            var seg = document.createElement("div");
+            seg.className = "seg";
+            if (i < currentIndex) seg.classList.add("is-done");
+            if (i === currentIndex) seg.classList.add("is-active");
+            progressBar.appendChild(seg);
+          }
+          countEl.textContent =
+            "Langkah " + (currentIndex + 1) + " daripada " + total;
+        }
+
+        function renderStep() {
+          if (currentIndex >= steps.length) currentIndex = steps.length - 1;
+          if (currentIndex < 0) currentIndex = 0;
+
+          steps.forEach(function (s) {
+            s.classList.remove("is-active");
+          });
+          steps[currentIndex].classList.add("is-active");
+
+          prevBtn.hidden = currentIndex === 0;
+          nextBtn.hidden = currentIndex === steps.length - 1;
+          submitBtn.hidden = currentIndex !== steps.length - 1;
+
+          // Show "Simpan draf" on every step except the last
+          saveBtn.hidden = currentIndex === steps.length - 1;
+
+          renderProgress();
+          wizard.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        nextBtn.addEventListener("click", function () {
+          if (!validateCurrentStep()) return;
+          currentIndex++;
+          renderStep();
+        });
+
+        prevBtn.addEventListener("click", function () {
+          currentIndex--;
+          renderStep();
+        });
+
+        saveBtn.addEventListener("click", function () {
+          saveBtn.innerHTML = '<i class="bi bi-check-lg me-1"></i>Disimpan';
+          setTimeout(function () {
+            saveBtn.textContent = "Simpan draf";
+          }, 1800);
+        });
+
+        form.querySelectorAll('[name="applicant_type"]').forEach(function (r) {
+          r.addEventListener("change", function () {
+            syncTypeSections();
+          });
+        });
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          if (!validateCurrentStep()) return;
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="bi bi-check-lg me-1"></i>Dihantar';
+          alert("Permohonan dihantar! Anda akan dimaklumkan melalui e-mel.");
+        });
+
+        syncTypeSections();
+        renderStep();
+      })();
+
+      /* ===== Upload helper (single file per input) ===== */
+      (function () {
+        document
+          .querySelectorAll('.upload-placeholder input[type="file"]')
+          .forEach(function (input) {
+            input.addEventListener("change", function () {
+              var listEl = document.querySelector(
+                '[data-list-for="' + input.id + '"]',
+              );
+              if (!listEl) return;
+              listEl.innerHTML = "";
+
+              if (!input.files || !input.files.length) return;
+
+              var f = input.files[0];
+              var row = document.createElement("div");
+              row.className = "file-item";
+              row.innerHTML =
+                '<span class="file-icon"><i class="bi bi-file-earmark"></i></span>' +
+                '<span class="file-name" title="' +
+                f.name +
+                '">' +
+                f.name +
+                "</span>" +
+                '<span class="file-size">' +
+                (f.size > 1024
+                  ? Math.round(f.size / 1024) + " KB"
+                  : f.size + " B") +
+                "</span>" +
+                '<button type="button" class="file-remove" aria-label="Buang">' +
+                '<i class="bi bi-x-lg"></i></button>';
+
+              row
+                .querySelector(".file-remove")
+                .addEventListener("click", function () {
+                  input.value = "";
+                  listEl.innerHTML = "";
+                });
+
+              listEl.appendChild(row);
+            });
+          });
+      })();
+
+      /* ===== Item modal: mikroorganisma field ===== */
+      (function () {
+        var cat = document.getElementById("i_category");
+        var grp = document.getElementById("i_micro_group");
+        cat.addEventListener("change", function () {
+          var isOrganik = cat.value === "Baja Organik";
+          grp.hidden = !isOrganik;
+          if (!isOrganik) document.getElementById("i_micro").value = "";
+        });
+      })();
+
+      /* ===== Item list ===== */
+      (function () {
+        var items = [];
+        var itemForm = document.getElementById("item-form");
+        var listEl = document.getElementById("item-list");
+        var emptyEl = document.getElementById("item-empty");
+        var descEl = document.getElementById("item-desc");
+
+        function renderItems() {
+          listEl.innerHTML = "";
+
+          if (items.length === 0) {
+            emptyEl.hidden = false;
+            descEl.textContent = "Belum ada item ditambah.";
+            return;
+          }
+          emptyEl.hidden = true;
+          descEl.textContent = items.length + " item ditambah.";
+
+          items.forEach(function (it, i) {
+            var row = document.createElement("div");
+            row.className = "permit-item";
+            row.innerHTML =
+              '<div class="flex-grow-1 min-w-0">' +
+              '<div class="item-title">' +
+              it.name +
+              "</div>" +
+              '<div class="item-sub">' +
+              it.category +
+              (it.form ? " &middot; " + it.form : "") +
+              "</div>" +
+              "</div>" +
+              '<div class="item-side">' +
+              '<button type="button" class="btn btn-icon" data-remove="' +
+              i +
+              '" aria-label="Buang"><i class="bi bi-trash"></i></button>' +
+              "</div>";
+            listEl.appendChild(row);
+          });
+        }
+
+        itemForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          items.push({
+            name: document.getElementById("i_name").value.trim(),
+            category: document.getElementById("i_category").value,
+            formula: document.getElementById("i_formula").value.trim(),
+            form: document.getElementById("i_form").value,
+            micro: document.getElementById("i_micro").value.trim(),
+            supplier: document.getElementById("i_supplier").value.trim(),
+            supplierAddr: document
+              .getElementById("i_supplier_addr")
+              .value.trim(),
+            msds: (document.getElementById("i_msds").files[0] || {}).name || "",
+            coa: (document.getElementById("i_coa").files[0] || {}).name || "",
+            packaging:
+              (document.getElementById("i_packaging").files[0] || {}).name ||
+              "",
+          });
+
+          itemForm.reset();
+          document.getElementById("i_micro_group").hidden = true;
+          itemForm.querySelectorAll(".file-list").forEach(function (el) {
+            el.innerHTML = "";
+          });
+
+          bootstrap.Modal.getInstance(
+            document.getElementById("itemModal"),
+          ).hide();
+          renderItems();
+        });
+
+        listEl.addEventListener("click", function (e) {
+          var b = e.target.closest("[data-remove]");
+          if (!b) return;
+          items.splice(parseInt(b.getAttribute("data-remove"), 10), 1);
+          renderItems();
+        });
+
+        renderItems();
+      })();
+    </script>
+  </body>
+</html>
