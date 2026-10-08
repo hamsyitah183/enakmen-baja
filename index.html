@@ -18,128 +18,355 @@
     />
     <link href="css/base.css" rel="stylesheet" />
     <link href="css/components.css" rel="stylesheet" />
-    <link href="css/login.css" rel="stylesheet" />
-    <title>Log masuk | Portal Pendaftaran Baja</title>
+    <link href="css/index.css" rel="stylesheet" />
+    <title>Semua Halaman | Portal Pendaftaran Baja</title>
+
+ 
   </head>
   <body>
-    <div class="row g-0 auth-split">
-      <aside class="col-lg-6 d-none d-lg-flex login-aside">
+    <div class="index-wrap">
+      <!-- ===================== HERO ===================== -->
+      <header class="index-hero">
         <a href="#" class="brand" aria-label="Enakmen Baja Sabah">
           <span class="brand-mark brand-mark--img">
             <img src="logo/image.png" alt="" width="40" height="40" />
           </span>
           <span class="brand-text">Enakmen Baja Sabah</span>
         </a>
-        <div>
-          <h2>Daftar produk dan mohon lesen secara dalam talian.</h2>
-          <p class="mt-3">
-            Urus pendaftaran baja, lesen dan permit import anda di bawah Enakmen
-            Baja Pertanian 2025.
-          </p>
-          <ul class="login-points">
-            <li>
-              <i class="bi bi-check2-circle"></i>Jejak setiap permohonan di satu
-              tempat
-            </li>
-            <li>
-              <i class="bi bi-check2-circle"></i>Terima peringatan pembaharuan
-              90 hari sebelum tamat tempoh
-            </li>
-            <li>
-              <i class="bi bi-check2-circle"></i>Balas notis dan rayuan tepat
-              pada masanya
-            </li>
-          </ul>
+
+        <span class="eyebrow">Peta Laman</span>
+        <h1>Semua halaman portal</h1>
+        <p>
+          Koleksi lengkap halaman HTML untuk Portal Pendaftaran Baja.
+          Klik mana-mana kad untuk membuka halaman berkenaan, atau
+          gunakan butang <em>Lihat</em> untuk pratonton pantas.
+        </p>
+      </header>
+
+      <!-- ===================== AUTHENTICATION ===================== -->
+      <section class="index-category">
+        <div class="index-category-head">
+          <span class="cat-icon"><i class="bi bi-shield-lock"></i></span>
+          <h2>Pengesahan &amp; Pendaftaran Akaun</h2>
+          <span class="cat-count">3 halaman</span>
         </div>
-        <small class="text-white-50">Jabatan Pertanian Sabah</small>
-      </aside>
 
-      <main class="col-12 col-lg-6 login-main">
-        <div class="login-box">
-          <a href="#" class="brand" aria-label="Enakmen Baja Sabah">
-            <span class="brand-mark brand-mark--img">
-              <img src="logo/image.png" alt="" width="40" height="40" />
-            </span>
-            <span class="brand-text">Enakmen Baja Sabah</span>
-          </a>
-          <h1 class="mb-1">Log masuk</h1>
-          <p class="text-muted-2 mb-4">Gunakan e-mel yang anda daftarkan.</p>
-
-          <form action="filled-dashboard.html" novalidate>
-            <div class="mb-3">
-              <label for="email" class="form-label">E-mel</label>
-              <div class="input-icon">
-                <i class="bi bi-envelope"></i>
-                <input
-                  type="email"
-                  class="form-control"
-                  id="email"
-                  placeholder="anda@syarikat.com"
-                  autocomplete="username"
-                  required
-                />
+        <div class="index-grid">
+          <article class="page-card">
+            <div class="page-thumb is-auth">
+              <span class="thumb-icon"><i class="bi bi-door-open"></i></span>
+              <span class="page-tag is-info">Log masuk</span>
+            </div>
+            <div class="page-body">
+              <span class="page-file">index.html</span>
+              <h3>Log masuk</h3>
+              <p>
+                Halaman log masuk untuk pengguna berdaftar. Pintu masuk ke
+                papan pemuka.
+              </p>
+              <div class="page-actions">
+                <a href="index.html" class="btn btn-primary">
+                  <i class="bi bi-box-arrow-up-right"></i>Buka
+                </a>
               </div>
             </div>
-            <div class="mb-3">
-              <div class="d-flex justify-content-between">
-                <label for="password" class="form-label">Kata laluan</label>
-                <a href="#" class="small">Lupa kata laluan?</a>
+          </article>
+
+          <article class="page-card">
+            <div class="page-thumb is-auth">
+              <span class="thumb-icon"><i class="bi bi-person-plus"></i></span>
+              <span class="page-tag is-info">Wizard</span>
+            </div>
+            <div class="page-body">
+              <span class="page-file">signup.html</span>
+              <h3>Cipta akaun (wizard)</h3>
+              <p>
+                Wizard pendaftaran 4 langkah: jenis akaun, butiran, dokumen
+                sokongan (boleh dilangkau), dan butiran log masuk.
+              </p>
+              <div class="page-actions">
+                <a href="signup.html" class="btn btn-primary">
+                  <i class="bi bi-box-arrow-up-right"></i>Buka
+                </a>
               </div>
-              <div class="input-icon">
-                <i class="bi bi-lock"></i>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="password"
-                  placeholder="Masukkan kata laluan anda"
-                  autocomplete="current-password"
-                  required
-                />
-                <button
-                  type="button"
-                  class="toggle-pass"
-                  aria-label="Tunjukkan kata laluan"
-                  data-toggle-pass="#password"
+            </div>
+          </article>
+
+          <article class="page-card">
+            <div class="page-thumb is-auth">
+              <span class="thumb-icon"><i class="bi bi-envelope-check"></i></span>
+              <span class="page-tag is-info">Emel</span>
+            </div>
+            <div class="page-body">
+              <span class="page-file">verify-email.html</span>
+              <h3>Sahkan e-mel</h3>
+              <p>
+                Skrin pengesahan e-mel selepas pendaftaran. Menunjukkan emel
+                yang digunakan dan butang hantar semula.
+              </p>
+              <div class="page-actions">
+                <a href="verify-email.html" class="btn btn-primary">
+                  <i class="bi bi-box-arrow-up-right"></i>Buka
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===================== DASHBOARDS ===================== -->
+      <section class="index-category">
+        <div class="index-category-head">
+          <span class="cat-icon"><i class="bi bi-speedometer2"></i></span>
+          <h2>Papan Pemuka</h2>
+          <span class="cat-count">2 halaman</span>
+        </div>
+
+        <div class="index-grid">
+          <article class="page-card">
+            <div class="page-thumb">
+              <span class="thumb-icon"><i class="bi bi-house-door"></i></span>
+              <span class="page-tag is-warning">Akaun belum lengkap</span>
+            </div>
+            <div class="page-body">
+              <span class="page-file">dashboard-empty.html</span>
+              <h3>Papan pemuka (kosong)</h3>
+              <p>
+                Papan pemuka untuk pengguna baharu. Menunjukkan alert
+                peringatan dan butang daftar produk yang dikunci.
+              </p>
+              <div class="page-actions">
+                <a href="dashboard-empty.html" class="btn btn-primary">
+                  <i class="bi bi-box-arrow-up-right"></i>Buka
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="page-card">
+            <div class="page-thumb is-approved">
+              <span class="thumb-icon"><i class="bi bi-grid-1x2"></i></span>
+              <span class="page-tag is-success">3 produk · 4 lesen</span>
+            </div>
+            <div class="page-body">
+              <span class="page-file">filled-dashboard.html</span>
+              <h3>Papan pemuka (berisi)</h3>
+              <p>
+                Papan pemuka dengan produk, cawangan, aktiviti lesen, aktiviti
+                terkini, pemberitahuan, dan tindakan pantas.
+              </p>
+              <div class="page-actions">
+                <a href="filled-dashboard.html" class="btn btn-primary">
+                  <i class="bi bi-box-arrow-up-right"></i>Buka
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===================== ONBOARDING ===================== -->
+      <section class="index-category">
+        <div class="index-category-head">
+          <span class="cat-icon"><i class="bi bi-list-check"></i></span>
+          <h2>Lengkapkan Akaun</h2>
+          <span class="cat-count">1 halaman</span>
+        </div>
+
+        <div class="index-grid">
+          <article class="page-card">
+            <div class="page-thumb">
+              <span class="thumb-icon"><i class="bi bi-clipboard2-check"></i></span>
+              <span class="page-tag">Onboarding</span>
+            </div>
+            <div class="page-body">
+              <span class="page-file">complete-account.html</span>
+              <h3>Lengkapkan akaun</h3>
+              <p>
+                Proses melengkapkan akaun: tambah produk, cawangan (pilihan),
+                dan aktiviti lesen. Termasuk modal tambah/lihat produk dan
+                cawangan.
+              </p>
+              <div class="page-actions">
+                <a href="complete-account.html" class="btn btn-primary">
+                  <i class="bi bi-box-arrow-up-right"></i>Buka
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===================== PROFILE ===================== -->
+      <section class="index-category">
+        <div class="index-category-head">
+          <span class="cat-icon"><i class="bi bi-building"></i></span>
+          <h2>Profil Organisasi</h2>
+          <span class="cat-count">2 halaman</span>
+        </div>
+
+        <div class="index-grid">
+          <article class="page-card">
+            <div class="page-thumb">
+              <span class="thumb-icon"><i class="bi bi-eye"></i></span>
+              <span class="page-tag">Baca sahaja</span>
+            </div>
+            <div class="page-body">
+              <span class="page-file">profil-organisasi.html</span>
+              <h3>Lihat profil organisasi</h3>
+              <p>
+                Paparan profil organisasi dengan accordion: butiran syarikat,
+                wakil, dokumen, cawangan, produk, dan aktiviti lesen.
+              </p>
+              <div class="page-actions">
+                <a href="profil-organisasi.html" class="btn btn-primary">
+                  <i class="bi bi-box-arrow-up-right"></i>Buka
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="page-card">
+            <div class="page-thumb">
+              <span class="thumb-icon"><i class="bi bi-pencil-square"></i></span>
+              <span class="page-tag">Edit</span>
+            </div>
+            <div class="page-body">
+              <span class="page-file">profil-organisasi-edit.html</span>
+              <h3>Edit profil organisasi</h3>
+              <p>
+                Edit terhad: boleh ubah alamat premis, tambah wakil syarikat,
+                dan urus cawangan. Butiran syarikat, lesen, dan dokumen
+                dikunci.
+              </p>
+              <div class="page-actions">
+                <a href="profil-organisasi-edit.html" class="btn btn-primary">
+                  <i class="bi bi-box-arrow-up-right"></i>Buka
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===================== PERMIT IMPORT ===================== -->
+      <section class="index-category">
+        <div class="index-category-head">
+          <span class="cat-icon"><i class="bi bi-truck"></i></span>
+          <h2>Permit Import Khas</h2>
+          <span class="cat-count">1 halaman</span>
+        </div>
+
+        <div class="index-grid">
+          <article class="page-card">
+            <div class="page-thumb is-permit">
+              <span class="thumb-icon"><i class="bi bi-clipboard2-plus"></i></span>
+              <span class="page-tag is-warning">Pengecualian</span>
+            </div>
+            <div class="page-body">
+              <span class="page-file">permohonan-permit-import-khas.html</span>
+              <h3>Permohonan permit import khas</h3>
+              <p>
+                Wizard 5 langkah untuk permohonan permit import khas (tujuan
+                penyelidikan). Termasuk item, tujuan, dokumen, dan perakuan.
+              </p>
+              <div class="page-actions">
+                <a
+                  href="permohonan-permit-import-khas.html"
+                  class="btn btn-primary"
                 >
-                  <i class="bi bi-eye"></i>
-                </button>
+                  <i class="bi bi-box-arrow-up-right"></i>Buka
+                </a>
               </div>
             </div>
-            <div class="form-check mb-4">
-              <input class="form-check-input" type="checkbox" id="remember" />
-              <label class="form-check-label" for="remember"
-                >Kekalkan log masuk saya</label
-              >
-            </div>
-            <button type="submit" class="btn btn-primary w-100 py-2">
-              Log masuk
-            </button>
-          </form>
-
-          <div class="login-divider">Baru menggunakan portal ini?</div>
-          <a href="signup.html" class="btn btn-outline-primary w-100 py-2"
-            >Cipta akaun</a
-          >
-          <a href="permohonan-permit-import-khas.html" class="d-block text-center small mt-3"
-            >Mohon Permit Sementara</a
-          >
+          </article>
         </div>
-      </main>
-    </div>
+      </section>
 
-    <script>
-      document.querySelectorAll("[data-toggle-pass]").forEach(function (btn) {
-        btn.addEventListener("click", function () {
-          var input = btn
-            .closest(".input-icon")
-            .querySelector(btn.dataset.togglePass);
-          var show = input.type === "password";
-          input.type = show ? "text" : "password";
-          btn.querySelector(".bi").className = show
-            ? "bi bi-eye-slash"
-            : "bi bi-eye";
-        });
-      });
-    </script>
+      <!-- ===================== ASSESSMENT ===================== -->
+      <section class="index-category">
+        <div class="index-category-head">
+          <span class="cat-icon"><i class="bi bi-clipboard2-pulse"></i></span>
+          <h2>Penilaian Teknikal DOA</h2>
+          <span class="cat-count">3 halaman</span>
+        </div>
+
+        <div class="index-grid">
+          <article class="page-card">
+            <div class="page-thumb is-assessment">
+              <span class="thumb-icon"><i class="bi bi-hourglass-split"></i></span>
+              <span class="page-tag is-warning">Sedang dijalankan</span>
+            </div>
+            <div class="page-body">
+              <span class="page-file">penilaian-teknikal.html</span>
+              <h3>Penilaian sedang dijalankan</h3>
+              <p>
+                Skrin semasa penilaian teknikal. Menunjukkan kemajuan 2
+                daripada 4 dengan banner amber dan animasi pulse.
+              </p>
+              <div class="page-actions">
+                <a href="penilaian-teknikal.html" class="btn btn-primary">
+                  <i class="bi bi-box-arrow-up-right"></i>Buka
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="page-card">
+            <div class="page-thumb is-assessment">
+              <span class="thumb-icon"><i class="bi bi-flag"></i></span>
+              <span class="page-tag is-warning">Keputusan diproses</span>
+            </div>
+            <div class="page-body">
+              <span class="page-file">keputusan-diproses.html</span>
+              <h3>Keputusan sedang diproses</h3>
+              <p>
+                Langkah 4 daripada 4 – keputusan sedang disediakan. Semua
+                peringkat selesai tetapi keputusan rasmi belum dikeluarkan.
+              </p>
+              <div class="page-actions">
+                <a href="keputusan-diproses.html" class="btn btn-primary">
+                  <i class="bi bi-box-arrow-up-right"></i>Buka
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="page-card">
+            <div class="page-thumb is-approved">
+              <span class="thumb-icon"><i class="bi bi-patch-check-fill"></i></span>
+              <span class="page-tag is-success">Diluluskan</span>
+            </div>
+            <div class="page-body">
+              <span class="page-file">keputusan-dikeluarkan.html</span>
+              <h3>Keputusan dikeluarkan</h3>
+              <p>
+                Penilaian teknikal selesai dan diluluskan. Termasuk komen
+                pegawai, laporan lawatan tapak, dan butang muat turun surat
+                keputusan.
+              </p>
+              <div class="page-actions">
+                <a href="keputusan-dikeluarkan.html" class="btn btn-primary">
+                  <i class="bi bi-box-arrow-up-right"></i>Buka
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ===================== FOOTER ===================== -->
+      <footer class="index-foot">
+        <p class="mb-1">
+          <i class="bi bi-info-circle me-1"></i>
+          Nama fail di atas adalah cadangan — tukar mengikut struktur projek
+          anda yang sebenar.
+        </p>
+        <p class="mb-0">
+          Dibina untuk <strong>Enakmen Baja Sabah</strong> ·
+          <a href="#">Laporkan masalah</a>
+        </p>
+      </footer>
+    </div>
   </body>
 </html>
