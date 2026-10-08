@@ -12,7 +12,7 @@
 .login-points li { display: flex; gap: .6rem; align-items: flex-start; color: var(--color-primary-100); }
 .login-points .bi { color: var(--color-primary-200); margin-top: .1rem; }
 
-.login-main { display: flex; align-items: center; justify-content: center; padding: 2rem 1.25rem; background: var(--color-surface); }
+.login-main { display: flex; align-items: center; justify-content: center; padding: 2rem 1.25rem; background-color: var(--bs-body-bg); }
 .login-box { width: 100%; max-width: 400px; }
 .login-box h1 { font-size: 1.5rem; }
 .login-divider { display: flex; align-items: center; gap: .75rem; color: var(--color-muted); font-size: .8rem; margin: 1.25rem 0; }

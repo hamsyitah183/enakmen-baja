@@ -1,0 +1,237 @@
+/* ==========================================================
+   signup-wizard.css — wizard chrome only
+   Pairs with css/signup.css
+   ========================================================== */
+
+/* ---------- Shell ---------- */
+.wizard {
+  width: 100%;
+  /* Match the .signup-box width (defined in signup.css) —
+     the fallback keeps it working if signup.css isn't loaded */
+  max-width: clamp(760px, 68vw, 1200px);
+
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg, 1.25rem);
+  box-shadow: 0 1px 2px rgba(15, 58, 36, 0.04),
+    0 18px 44px -22px rgba(15, 58, 36, 0.22);
+  overflow: hidden;
+}
+
+@media (min-width: 1800px) {
+  .wizard { max-width: 1280px; }
+}
+
+/* ---------- Header ---------- */
+.wizard-head {
+  padding: clamp(1.25rem, 2.2vw, 2rem) clamp(1.25rem, 2.5vw, 2.25rem) 0;
+}
+
+.wizard-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.wizard-topline .brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-text);
+}
+.wizard-topline .brand:hover { text-decoration: none; }
+
+.wizard-count {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+/* ---------- Progress bar ---------- */
+.wizard-progress {
+  --wizard-steps: 4;
+  display: grid;
+  grid-template-columns: repeat(var(--wizard-steps), minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 1.75rem;
+}
+.wizard-progress .seg {
+  height: 4px;
+  border-radius: 999px;
+  background: var(--color-border);
+  transition: background 0.25s ease;
+}
+.wizard-progress .seg.is-done,
+.wizard-progress .seg.is-active {
+  background: var(--color-primary-600);
+}
+
+/* ---------- Body / steps ---------- */
+.wizard-body {
+  padding: 0 clamp(1.25rem, 2.5vw, 2.25rem) clamp(1.25rem, 2.5vw, 2.25rem);
+}
+
+/* On very wide screens, put the "intro" (title+subtitle) in a
+   narrower column so text lines don't get too long */
+@media (min-width: 992px) {
+  .wizard-title,
+  .wizard-subtitle {
+    max-width: 60ch;
+  }
+}
+
+.wizard-step { display: none; }
+.wizard-step.is-active {
+  display: block;
+  animation: wizardStepIn 0.25s ease;
+}
+@keyframes wizardStepIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wizard-step.is-active { animation: none; }
+}
+
+/* ---------- Step headings ---------- */
+.wizard-title {
+  font-size: clamp(1.2rem, 1rem + 0.6vw, 1.5rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin: 0 0 0.4rem;
+  color: var(--color-text);
+}
+.wizard-subtitle {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  margin: 0 0 1.5rem;
+  line-height: 1.55;
+}
+
+/* ---------- Sub-section inside a step ---------- */
+.wizard-section + .wizard-section {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+.wizard-section-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 0.15rem;
+}
+.wizard-section-hint {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  margin: 0 0 1rem;
+  line-height: 1.5;
+}
+
+/* ---------- Type choice tiles ---------- */
+.wizard .type-choice .btn-check + label {
+  padding: 1rem 1.15rem;
+  align-items: flex-start;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+}
+.wizard .type-choice .btn-check + label:hover {
+  border-color: var(--color-primary-200);
+  background: var(--color-surface-2);
+}
+.wizard .type-choice .btn-check:checked + label {
+  border-color: var(--color-primary-500);
+  background: var(--color-primary-50);
+  box-shadow: 0 0 0 1px var(--color-primary-500);
+}
+
+/* ---------- Upload grid (dokumen sokongan) ---------- */
+.wizard-upload-grid {
+  display: grid;
+  /* Wider cards on desktop, but wrap nicely on smaller screens */
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.9rem;
+}
+.wizard-upload-grid .upload-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.wizard-upload-grid .upload-field label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--color-text);
+  margin: 0;
+}
+
+/* Skippable notice */
+.wizard-skip-note {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  background: var(--color-info-bg, #e6f0fb);
+  color: var(--color-info, #2b6cb0);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+.wizard-skip-note i { font-size: 1rem; margin-top: 0.05rem; flex: none; }
+
+/* ---------- Footer ---------- */
+.wizard-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: clamp(0.9rem, 1.6vw, 1.25rem) clamp(1.25rem, 2.5vw, 2.25rem);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+}
+
+.wizard-skip {
+  background: none;
+  border: 0;
+  padding: 0.4rem 0.6rem;
+  color: var(--color-muted);
+  font-size: 0.82rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+}
+.wizard-skip:hover {
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+.wizard-skip[hidden] {
+  visibility: hidden;
+  display: inline-block;
+}
+
+.wizard-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+}
+.wizard-actions .btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 575.98px) {
+  .wizard-head { padding: 1.25rem 1.25rem 0; }
+  .wizard-body { padding: 0 1.25rem 1.25rem; }
+  .wizard-foot {
+    padding: 1rem 1.25rem;
+    flex-wrap: wrap;
+  }
+  .wizard-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .wizard-topline .brand-text { display: none; }
+}

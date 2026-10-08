@@ -1,25 +1,31 @@
 /* ==========================================================
    base.css — design tokens, resets, typography
    Change the green scale here and the whole portal follows.
+   Theme: warm cream background, deep green, serif headings.
    ========================================================== */
 :root {
-  /* Brand green scale */
-  --color-primary-50:  #ecf8f1;
-  --color-primary-100: #d4f0e0;
-  --color-primary-200: #a9e0c1;
-  --color-primary-500: #22a65a;
-  --color-primary-600: #1b8a4a;
-  --color-primary-700: #156f3b;
-  --color-primary-800: #14502f;
-  --color-primary-900: #0f3a24;
+  /* Brand green scale (deep emerald, as in the landing page) */
+  --color-primary-50:  #eff8f3;
+  --color-primary-100: #d6efe2;
+  --color-primary-200: #a9dcc3;
+  --color-primary-500: #178a5c;
+  --color-primary-600: #0a4f37;   /* main button / step cards */
+  --color-primary-700: #083f2d;
+  --color-primary-800: #063323;
+  --color-primary-900: #04271b;
 
-  /* Neutrals */
-  --color-bg:        #eceeed;
+  /* Accents */
+  --color-mint:      #a8e6c8;     /* numerals "01 02 03", step labels */
+  --color-eyebrow:   #1b7f6b;     /* small uppercase label above headings */
+  --color-link:      #0c4a6e;     /* blue-teal titles and links */
+
+  /* Neutrals (warm) */
+  --color-bg:        #faf8f3;
   --color-surface:   #ffffff;
-  --color-surface-2: #f6f8f7;
-  --color-border:    #e3e7e5;
-  --color-text:      #1b2420;
-  --color-muted:     #67736d;
+  --color-surface-2: #f4f1ea;
+  --color-border:    #e6e2d8;
+  --color-text:      #1d2a23;
+  --color-muted:     #6e7168;
 
   /* Status */
   --color-success: var(--color-primary-600);
@@ -31,12 +37,13 @@
   --color-info-bg: #e6f0fb;
 
   /* Shape and type */
-  --radius-sm: .5rem;
-  --radius-md: .75rem;
-  --radius-lg: 1.25rem;
-  --shadow-sm: 0 1px 2px rgba(15, 58, 36, .06);
-  --shadow-md: 0 8px 24px rgba(15, 58, 36, .10);
-  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --radius-sm: .375rem;
+  --radius-md: .625rem;
+  --radius-lg: 1rem;
+  --shadow-sm: 0 1px 2px rgba(30, 40, 30, .05);
+  --shadow-md: 0 8px 24px rgba(30, 40, 30, .09);
+  --font-sans:  "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
 
   /* Layout */
   --sidebar-width: 260px;
@@ -44,25 +51,39 @@
 
   /* Map tokens onto Bootstrap */
   --bs-primary: var(--color-primary-600);
-  --bs-primary-rgb: 27, 138, 74;
+  --bs-primary-rgb: 10, 79, 55;
   --bs-success: var(--color-primary-600);
-  --bs-success-rgb: 27, 138, 74;
+  --bs-success-rgb: 10, 79, 55;
   --bs-body-font-family: var(--font-sans);
   --bs-body-color: var(--color-text);
   --bs-body-bg: var(--color-bg);
   --bs-border-color: var(--color-border);
   --bs-secondary-color: var(--color-muted);
-  --bs-link-color: var(--color-primary-700);
+  --bs-link-color: var(--color-link);
   --bs-link-hover-color: var(--color-primary-800);
   --bs-border-radius: var(--radius-sm);
   --bs-border-radius-lg: var(--radius-md);
 }
 
 body { font-size: .9rem; -webkit-font-smoothing: antialiased; }
-h1, h2, h3, h4, h5, h6 { font-weight: 600; letter-spacing: -.01em; }
+
+/* Serif headings, sans for everything else */
+h1, h2, h3 { font-family: var(--font-serif); font-weight: 500; letter-spacing: -.015em; }
+h4, h5, h6 { font-weight: 600; letter-spacing: -.01em; }
+
 a { text-decoration: none; }
 a:hover { text-decoration: underline; }
+
+/* Helpers */
+.font-serif { font-family: var(--font-serif); }
 .text-muted-2 { color: var(--color-muted) !important; }
+.text-mint { color: var(--color-mint) !important; }
+.eyebrow {
+  display: block; margin-bottom: .75rem;
+  font-size: .68rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--color-eyebrow);
+}
+
 :focus-visible { outline: 2px solid var(--color-primary-500); outline-offset: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
