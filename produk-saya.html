@@ -91,10 +91,7 @@
               ><i class="bi bi-patch-check"></i
               ><span class="side-label">Lesen</span></a
             >
-            <a href="#" class="side-link" title="Permit import"
-              ><i class="bi bi-truck"></i
-              ><span class="side-label">Permit import</span></a
-            >
+           
             <a href="#" class="side-link" title="Pembayaran"
               ><i class="bi bi-receipt"></i
               ><span class="side-label">Pembayaran</span></a
@@ -106,21 +103,7 @@
             >
           </nav>
 
-          <div class="nav-group-label">Bantuan</div>
-          <nav class="d-grid gap-1">
-            <a href="#" class="side-link" title="Daftar awam"
-              ><i class="bi bi-search"></i
-              ><span class="side-label">Daftar awam</span></a
-            >
-            <a href="#" class="side-link" title="Panduan dan fi"
-              ><i class="bi bi-book"></i
-              ><span class="side-label">Panduan dan fi</span></a
-            >
-            <a href="#" class="side-link" title="Sokongan"
-              ><i class="bi bi-headset"></i
-              ><span class="side-label">Sokongan</span></a
-            >
-          </nav>
+        
 
           <div class="nav-group-label">Akaun</div>
           <nav class="d-grid gap-1 mb-3">
@@ -1025,7 +1008,7 @@
           var name = $row.find(".product-title").text().trim();
 
           if (action === "view") {
-            alert("Lihat: " + name);
+            window.location.href = "produk-butiran.html";
           } else if (action === "edit") {
             alert("Edit: " + name);
           } else if (action === "delete") {

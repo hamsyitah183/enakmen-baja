@@ -20,6 +20,7 @@
     <link href="css/components.css" rel="stylesheet" />
     <link href="css/dashboard.css" rel="stylesheet" />
     <link href="css/complete-account.css" rel="stylesheet" />
+    <link href="css/submissionModal.css" rel="stylesheet" />
     <title>Lengkapkan Akaun | Portal Pendaftaran Baja</title>
 
     <style>
@@ -45,15 +46,9 @@
         content: "";
         position: absolute;
         inset: 0;
-        background-image: linear-gradient(
-            rgba(255, 255, 255, 0.35) 1px,
-            transparent 1px
-          ),
-          linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.35) 1px,
-            transparent 1px
-          );
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.35) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.35) 1px, transparent 1px);
         background-size: 22px 22px;
         opacity: 0.5;
         pointer-events: none;
@@ -495,7 +490,7 @@
               ><i class="bi bi-house-door"></i
               ><span class="side-label">Papan pemuka</span></a
             >
-            <a href="#" class="side-link" title="Produk saya"
+            <a href="produk-saya.html" class="side-link" title="Produk saya"
               ><i class="bi bi-box-seam"></i
               ><span class="side-label">Produk saya</span></a
             >
@@ -503,10 +498,7 @@
               ><i class="bi bi-patch-check"></i
               ><span class="side-label">Lesen</span></a
             >
-            <a href="#" class="side-link" title="Permit import"
-              ><i class="bi bi-truck"></i
-              ><span class="side-label">Permit import</span></a
-            >
+
             <a href="#" class="side-link" title="Pembayaran"
               ><i class="bi bi-receipt"></i
               ><span class="side-label">Pembayaran</span></a
@@ -515,22 +507,6 @@
               ><i class="bi bi-envelope-exclamation"></i
               ><span class="side-label">Notis dan rayuan</span
               ><span class="count pill pill-danger">0</span></a
-            >
-          </nav>
-
-          <div class="nav-group-label">Bantuan</div>
-          <nav class="d-grid gap-1">
-            <a href="#" class="side-link" title="Daftar awam"
-              ><i class="bi bi-search"></i
-              ><span class="side-label">Daftar awam</span></a
-            >
-            <a href="#" class="side-link" title="Panduan dan fi"
-              ><i class="bi bi-book"></i
-              ><span class="side-label">Panduan dan fi</span></a
-            >
-            <a href="#" class="side-link" title="Sokongan"
-              ><i class="bi bi-headset"></i
-              ><span class="side-label">Sokongan</span></a
             >
           </nav>
 
@@ -809,7 +785,9 @@
                       </div>
 
                       <div class="lesen-tile" data-license-type="penjual">
-                        <span class="icon-chip"><i class="bi bi-shop"></i></span>
+                        <span class="icon-chip"
+                          ><i class="bi bi-shop"></i
+                        ></span>
                         <div class="tile-title">Penjual</div>
                         <div class="tile-count" data-count="penjual">
                           0 lesen
@@ -857,14 +835,15 @@
                     <ol>
                       <li>
                         Saya mengaku bahawa semua maklumat yang diberikan dalam
-                        permohonan ini adalah <strong>benar, tepat dan
-                        lengkap</strong> pada pengetahuan saya.
+                        permohonan ini adalah
+                        <strong>benar, tepat dan lengkap</strong> pada
+                        pengetahuan saya.
                       </li>
                       <li>
                         Saya faham bahawa memberikan maklumat palsu atau
-                        mengelirukan adalah suatu <strong>kesalahan di bawah
-                        Enakmen Baja Sabah</strong> dan boleh dikenakan tindakan
-                        undang-undang.
+                        mengelirukan adalah suatu
+                        <strong>kesalahan di bawah Enakmen Baja Sabah</strong>
+                        dan boleh dikenakan tindakan undang-undang.
                       </li>
                       <li>
                         Saya bersetuju bahawa pihak DOA berhak untuk
@@ -873,8 +852,8 @@
                       </li>
                       <li>
                         Saya bersetuju bahawa sebarang perubahan pada maklumat
-                        selepas penghantaran perlu dimaklumkan kepada DOA
-                        dalam tempoh <strong>14 hari</strong>.
+                        selepas penghantaran perlu dimaklumkan kepada DOA dalam
+                        tempoh <strong>14 hari</strong>.
                       </li>
                       <li>
                         Saya bersetuju dengan
@@ -909,16 +888,12 @@
                   </div>
 
                   <p class="submit-hint" id="submit-hint">
-                    Lengkapkan produk dan sekurang-kurangnya satu aktiviti
-                    lesen sebelum menghantar.
+                    Lengkapkan produk dan sekurang-kurangnya satu aktiviti lesen
+                    sebelum menghantar.
                   </p>
 
                   <!-- Success message (hidden by default) -->
-                  <div
-                    class="submit-success mt-3"
-                    id="submit-success"
-                    hidden
-                  >
+                  <div class="submit-success mt-3" id="submit-success" hidden>
                     <i class="bi bi-check-circle-fill"></i>
                     <div>
                       <strong>Permohonan berjaya dihantar!</strong><br />
@@ -938,7 +913,9 @@
                     ><i class="bi bi-check-lg"></i
                   ></span>
                   <div>
-                    <div class="stepper-title">Lengkapkan profil organisasi</div>
+                    <div class="stepper-title">
+                      Lengkapkan profil organisasi
+                    </div>
                     <p class="stepper-desc">
                       Maklumat syarikat dan wakil yang bertanggungjawab.
                     </p>
@@ -988,9 +965,7 @@
               </div>
 
               <div class="help-box">
-                <span class="help-icon"
-                  ><i class="bi bi-question-lg"></i
-                ></span>
+                <span class="help-icon"><i class="bi bi-question-lg"></i></span>
                 <h4>Menghadapi masalah?</h4>
                 <p>
                   Hubungi kami dan kami akan membantu anda sepanjang proses
@@ -1485,7 +1460,10 @@
                       value="pengimport"
                       checked
                     />
-                    <label class="btn btn-outline-primary w-100" for="lt-import">
+                    <label
+                      class="btn btn-outline-primary w-100"
+                      for="lt-import"
+                    >
                       <i class="bi bi-box-arrow-in-down me-1"></i>Pengimport
                     </label>
                   </div>
@@ -1497,7 +1475,10 @@
                       id="lt-export"
                       value="pengeksport"
                     />
-                    <label class="btn btn-outline-primary w-100" for="lt-export">
+                    <label
+                      class="btn btn-outline-primary w-100"
+                      for="lt-export"
+                    >
                       <i class="bi bi-box-arrow-up-right me-1"></i>Pengeksport
                     </label>
                   </div>
@@ -1524,7 +1505,10 @@
                       id="lt-seller"
                       value="penjual"
                     />
-                    <label class="btn btn-outline-primary w-100" for="lt-seller">
+                    <label
+                      class="btn btn-outline-primary w-100"
+                      for="lt-seller"
+                    >
                       <i class="bi bi-shop me-1"></i>Penjual
                     </label>
                   </div>
@@ -1572,6 +1556,106 @@
               <button type="submit" class="btn btn-primary">Tambah</button>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================
+     Modal: Permohonan berjaya dihantar
+     ========================================================= -->
+    <div
+      class="modal fade"
+      id="submissionSuccessModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content submit-success-modal">
+          <div class="submit-success-body">
+            <!-- Head -->
+            <div class="submit-success-head">
+              <div class="flex-grow-1 min-w-0">
+                <h3>Permohonan berjaya dihantar! 🎉</h3>
+                <p>
+                  Permohonan anda telah dihantar dan akan melalui proses
+                  penilaian teknikal oleh pihak DOA.
+                </p>
+              </div>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Tutup"
+              ></button>
+            </div>
+
+            <!-- Timeline -->
+            <div class="tl">
+              <!-- Stage 1 -->
+              <div class="tl-item is-active" >
+                <span class="tl-badge">1</span>
+                <div class="tl-body">
+                  <p class="tl-title">Semakan dokumen sokongan</p>
+                  <p class="tl-meta">
+                    Pegawai akan menyemak semua dokumen yang telah dimuat naik.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Stage 2 -->
+              <div class="tl-item" >
+                <span class="tl-badge">2</span>
+                <div class="tl-body">
+                  <p class="tl-title">Penilaian teknikal kandungan produk</p>
+                  <p class="tl-meta">
+                    Formulasi, kandungan nutrien, dan label setiap produk akan
+                    dinilai.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Stage 3 -->
+              <div class="tl-item" >
+                <span class="tl-badge">3</span>
+                <div class="tl-body">
+                  <p class="tl-title">Lawatan tapak premis (jika perlu)</p>
+                  <p class="tl-meta">
+                    Lawatan akan dijalankan untuk mengesahkan premis operasi dan
+                    penyimpanan produk.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Stage 4 -->
+              <div class="tl-item is-last">
+                <span class="tl-badge"><i class="bi bi-flag"></i></span>
+                <div class="tl-body">
+                  <p class="tl-title">Keputusan penilaian teknikal</p>
+                  <p class="tl-meta">
+                    Keputusan akan dimaklumkan melalui e-mel dan papan pemuka
+                    anda.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Summary strip -->
+            <div class="tl-summary">
+              <i class="bi bi-clock-history"></i>
+              <span>
+                Anggaran keseluruhan: <strong>14-30 hari bekerja</strong>
+              </span>
+            </div>
+
+            <!-- Continue -->
+            <button
+              type="button"
+              class="btn btn-primary w-100"
+              data-bs-dismiss="modal"
+            >
+              Teruskan
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -1984,8 +2068,7 @@
           }
 
           // Step 5: submit — current if reqs met, locked otherwise
-          var reqMet =
-            state.products.length > 0 && state.licenses.length > 0;
+          var reqMet = state.products.length > 0 && state.licenses.length > 0;
           if (reqMet) {
             s5.classList.add("is-current");
             s5.querySelector(".stepper-badge").textContent = "5";
@@ -2005,15 +2088,13 @@
         var submitCard = document.getElementById("submit-card");
 
         function canSubmit() {
-          var reqMet =
-            state.products.length > 0 && state.licenses.length > 0;
+          var reqMet = state.products.length > 0 && state.licenses.length > 0;
           var disclaimerOk = disclaimerAccept.checked;
           return reqMet && disclaimerOk;
         }
 
         function updateSubmitState() {
-          var reqMet =
-            state.products.length > 0 && state.licenses.length > 0;
+          var reqMet = state.products.length > 0 && state.licenses.length > 0;
           var disclaimerOk = disclaimerAccept.checked;
 
           submitBtn.disabled = !(reqMet && disclaimerOk);
@@ -2044,21 +2125,13 @@
           if (!canSubmit()) return;
 
           // TODO: Replace with real AJAX submission to backend.
-          // For now, just show the success message and disable the form.
+          // For now, just update the UI.
 
-          submitSuccess.hidden = false;
+          // Update the submit button state
           submitBtn.disabled = true;
-          submitBtn.innerHTML =
-            '<i class="bi bi-check-lg"></i>Dihantar';
+          submitBtn.innerHTML = '<i class="bi bi-check-lg"></i>Dihantar';
 
-          // Scroll success message into view
-          submitSuccess.scrollIntoView({
-            behavior: "smooth",
-            block: "center",
-          });
-
-          // Optionally disable the whole card to prevent edits
-          // (Remove if you want to allow edits after submit)
+          // Disable the form controls to prevent edits
           submitCard
             .querySelectorAll("input, button, a")
             .forEach(function (el) {
@@ -2066,6 +2139,11 @@
               el.disabled = true;
               el.classList.add("disabled");
             });
+
+          // Show the success modal (with timeline)
+          bootstrap.Modal.getOrCreateInstance(
+            document.getElementById("submissionSuccessModal"),
+          ).show();
         });
 
         /* =========================================================
@@ -2087,9 +2165,7 @@
             ["Kategori Item", p.category],
             ["Bentuk Baja", p.form],
           ];
-          var single = [
-            ["Formulasi / Komposisi Kandungan Nutrien", p.formula],
-          ];
+          var single = [["Formulasi / Komposisi Kandungan Nutrien", p.formula]];
           if (p.category === "Baja Organik" && p.micro) {
             single.push(["Jenis Mikroorganisma", p.micro]);
           }
@@ -2173,8 +2249,7 @@
           if (!b) return;
 
           document.getElementById("vb_title").textContent = b.name;
-          document.getElementById("vb_type").textContent =
-            "Jenis: " + b.type;
+          document.getElementById("vb_type").textContent = "Jenis: " + b.type;
 
           var dl = document.getElementById("vb-details-list");
           dl.innerHTML = "";
@@ -2209,9 +2284,7 @@
 
           var addrRow = document.createElement("div");
           addrRow.innerHTML =
-            "<dt>Alamat</dt><dd>" +
-            escapeHtml(b.address || "-") +
-            "</dd>";
+            "<dt>Alamat</dt><dd>" + escapeHtml(b.address || "-") + "</dd>";
           dl.appendChild(addrRow);
 
           var att = document.getElementById("vb-attachments-list");
@@ -2285,9 +2358,7 @@
           .getElementById("branch-form")
           .addEventListener("submit", function (e) {
             e.preventDefault();
-            var type = this.querySelector(
-              'input[name="b_type"]:checked',
-            ).value;
+            var type = this.querySelector('input[name="b_type"]:checked').value;
 
             state.branches.push({
               type: type,
@@ -2325,9 +2396,7 @@
           .getElementById("license-form")
           .addEventListener("submit", function (e) {
             e.preventDefault();
-            var type = this.querySelector(
-              'input[name="l_type"]:checked',
-            ).value;
+            var type = this.querySelector('input[name="l_type"]:checked').value;
             state.licenses.push({
               type: type,
               files: licenseUpload.get(),

@@ -141,6 +141,6 @@
 .empty-state { text-align: center; padding: 2rem 1rem; color: var(--color-muted); }
 .empty-state .bi { font-size: 1.6rem; color: var(--color-primary-500); }
 
-.form-control, .btn, .table-clean td {
+.form-control, .btn, .table-clean td, .form-select {
   font-size: 0.8rem;
 }

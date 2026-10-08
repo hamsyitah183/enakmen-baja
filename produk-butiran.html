@@ -1,0 +1,739 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/components.css" rel="stylesheet" />
+    <link href="css/dashboard.css" rel="stylesheet" />
+    <link href="css/view.css" rel="stylesheet" />
+    <title>Butiran Produk | Portal Pendaftaran Baja</title>
+
+   
+  </head>
+  <body>
+    <div class="app">
+      <script>
+        try {
+          if (localStorage.getItem("sidebar-collapsed") === "1")
+            document.querySelector(".app").classList.add("is-collapsed");
+        } catch (e) {}
+      </script>
+
+      <!-- Bar sisi -->
+      <aside
+        class="sidebar offcanvas-lg offcanvas-start"
+        tabindex="-1"
+        id="sidebar"
+        aria-label="Navigasi utama"
+      >
+        <div class="sidebar-inner">
+          <div class="sidebar-head border-bottom pb-2">
+            <a href="#" class="brand" aria-label="Enakmen Baja Sabah">
+              <span class="brand-mark brand-mark--img">
+                <img src="logo/image.png" alt="" width="40" height="40" />
+              </span>
+              <span class="brand-text">Enakmen Baja Sabah</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-icon sidebar-toggle d-none d-lg-inline-grid"
+              id="sidebar-toggle"
+              aria-controls="sidebar"
+              aria-expanded="true"
+              aria-label="Tutup bar sisi"
+              title="Tutup bar sisi"
+            >
+              <i class="bi bi-layout-sidebar"></i>
+            </button>
+            <button
+              type="button"
+              class="btn-close d-lg-none"
+              data-bs-dismiss="offcanvas"
+              data-bs-target="#sidebar"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <nav class="d-grid gap-1">
+            <a
+              href="filled-dashboard.html"
+              class="side-link"
+              title="Papan pemuka"
+              ><i class="bi bi-house-door"></i
+              ><span class="side-label">Papan pemuka</span></a
+            >
+            <a href="#" class="side-link active" title="Produk saya"
+              ><i class="bi bi-box-seam"></i
+              ><span class="side-label">Produk saya</span></a
+            >
+            <a href="#" class="side-link" title="Lesen"
+              ><i class="bi bi-patch-check"></i
+              ><span class="side-label">Lesen</span></a
+            >
+            <a href="#" class="side-link" title="Pembayaran"
+              ><i class="bi bi-receipt"></i
+              ><span class="side-label">Pembayaran</span></a
+            >
+            <a href="#" class="side-link" title="Notis dan rayuan"
+              ><i class="bi bi-envelope-exclamation"></i
+              ><span class="side-label">Notis dan rayuan</span
+              ><span class="count pill pill-danger">0</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Akaun</div>
+          <nav class="d-grid gap-1 mb-3">
+            <a
+              href="company-profile.html"
+              class="side-link"
+              title="Profil organisasi"
+              ><i class="bi bi-building"></i
+              ><span class="side-label">Profil organisasi</span></a
+            >
+            <a href="#" class="side-link" title="Tetapan"
+              ><i class="bi bi-gear"></i
+              ><span class="side-label">Tetapan</span></a
+            >
+            <a href="index.html" class="side-link" title="Log keluar"
+              ><i class="bi bi-box-arrow-right"></i
+              ><span class="side-label">Log keluar</span></a
+            >
+          </nav>
+
+          <div class="side-user">
+            <span class="avatar">AH</span>
+            <div class="lh-sm side-user-text">
+              <div class="fw-semibold">Aisyah Hassan</div>
+              <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Utama -->
+      <div class="app-main">
+        <header class="topbar border-bottom">
+          <button
+            class="btn btn-icon d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebar"
+            aria-controls="sidebar"
+            aria-label="Buka menu"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+          <h1 class="h5 mb-0 me-2">Butiran produk</h1>
+          <div class="topbar-search d-none d-md-block input-icon">
+            <i class="bi bi-search"></i>
+            <input
+              type="search"
+              class="form-control"
+              placeholder="Cari produk, lesen atau permit"
+              aria-label="Cari"
+            />
+          </div>
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <button
+              class="btn btn-icon position-relative"
+              type="button"
+              aria-label="Pemberitahuan"
+            >
+              <i class="bi bi-bell"></i><span class="notif-dot"></span>
+            </button>
+
+            <div class="dropdown">
+              <button
+                type="button"
+                class="avatar avatar-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Menu pengguna"
+              >
+                AH
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end user-menu">
+                <li class="user-menu-head">
+                  <div class="fw-semibold">Aisyah Hassan</div>
+                  <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="company-profile.html"
+                    ><i class="bi bi-building me-2"></i>Profil organisasi</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-gear me-2"></i>Tetapan</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="index.html"
+                    ><i class="bi bi-box-arrow-right me-2"></i>Log keluar</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <main class="app-content p-3 p-md-4 p-xl-5">
+          <div class="detail-container">
+            <!-- ===== Top action bar ===== -->
+            <div class="detail-topbar">
+              <div class="detail-topbar-left">
+                <a href="produk-saya.html" class="btn-back">
+                  <i class="bi bi-arrow-left"></i>Kembali
+                </a>
+                <button type="button" class="btn-nav-arrow" aria-label="Sebelum">
+                  <i class="bi bi-chevron-left"></i>
+                </button>
+                <button
+                  type="button"
+                  class="btn-nav-arrow"
+                  aria-label="Seterusnya"
+                >
+                  <i class="bi bi-chevron-right"></i>
+                </button>
+              </div>
+
+              <div class="detail-topbar-right">
+                <a href="#" class="btn-back">
+                  <i class="bi bi-download"></i>Muat turun perakuan
+                </a>
+                <a href="#" class="btn-back">
+                  <i class="bi bi-pencil"></i>Kemas kini produk
+                </a>
+                <button type="button" class="btn-nav-arrow" aria-label="Lagi">
+                  <i class="bi bi-three-dots"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- ===== Main shell ===== -->
+            <div class="detail-shell">
+              <!-- Header -->
+              <div class="detail-header">
+                <span class="head-avatar">
+                  <i class="bi bi-flower2"></i>
+                </span>
+                <div class="head-info">
+                  <h1 id="product-name-head">Baja Sawit Premium</h1>
+                  <div class="head-sub">
+                    <span class="avatar-mini">AH</span>
+                    <span>Aisyah Hassan</span>
+                    <span class="dot">·</span>
+                    <span>Didaftarkan pada 18 Okt 2026</span>
+                  </div>
+                </div>
+                <div class="head-links">
+                  <a href="#" aria-label="Pautan dokumen">
+                    <i class="bi bi-file-earmark-text"></i>
+                  </a>
+                  <a href="#" aria-label="Perakuan">
+                    <i class="bi bi-patch-check-fill"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Info strip -->
+              <div class="info-strip">
+                <div class="strip-cell">
+                  <div class="strip-label">
+                    <i class="bi bi-hash"></i>No. Rujukan
+                  </div>
+                  <div class="strip-value">PB/2026/87128</div>
+                </div>
+
+                <div class="strip-cell">
+                  <div class="strip-label"><i class="bi bi-tag"></i>Kategori</div>
+                  <div class="strip-value" id="p-category">
+                    Baja – Baja Sebatian
+                  </div>
+                </div>
+
+                <div class="strip-cell">
+                  <div class="strip-label"><i class="bi bi-box"></i>Bentuk</div>
+                  <div class="strip-value" id="p-form">
+                    Butiran (Granular)
+                  </div>
+                </div>
+
+                <div class="strip-cell">
+                  <div class="strip-label">
+                    <i class="bi bi-clipboard-pulse"></i>Status
+                  </div>
+                  <div class="strip-value">
+                    <span class="strip-pill is-success">
+                      <i class="bi bi-patch-check-fill"></i>Perakuan Aktif
+                    </span>
+                  </div>
+                </div>
+
+                <div class="strip-cell">
+                  <div class="strip-label"><i class="bi bi-flag"></i>Keutamaan</div>
+                  <div class="strip-value">
+                    <span class="strip-pill is-warning">Sederhana</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tabs -->
+              <div class="detail-tabs" role="tablist">
+                <button
+                  type="button"
+                  class="detail-tab active"
+                  role="tab"
+                  data-tab="overview"
+                >
+                  <i class="bi bi-house-door"></i>Ringkasan
+                </button>
+                <button
+                  type="button"
+                  class="detail-tab"
+                  role="tab"
+                  data-tab="details"
+                >
+                  <i class="bi bi-info-circle"></i>Butiran
+                </button>
+                <button
+                  type="button"
+                  class="detail-tab"
+                  role="tab"
+                  data-tab="activity"
+                >
+                  <i class="bi bi-activity"></i>Log Aktiviti
+                  <span class="tab-count">6</span>
+                </button>
+                <button
+                  type="button"
+                  class="detail-tab"
+                  role="tab"
+                  data-tab="attachments"
+                >
+                  <i class="bi bi-paperclip"></i>Lampiran
+                  <span class="tab-count">4</span>
+                </button>
+              </div>
+
+              <!-- ============ TAB PANEL: Ringkasan ============ -->
+              <div class="detail-panel active" data-panel="overview">
+                <div class="panel-grid">
+                  <!-- Left: description -->
+                  <div>
+                    <div class="panel-section">
+                      <h2 class="panel-title">Butiran Produk</h2>
+                      <p class="panel-desc">
+                        Baja Sawit Premium ialah baja sebatian lengkap yang
+                        dirumus khas untuk tanaman kelapa sawit. Mengandungi
+                        nisbah nitrogen (N), fosforus (P2O5), dan kalium (K2O)
+                        yang seimbang bagi menyokong pertumbuhan pokok dan
+                        pengeluaran hasil buah tandan segar.
+                      </p>
+                      <p class="panel-desc">
+                        Produk ini telah lulus penilaian teknikal dan mematuhi
+                        keperluan pendaftaran di bawah Enakmen Baja Sabah.
+                        Penggunaan baja ini disyorkan pada peringkat pertumbuhan
+                        vegetatif dan generatif pokok sawit.
+                      </p>
+                    </div>
+
+                    <div class="panel-section">
+                      <h2 class="panel-title">Komposisi Nutrien</h2>
+                      <p
+                        class="panel-desc"
+                        id="p-formula"
+                        style="font-weight: 600"
+                      >
+                        N 15%, P2O5 15%, K2O 15% + unsur mikro (B, Cu, Zn)
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Right: sidebar stack -->
+                  <div class="panel-side">
+                    <div class="info-box">
+                      <div class="info-box-head">
+                        <i class="bi bi-box-seam"></i>Pengilang / Pembekal
+                      </div>
+                      <p class="name" id="supplier-name">Borneo Agro Sdn Bhd</p>
+                      <p class="addr" id="supplier-addr">
+                        Lot 5, Jalan Industri 3, Kawasan Perindustrian Kota
+                        Kinabalu, 88450 Kota Kinabalu, Sabah
+                      </p>
+                    </div>
+
+                    <div class="quick-stats">
+                      <div class="quick-stat">
+                        <div class="qs-label">No. Rujukan</div>
+                        <div class="qs-value" style="font-size: 0.85rem">
+                          PB/2026/87128
+                        </div>
+                      </div>
+                      <div class="quick-stat">
+                        <div class="qs-label">Sah Sehingga</div>
+                        <div class="qs-value" style="font-size: 0.85rem">
+                          2031-10-08
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ============ TAB PANEL: Butiran ============ -->
+              <div class="detail-panel" data-panel="details">
+                <div class="panel-section">
+                  <h2 class="panel-title">Maklumat Pendaftaran</h2>
+                  <dl class="def-grid">
+                    <div>
+                      <dt>No. Rujukan</dt>
+                      <dd>PB/2026/87128</dd>
+                    </div>
+                    <div>
+                      <dt>Tarikh Dikeluarkan</dt>
+                      <dd>8 Oktober 2026, 5:00 PM</dd>
+                    </div>
+                    <div>
+                      <dt>Sah Sehingga</dt>
+                      <dd>8 Oktober 2031</dd>
+                    </div>
+                    <div>
+                      <dt>Status</dt>
+                      <dd>Perakuan Aktif</dd>
+                    </div>
+                    <div>
+                      <dt>Pemegang Perakuan</dt>
+                      <dd>Borneo Agro Sdn Bhd</dd>
+                    </div>
+                    <div>
+                      <dt>Jenis Pemegang</dt>
+                      <dd>Syarikat</dd>
+                    </div>
+                    <div>
+                      <dt>No. SSM / KP</dt>
+                      <dd>202301012345</dd>
+                    </div>
+                    <div>
+                      <dt>Daerah</dt>
+                      <dd>Kota Kinabalu</dd>
+                    </div>
+                    <div class="full">
+                      <dt>Alamat Pemegang</dt>
+                      <dd>
+                        Lot 5, Jalan Industri 3, Kawasan Perindustrian Kota
+                        Kinabalu, 88450 Kota Kinabalu, Sabah
+                      </dd>
+                    </div>
+                  </dl>
+                </div>
+
+                <div class="panel-section">
+                  <h2 class="panel-title">Ciri-ciri Produk</h2>
+                  <dl class="def-grid">
+                    <div>
+                      <dt>Kategori</dt>
+                      <dd id="p-category-2">Baja – Baja Sebatian</dd>
+                    </div>
+                    <div>
+                      <dt>Bentuk</dt>
+                      <dd id="p-form-2">Butiran (Granular)</dd>
+                    </div>
+                    <div class="full">
+                      <dt>Komposisi Nutrien</dt>
+                      <dd id="p-formula-2">
+                        N 15%, P2O5 15%, K2O 15% + unsur mikro (B, Cu, Zn)
+                      </dd>
+                    </div>
+                  </dl>
+                </div>
+              </div>
+
+              <!-- ============ TAB PANEL: Log Aktiviti ============ -->
+              <div class="detail-panel" data-panel="activity">
+                <h2 class="panel-title">Log Aktiviti Produk</h2>
+
+                <div class="activity-log">
+                  <div class="log-day">
+                    <i class="bi bi-calendar-week"></i>
+                    Rabu, 28 Oktober 2026
+                  </div>
+
+                  <div class="log-item">
+                    <span class="log-badge is-success">
+                      <i class="bi bi-patch-check-fill"></i>
+                    </span>
+                    <div class="log-body">
+                      <p class="log-title">
+                        <span class="log-actor">Zaba binti Ahmad</span>
+                        meluluskan perakuan produk ini
+                      </p>
+                      <p class="log-sub">
+                        Penilaian teknikal selesai · Produk lulus penuh
+                      </p>
+                    </div>
+                    <span class="log-time">9:15 AM</span>
+                  </div>
+
+                  <div class="log-item">
+                    <span class="log-badge is-info">
+                      <i class="bi bi-clipboard-check"></i>
+                    </span>
+                    <div class="log-body">
+                      <p class="log-title">
+                        <span class="log-actor">Zaba binti Ahmad</span>
+                        menyelesaikan lawatan tapak premis
+                      </p>
+                      <p class="log-sub">
+                        Laporan lawatan tapak telah dimuat naik
+                      </p>
+                    </div>
+                    <span class="log-time">11:20 AM</span>
+                  </div>
+
+                  <div class="log-item">
+                    <span class="log-badge">
+                      <i class="bi bi-file-earmark-text"></i>
+                    </span>
+                    <div class="log-body">
+                      <p class="log-title">
+                        <span class="log-actor">Zaba binti Ahmad</span>
+                        memulakan penilaian teknikal
+                      </p>
+                      <p class="log-sub">
+                        Menilai formulasi, kandungan nutrien dan label
+                      </p>
+                    </div>
+                    <span class="log-time">3:40 PM</span>
+                  </div>
+
+                  <div class="log-day">
+                    <i class="bi bi-calendar-week"></i>
+                    Selasa, 20 Oktober 2026
+                  </div>
+
+                  <div class="log-item">
+                    <span class="log-badge is-warning">
+                      <i class="bi bi-arrow-repeat"></i>
+                    </span>
+                    <div class="log-body">
+                      <p class="log-title">
+                        <span class="log-actor">Aisyah Hassan</span>
+                        mengemas kini komposisi nutrien
+                      </p>
+                      <p class="log-sub">
+                        Perubahan pada: N 14% → N 15% · CoA baharu dimuat naik
+                      </p>
+                    </div>
+                    <span class="log-time">4:10 PM</span>
+                  </div>
+
+                  <div class="log-item">
+                    <span class="log-badge is-info">
+                      <i class="bi bi-cloud-arrow-up"></i>
+                    </span>
+                    <div class="log-body">
+                      <p class="log-title">
+                        <span class="log-actor">Aisyah Hassan</span>
+                        memuat naik 3 dokumen sokongan
+                      </p>
+                      <p class="log-sub">
+                        MSDS / SDS · CoA · Gambar Pembungkusan
+                      </p>
+                    </div>
+                    <span class="log-time">2:35 PM</span>
+                  </div>
+
+                  <div class="log-day">
+                    <i class="bi bi-calendar-week"></i>
+                    Isnin, 18 Oktober 2026
+                  </div>
+
+                  <div class="log-item">
+                    <span class="log-badge is-success">
+                      <i class="bi bi-plus-circle"></i>
+                    </span>
+                    <div class="log-body">
+                      <p class="log-title">
+                        <span class="log-actor">Aisyah Hassan</span>
+                        mendaftarkan produk ini
+                      </p>
+                      <p class="log-sub">
+                        Permohonan pendaftaran dihantar untuk semakan DOA
+                      </p>
+                    </div>
+                    <span class="log-time">5:00 PM</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ============ TAB PANEL: Lampiran ============ -->
+              <div class="detail-panel" data-panel="attachments">
+                <h2 class="panel-title">Lampiran Produk</h2>
+                <p class="panel-desc" style="margin-bottom: 1.25rem">
+                  Dokumen dan fail sokongan yang dimuat naik semasa pendaftaran
+                  produk.
+                </p>
+
+                <div class="attach-grid">
+                  <a href="#" class="attach-card">
+                    <span class="attach-icon is-pdf">
+                      <i class="bi bi-file-earmark-medical"></i>
+                    </span>
+                    <div class="attach-body">
+                      <p class="attach-name">MSDS / SDS</p>
+                      <p class="attach-meta">msds_baja_sawit.pdf · 245 KB</p>
+                    </div>
+                    <span class="attach-open"
+                      ><i class="bi bi-box-arrow-up-right"></i
+                    ></span>
+                  </a>
+
+                  <a href="#" class="attach-card">
+                    <span class="attach-icon is-pdf">
+                      <i class="bi bi-file-earmark-check"></i>
+                    </span>
+                    <div class="attach-body">
+                      <p class="attach-name">Certificate of Analysis (CoA)</p>
+                      <p class="attach-meta">coa_baja_sawit.pdf · 180 KB</p>
+                    </div>
+                    <span class="attach-open"
+                      ><i class="bi bi-box-arrow-up-right"></i
+                    ></span>
+                  </a>
+
+                  <a href="#" class="attach-card">
+                    <span class="attach-icon is-img">
+                      <i class="bi bi-image"></i>
+                    </span>
+                    <div class="attach-body">
+                      <p class="attach-name">Gambar Pembungkusan</p>
+                      <p class="attach-meta">
+                        packaging_baja_sawit.jpg · 1.2 MB
+                      </p>
+                    </div>
+                    <span class="attach-open"
+                      ><i class="bi bi-box-arrow-up-right"></i
+                    ></span>
+                  </a>
+
+                  <a href="#" class="attach-card">
+                    <span class="attach-icon is-pdf">
+                      <i class="bi bi-file-earmark-text"></i>
+                    </span>
+                    <div class="attach-body">
+                      <p class="attach-name">Sijil Pendaftaran Produk</p>
+                      <p class="attach-meta">
+                        sijil_PB-2026-87128.pdf · 320 KB
+                      </p>
+                    </div>
+                    <span class="attach-open"
+                      ><i class="bi bi-box-arrow-up-right"></i
+                    ></span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /* ===== Sidebar toggle ===== */
+      (function () {
+        var app = document.querySelector(".app");
+        var btn = app.querySelector("#sidebar-toggle");
+        var KEY = "sidebar-collapsed";
+
+        function sync() {
+          var collapsed = app.classList.contains("is-collapsed");
+          var label = collapsed ? "Buka bar sisi" : "Tutup bar sisi";
+          btn.setAttribute("aria-expanded", String(!collapsed));
+          btn.setAttribute("aria-label", label);
+          btn.title = label;
+        }
+
+        btn.addEventListener("click", function () {
+          app.classList.toggle("is-collapsed");
+          sync();
+          try {
+            localStorage.setItem(
+              KEY,
+              app.classList.contains("is-collapsed") ? "1" : "0",
+            );
+          } catch (e) {}
+        });
+
+        sync();
+      })();
+
+      /* ===== Tabs ===== */
+      (function () {
+        var tabs = document.querySelectorAll(".detail-tab");
+        var panels = document.querySelectorAll(".detail-panel");
+
+        tabs.forEach(function (tab) {
+          tab.addEventListener("click", function () {
+            var target = tab.getAttribute("data-tab");
+
+            tabs.forEach(function (t) {
+              t.classList.toggle("active", t === tab);
+            });
+            panels.forEach(function (p) {
+              p.classList.toggle(
+                "active",
+                p.getAttribute("data-panel") === target,
+              );
+            });
+          });
+        });
+      })();
+
+      /* =========================================================
+         Load product from URL query string
+         ========================================================= */
+      (function () {
+        try {
+          var params = new URLSearchParams(window.location.search);
+
+          function setText(id, val) {
+            if (!val) return;
+            var el = document.getElementById(id);
+            if (el) el.textContent = val;
+          }
+
+          setText("product-name-head", params.get("name"));
+          setText("p-category", params.get("category"));
+          setText("p-category-2", params.get("category"));
+          setText("p-form", params.get("form"));
+          setText("p-form-2", params.get("form"));
+          setText("p-formula", params.get("formula"));
+          setText("p-formula-2", params.get("formula"));
+          setText("supplier-name", params.get("supplier"));
+          setText("supplier-addr", params.get("supplierAddr"));
+
+          var name = params.get("name");
+          if (name) document.title = name + " | Portal Pendaftaran Baja";
+        } catch (e) {}
+      })();
+    </script>
+  </body>
+</html>
