@@ -45,9 +45,9 @@
         <span class="eyebrow">Peta Laman</span>
         <h1>Semua halaman portal</h1>
         <p>
-          Koleksi lengkap halaman HTML untuk Portal Pendaftaran Baja.
-          Klik mana-mana kad untuk membuka halaman berkenaan, atau
-          gunakan butang <em>Lihat</em> untuk pratonton pantas.
+          Koleksi lengkap halaman HTML untuk Portal Pendaftaran Baja. Klik
+          mana-mana kad untuk membuka halaman berkenaan, atau gunakan butang
+          <em>Lihat</em> untuk pratonton pantas.
         </p>
       </header>
 
@@ -101,6 +101,22 @@
          ========================================================== */
 
       var SITEMAP = [
+        {
+          title: "Landing Page",
+          icon: "bi-speedometer2",
+          pages: [
+            {
+              file: "landing.html",
+              title: "Landing page",
+              desc: "",
+              thumb: "",
+              icon: "bi-house-door",
+              tag: "",
+              tagClass: "is-warning",
+            },
+           
+          ],
+        },
         {
           title: "Pengesahan & Pendaftaran Akaun",
           icon: "bi-shield-lock",
@@ -180,7 +196,6 @@
               tag: "",
               tagClass: "is-warning",
             },
-           
           ],
         },
         {
@@ -205,7 +220,6 @@
               tag: "",
               tagClass: "is-warning",
             },
-           
           ],
         },
         {
@@ -325,8 +339,7 @@
         }
 
         function buildPageCard(page) {
-          var thumbClass =
-            "page-thumb" + (page.thumb ? " " + page.thumb : "");
+          var thumbClass = "page-thumb" + (page.thumb ? " " + page.thumb : "");
           var tagClass =
             "page-tag" + (page.tagClass ? " " + page.tagClass : "");
 
