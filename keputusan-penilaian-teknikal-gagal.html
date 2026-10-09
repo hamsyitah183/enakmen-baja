@@ -143,8 +143,8 @@
         border-radius: 14px;
         display: grid;
         place-items: center;
-        background: var(--color-primary-100);
-        color: var(--color-primary-800);
+        background: #fee2e2;
+        color: #b91c1c;
         font-size: 1.35rem;
         flex: none;
       }
@@ -558,7 +558,177 @@
       }
 
       /* ==========================================================
-         FAILURE / REASON CARD
+         STAGE STEPS (checklist in Kemajuan Penilaian tab)
+         ========================================================== */
+      .stage-card {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 0.5rem 1.25rem;
+      }
+      .stage-step {
+        display: grid;
+        grid-template-columns: 34px 1fr auto;
+        gap: 0.9rem;
+        align-items: start;
+        padding: 0.95rem 0;
+        border-bottom: 1px solid var(--color-border);
+      }
+      .stage-step:last-child {
+        border-bottom: 0;
+      }
+      .stage-badge {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--color-surface-2);
+        border: 2px solid var(--color-border);
+        color: var(--color-muted);
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      .stage-step.is-done .stage-badge {
+        background: var(--color-primary-600);
+        border-color: var(--color-primary-600);
+        color: #fff;
+      }
+      .stage-step.is-failed .stage-badge {
+        background: #dc2626;
+        border-color: #dc2626;
+        color: #fff;
+      }
+      .stage-step.is-active .stage-badge {
+        background: #fff;
+        border-color: var(--color-warning);
+        color: var(--color-warning);
+        box-shadow: 0 0 0 4px var(--color-warning-bg);
+      }
+      .stage-step .stage-title {
+        font-weight: 600;
+        font-size: 0.88rem;
+        margin: 0.15rem 0 0.15rem;
+        color: var(--color-text);
+      }
+      .stage-step .stage-desc {
+        font-size: 0.78rem;
+        color: var(--color-muted);
+        margin: 0;
+        line-height: 1.5;
+      }
+      .stage-step .stage-note {
+        font-size: 0.72rem;
+        color: var(--color-muted);
+        margin: 0.25rem 0 0;
+      }
+
+      /* ---------- Officer note (inline in stage step) ---------- */
+      .officer-note {
+        margin-top: 0.75rem;
+        border-left: 3px solid var(--color-primary-500);
+        background: var(--color-primary-50);
+        border-radius: var(--radius-sm);
+        padding: 0.75rem 0.9rem;
+      }
+      .officer-note.is-danger {
+        border-left-color: #dc2626;
+        background: #fef2f2;
+      }
+      .officer-note-head {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        margin-bottom: 0.45rem;
+      }
+      .officer-note-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-600);
+        color: #fff;
+        font-size: 0.68rem;
+        font-weight: 600;
+        flex: none;
+      }
+      .officer-note.is-danger .officer-note-avatar {
+        background: #dc2626;
+      }
+      .officer-note-meta {
+        font-size: 0.7rem;
+        color: var(--color-muted);
+        margin: 0;
+      }
+      .officer-note-meta strong {
+        color: var(--color-text);
+        display: block;
+        font-size: 0.78rem;
+        margin-bottom: 0.05rem;
+      }
+      .officer-note-text {
+        font-size: 0.8rem;
+        color: var(--color-text);
+        line-height: 1.5;
+        margin: 0;
+      }
+      .officer-note-text + .officer-note-text {
+        margin-top: 0.4rem;
+      }
+
+      /* ---------- Reason list (inside officer note) ---------- */
+      .reason-list {
+        display: grid;
+        gap: 0.5rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .reason-list li {
+        display: flex;
+        gap: 0.6rem;
+        align-items: flex-start;
+        padding: 0.7rem 0.9rem;
+        border: 1px solid #fecaca;
+        background: #fff;
+        border-radius: var(--radius-sm);
+        font-size: 0.82rem;
+        line-height: 1.5;
+        color: var(--color-text);
+      }
+      .reason-list li i {
+        color: #dc2626;
+        font-size: 0.95rem;
+        flex: none;
+        margin-top: 0.05rem;
+      }
+
+      /* ---------- Status pill ---------- */
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 0.22rem 0.65rem;
+        border-radius: 999px;
+      }
+      .pill-danger {
+        background: #fee2e2;
+        color: #b91c1c;
+      }
+      .pill-success {
+        background: var(--color-primary-100);
+        color: var(--color-primary-800);
+      }
+      .pill-warning {
+        background: var(--color-warning-bg);
+        color: var(--color-warning);
+      }
+
+      /* ==========================================================
+         FAILURE / REASON CARD (below shell)
          ========================================================== */
       .result-box {
         border: 1px solid #fecaca;
@@ -591,32 +761,6 @@
         margin: 0;
         color: #7a1f1f;
         line-height: 1.5;
-      }
-
-      .reason-list {
-        display: grid;
-        gap: 0.5rem;
-        margin: 0;
-        padding: 0;
-        list-style: none;
-      }
-      .reason-list li {
-        display: flex;
-        gap: 0.6rem;
-        align-items: flex-start;
-        padding: 0.7rem 0.9rem;
-        border: 1px solid #fecaca;
-        background: #fff;
-        border-radius: var(--radius-sm);
-        font-size: 0.82rem;
-        line-height: 1.5;
-        color: var(--color-text);
-      }
-      .reason-list li i {
-        color: #dc2626;
-        font-size: 0.95rem;
-        flex: none;
-        margin-top: 0.05rem;
       }
 
       /* ---------- Appeal notice ---------- */
@@ -753,25 +897,6 @@
         margin: 0 0 0.85rem;
       }
 
-      /* ---------- Status pill ---------- */
-      .pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.35rem;
-        font-size: 0.72rem;
-        font-weight: 600;
-        padding: 0.22rem 0.65rem;
-        border-radius: 999px;
-      }
-      .pill-danger {
-        background: #fee2e2;
-        color: #b91c1c;
-      }
-      .pill-success {
-        background: var(--color-primary-100);
-        color: var(--color-primary-800);
-      }
-
       /* ==========================================================
          RESPONSIVE
          ========================================================== */
@@ -845,6 +970,15 @@
         }
         .attach-grid {
           grid-template-columns: 1fr;
+        }
+        .stage-step {
+          grid-template-columns: 34px 1fr;
+          gap: 0.75rem;
+        }
+        .stage-step > .pill {
+          grid-column: 2 / -1;
+          justify-self: start;
+          margin-top: 0.4rem;
         }
         .detail-panel {
           padding-top: 1.25rem;
@@ -1042,9 +1176,9 @@
                   <h2>Penilaian teknikal tidak berjaya</h2>
                   <p>
                     Permohonan anda tidak berjaya melepasi penilaian teknikal
-                    oleh pegawai DOA. Sila semak butiran syarikat, wakil,
-                    dokumen sokongan, dan log aktiviti di bawah, serta sebab
-                    penolakan dan pilihan rayuan.
+                    oleh pegawai DOA. Sila semak kemajuan penilaian, butiran
+                    syarikat, wakil, dokumen sokongan, dan log aktiviti di
+                    bawah, serta sebab penolakan dan pilihan rayuan.
                   </p>
                   <div class="assess-meta">
                     <span>
@@ -1141,6 +1275,14 @@
                     type="button"
                     class="detail-tab active"
                     role="tab"
+                    data-tab="progress"
+                  >
+                    <i class="bi bi-list-check"></i>Kemajuan Penilaian
+                  </button>
+                  <button
+                    type="button"
+                    class="detail-tab"
+                    role="tab"
                     data-tab="company"
                   >
                     <i class="bi bi-building"></i>Butiran Syarikat
@@ -1173,8 +1315,150 @@
                   </button>
                 </div>
 
+                <!-- ============ TAB PANEL: Kemajuan Penilaian ============ -->
+                <div class="detail-panel active" data-panel="progress">
+                  <h2 class="panel-title">Kemajuan Penilaian Teknikal</h2>
+                  <p class="panel-desc" style="margin-bottom: 1.25rem">
+                    Berikut adalah ringkasan setiap peringkat dalam penilaian
+                    teknikal permohonan anda. Dua (2) peringkat telah selesai,
+                    dua (2) lagi menunjukkan keputusan tidak berjaya.
+                  </p>
+
+                  <div class="stage-card">
+                    <!-- Step 1: Dokumen sokongan (DONE) -->
+                    <div class="stage-step is-done">
+                      <span class="stage-badge">
+                        <i class="bi bi-check-lg"></i>
+                      </span>
+                      <div>
+                        <div class="stage-title">
+                          Semakan dokumen sokongan
+                        </div>
+                        <p class="stage-desc">
+                          Semua dokumen sokongan telah disemak dan didapati
+                          lengkap serta sah.
+                        </p>
+                        <p class="stage-note">
+                          Selesai pada 19 Oktober 2026, 10:13 AM
+                        </p>
+                      </div>
+                      <span class="pill pill-success">Selesai</span>
+                    </div>
+
+                    <!-- Step 2: Penilaian teknikal (FAILED) -->
+                    <div class="stage-step is-failed">
+                      <span class="stage-badge">
+                        <i class="bi bi-x-lg"></i>
+                      </span>
+                      <div>
+                        <div class="stage-title">
+                          Penilaian teknikal kandungan produk
+                        </div>
+                        <p class="stage-desc">
+                          Formulasi dan kandungan nutrien produk telah dinilai
+                          dan didapati <strong>tidak mematuhi</strong> keperluan
+                          Enakmen Baja Sabah 2024.
+                        </p>
+                        <p class="stage-note">
+                          Selesai pada 24 Oktober 2026, 3:40 PM
+                        </p>
+
+                        <!-- Officer note with reasons -->
+                        <div class="officer-note is-danger">
+                          <div class="officer-note-head">
+                            <span class="officer-note-avatar">ZA</span>
+                            <div>
+                              <p class="officer-note-meta">
+                                <strong>Zaba binti Ahmad</strong>
+                                Pegawai Teknikal &middot; DOA Sabah
+                              </p>
+                            </div>
+                          </div>
+                          <p class="officer-note-text">
+                            Setelah semakan terperinci, terdapat isu teknikal
+                            serius yang dikenal pasti pada
+                            <strong>Baja Sawit Premium</strong> dan
+                            <strong>Baja Organik Plus</strong>. Kedua-dua
+                            produk menunjukkan percanggahan antara kandungan
+                            nutrien yang dinyatakan pada label dengan
+                            Certificate of Analysis (CoA) yang dikemukakan.
+                          </p>
+                          <p
+                            class="officer-note-text"
+                            style="margin-top: 0.6rem"
+                          >
+                            <strong>Percanggahan yang dikenal pasti:</strong>
+                          </p>
+                          <ul class="reason-list" style="margin-top: 0.5rem">
+                            <li>
+                              <i class="bi bi-x-circle-fill"></i>
+                              <div>
+                                <strong>Baja Sawit Premium</strong> — Kandungan
+                                K2O pada label (15%) tidak menepati CoA (9.8%).
+                                Perbezaan melebihi toleransi yang dibenarkan
+                                (&plusmn;1%), iaitu 5.2%.
+                              </div>
+                            </li>
+                            <li>
+                              <i class="bi bi-x-circle-fill"></i>
+                              <div>
+                                <strong>Baja Organik Plus</strong> — Bahan
+                                organik yang diuji hanya 42%, manakala label
+                                menyatakan 60%. Kandungan N juga di bawah
+                                keperluan minimum (2.1% vs 3.0%).
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                      <span class="pill pill-danger">Gagal</span>
+                    </div>
+
+                    <!-- Step 3: Lawatan tapak (DONE) -->
+                    <div class="stage-step is-done">
+                      <span class="stage-badge">
+                        <i class="bi bi-check-lg"></i>
+                      </span>
+                      <div>
+                        <div class="stage-title">Lawatan tapak premis</div>
+                        <p class="stage-desc">
+                          Lawatan tapak telah dijalankan di premis operasi
+                          syarikat bagi mengesahkan keadaan penyimpanan dan
+                          operasi harian. Premis didapati bersih dan mematuhi
+                          keperluan MSDS.
+                        </p>
+                        <p class="stage-note">
+                          Selesai pada 26 Oktober 2026, 11:20 AM
+                        </p>
+                      </div>
+                      <span class="pill pill-success">Lulus</span>
+                    </div>
+
+                    <!-- Step 4: Keputusan (FAILED) -->
+                    <div class="stage-step is-failed">
+                      <span class="stage-badge">
+                        <i class="bi bi-x-lg"></i>
+                      </span>
+                      <div>
+                        <div class="stage-title">
+                          Keputusan penilaian teknikal
+                        </div>
+                        <p class="stage-desc">
+                          Berdasarkan penilaian dokumen, teknikal dan lawatan
+                          tapak, permohonan anda telah
+                          <strong>tidak berjaya</strong>.
+                        </p>
+                        <p class="stage-note">
+                          Dikeluarkan pada 28 Oktober 2026, 9:15 AM
+                        </p>
+                      </div>
+                      <span class="pill pill-danger">Gagal</span>
+                    </div>
+                  </div>
+                </div>
+
                 <!-- ============ TAB PANEL: Butiran Syarikat ============ -->
-                <div class="detail-panel active" data-panel="company">
+                <div class="detail-panel" data-panel="company">
                   <div class="panel-section">
                     <h2 class="panel-title">Maklumat Syarikat</h2>
                     <dl class="def-grid">
@@ -1633,6 +1917,38 @@
                   <div>
                     <strong>Status</strong>
                     <span class="pill pill-danger mt-1">Tidak berjaya</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="meta-card mb-3">
+                <h4>Ringkasan peringkat</h4>
+                <div class="meta-row">
+                  <i class="bi bi-check-circle-fill"></i>
+                  <div>
+                    <strong>Semakan dokumen</strong>
+                    Lulus · 19 Okt 2026
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-x-circle-fill"></i>
+                  <div>
+                    <strong>Penilaian teknikal</strong>
+                    Gagal · 24 Okt 2026
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-check-circle-fill"></i>
+                  <div>
+                    <strong>Lawatan tapak</strong>
+                    Lulus · 26 Okt 2026
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-x-circle-fill"></i>
+                  <div>
+                    <strong>Keputusan</strong>
+                    Tidak berjaya · 28 Okt 2026
                   </div>
                 </div>
               </div>
