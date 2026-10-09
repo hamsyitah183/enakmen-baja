@@ -1,0 +1,927 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <title>Enakmen Baja Sabah — Portal Pendaftaran Baja</title>
+    <link href="css/landing.css" rel="stylesheet" />
+
+    <style>
+      /* ==========================================================
+         KEHENDAK UNDANG-UNDANG
+         ========================================================== */
+      .legal-section {
+        padding: 2.5rem 0 0;
+      }
+      .legal-card {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-xl);
+        padding: 2rem 2.25rem;
+        box-shadow: var(--shadow-sm);
+      }
+      .legal-head {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.25rem;
+        border-bottom: 1px dashed var(--color-border);
+      }
+      .legal-head-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-50);
+        color: var(--color-primary-700);
+        font-size: 1.05rem;
+        flex: none;
+      }
+      .legal-head h2 {
+        font-family: var(--font-serif);
+        font-size: 1.35rem;
+        font-weight: 600;
+        color: var(--color-primary-800);
+        margin: 0;
+        letter-spacing: -0.015em;
+      }
+      .legal-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 2.5rem;
+      }
+      @media (max-width: 767.98px) {
+        .legal-grid {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+      }
+      .legal-item .legal-title {
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: var(--color-text);
+        margin: 0 0 0.5rem;
+      }
+      .legal-item .legal-title strong {
+        color: var(--color-primary-700);
+        font-weight: 700;
+      }
+      .legal-item .legal-text {
+        font-size: 0.85rem;
+        color: var(--color-muted);
+        line-height: 1.65;
+        margin: 0;
+      }
+      .legal-item .legal-text strong {
+        color: var(--color-text);
+        font-weight: 600;
+      }
+      .legal-item .legal-text em {
+        font-style: normal;
+        color: var(--color-primary-700);
+        font-weight: 600;
+      }
+
+      /* ==========================================================
+         PENGUMUMAN (ANNOUNCEMENTS)
+         ========================================================== */
+      .announce-section {
+        padding: 4rem 0 4rem;
+      }
+      .announce-head {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 2rem;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+      }
+      .announce-head .section-title {
+        margin-bottom: 0;
+      }
+      .announce-head-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: var(--color-primary-700);
+        transition: 0.15s;
+      }
+      .announce-head-link:hover {
+        color: var(--color-primary-800);
+      }
+
+      .announce-grid {
+        display: grid;
+        grid-template-columns: 1.15fr 1fr 1fr;
+        gap: 1rem;
+      }
+      @media (max-width: 991.98px) {
+        .announce-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 767.98px) {
+        .announce-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .announce-card {
+        display: flex;
+        flex-direction: column;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        padding: 1.35rem 1.4rem 1.25rem;
+        transition: 0.2s;
+        position: relative;
+        overflow: hidden;
+      }
+      .announce-card:hover {
+        border-color: var(--color-primary-200);
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+      }
+
+      /* Featured announcement */
+      .announce-card.is-featured {
+        grid-row: span 2;
+        background: linear-gradient(
+          160deg,
+          var(--color-primary-800) 0%,
+          var(--color-primary-600) 100%
+        );
+        border-color: var(--color-primary-600);
+        color: #fff;
+        min-height: 100%;
+      }
+      .announce-card.is-featured .announce-tag {
+        background: rgba(168, 230, 200, 0.18);
+        color: var(--color-mint);
+        border-color: rgba(168, 230, 200, 0.35);
+      }
+      .announce-card.is-featured .announce-title {
+        color: #fff;
+        font-size: 1.35rem;
+      }
+      .announce-card.is-featured .announce-desc {
+        color: rgba(255, 255, 255, 0.82);
+      }
+      .announce-card.is-featured .announce-meta {
+        color: rgba(255, 255, 255, 0.7);
+        border-top-color: rgba(255, 255, 255, 0.15);
+      }
+      .announce-card.is-featured .announce-meta i {
+        color: var(--color-mint);
+      }
+      .announce-card.is-featured::after {
+        content: "";
+        position: absolute;
+        right: -60px;
+        bottom: -60px;
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        background: rgba(168, 230, 200, 0.08);
+      }
+      .announce-card.is-featured > * {
+        position: relative;
+        z-index: 1;
+      }
+      .announce-card.is-featured .announce-cta {
+        margin-top: auto;
+        padding-top: 1.25rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        color: var(--color-mint);
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+      .announce-card.is-featured .announce-cta:hover {
+        color: #fff;
+      }
+
+      .announce-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        padding: 0.25rem 0.6rem;
+        border-radius: 999px;
+        background: var(--color-primary-50);
+        color: var(--color-primary-700);
+        border: 1px solid var(--color-primary-100);
+        align-self: flex-start;
+        margin-bottom: 0.9rem;
+      }
+      .announce-tag.is-warning {
+        background: var(--color-warning-bg);
+        color: var(--color-warning);
+        border-color: #f5d68a;
+      }
+      .announce-tag.is-danger {
+        background: var(--color-danger-bg);
+        color: var(--color-danger);
+        border-color: #f5b5b5;
+      }
+      .announce-tag.is-info {
+        background: var(--color-info-bg);
+        color: var(--color-info);
+        border-color: #b6d3f1;
+      }
+
+      .announce-title {
+        font-family: var(--font-serif);
+        font-size: 1.02rem;
+        font-weight: 600;
+        color: var(--color-text);
+        margin: 0 0 0.6rem;
+        line-height: 1.35;
+        letter-spacing: -0.015em;
+      }
+      .announce-desc {
+        font-size: 0.82rem;
+        color: var(--color-muted);
+        line-height: 1.6;
+        margin: 0 0 1rem;
+      }
+      .announce-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-size: 0.72rem;
+        color: var(--color-muted);
+        padding-top: 0.85rem;
+        border-top: 1px solid var(--color-border);
+        margin-top: auto;
+        flex-wrap: wrap;
+      }
+      .announce-meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+      .announce-meta i {
+        color: var(--color-primary-600);
+        font-size: 0.8rem;
+      }
+
+      @media (max-width: 991.98px) {
+        .announce-card.is-featured {
+          grid-column: 1 / -1;
+        }
+      }
+
+      /* ==========================================================
+         QUICK LINKS STRIP
+         ========================================================== */
+      .quick-links {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-top: 2.5rem;
+      }
+      @media (max-width: 767.98px) {
+        .quick-links {
+          grid-template-columns: 1fr;
+        }
+      }
+      .quick-link {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.15rem 1.25rem;
+        background: var(--color-surface-2);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        transition: 0.2s;
+      }
+      .quick-link:hover {
+        border-color: var(--color-primary-300);
+        background: var(--color-primary-50);
+      }
+      .quick-link-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 11px;
+        display: grid;
+        place-items: center;
+        background: var(--color-surface);
+        color: var(--color-primary-700);
+        font-size: 1.15rem;
+        flex: none;
+      }
+      .quick-link-body {
+        flex: 1;
+        min-width: 0;
+      }
+      .quick-link-title {
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: var(--color-text);
+        margin: 0 0 0.15rem;
+      }
+      .quick-link-desc {
+        font-size: 0.75rem;
+        color: var(--color-muted);
+        margin: 0;
+      }
+      .quick-link-arrow {
+        color: var(--color-muted);
+        font-size: 0.9rem;
+        flex: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ==========================================================
+         HEADER
+         ========================================================== -->
+    <header class="site-header">
+      <div class="container">
+        <a href="#" class="brand">
+          <span class="brand-mark"><i class="bi bi-flower2"></i></span>
+          <span>Enakmen Baja Sabah</span>
+        </a>
+
+        <nav class="main-nav">
+          <a href="#kategori">Kategori</a>
+          <a href="#perkhidmatan">Perkhidmatan</a>
+          <a href="#produk">Produk</a>
+          <a href="#panduan">Panduan</a>
+          <a href="#hubungi">Hubungi</a>
+        </nav>
+
+        <div class="header-actions">
+          <a href="#hubungi" class="header-phone">
+            <i class="bi bi-telephone-fill"></i>
+            <span>+60 88 234 567</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ==========================================================
+         HERO
+         ========================================================== -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-panel">
+          <div class="hero-inner">
+            <span class="hero-eyebrow">
+              <i class="bi bi-shield-check"></i>
+              Enakmen Baja Sabah 2025
+            </span>
+            <h1>
+              Daftar Baja Anda<br />
+              dengan <em>Kepercayaan</em>
+            </h1>
+            <p>
+              Portal rasmi pendaftaran baja, baja tambahan dan bahan mentah di
+              bawah Enakmen Baja Sabah. Semak status, muat naik dokumen dan
+              dapatkan perakuan dalam satu platform.
+            </p>
+
+            <form class="hero-search" onsubmit="event.preventDefault()">
+              <i class="bi bi-search"></i>
+              <input
+                type="text"
+                placeholder="Cari produk, syarikat atau no. rujukan..."
+              />
+              <button type="submit">
+                <i class="bi bi-arrow-right"></i>
+                <span>Cari</span>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Category pills -->
+        <div class="category-row" id="kategori">
+          <a href="#" class="category-card">
+            <span class="category-icon"><i class="bi bi-droplet"></i></span>
+            <div>
+              <p class="category-name">Baja Tunggal</p>
+              <p class="category-count">42 produk</p>
+            </div>
+          </a>
+          <a href="#" class="category-card">
+            <span class="category-icon"><i class="bi bi-diagram-3"></i></span>
+            <div>
+              <p class="category-name">Baja Campuran</p>
+              <p class="category-count">68 produk</p>
+            </div>
+          </a>
+          <a href="#" class="category-card">
+            <span class="category-icon"><i class="bi bi-flower3"></i></span>
+            <div>
+              <p class="category-name">Baja Organik</p>
+              <p class="category-count">54 produk</p>
+            </div>
+          </a>
+          <a href="#" class="category-card">
+            <span class="category-icon"><i class="bi bi-atom"></i></span>
+            <div>
+              <p class="category-name">Bahan Mentah</p>
+              <p class="category-count">28 bahan</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         KEHENDAK UNDANG-UNDANG
+         ========================================================== -->
+    <section class="legal-section">
+      <div class="container">
+        <div class="legal-card">
+          <div class="legal-head">
+            <span class="legal-head-icon"><i class="bi bi-bank"></i></span>
+            <h2>Kehendak undang-undang</h2>
+          </div>
+
+          <div class="legal-grid">
+            <div class="legal-item">
+              <p class="legal-title">
+                <strong>Seksyen 5(1)</strong> — Pendaftaran wajib.
+              </p>
+              <p class="legal-text">
+                Tiada seorang pun boleh mengilang, mengimport, mengeksport atau
+                menjual baja, baja tambahan atau bahan mentah melainkan telah
+                didaftarkan.
+              </p>
+            </div>
+
+            <div class="legal-item">
+              <p class="legal-title">
+                <strong>Seksyen 9</strong> — Pengecualian khas.
+              </p>
+              <p class="legal-text">
+                Bahan tidak berdaftar hanya boleh diimport untuk pendidikan,
+                penyelidikan, sampel pendaftaran atau bahan rujukan melalui
+                <em>Permit Import Khas</em>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         PENGUMUMAN
+         ========================================================== -->
+    <section class="announce-section">
+      <div class="container">
+        <div class="announce-head">
+          <div>
+            <span class="section-eyebrow">Berita terkini</span>
+            <h2 class="section-title">Pengumuman rasmi</h2>
+          </div>
+          <a href="#" class="announce-head-link">
+            Lihat semua pengumuman <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="announce-grid">
+          <!-- Featured announcement -->
+          <a href="#" class="announce-card is-featured">
+            <span class="announce-tag">
+              <i class="bi bi-megaphone"></i>Penting
+            </span>
+            <h3 class="announce-title">
+              Enakmen Baja Sabah 2025 berkuat kuasa 15 Mei 2025
+            </h3>
+            <p class="announce-desc">
+              Semua pengilang, pengimport, pengeksport dan penjual baja di
+              Sabah dikehendaki mematuhi peruntukan di bawah Enakmen Baja
+              Sabah 2025 (No. 4 of 2025). Permohonan pendaftaran dan lesen
+              hendaklah dikemukakan dalam tempoh peralihan yang ditetapkan —
+              enam bulan untuk pendaftaran dan lesen, tiga bulan untuk permit
+              import.
+            </p>
+            <span class="announce-cta">
+              Baca notis penuh <i class="bi bi-arrow-right"></i>
+            </span>
+          </a>
+
+          <!-- Standard announcements -->
+          <a href="#" class="announce-card">
+            <span class="announce-tag is-warning">
+              <i class="bi bi-exclamation-triangle"></i>Peringatan
+            </span>
+            <h3 class="announce-title">
+              Pembaharuan perakuan perlu 90 hari sebelum tamat
+            </h3>
+            <p class="announce-desc">
+              Pemegang perakuan pendaftaran yang sah perlu mengemukakan
+              permohonan pembaharuan sekurang-kurangnya 90 hari sebelum tarikh
+              tamat tempoh.
+            </p>
+            <div class="announce-meta">
+              <span><i class="bi bi-calendar3"></i>10 Okt 2026</span>
+              <span><i class="bi bi-file-text"></i>Seksyen 7</span>
+            </div>
+          </a>
+
+          <a href="#" class="announce-card">
+            <span class="announce-tag is-info">
+              <i class="bi bi-info-circle"></i>Kemas kini
+            </span>
+            <h3 class="announce-title">
+              Sistem pendaftaran dalam talian kini dibuka
+            </h3>
+            <p class="announce-desc">
+              Portal pendaftaran rasmi kini menerima permohonan produk baharu,
+              pembaharuan perakuan, dan permit import khas secara dalam talian.
+            </p>
+            <div class="announce-meta">
+              <span><i class="bi bi-calendar3"></i>8 Okt 2026</span>
+              <span><i class="bi bi-cloud-check"></i>Sistem aktif</span>
+            </div>
+          </a>
+
+          <a href="#" class="announce-card">
+            <span class="announce-tag is-danger">
+              <i class="bi bi-shield-exclamation"></i>Pematuhan
+            </span>
+            <h3 class="announce-title">
+              Tindakan tegas terhadap bahan tidak berdaftar
+            </h3>
+            <p class="announce-desc">
+              Pengilang, pengimport dan penjual yang melanggar Seksyen 5(1)
+              boleh dikenakan denda sehingga RM50,000 atau penjara tidak
+              melebihi satu tahun.
+            </p>
+            <div class="announce-meta">
+              <span><i class="bi bi-calendar3"></i>5 Okt 2026</span>
+              <span><i class="bi bi-file-text"></i>Seksyen 5(2)</span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Quick links -->
+        <div class="quick-links">
+          <a href="#" class="quick-link">
+            <span class="quick-link-icon"><i class="bi bi-journal-text"></i></span>
+            <div class="quick-link-body">
+              <p class="quick-link-title">Teks penuh Enakmen</p>
+              <p class="quick-link-desc">Agriculture Fertilizer Enactment 2025</p>
+            </div>
+            <i class="bi bi-arrow-right quick-link-arrow"></i>
+          </a>
+
+          <a href="#" class="quick-link">
+            <span class="quick-link-icon"><i class="bi bi-diagram-2"></i></span>
+            <div class="quick-link-body">
+              <p class="quick-link-title">Carta alir pendaftaran</p>
+              <p class="quick-link-desc">Proses 5 langkah dari daftar ke perakuan</p>
+            </div>
+            <i class="bi bi-arrow-right quick-link-arrow"></i>
+          </a>
+
+          <a href="#" class="quick-link">
+            <span class="quick-link-icon"><i class="bi bi-question-circle"></i></span>
+            <div class="quick-link-body">
+              <p class="quick-link-title">Soalan lazim</p>
+              <p class="quick-link-desc">Jawapan kepada pertanyaan biasa</p>
+            </div>
+            <i class="bi bi-arrow-right quick-link-arrow"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         TRUST / STATS
+         ========================================================== -->
+    <section class="trust-section">
+      <div class="container">
+        <div class="trust-grid">
+          <div>
+            <span class="section-eyebrow">Dipercayai oleh industri</span>
+            <h2 class="section-title">
+              Rakan Strategik Pendaftaran Baja Sabah
+            </h2>
+            <p class="section-lead">
+              Kami bekerjasama dengan pengilang, pengimport dan penjual baja
+              untuk memastikan setiap produk mematuhi piawaian keselamatan dan
+              kualiti yang ditetapkan di bawah Enakmen Baja Sabah 2025.
+            </p>
+
+            <div class="trust-stats">
+              <div class="stat-box">
+                <div class="stat-value">30+</div>
+                <p class="stat-label">Syarikat berdaftar</p>
+              </div>
+              <div class="stat-box is-featured">
+                <div class="stat-value">5k+</div>
+                <p class="stat-label">Produk berdaftar</p>
+              </div>
+              <div class="stat-box">
+                <div class="stat-value">07+</div>
+                <p class="stat-label">Tahun pengalaman</p>
+              </div>
+              <div class="stat-box">
+                <div class="stat-value">33+</div>
+                <p class="stat-label">Perakuan dikeluarkan</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="trust-visual">
+            <img
+              src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?auto=format&fit=crop&w=900&q=80"
+              alt="Pegawai pertanian memeriksa tanaman"
+            />
+            <span class="trust-badge"><i class="bi bi-patch-check-fill"></i></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         SERVICES
+         ========================================================== -->
+    <section class="services-section" id="perkhidmatan">
+      <div class="container">
+        <div class="services-head">
+          <span class="section-eyebrow">Perkhidmatan kami</span>
+          <h2 class="section-title">Semua keperluan pendaftaran</h2>
+          <p class="section-lead">
+            Proses pendaftaran yang telus dan pantas — daripada permohonan
+            produk baharu sehingga perakuan dikeluarkan.
+          </p>
+        </div>
+
+        <div class="services-grid">
+          <div class="service-card is-featured">
+            <span class="service-icon"><i class="bi bi-file-earmark-plus"></i></span>
+            <div>
+              <h4 class="service-title">Pendaftaran Produk Baharu</h4>
+              <p class="service-desc">
+                Mohon pendaftaran baja, baja tambahan atau bahan mentah dengan
+                pengesahan teknikal oleh pegawai pertanian.
+              </p>
+            </div>
+          </div>
+
+          <div class="service-card">
+            <span class="service-icon"><i class="bi bi-arrow-clockwise"></i></span>
+            <div>
+              <h4 class="service-title">Pembaharuan Perakuan</h4>
+              <p class="service-desc">
+                Perbaharui perakuan pendaftaran sekurang-kurangnya 90 hari
+                sebelum tarikh tamat tempoh.
+              </p>
+            </div>
+          </div>
+
+          <div class="service-card">
+            <span class="service-icon"><i class="bi bi-box-arrow-in-down"></i></span>
+            <div>
+              <h4 class="service-title">Permit Import Khas</h4>
+              <p class="service-desc">
+                Permit import untuk tujuan penyelidikan, pendidikan atau sampel
+                pendaftaran. Sah untuk satu konsainan.
+              </p>
+            </div>
+          </div>
+
+          <div class="service-card">
+            <span class="service-icon"><i class="bi bi-journal-text"></i></span>
+            <div>
+              <h4 class="service-title">Semakan &amp; Cabutan Daftar</h4>
+              <p class="service-desc">
+                Akses daftar rasmi produk berdaftar untuk semakan pematuhan dan
+                rujukan industri.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="services-cta">
+          <a href="#" class="btn-primary-cta">
+            Mula Permohonan <i class="bi bi-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         FEATURED PRODUCTS
+         ========================================================== -->
+    <section class="products-section" id="produk">
+      <div class="container">
+        <div class="products-head">
+          <div>
+            <span class="section-eyebrow">Produk berdaftar</span>
+            <h2 class="section-title" style="margin-bottom: 0">
+              Produk pilihan terkini
+            </h2>
+          </div>
+          <p class="section-lead" style="margin-bottom: 0.25rem">
+            Contoh produk yang telah lulus Semakan Teknikal dan mematuhi
+            keperluan Enakmen Baja Sabah 2025.
+          </p>
+        </div>
+
+        <div class="products-grid">
+          <a href="#" class="product-card">
+            <img
+              src="https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?auto=format&fit=crop&w=900&q=80"
+              alt="Baja Sawit Premium"
+            />
+            <div class="product-overlay">
+              <span class="product-chip">Baja Sebatian</span>
+              <h3 class="product-name">Baja Sawit Premium</h3>
+              <div class="product-meta">
+                <span><i class="bi bi-building"></i>Borneo Agro Sdn Bhd</span>
+                <span><i class="bi bi-patch-check-fill"></i>Berdaftar</span>
+                <span class="product-price">N 15% · P 15% · K 15%</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="#" class="product-card">
+            <img
+              src="https://images.unsplash.com/photo-1595855759920-86582396756a?auto=format&fit=crop&w=900&q=80"
+              alt="Baja Organik Plus"
+            />
+            <div class="product-overlay">
+              <span class="product-chip">Baja Organik</span>
+              <h3 class="product-name">Baja Organik Plus</h3>
+              <div class="product-meta">
+                <span><i class="bi bi-building"></i>GreenLife Organics</span>
+                <span><i class="bi bi-patch-check-fill"></i>Berdaftar</span>
+                <span class="product-price">60% Organik</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="#" class="product-card">
+            <img
+              src="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?auto=format&fit=crop&w=900&q=80"
+              alt="Baja Mikro N"
+            />
+            <div class="product-overlay">
+              <span class="product-chip">Baja Mikronutrien</span>
+              <h3 class="product-name">Baja Mikro N</h3>
+              <div class="product-meta">
+                <span><i class="bi bi-building"></i>AgriChem Supplies</span>
+                <span><i class="bi bi-patch-check-fill"></i>Berdaftar</span>
+                <span class="product-price">Zn · B · Cu</span>
+              </div>
+            </div>
+          </a>
+
+          <a href="#" class="product-card">
+            <img
+              src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?auto=format&fit=crop&w=900&q=80"
+              alt="Baja Padi Super"
+            />
+            <div class="product-overlay">
+              <span class="product-chip">Baja Campuran</span>
+              <h3 class="product-name">Baja Padi Super</h3>
+              <div class="product-meta">
+                <span><i class="bi bi-building"></i>PadiTech Industries</span>
+                <span><i class="bi bi-patch-check-fill"></i>Berdaftar</span>
+                <span class="product-price">N 20% · P 10% · K 10%</span>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         FINAL CTA
+         ========================================================== -->
+    <section class="cta-section" id="panduan">
+      <div class="container">
+        <div class="cta-card">
+          <div>
+            <span class="section-eyebrow" style="color: var(--color-mint)">
+              Sedia untuk mula?
+            </span>
+            <h2>Daftar produk anda dalam masa beberapa minit</h2>
+            <p>
+              Akses portal pendaftaran, muat naik dokumen sokongan, dan pantau
+              status permohonan anda secara masa nyata — semuanya di satu
+              tempat.
+            </p>
+            <div class="cta-buttons">
+              <a href="#" class="btn-white">
+                <i class="bi bi-person-plus"></i>
+                Daftar Akaun
+              </a>
+              <a href="#" class="btn-glass">
+                <i class="bi bi-book"></i>
+                Baca Panduan
+              </a>
+            </div>
+          </div>
+
+          <div class="cta-visual">
+            <div class="cta-tile">
+              <span class="tile-icon"><i class="bi bi-clock-history"></i></span>
+              <div class="tile-value">14</div>
+              <div class="tile-label">Hari proses</div>
+            </div>
+            <div class="cta-tile">
+              <span class="tile-icon"><i class="bi bi-patch-check"></i></span>
+              <div class="tile-value">5</div>
+              <div class="tile-label">Tahun sah</div>
+            </div>
+            <div class="cta-tile">
+              <span class="tile-icon"><i class="bi bi-file-earmark-text"></i></span>
+              <div class="tile-value">4</div>
+              <div class="tile-label">Langkah mudah</div>
+            </div>
+            <div class="cta-tile">
+              <span class="tile-icon"><i class="bi bi-shield-lock"></i></span>
+              <div class="tile-value">100%</div>
+              <div class="tile-label">Selamat</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================================
+         FOOTER
+         ========================================================== -->
+    <footer class="site-footer" id="hubungi">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="#" class="brand">
+              <span class="brand-mark"><i class="bi bi-flower2"></i></span>
+              <span>Enakmen Baja Sabah</span>
+            </a>
+            <p>
+              Portal rasmi pendaftaran baja, baja tambahan dan bahan mentah di
+              bawah Enakmen Baja Sabah 2025 (No. 4 of 2025).
+            </p>
+          </div>
+
+          <div class="footer-col">
+            <h5>Portal</h5>
+            <ul>
+              <li><a href="#">Pendaftaran Produk</a></li>
+              <li><a href="#">Pembaharuan Perakuan</a></li>
+              <li><a href="#">Permit Import Khas</a></li>
+              <li><a href="#">Semakan Daftar</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h5>Panduan</h5>
+            <ul>
+              <li><a href="#">Carta Alir Proses</a></li>
+              <li><a href="#">Senarai Dokumen</a></li>
+              <li><a href="#">Soalan Lazim</a></li>
+              <li><a href="#">Enakmen Penuh</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h5>Hubungi</h5>
+            <ul>
+              <li><a href="#">Jabatan Pertanian Sabah</a></li>
+              <li><a href="#">+60 88 234 567</a></li>
+              <li><a href="#">info@doa.sabah.gov.my</a></li>
+              <li><a href="#">Kota Kinabalu, Sabah</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© 2026 Jabatan Pertanian Sabah. Hak cipta terpelihara.</span>
+          <span>Enakmen Baja Sabah 2025 (No. 4 of 2025)</span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
