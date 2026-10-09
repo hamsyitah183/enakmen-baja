@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta name="color-scheme" content="light" />
+    <meta name="supported-color-schemes" content="light" />
+    <title>Sahkan e-mel anda — Enakmen Baja Sabah</title>
+    <style>
+      /* Email-client specific resets. Most styling is inlined below. */
+      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+      table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+      img { -ms-interpolation-mode: bicubic; border: 0; outline: none; text-decoration: none; }
+      body { margin: 0; padding: 0; width: 100% !important; height: 100% !important; }
+
+      /* Mobile stacking */
+      @media only screen and (max-width: 600px) {
+        .container { width: 100% !important; }
+        .stack { display: block !important; width: 100% !important; }
+        .pad-x { padding-left: 24px !important; padding-right: 24px !important; }
+        .h1 { font-size: 22px !important; line-height: 1.25 !important; }
+        .btn a { display: block !important; width: 100% !important; }
+        .steps td { display: block !important; width: 100% !important; padding-bottom: 8px !important; }
+        .steps .step-num { display: inline-block !important; width: 24px !important; }
+      }
+    </style>
+  </head>
+  <body style="margin:0;padding:0;background:#faf8f3;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+
+    <!-- Preheader (hidden preview text shown in inbox) -->
+    <div style="display:none;font-size:1px;color:#faf8f3;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;">
+      Klik pautan pengesahan untuk mengaktifkan akaun Enakmen Baja Sabah anda. Pautan sah selama 24 jam.
+    </div>
+
+    <!-- Outer wrapper -->
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+           style="background:#faf8f3;">
+      <tr>
+        <td align="center" style="padding:32px 12px;">
+
+          <!-- Container -->
+          <table role="presentation" class="container" width="600" cellpadding="0" cellspacing="0" border="0"
+                 style="max-width:600px;width:100%;background:#ffffff;border:1px solid #e6e2d8;border-radius:16px;overflow:hidden;">
+
+            <!-- ============ HEADER ============ -->
+            <tr>
+              <td class="pad-x" style="padding:24px 32px 0;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td align="left" style="vertical-align:middle;">
+                      <a href="https://doa.sabah.gov.my" style="text-decoration:none;">
+                        <span style="display:inline-block;width:36px;height:36px;background:#0a4f37;border-radius:10px;color:#a8e6c8;font-size:18px;line-height:36px;text-align:center;vertical-align:middle;font-weight:700;">
+                          &#10047;
+                        </span>
+                        <span style="display:inline-block;vertical-align:middle;margin-left:10px;font-family:Georgia,'Times New Roman',serif;font-size:15px;font-weight:600;color:#063323;letter-spacing:-0.01em;">
+                          Enakmen Baja Sabah
+                        </span>
+                      </a>
+                    </td>
+                    <td align="right" style="vertical-align:middle;">
+                      <a href="https://doa.sabah.gov.my/help"
+                         style="font-size:12px;color:#6e7168;text-decoration:none;">
+                        Bantuan
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- ============ HERO ============ -->
+            <tr>
+              <td class="pad-x" style="padding:28px 32px 0;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                       style="background:#eff8f3;border:1px solid #d6efe2;border-radius:14px;">
+                  <tr>
+                    <td align="center" style="padding:28px 24px 24px;">
+                      <!-- Envelope icon (text-based to avoid image-blocking issues) -->
+                      <div style="width:64px;height:64px;background:#0a4f37;border-radius:16px;margin:0 auto 16px;color:#a8e6c8;font-size:28px;line-height:64px;text-align:center;font-weight:700;">
+                        &#9993;
+                      </div>
+
+                      <h1 class="h1" style="margin:0 0 10px;font-family:Georgia,'Times New Roman',serif;font-size:24px;font-weight:600;color:#04271b;letter-spacing:-0.02em;line-height:1.25;">
+                        Sahkan e-mel anda
+                      </h1>
+                      <p style="margin:0;font-size:14px;line-height:1.6;color:#1d2a23;max-width:420px;">
+                        Terima kasih kerana mendaftar dengan Portal Pendaftaran Baja. Sila klik butang di bawah untuk mengaktifkan akaun anda.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- ============ GREETING + EMAIL BOX ============ -->
+            <tr>
+              <td class="pad-x" style="padding:28px 32px 0;">
+                <p style="margin:0 0 6px;font-size:14px;line-height:1.6;color:#1d2a23;">
+                  Yang Berhormat <strong>{{ $name }}</strong>,
+                </p>
+                <p style="margin:0 0 20px;font-size:14px;line-height:1.6;color:#1d2a23;">
+                  Permohonan anda menggunakan alamat e-mel berikut:
+                </p>
+
+                <!-- Email pill -->
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                       style="background:#f4f1ea;border:1px solid #e6e2d8;border-radius:10px;">
+                  <tr>
+                    <td style="padding:14px 18px;">
+                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                          <td width="24" style="vertical-align:middle;font-size:16px;color:#0a4f37;">
+                            &#9993;
+                          </td>
+                          <td style="vertical-align:middle;font-size:14px;font-weight:600;color:#1d2a23;word-break:break-all;">
+                            {{ $email }}
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- ============ CTA BUTTON ============ -->
+            <tr>
+              <td class="pad-x" style="padding:28px 32px 8px;" align="center">
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="btn" width="100%">
+                  <tr>
+                    <td align="center" style="background:#0a4f37;border-radius:10px;">
+                      <!--[if mso]>
+                      <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word"
+                                   href="{{ $verifyUrl }}" style="height:48px;v-text-anchor:middle;width:280px;"
+                                   arcsize="22%" stroke="f" fillcolor="#0a4f37">
+                        <w:anchorlock/>
+                        <center style="color:#ffffff;font-family:Arial,sans-serif;font-size:15px;font-weight:700;">
+                          Sahkan e-mel
+                        </center>
+                      </v:roundrect>
+                      <![endif]-->
+                      <!--[if !mso]><!-- -->
+                      <a href="{{ $verifyUrl }}"
+                         style="display:inline-block;padding:14px 36px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;font-size:15px;font-weight:700;color:#ffffff;text-decoration:none;border-radius:10px;">
+                        Sahkan e-mel &rarr;
+                      </a>
+                      <!--<![endif]-->
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="margin:14px 0 0;font-size:12px;color:#6e7168;line-height:1.5;">
+                  Pautan ini akan tamat tempoh dalam <strong style="color:#1d2a23;">24 jam</strong>.
+                </p>
+              </td>
+            </tr>
+
+            <!-- ============ FALLBACK LINK ============ -->
+            <tr>
+              <td class="pad-x" style="padding:16px 32px 0;">
+                <p style="margin:0 0 6px;font-size:12px;color:#6e7168;line-height:1.6;">
+                  Jika butang di atas tidak berfungsi, salin dan tampal pautan berikut dalam pelayar anda:
+                </p>
+                <p style="margin:0;padding:10px 14px;background:#f4f1ea;border-radius:8px;font-family:'Courier New',Courier,monospace;font-size:11px;color:#1d2a23;word-break:break-all;line-height:1.5;">
+                  {{ $verifyUrl }}
+                </p>
+              </td>
+            </tr>
+
+            <!-- ============ DIVIDER ============ -->
+            <tr>
+              <td class="pad-x" style="padding:28px 32px 0;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr><td style="border-top:1px dashed #e6e2d8;line-height:1px;font-size:0;">&nbsp;</td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- ============ STEPS ============ -->
+            <tr>
+              <td class="pad-x" style="padding:24px 32px 0;">
+                <h2 style="margin:0 0 14px;font-family:Georgia,'Times New Roman',serif;font-size:15px;font-weight:600;color:#1d2a23;letter-spacing:-0.01em;">
+                  Langkah seterusnya
+                </h2>
+
+                <table role="presentation" class="steps" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td class="step-num" width="28" valign="top" style="vertical-align:top;font-size:13px;font-weight:700;color:#0a4f37;padding:0 0 10px;">
+                      1.
+                    </td>
+                    <td valign="top" style="vertical-align:top;font-size:13px;line-height:1.6;color:#1d2a23;padding:0 0 10px;">
+                      Klik butang <strong>Sahkan e-mel</strong> di atas.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="step-num" width="28" valign="top" style="vertical-align:top;font-size:13px;font-weight:700;color:#0a4f37;padding:0 0 10px;">
+                      2.
+                    </td>
+                    <td valign="top" style="vertical-align:top;font-size:13px;line-height:1.6;color:#1d2a23;padding:0 0 10px;">
+                      Anda akan dibawa semula ke portal untuk melengkapkan profil organisasi.
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="step-num" width="28" valign="top" style="vertical-align:top;font-size:13px;font-weight:700;color:#0a4f37;padding:0 0 10px;">
+                      3.
+                    </td>
+                    <td valign="top" style="vertical-align:top;font-size:13px;line-height:1.6;color:#1d2a23;padding:0 0 10px;">
+                      Mulakan permohonan pendaftaran produk anda.
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- ============ SECURITY NOTICE ============ -->
+            <tr>
+              <td class="pad-x" style="padding:16px 32px 0;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                       style="background:#fdf3dc;border:1px solid #f5d68a;border-radius:10px;">
+                  <tr>
+                    <td style="padding:14px 16px;font-size:12px;line-height:1.6;color:#1d2a23;">
+                      <strong style="color:#b7791f;display:block;margin-bottom:4px;">&#9888;&nbsp; Bukan anda?</strong>
+                      Jika anda tidak memohon akaun Enakmen Baja Sabah, abaikan e-mel ini. Tiada tindakan diperlukan dan akaun tidak akan diaktifkan.
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <!-- ============ FOOTER ============ -->
+            <tr>
+              <td class="pad-x" style="padding:32px 32px 0;">
+                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <tr><td style="border-top:1px solid #e6e2d8;line-height:1px;font-size:0;">&nbsp;</td></tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr>
+              <td class="pad-x" align="center" style="padding:20px 32px 32px;">
+                <p style="margin:0 0 6px;font-size:12px;color:#6e7168;line-height:1.6;">
+                  <strong style="color:#1d2a23;">Jabatan Pertanian Sabah</strong><br>
+                  Kota Kinabalu, Sabah, Malaysia
+                </p>
+                <p style="margin:12px 0 0;font-size:11px;color:#6e7168;line-height:1.6;">
+                  <a href="https://doa.sabah.gov.my" style="color:#0a4f37;text-decoration:none;font-weight:600;">doa.sabah.gov.my</a>
+                  &nbsp;&middot;&nbsp;
+                  <a href="mailto:info@doa.sabah.gov.my" style="color:#0a4f37;text-decoration:none;font-weight:600;">info@doa.sabah.gov.my</a>
+                  &nbsp;&middot;&nbsp;
+                  <a href="tel:+6088234567" style="color:#0a4f37;text-decoration:none;font-weight:600;">+60 88 234 567</a>
+                </p>
+                <p style="margin:16px 0 0;font-size:10px;color:#6e7168;line-height:1.6;">
+                  E-mel ini dijana secara automatik. Sila jangan balas.<br>
+                  Enakmen Baja Sabah 2025 (No. 4 of 2025)
+                </p>
+              </td>
+            </tr>
+
+          </table>
+          <!-- /Container -->
+
+        </td>
+      </tr>
+    </table>
+
+  </body>
+</html>
