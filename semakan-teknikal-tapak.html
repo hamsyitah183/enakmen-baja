@@ -1,0 +1,2004 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/components.css" rel="stylesheet" />
+    <link href="css/dashboard.css" rel="stylesheet" />
+    <link href="css/assesment.css" rel="stylesheet" />
+    <link href="css/view.css" rel="stylesheet" />
+    <link href="css/complete-account.css" rel="stylesheet" />
+    <link href="css/edit-account.css" rel="stylesheet" />
+    <link href="css/accordionBoard.css" rel="stylesheet" />
+    <link href="css/detailBoard.css" rel="stylesheet" />
+    <title>
+      Semakan Tapak Kawasan — Panel Pegawai | Portal Pendaftaran Baja
+    </title>
+
+    <!-- TinyMCE (free community) — used for all rich-text editors on this page -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/tinymce@6.8.4/tinymce.min.js"
+      referrerpolicy="origin"
+    ></script>
+
+    <style>
+      /* =========================================================
+         Premise-check row (label + rating buttons)
+         ========================================================= */
+      .premise-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid var(--color-border, #e5e7eb);
+      }
+      .premise-row:last-child {
+        border-bottom: 0;
+      }
+      .premise-row .premise-label {
+        font-size: 0.85rem;
+        color: var(--color-text, #111827);
+        font-weight: 500;
+        flex: 1;
+        min-width: 0;
+      }
+      .premise-row .premise-actions {
+        display: flex;
+        gap: 0.35rem;
+        flex-wrap: wrap;
+        flex: none;
+      }
+
+      /* Default state — all premise buttons white / neutral */
+      .premise-row .btn-check + .btn {
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 0.3rem 0.7rem;
+        border-radius: 999px;
+        white-space: nowrap;
+        background: #fff;
+        border: 1px solid var(--color-border, #e5e7eb);
+        color: var(--color-muted, #6b7280);
+        transition: all 0.15s ease;
+      }
+      .premise-row .btn-check + .btn:hover {
+        background: var(--color-surface-2, #f9fafb);
+        border-color: #cbd5e1;
+        color: var(--color-text, #111827);
+      }
+
+      /* Checked state — only the active one gets a colored background */
+      .premise-row .btn-check:checked + .btn-outline-success {
+        background: #16a34a;
+        border-color: #16a34a;
+        color: #fff;
+      }
+      .premise-row .btn-check:checked + .btn-outline-danger {
+        background: #dc2626;
+        border-color: #dc2626;
+        color: #fff;
+      }
+      .premise-row .btn-check:checked + .btn-outline-secondary {
+        background: #6b7280;
+        border-color: #6b7280;
+        color: #fff;
+      }
+      .premise-row .btn-check:focus-visible + .btn {
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+      }
+
+      /* ===== Doc verification grid ===== */
+      .doc-verify-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 0.5rem;
+      }
+      .doc-verify-grid .checklist-item {
+        margin: 0;
+      }
+
+      /* ===== Decision option buttons ===== */
+      .visit-decision-options {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.5rem;
+      }
+      @media (max-width: 575.98px) {
+        .visit-decision-options {
+          grid-template-columns: 1fr;
+        }
+      }
+      .visit-decision-options .btn-check + .btn {
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 0.6rem 1rem;
+        border-radius: 8px;
+      }
+
+      /* ===== Save bar (sticky at bottom of form) ===== */
+      .visit-save-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 1rem 1.25rem;
+        margin-top: 1rem;
+        background: var(--color-surface, #fff);
+        border: 1px solid var(--color-border, #e5e7eb);
+        border-radius: var(--radius-lg, 14px);
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+      }
+      .visit-save-bar .save-note {
+        font-size: 0.8rem;
+        color: var(--color-muted, #6b7280);
+        flex: 1;
+        min-width: 0;
+      }
+      .visit-save-bar .save-note.is-warning {
+        color: #b45309;
+        font-weight: 600;
+      }
+      .visit-save-bar .save-note.is-ready {
+        color: #166534;
+        font-weight: 600;
+      }
+      .visit-save-bar .btn {
+        min-width: 180px;
+        font-weight: 600;
+      }
+
+      .field-group {
+        margin-bottom: 1rem;
+      }
+      .field-group:last-child {
+        margin-bottom: 0;
+      }
+
+      /* ===== Repeatable rows (wakil + pemerhatian) ===== */
+      .repeat-list {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .repeat-item {
+        position: relative;
+        padding: 1rem 1rem 0.85rem;
+        border: 1px solid var(--color-border, #e5e7eb);
+        border-radius: var(--radius-md, 10px);
+        background: var(--color-surface-2, #f9fafb);
+      }
+      .repeat-item .repeat-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        margin-bottom: 0.75rem;
+      }
+      .repeat-item .repeat-index {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--color-primary-700, #1d4ed8);
+        background: var(--color-primary-50, #eff6ff);
+        padding: 0.2rem 0.55rem;
+        border-radius: 999px;
+      }
+      .repeat-item .repeat-remove {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 0.25rem 0.6rem;
+        border-radius: 6px;
+        border: 1px solid #fecaca;
+        background: #fef2f2;
+        color: #b91c1c;
+        cursor: pointer;
+        transition: 0.15s;
+      }
+      .repeat-item .repeat-remove:hover {
+        background: #fee2e2;
+      }
+      .repeat-item .repeat-remove:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+
+      .repeat-add {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.82rem;
+        font-weight: 600;
+        padding: 0.5rem 0.95rem;
+        border-radius: 8px;
+        border: 1px dashed var(--color-primary-400, #60a5fa);
+        background: var(--color-primary-50, #eff6ff);
+        color: var(--color-primary-700, #1d4ed8);
+        cursor: pointer;
+        transition: 0.15s;
+      }
+      .repeat-add:hover {
+        background: var(--color-primary-100, #dbeafe);
+      }
+
+      /* Readonly input look */
+      .form-control[readonly] {
+        background: var(--color-surface-2, #f9fafb);
+        cursor: default;
+      }
+
+      /* Tighten TinyMCE spacing inside the form */
+      .tox-tinymce {
+        border-radius: var(--radius-sm, 6px) !important;
+        border-color: var(--color-border, #e5e7eb) !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <script>
+        try {
+          if (localStorage.getItem("sidebar-collapsed") === "1")
+            document.querySelector(".app").classList.add("is-collapsed");
+        } catch (e) {}
+      </script>
+
+      <!-- Bar sisi -->
+      <aside
+        class="sidebar offcanvas-lg offcanvas-start"
+        tabindex="-1"
+        id="sidebar"
+        aria-label="Navigasi utama"
+      >
+        <div class="sidebar-inner">
+          <div class="sidebar-head border-bottom pb-2">
+            <a href="#" class="brand" aria-label="Enakmen Baja Sabah">
+              <span class="brand-mark brand-mark--img">
+                <img src="logo/image.png" alt="" width="40" height="40" />
+              </span>
+              <span class="brand-text">Enakmen Baja Sabah</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-icon sidebar-toggle d-none d-lg-inline-grid"
+              id="sidebar-toggle"
+              aria-controls="sidebar"
+              aria-expanded="true"
+              aria-label="Tutup bar sisi"
+              title="Tutup bar sisi"
+            >
+              <i class="bi bi-layout-sidebar"></i>
+            </button>
+            <button
+              type="button"
+              class="btn-close d-lg-none"
+              data-bs-dismiss="offcanvas"
+              data-bs-target="#sidebar"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <nav class="d-grid gap-1">
+            <a
+              href="filled-dashboard.html"
+              class="side-link"
+              title="Papan pemuka"
+              ><i class="bi bi-house-door"></i
+              ><span class="side-label">Papan pemuka</span></a
+            >
+            <a href="#" class="side-link" title="Produk"
+              ><i class="bi bi-box-seam"></i
+              ><span class="side-label">Produk</span></a
+            >
+            <a href="#" class="side-link" title="Lesen"
+              ><i class="bi bi-patch-check"></i
+              ><span class="side-label">Lesen</span></a
+            >
+            <a href="#" class="side-link" title="Pembayaran"
+              ><i class="bi bi-receipt"></i
+              ><span class="side-label">Pembayaran</span></a
+            >
+            <a href="#" class="side-link" title="Notis dan rayuan"
+              ><i class="bi bi-envelope-exclamation"></i
+              ><span class="side-label">Notis dan rayuan</span
+              ><span class="count pill pill-danger">3</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Pegawai DOA</div>
+          <nav class="d-grid gap-1 mb-3">
+            <a
+              href="senarai-semakan-teknikal.html"
+              class="side-link"
+              title="Semakan teknikal"
+              ><i class="bi bi-clipboard2-check"></i
+              ><span class="side-label">Semakan teknikal</span
+              ><span class="count pill pill-warning">5</span></a
+            >
+            <a
+              href="senarai-semakan-lesen.html"
+              class="side-link"
+              title="Semakan lesen"
+              ><i class="bi bi-patch-check"></i
+              ><span class="side-label">Semakan lesen</span
+              ><span class="count pill pill-warning">3</span></a
+            >
+            <a
+              href="senarai-tapak-kawasan.html"
+              class="side-link active"
+              title="Tapak kawasan"
+              ><i class="bi bi-geo-alt"></i
+              ><span class="side-label">Tapak kawasan</span
+              ><span class="count pill pill-warning">2</span></a
+            >
+            <a href="#" class="side-link" title="Semakan akaun"
+              ><i class="bi bi-building-check"></i
+              ><span class="side-label">Semakan akaun</span></a
+            >
+            <a href="#" class="side-link" title="Laporan"
+              ><i class="bi bi-file-earmark-bar-graph"></i
+              ><span class="side-label">Laporan</span></a
+            >
+            <a href="index.html" class="side-link" title="Log keluar"
+              ><i class="bi bi-box-arrow-right"></i
+              ><span class="side-label">Log keluar</span></a
+            >
+          </nav>
+
+          <div class="side-user">
+            <span class="avatar">ZA</span>
+            <div class="lh-sm side-user-text">
+              <div class="fw-semibold">Nur binti Ahmad</div>
+              <small class="text-muted-2">Pegawai Teknikal · DOA Sabah</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Utama -->
+      <div class="app-main">
+        <header class="topbar border-bottom">
+          <button
+            class="btn btn-icon d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebar"
+            aria-controls="sidebar"
+            aria-label="Buka menu"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+          <h1 class="h5 mb-0 me-2">Semakan Tapak Kawasan</h1>
+          <div class="topbar-search d-none d-md-block input-icon">
+            <i class="bi bi-search"></i>
+            <input
+              type="search"
+              class="form-control"
+              placeholder="Cari akaun, tapak atau rujukan"
+              aria-label="Cari"
+            />
+          </div>
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <button
+              class="btn btn-icon position-relative"
+              type="button"
+              aria-label="Pemberitahuan"
+            >
+              <i class="bi bi-bell"></i><span class="notif-dot"></span>
+            </button>
+
+            <div class="dropdown">
+              <button
+                type="button"
+                class="avatar avatar-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Menu pengguna"
+              >
+                ZA
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end user-menu">
+                <li class="user-menu-head">
+                  <div class="fw-semibold">Nur binti Ahmad</div>
+                  <small class="text-muted-2"
+                    >Pegawai Teknikal · DOA Sabah</small
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-clipboard2-check me-2"></i>Semakan
+                    teknikal</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-patch-check me-2"></i>Semakan lesen</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-geo-alt me-2"></i>Tapak kawasan</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-gear me-2"></i>Tetapan</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="index.html"
+                    ><i class="bi bi-box-arrow-right me-2"></i>Log keluar</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <main class="app-content p-3 p-md-4 p-xl-5">
+          <div class="complete-layout">
+            <!-- ============ LEFT ============ -->
+            <div class="complete-main">
+              <!-- Top action bar -->
+              <div class="detail-topbar">
+                <div class="detail-topbar-left">
+                  <a href="senarai-tapak-kawasan.html" class="btn-back">
+                    <i class="bi bi-arrow-left"></i>Kembali
+                  </a>
+                  <button
+                    type="button"
+                    class="btn-nav-arrow"
+                    aria-label="Sebelum"
+                  >
+                    <i class="bi bi-chevron-left"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn-nav-arrow"
+                    aria-label="Seterusnya"
+                  >
+                    <i class="bi bi-chevron-right"></i>
+                  </button>
+                  <span class="text-muted-2 small ms-2">1 daripada 2</span>
+                </div>
+
+                <div class="detail-topbar-right">
+                  <a href="senarai-tapak-kawasan.html" class="btn btn-success">
+                    <i class="bi bi-check-lg"></i>Selesai
+                  </a>
+                  <button type="button" class="btn-nav-arrow" aria-label="Lagi">
+                    <i class="bi bi-three-dots"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Edit banner -->
+              <div class="edit-banner">
+                <span class="edit-icon">
+                  <i class="bi bi-geo-alt"></i>
+                </span>
+                <div class="flex-grow-1">
+                  <h2>Laporan lawatan tapak sedang disunting</h2>
+                  <p>
+                    Isi semua maklumat lawatan tapak berdasarkan pemeriksaan
+                    fizikal di premis pemohon. Semua medan bertanda wajib perlu
+                    dilengkapkan sebelum simpan.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Header card -->
+              <div class="detail-shell mb-3">
+                <div class="detail-header">
+                  <span class="head-avatar">
+                    <i class="bi bi-geo-alt"></i>
+                  </span>
+                  <div class="head-info">
+                    <h1 id="thread-title">Laporan Lawatan Tapak</h1>
+                    <div class="head-sub">
+                      <span class="avatar-mini">BA</span>
+                      <span>Borneo Agro Sdn Bhd</span>
+                      <span class="dot">·</span>
+                      <span>18 Okt 2026, 10:32 AM</span>
+                      <span class="dot">·</span>
+                      <span
+                        style="
+                          font-family: monospace;
+                          font-weight: 600;
+                          color: var(--color-primary-800, #1e40af);
+                          background: var(--color-primary-50, #eff6ff);
+                          border-radius: 6px;
+                          padding: 0.1rem 0.45rem;
+                        "
+                        >LS/2026/00056</span
+                      >
+                    </div>
+                  </div>
+                  <div class="head-links">
+                    <a href="#" aria-label="Pautan dokumen">
+                      <i class="bi bi-file-earmark-text"></i>
+                    </a>
+                    <a href="#" aria-label="Perakuan">
+                      <i class="bi bi-patch-check-fill"></i>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="info-strip">
+                  <div class="strip-cell">
+                    <div class="strip-label">
+                      <i class="bi bi-hash"></i>No. Rujukan
+                    </div>
+                    <div class="strip-value">LS/2026/00056</div>
+                  </div>
+
+                  <div class="strip-cell">
+                    <div class="strip-label">
+                      <i class="bi bi-tag"></i>Jenis Lawatan
+                    </div>
+                    <div class="strip-value">Tapak Kawasan Premis</div>
+                  </div>
+
+                  <div class="strip-cell">
+                    <div class="strip-label">
+                      <i class="bi bi-pin-map"></i>Lokasi
+                    </div>
+                    <div class="strip-value">Kota Kinabalu, Sabah</div>
+                  </div>
+
+                  <div class="strip-cell">
+                    <div class="strip-label">
+                      <i class="bi bi-clipboard-pulse"></i>Status
+                    </div>
+                    <div class="strip-value">
+                      <span class="strip-pill is-info">
+                        <i class="bi bi-hourglass-split"></i>Dalam Semakan
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="strip-cell">
+                    <div class="strip-label">
+                      <i class="bi bi-flag"></i>Keutamaan
+                    </div>
+                    <div class="strip-value">
+                      <span class="strip-pill is-warning">Sederhana</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+           
+              <!-- Stage wizard card -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item is-open" data-accordion="wizard">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="true"
+                    aria-controls="body-wizard"
+                  >
+                    <span class="onboard-icon is-green">
+                      <i class="bi bi-diagram-3"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">Proses Semakan Teknikal</h3>
+                      <p class="onboard-desc">
+                        Peringkat 3 daripada 5 · Sedang berjalan
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-wizard">
+                    <div class="stage-track">
+                      <div class="stage-node is-done" id="stage-1">
+                        <span class="stage-circle"
+                          ><i class="bi bi-check-lg"></i
+                        ></span>
+                        <span class="stage-name">Semakan dokumen sokongan</span>
+                        <span class="stage-status">Selesai</span>
+                      </div>
+
+                      <div class="stage-node is-done" id="stage-2">
+                        <span class="stage-circle"
+                          ><i class="bi bi-check-lg"></i
+                        ></span>
+                        <span class="stage-name">Semakan Lesen Aktiviti</span>
+                        <span class="stage-status">Selesai</span>
+                      </div>
+
+                      <div class="stage-node is-active" id="stage-3">
+                        <span class="stage-circle">3</span>
+                        <span class="stage-name"
+                          >Lawatan tapak premis (jika perlu)</span
+                        >
+                        <span class="stage-status">Dalam proses</span>
+                      </div>
+
+                      <div class="stage-node" id="stage-4">
+                        <span class="stage-circle">4</span>
+                        <span class="stage-name">Keputusan Semakan Lesen</span>
+                        <span class="stage-status">Belum bermula</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- =========================================================
+                   CARD 1: Maklumat Lawatan
+                   ========================================================= -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item is-open" data-accordion="visit-info">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="true"
+                    aria-controls="body-visit-info"
+                  >
+                    <span class="onboard-icon is-green">
+                      <i class="bi bi-calendar-event"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">Maklumat Lawatan</h3>
+                      <p class="onboard-desc">
+                        Tarikh, masa dan pegawai yang menjalankan lawatan tapak.
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-visit-info">
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label class="form-label" for="v_date"
+                          >Tarikh Lawatan
+                          <span class="text-danger">*</span></label
+                        >
+                        <input
+                          type="date"
+                          class="form-control"
+                          id="v_date"
+                          value="2026-12-10"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label" for="v_start"
+                          >Masa Bermula
+                          <span class="text-danger">*</span></label
+                        >
+                        <input
+                          type="time"
+                          class="form-control"
+                          id="v_start"
+                          value="09:30"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label" for="v_end"
+                          >Masa Tamat <span class="text-danger">*</span></label
+                        >
+                        <input
+                          type="time"
+                          class="form-control"
+                          id="v_end"
+                          value="11:30"
+                          required
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label" for="v_officer"
+                          >Pegawai Pelawat
+                          <span class="text-danger">*</span></label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="v_officer"
+                          placeholder="Nama pegawai pelawat"
+                          value="Nur binti Ahmad"
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label" for="v_with"
+                          >Pegawai Bersama</label
+                        >
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="v_with"
+                          placeholder="Nama pegawai bersama (jika ada)"
+                        />
+                      </div>
+
+                      <!-- Alamat Tapak (readonly, locked to place address) -->
+                      <div class="col-12">
+                        <label class="form-label" for="v_site_address">
+                          Alamat Tapak Dilawati
+                          <span class="text-muted-2 small ms-1"
+                            >(ditetapkan dari alamat premis pemohon)</span
+                          >
+                          <i
+                            class="bi bi-lock-fill ms-1 text-muted-2"
+                            title="Tidak boleh diubah"
+                          ></i>
+                        </label>
+                        <textarea
+                          class="form-control"
+                          id="v_site_address"
+                          rows="2"
+                          readonly
+                        >
+Lot 5, Jalan Industri 3, Kawasan Perindustrian Kota Kinabalu, 88450 Kota Kinabalu, Sabah</textarea
+                        >
+                        <div class="form-text">
+                          Alamat ini terikat pada rekod premis pemohon dan tidak
+                          boleh diubah semasa lawatan.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- =========================================================
+                   CARD 2: Kehadiran Wakil (repeatable)
+                   ========================================================= -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item is-open" data-accordion="rep-info">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="true"
+                    aria-controls="body-rep-info"
+                  >
+                    <span class="onboard-icon is-blue">
+                      <i class="bi bi-person-badge"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">
+                        Kehadiran Wakil
+                        <span class="tab-count ms-2" id="reps-count">1</span>
+                      </h3>
+                      <p class="onboard-desc">
+                        Wakil syarikat yang hadir semasa lawatan tapak. Boleh
+                        tambah lebih daripada satu.
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-rep-info">
+                    <div class="repeat-list" id="reps-list">
+                      <div class="repeat-item" data-rep>
+                        <div class="repeat-head">
+                          <span class="repeat-index">Wakil #1</span>
+                          <button
+                            type="button"
+                            class="repeat-remove"
+                            data-remove-rep
+                            disabled
+                          >
+                            <i class="bi bi-trash"></i>Buang
+                          </button>
+                        </div>
+                        <div class="row g-3">
+                          <div class="col-md-6">
+                            <label class="form-label"
+                              >Nama Wakil
+                              <span class="text-danger">*</span></label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              data-field="name"
+                              placeholder="Nama penuh wakil"
+                            />
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label"
+                              >No. Kad Pengenalan
+                              <span class="text-danger">*</span></label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              data-field="ic"
+                              placeholder="cth. 900101-12-3456"
+                            />
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label"
+                              >Jawatan <span class="text-danger">*</span></label
+                            >
+                            <input
+                              type="text"
+                              class="form-control"
+                              data-field="role"
+                              placeholder="cth. Pengurus Operasi"
+                            />
+                          </div>
+                          <div class="col-md-6">
+                            <label class="form-label">No. Telefon</label>
+                            <input
+                              type="tel"
+                              class="form-control"
+                              data-field="phone"
+                              placeholder="+60"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="mt-3">
+                      <button type="button" class="repeat-add" id="add-rep">
+                        <i class="bi bi-plus-lg"></i>Tambah Wakil
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- =========================================================
+                   CARD 3: Semakan Premis
+                   ========================================================= -->
+              <div class="onboard-card mb-3">
+                <div
+                  class="onboard-item is-open"
+                  data-accordion="premise-check"
+                >
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="true"
+                    aria-controls="body-premise-check"
+                  >
+                    <span class="onboard-icon is-amber">
+                      <i class="bi bi-clipboard-check"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">Semakan Premis</h3>
+                      <p class="onboard-desc">
+                        Nilai setiap aspek premis mengikut keadaan sebenar di
+                        tapak.
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-premise-check">
+                    <!-- Row 1 -->
+                    <div class="premise-row">
+                      <div class="premise-label">
+                        Keadaan ruang simpanan baja
+                      </div>
+                      <div class="premise-actions">
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_storage"
+                          id="p_storage_ok"
+                          value="ok"
+                        />
+                        <label
+                          class="btn btn-outline-success"
+                          for="p_storage_ok"
+                          >Memuaskan</label
+                        >
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_storage"
+                          id="p_storage_bad"
+                          value="bad"
+                        />
+                        <label
+                          class="btn btn-outline-danger"
+                          for="p_storage_bad"
+                          >Tidak Memuaskan</label
+                        >
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_storage"
+                          id="p_storage_na"
+                          value="na"
+                        />
+                        <label
+                          class="btn btn-outline-secondary"
+                          for="p_storage_na"
+                          >Tidak Berkenaan</label
+                        >
+                      </div>
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div class="premise-row">
+                      <div class="premise-label">Sistem pengudaraan</div>
+                      <div class="premise-actions">
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_air"
+                          id="p_air_ok"
+                          value="ok"
+                        />
+                        <label class="btn btn-outline-success" for="p_air_ok"
+                          >Memuaskan</label
+                        >
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_air"
+                          id="p_air_bad"
+                          value="bad"
+                        />
+                        <label class="btn btn-outline-danger" for="p_air_bad"
+                          >Tidak Memuaskan</label
+                        >
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_air"
+                          id="p_air_na"
+                          value="na"
+                        />
+                        <label class="btn btn-outline-secondary" for="p_air_na"
+                          >Tidak Berkenaan</label
+                        >
+                      </div>
+                    </div>
+
+                    <!-- Row 3 -->
+                    <div class="premise-row">
+                      <div class="premise-label">
+                        Sistem keselamatan &amp; pencegahan kebakaran
+                      </div>
+                      <div class="premise-actions">
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_fire"
+                          id="p_fire_ok"
+                          value="ok"
+                        />
+                        <label class="btn btn-outline-success" for="p_fire_ok"
+                          >Memuaskan</label
+                        >
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_fire"
+                          id="p_fire_bad"
+                          value="bad"
+                        />
+                        <label class="btn btn-outline-danger" for="p_fire_bad"
+                          >Tidak Memuaskan</label
+                        >
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_fire"
+                          id="p_fire_na"
+                          value="na"
+                        />
+                        <label class="btn btn-outline-secondary" for="p_fire_na"
+                          >Tidak Berkenaan</label
+                        >
+                      </div>
+                    </div>
+
+                    <!-- Row 4 -->
+                    <div class="premise-row">
+                      <div class="premise-label">Kebersihan &amp; sanitasi</div>
+                      <div class="premise-actions">
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_clean"
+                          id="p_clean_ok"
+                          value="ok"
+                        />
+                        <label class="btn btn-outline-success" for="p_clean_ok"
+                          >Memuaskan</label
+                        >
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_clean"
+                          id="p_clean_bad"
+                          value="bad"
+                        />
+                        <label class="btn btn-outline-danger" for="p_clean_bad"
+                          >Tidak Memuaskan</label
+                        >
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_clean"
+                          id="p_clean_na"
+                          value="na"
+                        />
+                        <label
+                          class="btn btn-outline-secondary"
+                          for="p_clean_na"
+                          >Tidak Berkenaan</label
+                        >
+                      </div>
+                    </div>
+
+                    <!-- Row 5 -->
+                    <div class="premise-row">
+                      <div class="premise-label">Kapasiti storan</div>
+                      <div class="premise-actions">
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_storage_cap"
+                          id="p_storage_cap_ok"
+                          value="ok"
+                        />
+                        <label
+                          class="btn btn-outline-success"
+                          for="p_storage_cap_ok"
+                          >Memuaskan</label
+                        >
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_storage_cap"
+                          id="p_storage_cap_bad"
+                          value="bad"
+                        />
+                        <label
+                          class="btn btn-outline-danger"
+                          for="p_storage_cap_bad"
+                          >Tidak Memuaskan</label
+                        >
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_storage_cap"
+                          id="p_storage_cap_na"
+                          value="na"
+                        />
+                        <label
+                          class="btn btn-outline-secondary"
+                          for="p_storage_cap_na"
+                          >Tidak Berkenaan</label
+                        >
+                      </div>
+                    </div>
+
+                    <!-- Row 6 -->
+                    <div class="premise-row">
+                      <div class="premise-label">Sistem rekod inventori</div>
+                      <div class="premise-actions">
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_inventory"
+                          id="p_inventory_ok"
+                          value="ok"
+                        />
+                        <label
+                          class="btn btn-outline-success"
+                          for="p_inventory_ok"
+                          >Memuaskan</label
+                        >
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_inventory"
+                          id="p_inventory_bad"
+                          value="bad"
+                        />
+                        <label
+                          class="btn btn-outline-danger"
+                          for="p_inventory_bad"
+                          >Tidak Memuaskan</label
+                        >
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_inventory"
+                          id="p_inventory_na"
+                          value="na"
+                        />
+                        <label
+                          class="btn btn-outline-secondary"
+                          for="p_inventory_na"
+                          >Tidak Berkenaan</label
+                        >
+                      </div>
+                    </div>
+
+                    <!-- Row 7 -->
+                    <div class="premise-row">
+                      <div class="premise-label">
+                        Peralatan pengukuran (jika pengilang)
+                      </div>
+                      <div class="premise-actions">
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_measure"
+                          id="p_measure_ok"
+                          value="ok"
+                        />
+                        <label
+                          class="btn btn-outline-success"
+                          for="p_measure_ok"
+                          >Memuaskan</label
+                        >
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_measure"
+                          id="p_measure_bad"
+                          value="bad"
+                        />
+                        <label
+                          class="btn btn-outline-danger"
+                          for="p_measure_bad"
+                          >Tidak Memuaskan</label
+                        >
+                        <input
+                          type="radio"
+                          class="btn-check"
+                          name="p_measure"
+                          id="p_measure_na"
+                          value="na"
+                        />
+                        <label
+                          class="btn btn-outline-secondary"
+                          for="p_measure_na"
+                          >Tidak Berkenaan</label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- =========================================================
+                   CARD 4: Pengesahan Dokumen di Tapak
+                   ========================================================= -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item is-open" data-accordion="doc-verify">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="true"
+                    aria-controls="body-doc-verify"
+                  >
+                    <span class="onboard-icon is-blue">
+                      <i class="bi bi-file-earmark-check"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">Pengesahan Dokumen di Tapak</h3>
+                      <p class="onboard-desc">
+                        Tandakan dokumen yang telah disemak semasa lawatan.
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-doc-verify">
+                    <div class="doc-verify-grid">
+                      <label class="checklist-item">
+                        <input type="checkbox" id="doc_ssm" checked />
+                        <span class="cl-text">
+                          <strong>Sijil Pendaftaran Syarikat (SSM)</strong>
+                          <small>Disemak di tapak</small>
+                        </span>
+                      </label>
+
+                      <label class="checklist-item">
+                        <input type="checkbox" id="doc_bl" checked />
+                        <span class="cl-text">
+                          <strong>Lesen Perniagaan</strong>
+                          <small>Disemak di tapak</small>
+                        </span>
+                      </label>
+
+                      <label class="checklist-item">
+                        <input type="checkbox" id="doc_purchase" />
+                        <span class="cl-text">
+                          <strong>Rekod Pembelian / Import</strong>
+                          <small>Belum disemak</small>
+                        </span>
+                      </label>
+
+                      <label class="checklist-item">
+                        <input type="checkbox" id="doc_label" />
+                        <span class="cl-text">
+                          <strong>Label Produk</strong>
+                          <small>Belum disemak</small>
+                        </span>
+                      </label>
+
+                      <label class="checklist-item">
+                        <input type="checkbox" id="doc_lab" />
+                        <span class="cl-text">
+                          <strong>Laporan Ujian Makmal</strong>
+                          <small>Belum disemak</small>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- =========================================================
+                   CARD 5: Pengambilan Sampel
+                   ========================================================= -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item is-open" data-accordion="sample">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="true"
+                    aria-controls="body-sample"
+                  >
+                    <span class="onboard-icon is-amber">
+                      <i class="bi bi-clipboard2-pulse"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">Pengambilan Sampel</h3>
+                      <p class="onboard-desc">
+                        Tandakan jika sampel produk telah diambil semasa
+                        lawatan.
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-sample">
+                    <label class="checklist-item">
+                      <input type="checkbox" id="sample_taken" />
+                      <span class="cl-text">
+                        <strong>Sampel diambil?</strong>
+                        <small
+                          >Tandakan jika sampel produk telah diambil untuk ujian
+                          makmal</small
+                        >
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- =========================================================
+                   CARD 6: Pemerhatian & Penemuan (repeatable, rich text)
+                   ========================================================= -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item is-open" data-accordion="observation">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="true"
+                    aria-controls="body-observation"
+                  >
+                    <span class="onboard-icon is-blue">
+                      <i class="bi bi-eye"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">
+                        Pemerhatian &amp; Penemuan
+                        <span class="tab-count ms-2" id="obs-count">1</span>
+                      </h3>
+                      <p class="onboard-desc">
+                        Catatkan setiap pemerhatian / penemuan sebagai item
+                        berasingan. Boleh tambah lebih daripada satu.
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-observation">
+                    <div class="repeat-list" id="obs-list">
+                      <div class="repeat-item" data-obs>
+                        <div class="repeat-head">
+                          <span class="repeat-index">Pemerhatian #1</span>
+                          <button
+                            type="button"
+                            class="repeat-remove"
+                            data-remove-obs
+                            disabled
+                          >
+                            <i class="bi bi-trash"></i>Buang
+                          </button>
+                        </div>
+                        <div class="field-group">
+                          <label class="form-label"
+                            >Tajuk Pemerhatian
+                            <span class="text-danger">*</span></label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            data-field="title"
+                            placeholder="cth. Keadaan ruang simpanan"
+                          />
+                        </div>
+                        <div class="field-group">
+                          <label class="form-label"
+                            >Keterangan / Penemuan</label
+                          >
+                          <textarea
+                            class="obs-editor"
+                            data-field="body"
+                            rows="5"
+                          ></textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="mt-3">
+                      <button type="button" class="repeat-add" id="add-obs">
+                        <i class="bi bi-plus-lg"></i>Tambah Pemerhatian
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- =========================================================
+                   CARD 7: Keputusan Lawatan
+                   ========================================================= -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item is-open" data-accordion="decision">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="true"
+                    aria-controls="body-decision"
+                  >
+                    <span class="onboard-icon is-green">
+                      <i class="bi bi-patch-check"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">Keputusan Lawatan</h3>
+                      <p class="onboard-desc">
+                        Pilih keputusan keseluruhan lawatan tapak.
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-decision">
+                    <div class="visit-decision-options mb-3">
+                      <input
+                        type="radio"
+                        class="btn-check"
+                        name="visit_decision"
+                        id="vd_ok"
+                        value="memuaskan"
+                        checked
+                      />
+                      <label class="btn btn-outline-success" for="vd_ok">
+                        <i class="bi bi-check-circle me-1"></i>Memuaskan
+                      </label>
+
+                      <input
+                        type="radio"
+                        class="btn-check"
+                        name="visit_decision"
+                        id="vd_bad"
+                        value="tidak_memuaskan"
+                      />
+                      <label class="btn btn-outline-danger" for="vd_bad">
+                        <i class="bi bi-x-circle me-1"></i>Tidak Memuaskan
+                      </label>
+
+                      <input
+                        type="radio"
+                        class="btn-check"
+                        name="visit_decision"
+                        id="vd_revisit"
+                        value="perlu_lawatan_semula"
+                      />
+                      <label class="btn btn-outline-warning" for="vd_revisit">
+                        <i class="bi bi-arrow-repeat me-1"></i>Perlu Lawatan
+                        Semula
+                      </label>
+                    </div>
+
+                    <div class="field-group">
+                      <label class="form-label" for="visit_recommendation"
+                        >Cadangan Pegawai</label
+                      >
+                      <textarea
+                        class="form-control"
+                        id="visit_recommendation"
+                        rows="3"
+                        placeholder="Cadangan pegawai berdasarkan hasil lawatan..."
+                      ></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- =========================================================
+                   CARD 8: Pengesahan
+                   ========================================================= -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item is-open" data-accordion="verification">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="true"
+                    aria-controls="body-verification"
+                  >
+                    <span class="onboard-icon is-blue">
+                      <i class="bi bi-shield-check"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">Pengesahan</h3>
+                      <p class="onboard-desc">
+                        Sahkan maklumat dan lampirkan foto tapak.
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-verification">
+                    <div class="field-group">
+                      <label class="checklist-item">
+                        <input type="checkbox" id="confirm_info" checked />
+                        <span class="cl-text">
+                          <strong
+                            >Saya mengesahkan maklumat lawatan ini benar</strong
+                          >
+                          <small
+                            >Semua maklumat yang diisi adalah tepat dan
+                            lengkap</small
+                          >
+                        </span>
+                      </label>
+                    </div>
+
+                    <div class="field-group">
+                      <label class="checklist-item">
+                        <input type="checkbox" id="confirm_rep" checked />
+                        <span class="cl-text">
+                          <strong>Wakil pemohon mengesahkan kehadiran</strong>
+                          <small
+                            >Wakil telah hadir semasa lawatan dijalankan</small
+                          >
+                        </span>
+                      </label>
+                    </div>
+
+                    <div class="field-group">
+                      <label class="form-label" for="site_photos"
+                        >Foto Tapak</label
+                      >
+                      <input
+                        type="file"
+                        class="form-control"
+                        id="site_photos"
+                        accept=".jpg,.jpeg,.png,.pdf"
+                        multiple
+                      />
+                      <div class="form-text">
+                        Muat naik gambar tapak kawasan, premis penyimpanan dan
+                        bukti lawatan. Format: JPG, PNG, PDF.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ===== Save bar ===== -->
+              <div class="visit-save-bar" id="visit-save-bar">
+                <div class="save-note" id="save-note">
+                  Sila lengkapkan semua medan wajib sebelum menyimpan laporan
+                  lawatan.
+                </div>
+                <button
+                  type="button"
+                  class="btn btn-success"
+                  id="save-visit-btn"
+                >
+                  <i class="bi bi-check-lg me-1"></i>Simpan Lawatan
+                </button>
+              </div>
+            </div>
+
+            <!-- ============ RIGHT: Info ============ -->
+            <aside class="stepper-aside" style="top: 100px">
+              <div class="meta-card mb-3">
+                <h4>Ringkasan Laporan</h4>
+                <div class="meta-row">
+                  <i
+                    class="bi bi-calendar-event"
+                    style="color: var(--color-primary-600)"
+                  ></i>
+                  <div>
+                    <strong>Tarikh lawatan</strong>
+                    <span id="summary-date">10 Dis 2026 · 09:30</span>
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i
+                    class="bi bi-person-badge"
+                    style="color: var(--color-primary-600)"
+                  ></i>
+                  <div>
+                    <strong>Wakil hadir</strong>
+                    <span id="summary-rep">1 wakil</span>
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i
+                    class="bi bi-clipboard-check"
+                    style="color: var(--color-primary-600)"
+                  ></i>
+                  <div>
+                    <strong>Semakan premis</strong>
+                    <span id="summary-premise">0 / 7 dinilai</span>
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i
+                    class="bi bi-shield-check"
+                    style="color: var(--color-primary-600)"
+                  ></i>
+                  <div>
+                    <strong>Keputusan</strong>
+                    <span id="summary-decision">Memuaskan</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="meta-card mb-3">
+                <h4>Maklumat lawatan</h4>
+                <div class="meta-row">
+                  <i class="bi bi-pin-map"></i>
+                  <div>
+                    <strong>Lokasi</strong>
+                    Kota Kinabalu, Sabah
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-clock-history"></i>
+                  <div>
+                    <strong>Anggaran masa</strong>
+                    1 – 2 jam
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-file-earmark-text"></i>
+                  <div>
+                    <strong>No. Rujukan</strong>
+                    LS/2026/00056
+                  </div>
+                </div>
+              </div>
+
+              <div class="help-box">
+                <span class="help-icon"><i class="bi bi-question-lg"></i></span>
+                <h4>Panduan ringkas</h4>
+                <p>
+                  Isi semua medan berdasarkan pemeriksaan fizikal di tapak.
+                  Setelah selesai, tekan <strong>Simpan Lawatan</strong> untuk
+                  hantar laporan kepada pentadbir.
+                </p>
+                <button type="button" class="btn btn-outline-primary btn-sm">
+                  Hubungi pentadbir
+                </button>
+              </div>
+            </aside>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /* ===== Sidebar toggle ===== */
+      (function () {
+        var app = document.querySelector(".app");
+        var btn = app.querySelector("#sidebar-toggle");
+        var KEY = "sidebar-collapsed";
+        function sync() {
+          var collapsed = app.classList.contains("is-collapsed");
+          var label = collapsed ? "Buka bar sisi" : "Tutup bar sisi";
+          btn.setAttribute("aria-expanded", String(!collapsed));
+          btn.setAttribute("aria-label", label);
+          btn.title = label;
+        }
+        btn.addEventListener("click", function () {
+          app.classList.toggle("is-collapsed");
+          sync();
+          try {
+            localStorage.setItem(
+              KEY,
+              app.classList.contains("is-collapsed") ? "1" : "0",
+            );
+          } catch (e) {}
+        });
+        sync();
+      })();
+
+      /* ===== Accordion ===== */
+      (function () {
+        document.querySelectorAll(".onboard-card").forEach(function (card) {
+          var items = card.querySelectorAll(".onboard-item[data-accordion]");
+
+          items.forEach(function (item) {
+            var toggle = item.querySelector(".onboard-row.as-button");
+            var body = item.querySelector(".onboard-body");
+            if (!toggle) return;
+
+            toggle.addEventListener("click", function () {
+              var isOpen = item.classList.contains("is-open");
+
+              items.forEach(function (other) {
+                if (other === item) return;
+                other.classList.remove("is-open");
+                var t = other.querySelector(".onboard-row.as-button");
+                var b = other.querySelector(".onboard-body");
+                if (t) t.setAttribute("aria-expanded", "false");
+                if (b) b.hidden = true;
+              });
+
+              if (isOpen) {
+                item.classList.remove("is-open");
+                toggle.setAttribute("aria-expanded", "false");
+                if (body) body.hidden = true;
+              } else {
+                item.classList.add("is-open");
+                toggle.setAttribute("aria-expanded", "true");
+                if (body) body.hidden = false;
+              }
+            });
+          });
+        });
+      })();
+
+      /* =========================================================
+         TinyMCE init for every .obs-editor
+         ========================================================= */
+      (function () {
+        function initEditors(scope) {
+          if (!window.tinymce) return;
+          var editors = (scope || document).querySelectorAll(".obs-editor");
+          editors.forEach(function (el) {
+            if (el.dataset.mceInit === "1") return;
+            el.dataset.mceInit = "1";
+            window.tinymce.init({
+              target: el,
+              height: 200,
+              menubar: false,
+              statusbar: false,
+              branding: false,
+              plugins: "lists link code fullscreen autoresize",
+              toolbar:
+                "bold italic underline strikethrough | link | bullist numlist | blockquote | code | fullscreen",
+              toolbar_mode: "wrap",
+              placeholder: "Tulis pemerhatian atau penemuan di sini...",
+              content_style:
+                "body { font-family: Inter, system-ui, sans-serif; font-size: 14px; line-height: 1.55; }",
+              setup: function (editor) {
+                editor.on("change keyup", function () {
+                  editor.save();
+                });
+              },
+            });
+          });
+        }
+
+        // Expose so add-row logic can init new editors
+        window.__initObsEditors = initEditors;
+
+        // Init on load
+        if (window.tinymce) {
+          window.tinymce.init({}); // no-op warm-up
+        }
+        document.addEventListener("DOMContentLoaded", function () {
+          initEditors(document);
+        });
+        // Fallback if CDN loads late
+        window.addEventListener("load", function () {
+          initEditors(document);
+        });
+      })();
+
+      /* =========================================================
+         Repeatable: Kehadiran Wakil
+         ========================================================= */
+      (function () {
+        var list = document.getElementById("reps-list");
+        var addBtn = document.getElementById("add-rep");
+        var countEl = document.getElementById("reps-count");
+        var summaryRep = document.getElementById("summary-rep");
+
+        function reindex() {
+          var items = list.querySelectorAll("[data-rep]");
+          items.forEach(function (item, i) {
+            item.querySelector(".repeat-index").textContent =
+              "Wakil #" + (i + 1);
+            var removeBtn = item.querySelector("[data-remove-rep]");
+            removeBtn.disabled = items.length <= 1;
+          });
+          countEl.textContent = items.length;
+          if (summaryRep) {
+            summaryRep.textContent = items.length + " wakil";
+          }
+        }
+
+        function template() {
+          var wrap = document.createElement("div");
+          wrap.className = "repeat-item";
+          wrap.setAttribute("data-rep", "");
+          wrap.innerHTML =
+            '<div class="repeat-head">' +
+            '<span class="repeat-index">Wakil #N</span>' +
+            '<button type="button" class="repeat-remove" data-remove-rep>' +
+            '<i class="bi bi-trash"></i>Buang</button>' +
+            "</div>" +
+            '<div class="row g-3">' +
+            '<div class="col-md-6">' +
+            '<label class="form-label">Nama Wakil <span class="text-danger">*</span></label>' +
+            '<input type="text" class="form-control" data-field="name" placeholder="Nama penuh wakil" />' +
+            "</div>" +
+            '<div class="col-md-6">' +
+            '<label class="form-label">No. Kad Pengenalan <span class="text-danger">*</span></label>' +
+            '<input type="text" class="form-control" data-field="ic" placeholder="cth. 900101-12-3456" />' +
+            "</div>" +
+            '<div class="col-md-6">' +
+            '<label class="form-label">Jawatan <span class="text-danger">*</span></label>' +
+            '<input type="text" class="form-control" data-field="role" placeholder="cth. Pengurus Operasi" />' +
+            "</div>" +
+            '<div class="col-md-6">' +
+            '<label class="form-label">No. Telefon</label>' +
+            '<input type="tel" class="form-control" data-field="phone" placeholder="+60" />' +
+            "</div>" +
+            "</div>";
+          return wrap;
+        }
+
+        addBtn.addEventListener("click", function () {
+          list.appendChild(template());
+          reindex();
+          var last = list.querySelector("[data-rep]:last-of-type input");
+          if (last) last.focus();
+        });
+
+        list.addEventListener("click", function (e) {
+          var btn = e.target.closest("[data-remove-rep]");
+          if (!btn) return;
+          if (list.querySelectorAll("[data-rep]").length <= 1) return;
+          btn.closest("[data-rep]").remove();
+          reindex();
+        });
+
+        reindex();
+      })();
+
+      /* =========================================================
+         Repeatable: Pemerhatian & Penemuan (with TinyMCE)
+         ========================================================= */
+      (function () {
+        var list = document.getElementById("obs-list");
+        var addBtn = document.getElementById("add-obs");
+        var countEl = document.getElementById("obs-count");
+
+        function reindex() {
+          var items = list.querySelectorAll("[data-obs]");
+          items.forEach(function (item, i) {
+            item.querySelector(".repeat-index").textContent =
+              "Pemerhatian #" + (i + 1);
+            var removeBtn = item.querySelector("[data-remove-obs]");
+            removeBtn.disabled = items.length <= 1;
+          });
+          countEl.textContent = items.length;
+        }
+
+        function template() {
+          var wrap = document.createElement("div");
+          wrap.className = "repeat-item";
+          wrap.setAttribute("data-obs", "");
+          wrap.innerHTML =
+            '<div class="repeat-head">' +
+            '<span class="repeat-index">Pemerhatian #N</span>' +
+            '<button type="button" class="repeat-remove" data-remove-obs>' +
+            '<i class="bi bi-trash"></i>Buang</button>' +
+            "</div>" +
+            '<div class="field-group">' +
+            '<label class="form-label">Tajuk Pemerhatian <span class="text-danger">*</span></label>' +
+            '<input type="text" class="form-control" data-field="title" placeholder="cth. Keadaan ruang simpanan" />' +
+            "</div>" +
+            '<div class="field-group">' +
+            '<label class="form-label">Keterangan / Penemuan</label>' +
+            '<textarea class="obs-editor" data-field="body" rows="5"></textarea>' +
+            "</div>";
+          return wrap;
+        }
+
+        addBtn.addEventListener("click", function () {
+          var node = template();
+          list.appendChild(node);
+          reindex();
+          // initialise TinyMCE for the newly added editor only
+          if (window.__initObsEditors) {
+            window.__initObsEditors(node);
+          }
+        });
+
+        list.addEventListener("click", function (e) {
+          var btn = e.target.closest("[data-remove-obs]");
+          if (!btn) return;
+          if (list.querySelectorAll("[data-obs]").length <= 1) return;
+          var wrap = btn.closest("[data-obs]");
+          // destroy the TinyMCE instance attached to the textarea (if any)
+          var ta = wrap.querySelector(".obs-editor");
+          if (ta) {
+            var ed = window.tinymce && window.tinymce.get(ta.id);
+            if (ed) ed.remove();
+          }
+          wrap.remove();
+          reindex();
+        });
+
+        reindex();
+      })();
+
+      /* =========================================================
+         Live summary + save state
+         ========================================================= */
+      (function () {
+        var dateInput = document.getElementById("v_date");
+        var startInput = document.getElementById("v_start");
+        var decisionInputs = document.querySelectorAll(
+          'input[name="visit_decision"]',
+        );
+        var premiseRadios = document.querySelectorAll('input[name^="p_"]');
+        var summaryDate = document.getElementById("summary-date");
+        var summaryPremise = document.getElementById("summary-premise");
+        var summaryDecision = document.getElementById("summary-decision");
+        var saveNote = document.getElementById("save-note");
+        var saveBtn = document.getElementById("save-visit-btn");
+
+        function fmtDate(v) {
+          if (!v) return "—";
+          try {
+            var d = new Date(v);
+            return d.toLocaleDateString("ms-MY", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            });
+          } catch (e) {
+            return v;
+          }
+        }
+
+        function updateSummary() {
+          var dateText = fmtDate(dateInput.value);
+          var startText = startInput.value || "";
+          summaryDate.textContent =
+            dateText + (startText ? " · " + startText : "");
+
+          // Count how many premise rows have a selection
+          var premiseRows = document.querySelectorAll(".premise-row");
+          var picked = 0;
+          premiseRows.forEach(function (row) {
+            if (row.querySelector("input.btn-check:checked")) picked++;
+          });
+          if (summaryPremise) {
+            summaryPremise.textContent =
+              picked + " / " + premiseRows.length + " dinilai";
+          }
+
+          var decisionValue = "Memuaskan";
+          decisionInputs.forEach(function (r) {
+            if (r.checked) {
+              var label = document.querySelector('label[for="' + r.id + '"]');
+              if (label) {
+                decisionValue = label.textContent.trim();
+              }
+            }
+          });
+          summaryDecision.textContent = decisionValue;
+        }
+
+        dateInput.addEventListener("change", updateSummary);
+        startInput.addEventListener("change", updateSummary);
+        decisionInputs.forEach(function (r) {
+          r.addEventListener("change", updateSummary);
+        });
+        // Update the premise counter whenever a rating is picked
+        premiseRadios.forEach(function (r) {
+          r.addEventListener("change", updateSummary);
+        });
+
+        /* -------- Save -------- */
+        saveBtn.addEventListener("click", function () {
+          // Sync editors into their textareas before reading values
+          if (window.tinymce) {
+            window.tinymce.triggerSave();
+          }
+
+          var firstRep = document.querySelector(
+            '#reps-list [data-rep] input[data-field="name"]',
+          );
+          var firstObsTitle = document.querySelector(
+            '#obs-list [data-obs] input[data-field="title"]',
+          );
+
+          var required = [
+            document.getElementById("v_date"),
+            document.getElementById("v_start"),
+            document.getElementById("v_end"),
+            document.getElementById("v_officer"),
+            document.getElementById("v_site_address"),
+            firstRep,
+            firstObsTitle,
+            document.getElementById("confirm_info"),
+            document.getElementById("confirm_rep"),
+          ];
+
+          var missing = required.some(function (el) {
+            if (!el) return false;
+            if (el.type === "checkbox") return !el.checked;
+            return !String(el.value || "").trim();
+          });
+
+          if (missing) {
+            saveNote.textContent =
+              "Sila lengkapkan semua medan wajib dan tanda pengesahan sebelum menyimpan.";
+            saveNote.classList.add("is-warning");
+            return;
+          }
+
+          // TODO: replace with real AJAX submission to backend
+          saveBtn.disabled = true;
+          saveBtn.innerHTML = '<i class="bi bi-check-lg me-1"></i>Disimpan';
+          saveNote.textContent =
+            "Laporan lawatan telah disimpan. Menunggu semakan pentadbir.";
+          saveNote.classList.remove("is-warning");
+          saveNote.classList.add("is-ready");
+        });
+
+        updateSummary();
+      })();
+    </script>
+  </body>
+</html>

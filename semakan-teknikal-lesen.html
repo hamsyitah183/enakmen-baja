@@ -1,0 +1,1599 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/components.css" rel="stylesheet" />
+    <link href="css/dashboard.css" rel="stylesheet" />
+    <link href="css/assesment.css" rel="stylesheet" />
+    <link href="css/view.css" rel="stylesheet" />
+    <link href="css/complete-account.css" rel="stylesheet" />
+    <link href="css/edit-account.css" rel="stylesheet" />
+    <link href="css/accordionBoard.css" rel="stylesheet" />
+    <link href="css/detailBoard.css" rel="stylesheet" />
+    <title>Semakan Lesen — Panel Pegawai | Portal Pendaftaran Baja</title>
+
+    <style>
+      /* ===== License-type icon pills (page-specific) ===== */
+      .rr-icon.is-import {
+        background: #dbeafe;
+        color: #1d4ed8;
+      }
+      .rr-icon.is-export {
+        background: #ede9fe;
+        color: #6d28d9;
+      }
+      .rr-icon.is-manufacture {
+        background: #dcfce7;
+        color: #15803d;
+      }
+      .rr-icon.is-seller {
+        background: #fef3c7;
+        color: #b45309;
+      }
+
+      /* ===== Attachment strip inside review rows ===== */
+      .review-row:has(.rr-attach) {
+        flex-wrap: wrap;
+        align-items: flex-start;
+      }
+      .rr-attach {
+        flex: 0 0 100%;
+        width: 100%;
+        margin-top: 0.5rem;
+        padding-top: 0.6rem;
+        border-top: 1px dashed var(--color-border, #e5e7eb);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+      .rr-attach a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.25rem 0.6rem;
+        border: 1px solid var(--color-border, #e5e7eb);
+        border-radius: 999px;
+        font-size: 0.72rem;
+        color: var(--color-text, #111827);
+        background: var(--color-surface, #fff);
+        text-decoration: none;
+      }
+      .rr-attach a:hover {
+        border-color: var(--color-primary-400, #60a5fa);
+        color: var(--color-primary-700, #1d4ed8);
+      }
+
+      /* ===== Rejection reason note under a rejected row ===== */
+      .rr-reason {
+        flex: 0 0 100%;
+        width: 100%;
+        margin-top: 0.4rem;
+        padding: 0.5rem 0.7rem;
+        background: #fef2f2;
+        border: 1px solid #dc2626;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        color: #7f1d1d;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.4rem;
+        line-height: 1.45;
+      }
+      .rr-reason i {
+        flex: none;
+        margin-top: 0.1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <script>
+        try {
+          if (localStorage.getItem("sidebar-collapsed") === "1")
+            document.querySelector(".app").classList.add("is-collapsed");
+        } catch (e) {}
+      </script>
+
+      <!-- Bar sisi -->
+      <aside
+        class="sidebar offcanvas-lg offcanvas-start"
+        tabindex="-1"
+        id="sidebar"
+        aria-label="Navigasi utama"
+      >
+        <div class="sidebar-inner">
+          <div class="sidebar-head border-bottom pb-2">
+            <a href="#" class="brand" aria-label="Enakmen Baja Sabah">
+              <span class="brand-mark brand-mark--img">
+                <img src="logo/image.png" alt="" width="40" height="40" />
+              </span>
+              <span class="brand-text">Enakmen Baja Sabah</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-icon sidebar-toggle d-none d-lg-inline-grid"
+              id="sidebar-toggle"
+              aria-controls="sidebar"
+              aria-expanded="true"
+              aria-label="Tutup bar sisi"
+              title="Tutup bar sisi"
+            >
+              <i class="bi bi-layout-sidebar"></i>
+            </button>
+            <button
+              type="button"
+              class="btn-close d-lg-none"
+              data-bs-dismiss="offcanvas"
+              data-bs-target="#sidebar"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <nav class="d-grid gap-1">
+            <a
+              href="filled-dashboard.html"
+              class="side-link"
+              title="Papan pemuka"
+              ><i class="bi bi-house-door"></i
+              ><span class="side-label">Papan pemuka</span></a
+            >
+            <a href="#" class="side-link" title="Produk"
+              ><i class="bi bi-box-seam"></i
+              ><span class="side-label">Produk</span></a
+            >
+            <a href="#" class="side-link" title="Lesen"
+              ><i class="bi bi-patch-check"></i
+              ><span class="side-label">Lesen</span></a
+            >
+            <a href="#" class="side-link" title="Pembayaran"
+              ><i class="bi bi-receipt"></i
+              ><span class="side-label">Pembayaran</span></a
+            >
+            <a href="#" class="side-link" title="Notis dan rayuan"
+              ><i class="bi bi-envelope-exclamation"></i
+              ><span class="side-label">Notis dan rayuan</span
+              ><span class="count pill pill-danger">3</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Pegawai DOA</div>
+          <nav class="d-grid gap-1 mb-3">
+            <a
+              href="senarai-semakan-teknikal.html"
+              class="side-link"
+              title="Semakan teknikal"
+              ><i class="bi bi-clipboard2-check"></i
+              ><span class="side-label">Semakan teknikal</span
+              ><span class="count pill pill-warning">5</span></a
+            >
+            <a
+              href="senarai-semakan-lesen.html"
+              class="side-link active"
+              title="Semakan lesen"
+              ><i class="bi bi-patch-check"></i
+              ><span class="side-label">Semakan lesen</span
+              ><span class="count pill pill-warning">3</span></a
+            >
+            <a href="#" class="side-link" title="Semakan akaun"
+              ><i class="bi bi-building-check"></i
+              ><span class="side-label">Semakan akaun</span></a
+            >
+            <a href="#" class="side-link" title="Laporan"
+              ><i class="bi bi-file-earmark-bar-graph"></i
+              ><span class="side-label">Laporan</span></a
+            >
+            <a href="#" class="side-link" title="Tetapan"
+              ><i class="bi bi-gear"></i
+              ><span class="side-label">Tetapan</span></a
+            >
+            <a href="index.html" class="side-link" title="Log keluar"
+              ><i class="bi bi-box-arrow-right"></i
+              ><span class="side-label">Log keluar</span></a
+            >
+          </nav>
+
+          <div class="side-user">
+            <span class="avatar">ZA</span>
+            <div class="lh-sm side-user-text">
+              <div class="fw-semibold">Nur binti Ahmad</div>
+              <small class="text-muted-2">Pegawai Teknikal · DOA Sabah</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Utama -->
+      <div class="app-main">
+        <header class="topbar border-bottom">
+          <button
+            class="btn btn-icon d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebar"
+            aria-controls="sidebar"
+            aria-label="Buka menu"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+          <h1 class="h5 mb-0 me-2">Semakan Lesen</h1>
+          <div class="topbar-search d-none d-md-block input-icon">
+            <i class="bi bi-search"></i>
+            <input
+              type="search"
+              class="form-control"
+              placeholder="Cari akaun, lesen atau rujukan"
+              aria-label="Cari"
+            />
+          </div>
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <button
+              class="btn btn-icon position-relative"
+              type="button"
+              aria-label="Pemberitahuan"
+            >
+              <i class="bi bi-bell"></i><span class="notif-dot"></span>
+            </button>
+
+            <div class="dropdown">
+              <button
+                type="button"
+                class="avatar avatar-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Menu pengguna"
+              >
+                ZA
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end user-menu">
+                <li class="user-menu-head">
+                  <div class="fw-semibold">Nur binti Ahmad</div>
+                  <small class="text-muted-2"
+                    >Pegawai Teknikal · DOA Sabah</small
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-clipboard2-check me-2"></i>Semakan
+                    teknikal</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-patch-check me-2"></i>Semakan lesen</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-gear me-2"></i>Tetapan</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="index.html"
+                    ><i class="bi bi-box-arrow-right me-2"></i>Log keluar</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <main class="app-content p-3 p-md-4 p-xl-5">
+          <div class="complete-layout">
+            <!-- ============ LEFT ============ -->
+            <div class="complete-main">
+              <!-- Top action bar -->
+              <div class="detail-topbar">
+                <div class="detail-topbar-left">
+                  <a href="senarai-semakan-lesen.html" class="btn-back">
+                    <i class="bi bi-arrow-left"></i>Kembali
+                  </a>
+                  <button
+                    type="button"
+                    class="btn-nav-arrow"
+                    aria-label="Sebelum"
+                  >
+                    <i class="bi bi-chevron-left"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn-nav-arrow"
+                    aria-label="Seterusnya"
+                  >
+                    <i class="bi bi-chevron-right"></i>
+                  </button>
+                  <span class="text-muted-2 small ms-2">1 daripada 3</span>
+                </div>
+
+                <div class="detail-topbar-right">
+                  <a href="semakan-lesen-view.html" class="btn btn-success">
+                    <i class="bi bi-check-lg"></i>Selesai
+                  </a>
+                  <button type="button" class="btn-nav-arrow" aria-label="Lagi">
+                    <i class="bi bi-three-dots"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Edit banner -->
+              <div class="edit-banner">
+                <span class="edit-icon">
+                  <i class="bi bi-pencil-square"></i>
+                </span>
+                <div class="flex-grow-1">
+                  <h2>Semakan lesen sedang disunting</h2>
+                  <p>
+                    Sahkan setiap aktiviti lesen yang telah dimuat naik oleh
+                    pemohon. Jika ada item yang perlu ditolak, nyatakan asas
+                    penolakan. Setelah semua item disemak, hantar keputusan di
+                    bar bawah.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Header card -->
+              <div class="detail-shell mb-3">
+                <div class="detail-header">
+                  <span class="head-avatar">
+                    <i class="bi bi-patch-check"></i>
+                  </span>
+                  <div class="head-info">
+                    <h1 id="thread-title">Semakan Lesen</h1>
+                    <div class="head-sub">
+                      <span class="avatar-mini">BA</span>
+                      <span>Borneo Agro Sdn Bhd</span>
+                      <span class="dot">·</span>
+                      <span>18 Okt 2026, 10:32 AM</span>
+                      <span class="dot">·</span>
+                      <span
+                        style="
+                          font-family: monospace;
+                          font-weight: 600;
+                          color: var(--color-primary-800, #1e40af);
+                          background: var(--color-primary-50, #eff6ff);
+                          border-radius: 6px;
+                          padding: 0.1rem 0.45rem;
+                        "
+                        >PL/2026/00452</span
+                      >
+                    </div>
+                  </div>
+                  <div class="head-links">
+                    <a href="#" aria-label="Pautan dokumen">
+                      <i class="bi bi-file-earmark-text"></i>
+                    </a>
+                    <a href="#" aria-label="Perakuan">
+                      <i class="bi bi-patch-check-fill"></i>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="info-strip">
+                  <div class="strip-cell">
+                    <div class="strip-label">
+                      <i class="bi bi-hash"></i>No. Rujukan
+                    </div>
+                    <div class="strip-value">PL/2026/00452</div>
+                  </div>
+
+                  <div class="strip-cell">
+                    <div class="strip-label">
+                      <i class="bi bi-tag"></i>Jenis Permohonan
+                    </div>
+                    <div class="strip-value">Lesen Aktiviti Baja</div>
+                  </div>
+
+                  <div class="strip-cell">
+                    <div class="strip-label">
+                      <i class="bi bi-diagram-3"></i>Aktiviti
+                    </div>
+                    <div class="strip-value">
+                      Pengimport · Pengilang · Penjual
+                    </div>
+                  </div>
+
+                  <div class="strip-cell">
+                    <div class="strip-label">
+                      <i class="bi bi-clipboard-pulse"></i>Status
+                    </div>
+                    <div class="strip-value">
+                      <span class="strip-pill is-info">
+                        <i class="bi bi-hourglass-split"></i>Dalam Semakan
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="strip-cell">
+                    <div class="strip-label">
+                      <i class="bi bi-flag"></i>Keutamaan
+                    </div>
+                    <div class="strip-value">
+                      <span class="strip-pill is-warning">Tinggi</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Stage wizard card -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item is-open" data-accordion="wizard">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="true"
+                    aria-controls="body-wizard"
+                  >
+                    <span class="onboard-icon is-green">
+                      <i class="bi bi-diagram-3"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">Proses Semakan Teknikal</h3>
+                      <p class="onboard-desc">
+                        Peringkat 2 daripada 5 · Sedang berjalan
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-wizard">
+                    <div class="stage-track">
+                      <div class="stage-node is-done" id="stage-1">
+                        <span class="stage-circle"
+                          ><i class="bi bi-check-lg"></i
+                        ></span>
+                        <span class="stage-name">Semakan dokumen sokongan</span>
+                        <span class="stage-status">Selesai</span>
+                      </div>
+
+                      <div class="stage-node is-active" id="stage-2">
+                        <span class="stage-circle">2</span>
+                        <span class="stage-name">Semakan Lesen Aktiviti</span>
+                        <span class="stage-status">Dalam proses</span>
+                      </div>
+
+                      <div class="stage-node" id="stage-3">
+                        <span class="stage-circle">3</span>
+                        <span class="stage-name"
+                          >Lawatan tapak premis (jika perlu)</span
+                        >
+                        <span class="stage-status">Belum bermula</span>
+                      </div>
+
+                      <div class="stage-node" id="stage-4">
+                        <span class="stage-circle">4</span>
+                        <span class="stage-name">Keputusan Semakan Lesen</span>
+                        <span class="stage-status">Belum bermula</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- =========================================================
+                   CARD 1: Aktiviti Lesen
+                   ========================================================= -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item is-open" data-accordion="licenses">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="true"
+                    aria-controls="body-licenses"
+                  >
+                    <span class="onboard-icon is-blue">
+                      <i class="bi bi-patch-check"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">
+                        Aktiviti Lesen
+                        <span class="tab-count ms-2" id="licenses-badge"
+                          >3</span
+                        >
+                      </h3>
+                      <p class="onboard-desc">
+                        Sahkan setiap aktiviti lesen beserta dokumen sokongan
+                        yang dimuat naik.
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-licenses">
+                    <div class="warn-strip">
+                      <i class="bi bi-exclamation-triangle-fill"></i>
+                      <div>
+                        <strong>Sila semak setiap aktiviti lesen</strong>
+                        Sahkan jenis aktiviti, nombor lesen dan lampiran yang
+                        dimuat naik sebelum meneruskan.
+                      </div>
+                    </div>
+
+                    <!-- Pengimport -->
+                    <div
+                      class="review-row"
+                      data-row="license"
+                      data-license="import"
+                    >
+                      <span class="rr-icon is-import"
+                        ><i class="bi bi-box-arrow-in-down"></i
+                      ></span>
+                      <div class="rr-body">
+                        <p class="rr-name">Aktiviti Pengimport</p>
+                        <p class="rr-meta">
+                          Lesen Berniaga BL-2023-7890 · Tamat 31 Dis 2026
+                        </p>
+                        <a href="#" class="rr-link"
+                          ><i class="bi bi-box-arrow-up-right"></i>Lihat
+                          butiran</a
+                        >
+                      </div>
+                      <div class="rr-actions">
+                        <span class="rr-status is-approved"
+                          ><i class="bi bi-check-circle-fill"></i
+                          >Diluluskan</span
+                        >
+                        <span class="rr-status is-rejected"
+                          ><i class="bi bi-x-circle-fill"></i>Ditolak</span
+                        >
+                        <div class="rr-toggle">
+                          <button type="button" data-action="approve">
+                            <i class="bi bi-check-lg"></i>Lulus
+                          </button>
+                          <button type="button" data-action="reject">
+                            <i class="bi bi-x-lg"></i>Tolak
+                          </button>
+                        </div>
+                      </div>
+                      <div class="rr-attach">
+                        <a href="#"
+                          ><i class="bi bi-file-earmark-pdf"></i
+                          >lesen_berniaga.pdf · 245 KB</a
+                        >
+                        <a href="#"
+                          ><i class="bi bi-file-earmark-pdf"></i
+                          >surat_kebenaran_import.pdf · 180 KB</a
+                        >
+                        <a href="#"
+                          ><i class="bi bi-file-earmark-pdf"></i
+                          >ica10_pengecualian.pdf · 320 KB</a
+                        >
+                      </div>
+                    </div>
+
+                    <!-- Pengilang -->
+                    <div
+                      class="review-row"
+                      data-row="license"
+                      data-license="manufacture"
+                    >
+                      <span class="rr-icon is-manufacture"
+                        ><i class="bi bi-gear-wide-connected"></i
+                      ></span>
+                      <div class="rr-body">
+                        <p class="rr-name">Aktiviti Pengilang</p>
+                        <p class="rr-meta">
+                          Lesen MIDA/2023/4567 · Tamat 31 Dis 2026
+                        </p>
+                        <a href="#" class="rr-link"
+                          ><i class="bi bi-box-arrow-up-right"></i>Lihat
+                          butiran</a
+                        >
+                      </div>
+                      <div class="rr-actions">
+                        <span class="rr-status is-approved"
+                          ><i class="bi bi-check-circle-fill"></i
+                          >Diluluskan</span
+                        >
+                        <span class="rr-status is-rejected"
+                          ><i class="bi bi-x-circle-fill"></i>Ditolak</span
+                        >
+                        <div class="rr-toggle">
+                          <button type="button" data-action="approve">
+                            <i class="bi bi-check-lg"></i>Lulus
+                          </button>
+                          <button type="button" data-action="reject">
+                            <i class="bi bi-x-lg"></i>Tolak
+                          </button>
+                        </div>
+                      </div>
+                      <div class="rr-attach">
+                        <a href="#"
+                          ><i class="bi bi-file-earmark-pdf"></i>lesen_mida.pdf
+                          · 410 KB</a
+                        >
+                        <a href="#"
+                          ><i class="bi bi-file-earmark-pdf"></i>sijil_ssm.pdf ·
+                          245 KB</a
+                        >
+                      </div>
+                    </div>
+
+                    <!-- Penjual -->
+                    <div
+                      class="review-row"
+                      data-row="license"
+                      data-license="seller"
+                    >
+                      <span class="rr-icon is-seller"
+                        ><i class="bi bi-shop"></i
+                      ></span>
+                      <div class="rr-body">
+                        <p class="rr-name">Aktiviti Penjual</p>
+                        <p class="rr-meta">
+                          Lesen Berniaga BL-2023-7890 · Tamat 31 Dis 2026
+                        </p>
+                        <a href="#" class="rr-link"
+                          ><i class="bi bi-box-arrow-up-right"></i>Lihat
+                          butiran</a
+                        >
+                      </div>
+                      <div class="rr-actions">
+                        <span class="rr-status is-approved"
+                          ><i class="bi bi-check-circle-fill"></i
+                          >Diluluskan</span
+                        >
+                        <span class="rr-status is-rejected"
+                          ><i class="bi bi-x-circle-fill"></i>Ditolak</span
+                        >
+                        <div class="rr-toggle">
+                          <button type="button" data-action="approve">
+                            <i class="bi bi-check-lg"></i>Lulus
+                          </button>
+                          <button type="button" data-action="reject">
+                            <i class="bi bi-x-lg"></i>Tolak
+                          </button>
+                        </div>
+                      </div>
+                      <div class="rr-attach">
+                        <a href="#"
+                          ><i class="bi bi-file-earmark-pdf"></i
+                          >lesen_berniaga.pdf · 245 KB</a
+                        >
+                        <a href="#"
+                          ><i class="bi bi-file-earmark-image"></i
+                          >gambar_premis.jpg · 1.1 MB</a
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Decision result -->
+              <div class="decision-result" id="decision-result" hidden></div>
+
+              <!-- ===== DECISION BAR (fixed) ===== -->
+              <div class="decision-bar" id="decision-bar">
+                <div class="db-status">
+                  <strong id="decision-title">Keputusan Semakan Lesen</strong>
+                  <span id="decision-sub"
+                    >Sila semak semua item sebelum meneruskan ke peringkat
+                    seterusnya.</span
+                  >
+                </div>
+
+                <div class="db-actions">
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger btn-sm"
+                    data-decision="reject"
+                  >
+                    <i class="bi bi-x-circle"></i>Tolak Permohonan
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-success btn-sm"
+                    data-decision="advance"
+                  >
+                    <i class="bi bi-check2-all"></i>Terima Semua
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ============ RIGHT: Info ============ -->
+            <aside class="stepper-aside" style="top: 100px">
+              <div class="meta-card mb-3">
+                <h4>Ringkasan Semakan Lesen</h4>
+                <div class="meta-row">
+                  <i
+                    class="bi bi-patch-check"
+                    style="color: var(--color-primary-600)"
+                  ></i>
+                  <div>
+                    <strong>Aktiviti lesen</strong>
+                    <span id="summary-licenses">0 / 3 disemak</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="meta-card mb-3">
+                <h4>Maklumat permohonan</h4>
+                <div class="meta-row">
+                  <i class="bi bi-calendar-check"></i>
+                  <div>
+                    <strong>Diterima pada</strong>
+                    18 Oktober 2026, 10:32 AM
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-clock-history"></i>
+                  <div>
+                    <strong>Tarikh sasaran</strong>
+                    25 Oktober 2026
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-flag"></i>
+                  <div>
+                    <strong>Keutamaan</strong>
+                    Tinggi
+                  </div>
+                </div>
+              </div>
+
+              <div class="help-box">
+                <span class="help-icon"><i class="bi bi-question-lg"></i></span>
+                <h4>Panduan ringkas</h4>
+                <p>
+                  Sahkan setiap aktiviti lesen yang dimuat naik oleh pemohon.
+                  Jika ada item yang perlu ditolak, nyatakan asas penolakan
+                  pada setiap item.
+                </p>
+                <button type="button" class="btn btn-outline-primary btn-sm">
+                  Hubungi pentadbir
+                </button>
+              </div>
+            </aside>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         Modal: Asas penolakan untuk satu aktiviti lesen
+         ========================================================= -->
+    <div
+      class="modal fade"
+      id="rowRejectModal"
+      tabindex="-1"
+      aria-labelledby="rowRejectTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title h5" id="rowRejectTitle">
+              Asas penolakan item
+            </h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Tutup"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Item</label>
+              <input
+                type="text"
+                class="form-control"
+                id="rr-item-name"
+                readonly
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="rr-grounds"
+                >Asas penolakan <span class="text-danger">*</span></label
+              >
+              <select class="form-select" id="rr-grounds">
+                <option value="">Pilih asas</option>
+                <option>Dokumen tidak lengkap atau tidak sah</option>
+                <option>Tempoh sah laku lesen telah tamat</option>
+                <option>Jenis aktiviti tidak menepati permohonan</option>
+                <option>Maklumat palsu atau mengelirukan</option>
+                <option>Lain-lain</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="rr-comment"
+                >Keterangan tambahan</label
+              >
+              <textarea
+                class="form-control"
+                id="rr-comment"
+                rows="3"
+                placeholder="Nyatakan butiran tambahan bagi penolakan item ini..."
+              ></textarea>
+              <div class="form-text">
+                Keterangan ini akan dipaparkan kepada pemohon pada item ini.
+              </div>
+            </div>
+
+            <div
+              class="alert alert-danger mb-0 small"
+              id="rr-error"
+              role="alert"
+              hidden
+            ></div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Batal
+            </button>
+            <button type="button" class="btn btn-danger" id="rr-confirm">
+              Sahkan tolakan
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         Modal: Keputusan keseluruhan semakan lesen
+         ========================================================= -->
+    <div
+      class="modal fade"
+      id="decisionModal"
+      tabindex="-1"
+      aria-labelledby="decisionTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title h5" id="decisionTitle">Keputusan</h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Tutup"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="dm-summary" id="dm-summary"></div>
+
+            <!-- Reject-type picker -->
+            <div class="mb-3 dm-type-picker" id="dm-reject-picker" hidden>
+              <label class="form-label">Pilih tindakan</label>
+              <div class="d-flex gap-2 flex-wrap">
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="dm-reject-type"
+                  id="dm-rt-info"
+                  value="info"
+                  checked
+                />
+                <label
+                  class="btn btn-outline-warning flex-fill"
+                  for="dm-rt-info"
+                >
+                  <i class="bi bi-info-lg me-1"></i>Perlu Maklumat
+                </label>
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="dm-reject-type"
+                  id="dm-rt-reject"
+                  value="rejected"
+                />
+                <label
+                  class="btn btn-outline-danger flex-fill"
+                  for="dm-rt-reject"
+                >
+                  <i class="bi bi-x-lg me-1"></i>Tolak Permohonan
+                </label>
+              </div>
+            </div>
+
+            <div class="mb-3" data-for="advance">
+              <div
+                class="alert alert-info mb-0 small"
+                id="dm-advance-alert"
+              >
+                <i class="bi bi-info-circle me-1"></i>
+                Permohonan lesen akan diluluskan dan
+                <strong>perakuan lesen</strong> akan dijana untuk pemohon.
+              </div>
+            </div>
+
+            <div class="mb-3" data-for="rejected">
+              <label class="form-label" for="dm-grounds">Asas penolakan</label>
+              <select class="form-select" id="dm-grounds">
+                <option value="">Pilih asas</option>
+                <option>Dokumen lesen tidak lengkap atau tidak sah</option>
+                <option>Tempoh sah laku lesen telah tamat</option>
+                <option>Jenis aktiviti tidak menepati permohonan</option>
+                <option>Maklumat palsu atau mengelirukan</option>
+                <option>Lain-lain</option>
+              </select>
+            </div>
+
+            <div class="mb-3" data-for="info">
+              <label class="form-label" for="dm-deadline"
+                >Tarikh akhir maklum balas</label
+              >
+              <input type="date" class="form-control" id="dm-deadline" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="dm-comment" id="dm-comment-label"
+                >Komen</label
+              >
+              <textarea
+                class="form-control"
+                id="dm-comment"
+                rows="4"
+              ></textarea>
+              <div class="form-text">
+                Komen ini kelihatan kepada pemohon dan disimpan dalam log
+                aktiviti.
+              </div>
+            </div>
+
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="dm-notify"
+                checked
+              />
+              <label class="form-check-label" for="dm-notify"
+                >Maklumkan pemohon melalui e-mel</label
+              >
+            </div>
+
+            <div
+              class="alert alert-danger mt-3 mb-0 small"
+              id="dm-error"
+              role="alert"
+              hidden
+            ></div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Batal
+            </button>
+            <button type="button" class="btn btn-success" id="dm-confirm">
+              Sahkan
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /* ===== Sidebar toggle ===== */
+      (function () {
+        var app = document.querySelector(".app");
+        var btn = app.querySelector("#sidebar-toggle");
+        var KEY = "sidebar-collapsed";
+        function sync() {
+          var collapsed = app.classList.contains("is-collapsed");
+          var label = collapsed ? "Buka bar sisi" : "Tutup bar sisi";
+          btn.setAttribute("aria-expanded", String(!collapsed));
+          btn.setAttribute("aria-label", label);
+          btn.title = label;
+        }
+        btn.addEventListener("click", function () {
+          app.classList.toggle("is-collapsed");
+          sync();
+          try {
+            localStorage.setItem(
+              KEY,
+              app.classList.contains("is-collapsed") ? "1" : "0",
+            );
+          } catch (e) {}
+        });
+        sync();
+      })();
+
+      /* ===== Accordion ===== */
+      (function () {
+        document.querySelectorAll(".onboard-card").forEach(function (card) {
+          var items = card.querySelectorAll(".onboard-item[data-accordion]");
+
+          items.forEach(function (item) {
+            var toggle = item.querySelector(".onboard-row.as-button");
+            var body = item.querySelector(".onboard-body");
+            if (!toggle) return;
+
+            toggle.addEventListener("click", function () {
+              var isOpen = item.classList.contains("is-open");
+
+              items.forEach(function (other) {
+                if (other === item) return;
+                other.classList.remove("is-open");
+                var t = other.querySelector(".onboard-row.as-button");
+                var b = other.querySelector(".onboard-body");
+                if (t) t.setAttribute("aria-expanded", "false");
+                if (b) b.hidden = true;
+              });
+
+              if (isOpen) {
+                item.classList.remove("is-open");
+                toggle.setAttribute("aria-expanded", "false");
+                if (body) body.hidden = true;
+              } else {
+                item.classList.add("is-open");
+                toggle.setAttribute("aria-expanded", "true");
+                if (body) body.hidden = false;
+              }
+            });
+          });
+        });
+      })();
+
+      /* ===== License review workflow ===== */
+      (function () {
+        var allRows = document.querySelectorAll(".review-row");
+        var licenseRows = document.querySelectorAll(
+          '.review-row[data-row="license"]',
+        );
+
+        /* -------- Row reject modal refs -------- */
+        var rowRejectModalEl = document.getElementById("rowRejectModal");
+        var rowRejectModal = new bootstrap.Modal(rowRejectModalEl);
+        var rowRejectTarget = null;
+
+        function openRowReject(row) {
+          rowRejectTarget = row;
+          var nameEl = row.querySelector(".rr-name");
+          document.getElementById("rr-item-name").value = nameEl
+            ? nameEl.textContent
+            : "—";
+          document.getElementById("rr-grounds").value = "";
+          document.getElementById("rr-comment").value = "";
+          document.getElementById("rr-error").hidden = true;
+          rowRejectModal.show();
+        }
+
+        function clearRowReason(row) {
+          delete row.dataset.reason;
+          var note = row.querySelector(".rr-reason");
+          if (note) note.remove();
+        }
+
+        function setRowReason(row, text) {
+          clearRowReason(row);
+          row.dataset.reason = text;
+          var note = document.createElement("div");
+          note.className = "rr-reason";
+          note.innerHTML =
+            '<i class="bi bi-info-circle"></i><span></span>';
+          note.querySelector("span").textContent = text;
+          row.appendChild(note);
+        }
+
+        /* -------- Row toggle wiring -------- */
+        function attachToggle(row) {
+          row.dataset.state = "pending";
+          var approveBtn = row.querySelector('[data-action="approve"]');
+          var rejectBtn = row.querySelector('[data-action="reject"]');
+          if (!approveBtn || !rejectBtn) return;
+
+          function setState(state) {
+            row.dataset.state = state;
+            row.classList.toggle("is-approved", state === "approved");
+            row.classList.toggle("is-rejected", state === "rejected");
+            approveBtn.classList.toggle("active", state === "approved");
+            rejectBtn.classList.toggle("active", state === "rejected");
+            updateAll();
+          }
+
+          row.__setState = setState;
+
+          approveBtn.addEventListener("click", function () {
+            setState(
+              row.dataset.state === "approved" ? "pending" : "approved",
+            );
+            if (row.dataset.state === "approved") clearRowReason(row);
+          });
+
+          rejectBtn.addEventListener("click", function () {
+            // Clicking "Tolak" while already rejected → clear and back to pending
+            if (row.dataset.state === "rejected") {
+              setState("pending");
+              clearRowReason(row);
+              return;
+            }
+            // Otherwise open modal to capture the reason
+            openRowReject(row);
+          });
+        }
+        allRows.forEach(attachToggle);
+
+        /* -------- Row reject modal confirm -------- */
+        document
+          .getElementById("rr-confirm")
+          .addEventListener("click", function () {
+            var grounds = document.getElementById("rr-grounds").value;
+            var comment = document.getElementById("rr-comment").value.trim();
+            var err = document.getElementById("rr-error");
+
+            if (!grounds) {
+              err.textContent = "Sila pilih asas penolakan.";
+              err.hidden = false;
+              return;
+            }
+            if (!rowRejectTarget) return;
+
+            var reasonText = grounds + (comment ? " — " + comment : "");
+            rowRejectTarget.__setState("rejected");
+            setRowReason(rowRejectTarget, reasonText);
+
+            rowRejectModal.hide();
+            rowRejectTarget = null;
+          });
+
+        /* -------- Badges / summary / decision button -------- */
+        function updateBadge(rows, badgeId) {
+          var remaining = 0;
+          rows.forEach(function (r) {
+            if (r.dataset.state === "pending") remaining++;
+          });
+          var el = document.getElementById(badgeId);
+          if (!el) return;
+          el.textContent = remaining;
+          el.style.display = remaining > 0 ? "" : "none";
+        }
+
+        function countPending(rows) {
+          var n = 0;
+          rows.forEach(function (r) {
+            if (r.dataset.state === "pending") n++;
+          });
+          return n;
+        }
+
+        function countRejected(rows) {
+          var n = 0;
+          rows.forEach(function (r) {
+            if (r.dataset.state === "rejected") n++;
+          });
+          return n;
+        }
+
+        function updateSummary() {
+          var lP = countPending(licenseRows);
+          var sl = document.getElementById("summary-licenses");
+          if (sl)
+            sl.textContent =
+              licenseRows.length - lP + " / " + licenseRows.length + " disemak";
+        }
+
+        function updateDecisionButtons() {
+          var lP = countPending(licenseRows);
+          var lR = countRejected(licenseRows);
+          var allDone = lP === 0;
+
+          var title = document.getElementById("decision-title");
+          var sub = document.getElementById("decision-sub");
+          var advanceBtn = document.querySelector('[data-decision="advance"]');
+
+          if (!allDone) {
+            title.textContent = "Keputusan Semakan Lesen";
+            sub.textContent =
+              lP +
+              " aktiviti lesen masih belum disemak. Tandakan setiap item, atau gunakan butang di kanan.";
+          } else if (lR > 0) {
+            title.textContent = "Sedia untuk hantar keputusan";
+            sub.textContent =
+              lR +
+              " aktiviti lesen telah ditolak. Hantar keputusan untuk memaklumkan pemohon.";
+          } else {
+            title.textContent = "Sedia untuk keputusan";
+            sub.textContent =
+              "Semua item telah disemak. Sahkan untuk meluluskan lesen, atau Tolak untuk menolak / meminta maklumat.";
+          }
+
+          if (advanceBtn) {
+            if (!allDone) {
+              advanceBtn.innerHTML =
+                '<i class="bi bi-check2-all"></i>Terima Semua';
+              advanceBtn.className = "btn btn-success btn-sm";
+            } else if (lR > 0) {
+              advanceBtn.innerHTML =
+                '<i class="bi bi-send-check"></i>Hantar Keputusan';
+              advanceBtn.className = "btn btn-warning btn-sm";
+            } else {
+              advanceBtn.innerHTML =
+                '<i class="bi bi-check-circle-fill"></i>Sahkan dan Lulus Lesen';
+              advanceBtn.className = "btn btn-success btn-sm";
+            }
+          }
+        }
+
+        function updateAll() {
+          updateBadge(licenseRows, "licenses-badge");
+          updateSummary();
+          updateDecisionButtons();
+        }
+
+        updateAll();
+
+        /* -------- Bulk approve-all -------- */
+        function approveAll() {
+          allRows.forEach(function (row) {
+            if (row.__setState) row.__setState("approved");
+            clearRowReason(row);
+          });
+          updateDecisionButtons();
+        }
+
+        /* -------- Decision modal -------- */
+        var modalEl = document.getElementById("decisionModal");
+        var modal = new bootstrap.Modal(modalEl);
+        var actionBar = document.getElementById("decision-bar");
+        var barActions = actionBar.querySelector(".db-actions");
+        var baseActionsHTML = barActions.innerHTML;
+        var resultEl = document.getElementById("decision-result");
+        var commentEl = document.getElementById("dm-comment");
+        var errEl = document.getElementById("dm-error");
+        var rejectPicker = document.getElementById("dm-reject-picker");
+        var current = null;
+        var decided = false;
+
+        var CFG = {
+          advance: {
+            title: "Luluskan Lesen",
+            btn: "Sahkan kelulusan",
+            cls: "btn btn-success",
+            pill: ["is-approved", "Lesen diluluskan", "bi-check-circle-fill"],
+            head: "Lesen diluluskan",
+            label: "Komen kelulusan (pilihan)",
+          },
+          rejected: {
+            title: "Tolak permohonan lesen",
+            btn: "Sahkan penolakan",
+            cls: "btn btn-danger",
+            pill: ["is-rejected", "Ditolak", "bi-x-circle-fill"],
+            head: "Permohonan lesen ditolak",
+            label: "Alasan penolakan (dinyatakan kepada pemohon)",
+          },
+          info: {
+            title: "Minta maklumat tambahan",
+            btn: "Hantar permintaan",
+            cls: "btn btn-warning",
+            pill: ["is-info", "Maklumat Diminta", "bi-exclamation-circle-fill"],
+            head: "Menunggu maklum balas pemohon",
+            label: "Maklumat yang diperlukan daripada pemohon",
+          },
+        };
+
+        function fmt(d) {
+          return d.toLocaleDateString("ms-MY", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          });
+        }
+
+        function syncModalForType(type) {
+          current = type;
+          var c = CFG[type];
+          var lR = countRejected(licenseRows);
+          var mixed = type === "advance" && lR > 0;
+
+          document.getElementById("decisionTitle").textContent = mixed
+            ? "Hantar Keputusan Semakan"
+            : c.title;
+          document.getElementById("dm-comment-label").textContent = c.label;
+
+          modalEl.querySelectorAll("[data-for]").forEach(function (el) {
+            el.hidden = el.dataset.for !== type;
+          });
+
+          var advanceAlert = document.getElementById("dm-advance-alert");
+          if (advanceAlert) {
+            if (mixed) {
+              advanceAlert.className = "alert alert-warning mb-0 small";
+              advanceAlert.innerHTML =
+                '<i class="bi bi-exclamation-triangle me-1"></i>Sebahagian aktiviti lesen telah ditolak. Keputusan ini akan dihantar kepada pemohon dan mereka boleh mengemas kini permohonan atau membuat rayuan.';
+            } else {
+              advanceAlert.className = "alert alert-info mb-0 small";
+              advanceAlert.innerHTML =
+                '<i class="bi bi-info-circle me-1"></i>Permohonan lesen akan diluluskan dan <strong>perakuan lesen</strong> akan dijana untuk pemohon.';
+            }
+          }
+
+          var btn = document.getElementById("dm-confirm");
+          btn.className = mixed ? "btn btn-warning" : c.cls;
+          btn.textContent = mixed ? "Hantar keputusan" : c.btn;
+
+          errEl.hidden = true;
+        }
+
+        function primeModal() {
+          var lP = countPending(licenseRows);
+          var lR = countRejected(licenseRows);
+          var lOk = licenseRows.length - lP;
+
+          var summaryHtml =
+            '<span class="pill pill-success">' +
+            lOk +
+            "/" +
+            licenseRows.length +
+            " disemak</span>";
+          if (lR > 0) {
+            summaryHtml +=
+              '<span class="pill pill-danger">' +
+              lR +
+              " ditolak</span>";
+          }
+          document.getElementById("dm-summary").innerHTML = summaryHtml;
+
+          commentEl.value = "";
+          var grounds = document.getElementById("dm-grounds");
+          if (grounds) grounds.value = "";
+
+          var due = new Date();
+          due.setDate(due.getDate() + 14);
+          var dl = document.getElementById("dm-deadline");
+          dl.value = due.toISOString().slice(0, 10);
+          var min = new Date();
+          min.setDate(min.getDate() + 1);
+          dl.min = min.toISOString().slice(0, 10);
+        }
+
+        function openDecision(type) {
+          if (type === "advance") {
+            rejectPicker.hidden = true;
+            syncModalForType("advance");
+          } else if (type === "reject") {
+            rejectPicker.hidden = false;
+            document.getElementById("dm-rt-info").checked = true;
+            syncModalForType("info");
+          }
+          primeModal();
+          modal.show();
+        }
+
+        document
+          .querySelectorAll('input[name="dm-reject-type"]')
+          .forEach(function (radio) {
+            radio.addEventListener("change", function () {
+              syncModalForType(radio.value);
+            });
+          });
+
+        function renderResult(type, d) {
+          var styleType = type === "advance" ? "approved" : type;
+          var lR = countRejected(licenseRows);
+          var mixed = type === "advance" && lR > 0;
+
+          resultEl.className = "decision-result is-" + styleType;
+          resultEl.hidden = false;
+          resultEl.innerHTML =
+            '<h3></h3><dl class="def-grid"></dl><blockquote class="dr-comment" hidden></blockquote><p class="dr-next"></p>';
+
+          resultEl.querySelector("h3").textContent = mixed
+            ? "Keputusan separa dihantar"
+            : CFG[type].head;
+
+          var grid = resultEl.querySelector("dl");
+          function row(label, value) {
+            if (!value) return;
+            var wrap = document.createElement("div");
+            var dt = document.createElement("dt");
+            var dd = document.createElement("dd");
+            dt.textContent = label;
+            dd.textContent = value;
+            wrap.appendChild(dt);
+            wrap.appendChild(dd);
+            grid.appendChild(wrap);
+          }
+          row("Tarikh keputusan", fmt(new Date()));
+          row("Pegawai", "Nur binti Ahmad");
+
+          if (type === "advance") {
+            if (mixed) {
+              row("Aktiviti ditolak", String(lR) + " item");
+              row("Tindakan seterusnya", "Pemohon boleh kemas kini / rayuan");
+            } else {
+              row("Peringkat selesai", "2 — Semakan Lesen Aktiviti");
+              row("Peringkat seterusnya", "3 — Lawatan tapak premis");
+              row("Perakuan", "Akan dijana dan dihantar kepada pemohon");
+            }
+          } else if (type === "rejected") {
+            row("Asas penolakan", d.grounds);
+            row("Tempoh rayuan", "30 hari kepada Menteri (s.48)");
+          } else {
+            row("Tarikh akhir maklum balas", d.deadline);
+            row("Item bermasalah", d.flagged);
+          }
+
+          var q = resultEl.querySelector(".dr-comment");
+          if (d.comment) {
+            q.hidden = false;
+            q.textContent = d.comment;
+          }
+
+          resultEl.querySelector(".dr-next").textContent =
+            type === "advance"
+              ? mixed
+                ? "Pemohon akan dimaklumkan berkenaan aktiviti lesen yang ditolak dan boleh mengemas kini permohonan atau membuat rayuan."
+                : "Permohonan lesen akan diteruskan ke peringkat lawatan tapak premis."
+              : type === "rejected"
+                ? "Pemohon dimaklumkan dan boleh membuat rayuan dalam tempoh yang ditetapkan."
+                : "Hanya item yang ditandakan perlu dikemas kini oleh pemohon.";
+        }
+
+        function finalize(type, d) {
+          decided = true;
+          renderResult(type, d);
+          var c = CFG[type];
+          var lR = countRejected(licenseRows);
+          var mixed = type === "advance" && lR > 0;
+
+          var title = document.getElementById("decision-title");
+          var sub = document.getElementById("decision-sub");
+
+          if (type === "info") {
+            actionBar.className = "decision-bar is-info";
+            title.textContent = "Maklumat tambahan diminta";
+            sub.textContent = "Menunggu maklum balas pemohon.";
+            barActions.innerHTML =
+              '<button type="button" class="btn btn-secondary btn-sm" id="resume-review">' +
+              '<i class="bi bi-arrow-clockwise"></i>Sambung semakan</button>';
+            document
+              .getElementById("resume-review")
+              .addEventListener("click", function () {
+                decided = false;
+                resultEl.hidden = true;
+                actionBar.className = "decision-bar";
+                barActions.innerHTML = baseActionsHTML;
+                updateDecisionButtons();
+              });
+          } else if (type === "advance") {
+            actionBar.className = mixed
+              ? "decision-bar is-info"
+              : "decision-bar is-approved";
+            title.textContent = mixed
+              ? "Keputusan separa dihantar"
+              : "Lesen diluluskan";
+            sub.textContent = mixed
+              ? "Pemohon dimaklumkan berkenaan aktiviti lesen yang ditolak."
+              : "Semakan lesen selesai. Permohonan diteruskan ke peringkat lawatan tapak.";
+            barActions.innerHTML =
+              '<span class="pill ' +
+              (mixed ? "pill-danger" : "pill-success") +
+              '" style="display:inline-flex;align-items:center;gap:0.3rem;font-size:0.75rem;font-weight:600;padding:0.35rem 0.75rem;border-radius:999px;">' +
+              '<i class="bi ' +
+              (mixed ? "bi-exclamation-circle-fill" : c.pill[2]) +
+              '"></i>' +
+              (mixed ? "Keputusan dihantar" : c.pill[1]) +
+              "</span>";
+            document
+              .querySelectorAll(".rr-toggle button")
+              .forEach(function (b) {
+                b.disabled = true;
+              });
+          } else {
+            actionBar.className = "decision-bar is-" + type;
+            title.textContent = c.head;
+            sub.textContent = "Keputusan telah direkod.";
+            barActions.innerHTML =
+              '<span class="pill pill-danger" style="display:inline-flex;align-items:center;gap:0.3rem;font-size:0.75rem;font-weight:600;padding:0.35rem 0.75rem;border-radius:999px;">' +
+              '<i class="bi ' +
+              c.pill[2] +
+              '"></i>Keputusan direkod</span>';
+            document
+              .querySelectorAll(".rr-toggle button")
+              .forEach(function (b) {
+                b.disabled = true;
+              });
+          }
+        }
+
+        document
+          .getElementById("dm-confirm")
+          .addEventListener("click", function () {
+            errEl.hidden = true;
+            var comment = commentEl.value.trim();
+
+            if (current === "advance") {
+              var lP = countPending(licenseRows);
+              if (lP > 0) {
+                errEl.textContent =
+                  "Sila selesaikan semua aktiviti lesen terlebih dahulu.";
+                errEl.hidden = false;
+                return;
+              }
+              modal.hide();
+              finalize("advance", { comment: comment });
+            } else if (current === "rejected") {
+              var grounds = document.getElementById("dm-grounds").value;
+              if (!grounds) {
+                errEl.textContent = "Sila pilih asas penolakan.";
+                errEl.hidden = false;
+                return;
+              }
+              if (comment.length < 10) {
+                errEl.textContent =
+                  "Sila nyatakan alasan penolakan dengan lebih terperinci (sekurang-kurangnya 10 aksara).";
+                errEl.hidden = false;
+                return;
+              }
+              modal.hide();
+              finalize("rejected", { comment: comment, grounds: grounds });
+            } else if (current === "info") {
+              var deadline = document.getElementById("dm-deadline").value;
+              if (!deadline) {
+                errEl.textContent = "Sila tetapkan tarikh akhir maklum balas.";
+                errEl.hidden = false;
+                return;
+              }
+              if (!comment) {
+                errEl.textContent =
+                  "Sila nyatakan maklumat atau dokumen yang diperlukan.";
+                errEl.hidden = false;
+                return;
+              }
+              var flagged = document.querySelectorAll(
+                '.review-row[data-state="rejected"] .rr-name',
+              );
+              var flaggedNames = Array.prototype.map
+                .call(flagged, function (el) {
+                  return el.textContent;
+                })
+                .join(", ");
+              modal.hide();
+              finalize("info", {
+                comment: comment,
+                deadline: fmt(new Date(deadline)),
+                flagged: flaggedNames || "Tiada item ditandakan ditolak",
+              });
+            }
+          });
+
+        actionBar.addEventListener("click", function (e) {
+          var btn = e.target.closest("[data-decision]");
+          if (!btn || decided) return;
+          var type = btn.getAttribute("data-decision");
+
+          if (type === "advance") {
+            var lP = countPending(licenseRows);
+            if (lP > 0) {
+              approveAll();
+              return;
+            }
+          }
+
+          openDecision(type);
+        });
+      })();
+    </script>
+  </body>
+</html>

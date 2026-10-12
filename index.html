@@ -46,8 +46,7 @@
         <h1>Semua halaman portal</h1>
         <p>
           Koleksi lengkap halaman HTML untuk Portal Pendaftaran Baja. Klik
-          mana-mana kad untuk membuka halaman berkenaan, atau gunakan butang
-          <em>Lihat</em> untuk pratonton pantas.
+          mana-mana kad untuk membuka halaman berkenaan.
         </p>
       </header>
 
@@ -58,8 +57,7 @@
       <footer class="index-foot">
         <p class="mb-1">
           <i class="bi bi-info-circle me-1"></i>
-          Nama fail di atas adalah cadangan — tukar mengikut struktur projek
-          anda yang sebenar.
+          Senarai dikemas kini mengikut struktur projek sebenar.
         </p>
         <p class="mb-0">
           Dibina untuk <strong>Enakmen Baja Sabah</strong> ·
@@ -73,22 +71,21 @@
       /* ==========================================================
          SITEMAP DATA
          ----------------------------------------------------------
-         To add a new page, just add an object to the relevant
-         category's `pages` array. To add a new category, append a
-         new object to the SITEMAP array.
+         To add a new page, add an object to the relevant category's
+         `pages` array.
 
          Page object shape:
          {
-           file:        "file-name.html",       // filename
-           title:       "Page title",            // card heading
-           desc:        "Short description...",  // card description
-           thumb:       "is-auth",               // thumb variant
-           icon:        "bi-door-open",          // bootstrap icon
-           tag:         "Log masuk",             // tag text (optional)
-           tagClass:    "is-info"                // tag colour
+           file:      "file-name.html",
+           title:     "Page title",
+           desc:      "Short description...",
+           thumb:     "is-auth",
+           icon:      "bi-door-open",
+           tag:       "Log masuk",
+           tagClass:  "is-info"
          }
 
-         Available thumb variants (from index.css + inline):
+         Thumb variants:
            (none)         → green default
            is-auth        → indigo
            is-permit      → amber
@@ -96,31 +93,26 @@
            is-approved    → mint-green
            is-failed      → red
 
-         Available tag classes:
-           is-info, is-success, is-warning  (or empty for default)
+         Tag classes: is-info, is-success, is-warning (or empty)
          ========================================================== */
 
       var SITEMAP = [
+        /* ============================================================
+           LANDING & AUTHENTICATION
+           ============================================================ */
         {
-          title: "Landing Page",
-          icon: "bi-speedometer2",
+          title: "Landing & Pengesahan Akaun",
+          icon: "bi-shield-lock",
           pages: [
             {
               file: "landing.html",
               title: "Landing page",
-              desc: "",
+              desc: "Halaman utama awam dengan pengenalan portal, ciri-ciri utama, dan jalan masuk ke pendaftaran.",
               thumb: "",
               icon: "bi-house-door",
-              tag: "",
-              tagClass: "is-warning",
+              tag: "Awam",
+              tagClass: "is-info",
             },
-           
-          ],
-        },
-        {
-          title: "Pengesahan & Pendaftaran Akaun",
-          icon: "bi-shield-lock",
-          pages: [
             {
               file: "login.html",
               title: "Log masuk",
@@ -133,7 +125,7 @@
             {
               file: "signup.html",
               title: "Cipta akaun (wizard)",
-              desc: "Wizard pendaftaran 4 langkah: jenis akaun, butiran, dokumen sokongan (boleh dilangkau), dan butiran log masuk.",
+              desc: "Wizard pendaftaran 4 langkah: jenis akaun, butiran, dokumen sokongan, dan butiran log masuk.",
               thumb: "is-auth",
               icon: "bi-person-plus",
               tag: "Wizard",
@@ -150,6 +142,10 @@
             },
           ],
         },
+
+        /* ============================================================
+           PAPAN PEMUKA
+           ============================================================ */
         {
           title: "Papan Pemuka",
           icon: "bi-speedometer2",
@@ -169,71 +165,82 @@
               desc: "Papan pemuka dengan produk, cawangan, aktiviti lesen, aktiviti terkini, pemberitahuan, dan tindakan pantas.",
               thumb: "is-approved",
               icon: "bi-grid-1x2",
-              tag: "3 produk · 4 lesen",
+              tag: "Berisi",
               tagClass: "is-success",
+            },
+            {
+              file: "dashboard.html",
+              title: "Papan pemuka",
+              desc: "Papan pemuka piawai untuk pengguna berdaftar.",
+              thumb: "",
+              icon: "bi-grid",
+              tag: "",
+              tagClass: "",
+            },
+            {
+              file: "admin-dashboard.html",
+              title: "Papan pemuka",
+              desc: "Papan pemuka admin.",
+              thumb: "",
+              icon: "bi-grid",
+              tag: "",
+              tagClass: "",
             },
           ],
         },
+
+        /* ============================================================
+           PRODUK
+           ============================================================ */
         {
           title: "Produk",
-          icon: "bi-list",
+          icon: "bi-box-seam",
           pages: [
             {
               file: "produk-saya.html",
-              title: "Senarai Produk",
-              desc: "",
+              title: "Senarai produk",
+              desc: "Senarai penuh produk yang telah didaftarkan oleh pengguna.",
               thumb: "",
-              icon: "bi-list",
-              tag: "",
-              tagClass: "is-warning",
+              icon: "bi-list-ul",
+              tag: "Senarai",
+              tagClass: "",
             },
             {
               file: "produk-butiran.html",
-              title: "Butiran Produk",
-              desc: "",
+              title: "Butiran produk",
+              desc: "Paparan penuh butiran produk termasuk maklumat pendaftaran, lampiran, dan log aktiviti.",
               thumb: "",
-              icon: "bi-list",
-              tag: "",
-              tagClass: "is-warning",
+              icon: "bi-info-square",
+              tag: "Lihat",
+              tagClass: "",
+            },
+            {
+              file: "add-product.html",
+              title: "Tambah produk",
+              desc: "Borang tambah produk tunggal dengan tab Maklumat, Pengilang, Lampiran, dan Pengesahan.",
+              thumb: "",
+              icon: "bi-plus-circle",
+              tag: "Borang",
+              tagClass: "",
+            },
+            {
+              file: "add-multi-product.html",
+              title: "Permohonan pelbagai produk",
+              desc: "Borang permohonan yang membenarkan beberapa produk didaftarkan dalam satu permohonan.",
+              thumb: "",
+              icon: "bi-boxes",
+              tag: "Batch",
+              tagClass: "is-info",
             },
           ],
         },
+
+        /* ============================================================
+           LENGKAPKAN AKAUN & PROFIL
+           ============================================================ */
         {
-          title: "Semakan Teknikal",
-          icon: "bi-list",
-          pages: [
-            {
-              file: "senarai-semakan-teknikal.html",
-              title: "Senarai Semakan Teknikal",
-              desc: "",
-              thumb: "",
-              icon: "bi-list",
-              tag: "",
-              tagClass: "is-warning",
-            },
-            {
-              file: "user-semakan-teknikal.html",
-              title: "Semakan Teknikal",
-              desc: "",
-              thumb: "",
-              icon: "bi-list",
-              tag: "",
-              tagClass: "is-warning",
-            },
-            {
-              file: "admin-semakan-teknikal.html",
-              title: "Admin Semakan Teknikal",
-              desc: "",
-              thumb: "",
-              icon: "bi-list",
-              tag: "",
-              tagClass: "is-warning",
-            },
-          ],
-        },
-        {
-          title: "Lengkapkan Akaun",
-          icon: "bi-list-check",
+          title: "Lengkapkan Akaun & Profil",
+          icon: "bi-person-vcard",
           pages: [
             {
               file: "complete-account.html",
@@ -244,25 +251,19 @@
               tag: "Onboarding",
               tagClass: "",
             },
-          ],
-        },
-        {
-          title: "Profil Organisasi",
-          icon: "bi-building",
-          pages: [
             {
               file: "company-profile.html",
               title: "Lihat profil organisasi",
               desc: "Paparan profil organisasi dengan accordion: butiran syarikat, wakil, dokumen, cawangan, produk, dan aktiviti lesen.",
               thumb: "",
-              icon: "bi-eye",
+              icon: "bi-building",
               tag: "Baca sahaja",
               tagClass: "",
             },
             {
               file: "profil-organisasi-edit.html",
               title: "Edit profil organisasi",
-              desc: "Edit terhad: boleh ubah alamat premis, tambah wakil syarikat, dan urus cawangan. Butiran syarikat, lesen, dan dokumen dikunci.",
+              desc: "Edit terhad: boleh ubah alamat premis, tambah wakil syarikat, dan urus cawangan.",
               thumb: "",
               icon: "bi-pencil-square",
               tag: "Edit",
@@ -270,6 +271,10 @@
             },
           ],
         },
+
+        /* ============================================================
+           PERMIT IMPORT KHAS
+           ============================================================ */
         {
           title: "Permit Import Khas",
           icon: "bi-truck",
@@ -285,14 +290,111 @@
             },
           ],
         },
+
+        /* ============================================================
+           SEMAKAN TEKNIKAL — SISI PENGGUNA
+           ============================================================ */
         {
-          title: "Semakan Teknikal DOA",
-          icon: "bi-clipboard2-pulse",
+          title: "Semakan Teknikal — Pengguna",
+          icon: "bi-clipboard2-check",
+          pages: [
+            {
+              file: "senarai-semakan-teknikal.html",
+              title: "Senarai semakan teknikal",
+              desc: "Senarai semua permohonan yang sedang dalam proses Semakan Teknikal oleh pemohon.",
+              thumb: "",
+              icon: "bi-list-check",
+              tag: "Senarai",
+              tagClass: "",
+            },
+            {
+              file: "user-semakan-teknikal.html",
+              title: "Semakan teknikal (pengguna)",
+              desc: "Paparan status permohonan Semakan Teknikal daripada perspektif pemohon.",
+              thumb: "is-assessment",
+              icon: "bi-clipboard2-pulse",
+              tag: "Dalam proses",
+              tagClass: "is-warning",
+            },
+            {
+              file: "review-in-progress-email.html",
+              title: "Emel: semakan dijalankan",
+              desc: "Emel pemberitahuan kepada pemohon bahawa Semakan Teknikal sedang dijalankan.",
+              thumb: "is-assessment",
+              icon: "bi-envelope-paper",
+              tag: "Emel",
+              tagClass: "is-info",
+            },
+            {
+              file: "user-email.html",
+              title: "Peti masuk pengguna",
+              desc: "Paparan peti masuk pengguna dengan senarai emel pemberitahuan.",
+              thumb: "",
+              icon: "bi-inbox",
+              tag: "Emel",
+              tagClass: "is-info",
+            },
+          ],
+        },
+
+        /* ============================================================
+           SEMAKAN TEKNIKAL — PANEL PEGAWAI DOA
+           ============================================================ */
+        {
+          title: "Semakan Teknikal — Panel Pegawai DOA",
+          icon: "bi-person-badge",
+          pages: [
+            {
+              file: "admin-semakan-teknikal.html",
+              title: "Senarai semakan teknikal (admin)",
+              desc: "Antara muka pegawai DOA untuk menguruskan semua permohonan yang masuk ke Semakan Teknikal.",
+              thumb: "",
+              icon: "bi-list-check",
+              tag: "Panel",
+              tagClass: "",
+            },
+           
+            {
+              file: "semakan-teknikal-edit.html",
+              title: "Semakan teknikal (sunting)",
+              desc: "Halaman suntingan semakan teknikal dengan kad accordion untuk dokumen, senarai semakan, dan wakil syarikat.",
+              thumb: "is-assessment",
+              icon: "bi-pencil-square",
+              tag: "Edit",
+              tagClass: "is-warning",
+            },
+            {
+              file: "semakan-teknikal-lesen.html",
+              title: "Semakan lesen",
+              desc: "Semakan aktiviti lesen pemohon termasuk pengimport, pengilang, penjual, dan senarai semakan lesen.",
+              thumb: "is-assessment",
+              icon: "bi-patch-check",
+              tag: "Lesen",
+              tagClass: "is-warning",
+            },
+            {
+              file: "semakan-teknikal-tapak.html",
+              title: "Semakan tapak kawasan",
+              desc: "Laporan lawatan tapak kawasan dengan semakan premis, kehadiran wakil, pengambilan sampel, dan keputusan lawatan.",
+              thumb: "is-assessment",
+              icon: "bi-geo-alt",
+              tag: "Lawatan",
+              tagClass: "is-warning",
+            },
+          ],
+        },
+
+        /* ============================================================
+           KEPUTUSAN SEMAKAN
+           ============================================================ */
+        {
+          title: "Keputusan Semakan",
+          icon: "bi-flag",
           pages: [
             {
               file: "company-profile-assesment.html",
               title: "Penilaian sedang dijalankan",
-              desc: "Skrin semasa Semakan Teknikal. Menunjukkan kemajuan 2 daripada 4 dengan banner amber dan animasi pulse.",
+              desc: "Skrin semasa Semakan Teknikal. Menunjukkan kemajuan peringkat dengan banner amber.",
               thumb: "is-assessment",
               icon: "bi-hourglass-split",
               tag: "Sedang dijalankan",
@@ -301,7 +403,7 @@
             {
               file: "company-profile-result.html",
               title: "Keputusan sedang diproses",
-              desc: "Langkah 4 daripada 4 – keputusan sedang disediakan. Semua peringkat selesai tetapi keputusan rasmi belum dikeluarkan.",
+              desc: "Semua peringkat selesai tetapi keputusan rasmi belum dikeluarkan.",
               thumb: "is-assessment",
               icon: "bi-flag",
               tag: "Keputusan diproses",
@@ -310,7 +412,7 @@
             {
               file: "keputusan-penilaian-teknikal.html",
               title: "Keputusan dikeluarkan — Lulus",
-              desc: "Semakan Teknikal selesai dan diluluskan. Termasuk komen pegawai, laporan lawatan tapak, dan butang muat turun surat keputusan.",
+              desc: "Semakan Teknikal selesai dan diluluskan. Termasuk komen pegawai, laporan lawatan tapak, dan surat keputusan.",
               thumb: "is-approved",
               icon: "bi-patch-check-fill",
               tag: "Diluluskan",
@@ -319,7 +421,7 @@
             {
               file: "keputusan-penilaian-teknikal-gagal.html",
               title: "Keputusan dikeluarkan — Gagal",
-              desc: "Semakan Teknikal selesai tetapi tidak berjaya. Termasuk sebab penolakan terperinci, senarai produk tidak lulus, dan notis hak rayuan kepada Menteri.",
+              desc: "Semakan Teknikal selesai tetapi tidak berjaya. Termasuk sebab penolakan dan notis hak rayuan kepada Menteri.",
               thumb: "is-failed",
               icon: "bi-x-octagon",
               tag: "Tidak berjaya",

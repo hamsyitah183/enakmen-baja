@@ -1,0 +1,966 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/components.css" rel="stylesheet" />
+    <link href="css/dashboard.css" rel="stylesheet" />
+    <link href="css/assesment.css" rel="stylesheet" />
+    <link href="css/view.css" rel="stylesheet" />
+    <link href="css/complete-account.css" rel="stylesheet" />
+    <link href="css/edit-account.css" rel="stylesheet" />
+    <link href="css/accordionBoard.css" rel="stylesheet" />
+    <link href="css/detailBoard.css" rel="stylesheet" />
+    <title>Sunting Semakan Teknikal — Panel Pegawai | Portal Pendaftaran Baja</title>
+
+  
+  </head>
+  <body>
+    <div class="app">
+      <script>
+        try {
+          if (localStorage.getItem("sidebar-collapsed") === "1")
+            document.querySelector(".app").classList.add("is-collapsed");
+        } catch (e) {}
+      </script>
+
+      <!-- Bar sisi -->
+      <aside
+        class="sidebar offcanvas-lg offcanvas-start"
+        tabindex="-1"
+        id="sidebar"
+        aria-label="Navigasi utama"
+      >
+        <div class="sidebar-inner">
+          <div class="sidebar-head border-bottom pb-2">
+            <a href="#" class="brand" aria-label="Enakmen Baja Sabah">
+              <span class="brand-mark brand-mark--img">
+                <img src="logo/image.png" alt="" width="40" height="40" />
+              </span>
+              <span class="brand-text">Enakmen Baja Sabah</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-icon sidebar-toggle d-none d-lg-inline-grid"
+              id="sidebar-toggle"
+              aria-controls="sidebar"
+              aria-expanded="true"
+              aria-label="Tutup bar sisi"
+              title="Tutup bar sisi"
+            >
+              <i class="bi bi-layout-sidebar"></i>
+            </button>
+            <button
+              type="button"
+              class="btn-close d-lg-none"
+              data-bs-dismiss="offcanvas"
+              data-bs-target="#sidebar"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <nav class="d-grid gap-1">
+            <a href="filled-dashboard.html" class="side-link" title="Papan pemuka"
+              ><i class="bi bi-house-door"></i
+              ><span class="side-label">Papan pemuka</span></a
+            >
+            <a href="#" class="side-link" title="Produk"
+              ><i class="bi bi-box-seam"></i
+              ><span class="side-label">Produk</span></a
+            >
+            <a href="#" class="side-link" title="Lesen"
+              ><i class="bi bi-patch-check"></i
+              ><span class="side-label">Lesen</span></a
+            >
+            <a href="#" class="side-link" title="Pembayaran"
+              ><i class="bi bi-receipt"></i
+              ><span class="side-label">Pembayaran</span></a
+            >
+            <a href="#" class="side-link" title="Notis dan rayuan"
+              ><i class="bi bi-envelope-exclamation"></i
+              ><span class="side-label">Notis dan rayuan</span
+              ><span class="count pill pill-danger">3</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Pegawai DOA</div>
+          <nav class="d-grid gap-1 mb-3">
+            <a
+              href="senarai-semakan-teknikal.html"
+              class="side-link active"
+              title="Semakan teknikal"
+              ><i class="bi bi-clipboard2-check"></i
+              ><span class="side-label">Semakan teknikal</span
+              ><span class="count pill pill-warning">5</span></a
+            >
+            <a href="#" class="side-link" title="Semakan akaun"
+              ><i class="bi bi-building-check"></i
+              ><span class="side-label">Semakan akaun</span></a
+            >
+            <a href="#" class="side-link" title="Laporan"
+              ><i class="bi bi-file-earmark-bar-graph"></i
+              ><span class="side-label">Laporan</span></a
+            >
+            <a href="#" class="side-link" title="Tetapan"
+              ><i class="bi bi-gear"></i
+              ><span class="side-label">Tetapan</span></a
+            >
+            <a href="index.html" class="side-link" title="Log keluar"
+              ><i class="bi bi-box-arrow-right"></i
+              ><span class="side-label">Log keluar</span></a
+            >
+          </nav>
+
+          <div class="side-user">
+            <span class="avatar">ZA</span>
+            <div class="lh-sm side-user-text">
+              <div class="fw-semibold">Nur binti Ahmad</div>
+              <small class="text-muted-2">Pegawai Teknikal · DOA Sabah</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Utama -->
+      <div class="app-main">
+        <header class="topbar border-bottom">
+          <button
+            class="btn btn-icon d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebar"
+            aria-controls="sidebar"
+            aria-label="Buka menu"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+          <h1 class="h5 mb-0 me-2">Sunting Semakan Teknikal</h1>
+          <div class="topbar-search d-none d-md-block input-icon">
+            <i class="bi bi-search"></i>
+            <input
+              type="search"
+              class="form-control"
+              placeholder="Cari akaun, produk atau rujukan"
+              aria-label="Cari"
+            />
+          </div>
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <button
+              class="btn btn-icon position-relative"
+              type="button"
+              aria-label="Pemberitahuan"
+            >
+              <i class="bi bi-bell"></i><span class="notif-dot"></span>
+            </button>
+
+            <div class="dropdown">
+              <button
+                type="button"
+                class="avatar avatar-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Menu pengguna"
+              >
+                ZA
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end user-menu">
+                <li class="user-menu-head">
+                  <div class="fw-semibold">Nur binti Ahmad</div>
+                  <small class="text-muted-2"
+                    >Pegawai Teknikal · DOA Sabah</small
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-clipboard2-check me-2"></i>Semakan
+                    teknikal</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-gear me-2"></i>Tetapan</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="index.html"
+                    ><i class="bi bi-box-arrow-right me-2"></i>Log keluar</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <main class="app-content p-3 p-md-4 p-xl-5">
+          <div class="complete-layout">
+            <!-- ============ LEFT ============ -->
+            <div class="complete-main">
+              <!-- Top action bar -->
+              <div class="detail-topbar">
+                <div class="detail-topbar-left">
+                  <a href="semakan-teknikal-view.html" class="btn-back">
+                    <i class="bi bi-arrow-left"></i>Kembali
+                  </a>
+                  <button
+                    type="button"
+                    class="btn-nav-arrow"
+                    aria-label="Sebelum"
+                  >
+                    <i class="bi bi-chevron-left"></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn-nav-arrow"
+                    aria-label="Seterusnya"
+                  >
+                    <i class="bi bi-chevron-right"></i>
+                  </button>
+                  <span class="text-muted-2 small ms-2">1 daripada 5</span>
+                </div>
+
+                <div class="detail-topbar-right">
+                  <a href="semakan-teknikal-view.html" class="btn btn-success">
+                    <i class="bi bi-check-lg"></i>Selesai
+                  </a>
+                  <button type="button" class="btn-nav-arrow" aria-label="Lagi">
+                    <i class="bi bi-three-dots"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Edit banner -->
+              <div class="edit-banner">
+                <span class="edit-icon">
+                  <i class="bi bi-pencil-square"></i>
+                </span>
+                <div class="flex-grow-1">
+                  <h2>Semakan teknikal sedang disunting</h2>
+                  <p>
+                    Tandakan <strong>Lulus</strong> atau <strong>Tolak</strong>
+                    bagi setiap dokumen dan wakil syarikat. Setelah semua item
+                    disemak, pilih keputusan di bar bawah.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Header card -->
+              <div class="detail-shell mb-3">
+                <div class="detail-header">
+                  <span class="head-avatar">
+                    <i class="bi bi-clipboard2-check"></i>
+                  </span>
+                  <div class="head-info">
+                    <h1 id="thread-title">Semakan Teknikal</h1>
+                    <div class="head-sub">
+                      <span class="avatar-mini">BA</span>
+                      <span>Borneo Agro Sdn Bhd</span>
+                      <span class="dot">·</span>
+                      <span>18 Okt 2026, 10:32 AM</span>
+                      <span class="dot">·</span>
+                      <span
+                        style="
+                          font-family: monospace;
+                          font-weight: 600;
+                          color: var(--color-primary-800, #1e40af);
+                          background: var(--color-primary-50, #eff6ff);
+                          border-radius: 6px;
+                          padding: 0.1rem 0.45rem;
+                        "
+                        >PB/2026/87128</span
+                      >
+                    </div>
+                  </div>
+                  <div class="head-links">
+                    <a href="#" aria-label="Pautan dokumen">
+                      <i class="bi bi-file-earmark-text"></i>
+                    </a>
+                    <a href="#" aria-label="Perakuan">
+                      <i class="bi bi-patch-check-fill"></i>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="info-strip">
+                  <div class="strip-cell">
+                    <div class="strip-label">
+                      <i class="bi bi-hash"></i>No. Rujukan
+                    </div>
+                    <div class="strip-value">PB/2026/87128</div>
+                  </div>
+
+                  <div class="strip-cell">
+                    <div class="strip-label">
+                      <i class="bi bi-tag"></i>Kategori
+                    </div>
+                    <div class="strip-value">Baja – Baja Sebatian</div>
+                  </div>
+
+                  <div class="strip-cell">
+                    <div class="strip-label">
+                      <i class="bi bi-box"></i>Bentuk
+                    </div>
+                    <div class="strip-value">Butiran (Granular)</div>
+                  </div>
+
+                  <div class="strip-cell">
+                    <div class="strip-label">
+                      <i class="bi bi-clipboard-pulse"></i>Status
+                    </div>
+                    <div class="strip-value">
+                      <span class="strip-pill is-info">
+                        <i class="bi bi-hourglass-split"></i>Dalam Semakan
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="strip-cell">
+                    <div class="strip-label">
+                      <i class="bi bi-flag"></i>Keutamaan
+                    </div>
+                    <div class="strip-value">
+                      <span class="strip-pill is-warning">Tinggi</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Stage wizard card -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item is-open" data-accordion="wizard">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="true"
+                    aria-controls="body-wizard"
+                  >
+                    <span class="onboard-icon is-green">
+                      <i class="bi bi-diagram-3"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">Proses Semakan Teknikal</h3>
+                      <p class="onboard-desc">
+                        Peringkat 1 daripada 4 · Sedang berjalan
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-wizard">
+                    <div class="stage-track">
+                      <div class="stage-node is-active" id="stage-1">
+                        <span class="stage-circle">1</span>
+                        <span class="stage-name">Semakan dokumen sokongan</span>
+                        <span class="stage-status">Dalam proses</span>
+                      </div>
+
+                      <div class="stage-node" id="stage-2">
+                        <span class="stage-circle">2</span>
+                        <span class="stage-name">Lesen Aktiviti</span>
+                        <span class="stage-status">Belum bermula</span>
+                      </div>
+
+                      <div class="stage-node" id="stage-3">
+                        <span class="stage-circle">3</span>
+                        <span class="stage-name"
+                          >Lawatan tapak premis (jika perlu)</span
+                        >
+                        <span class="stage-status">Belum bermula</span>
+                      </div>
+
+                      <div class="stage-node" id="stage-4">
+                        <span class="stage-circle">4</span>
+                        <span class="stage-name"
+                          >Keputusan Semakan Teknikal</span
+                        >
+                        <span class="stage-status">Belum bermula</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 1: Dokumen -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item is-open" data-accordion="docs">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="true"
+                    aria-controls="body-docs"
+                  >
+                    <span class="onboard-icon is-blue">
+                      <i class="bi bi-paperclip"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">
+                        Dokumen
+                        <span class="tab-count ms-2" id="docs-badge">4</span>
+                      </h3>
+                      <p class="onboard-desc">
+                        Tandakan <em>Lulus</em> atau <em>Tolak</em> bagi setiap
+                        dokumen sokongan.
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-docs">
+                    <div class="warn-strip">
+                      <i class="bi bi-exclamation-triangle-fill"></i>
+                      <div>
+                        <strong>Sila semak setiap dokumen terlebih dahulu</strong>
+                        Tandakan setiap dokumen sebagai <em>Lulus</em> atau
+                        <em>Tolak</em> sebelum meneruskan ke peringkat
+                        seterusnya.
+                      </div>
+                    </div>
+
+                    <div class="review-row" data-row="doc" data-doc="msds">
+                      <span class="rr-icon"
+                        ><i class="bi bi-file-earmark-medical"></i
+                      ></span>
+                      <div class="rr-body">
+                        <p class="rr-name">MSDS / SDS</p>
+                        <p class="rr-meta">msds_baja_sawit.pdf · 245 KB</p>
+                        <a href="#" class="rr-link"
+                          ><i class="bi bi-box-arrow-up-right"></i>Lihat
+                          dokumen</a
+                        >
+                      </div>
+                      <div class="rr-actions">
+                        <span class="rr-status is-approved"
+                          ><i class="bi bi-check-circle-fill"></i>Diluluskan</span
+                        >
+                        <span class="rr-status is-rejected"
+                          ><i class="bi bi-x-circle-fill"></i>Ditolak</span
+                        >
+                        <div class="rr-toggle">
+                          <button type="button" data-action="approve">
+                            <i class="bi bi-check-lg"></i>Lulus
+                          </button>
+                          <button type="button" data-action="reject">
+                            <i class="bi bi-x-lg"></i>Tolak
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="review-row" data-row="doc" data-doc="coa">
+                      <span class="rr-icon"
+                        ><i class="bi bi-file-earmark-check"></i
+                      ></span>
+                      <div class="rr-body">
+                        <p class="rr-name">Certificate of Analysis (CoA)</p>
+                        <p class="rr-meta">coa_baja_sawit.pdf · 180 KB</p>
+                        <a href="#" class="rr-link"
+                          ><i class="bi bi-box-arrow-up-right"></i>Lihat
+                          dokumen</a
+                        >
+                      </div>
+                      <div class="rr-actions">
+                        <span class="rr-status is-approved"
+                          ><i class="bi bi-check-circle-fill"></i>Diluluskan</span
+                        >
+                        <span class="rr-status is-rejected"
+                          ><i class="bi bi-x-circle-fill"></i>Ditolak</span
+                        >
+                        <div class="rr-toggle">
+                          <button type="button" data-action="approve">
+                            <i class="bi bi-check-lg"></i>Lulus
+                          </button>
+                          <button type="button" data-action="reject">
+                            <i class="bi bi-x-lg"></i>Tolak
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div
+                      class="review-row"
+                      data-row="doc"
+                      data-doc="packaging"
+                    >
+                      <span class="rr-icon is-img"
+                        ><i class="bi bi-image"></i
+                      ></span>
+                      <div class="rr-body">
+                        <p class="rr-name">Gambar Pembungkusan</p>
+                        <p class="rr-meta">packaging_baja_sawit.jpg · 1.2 MB</p>
+                        <a href="#" class="rr-link"
+                          ><i class="bi bi-box-arrow-up-right"></i>Lihat
+                          dokumen</a
+                        >
+                      </div>
+                      <div class="rr-actions">
+                        <span class="rr-status is-approved"
+                          ><i class="bi bi-check-circle-fill"></i>Diluluskan</span
+                        >
+                        <span class="rr-status is-rejected"
+                          ><i class="bi bi-x-circle-fill"></i>Ditolak</span
+                        >
+                        <div class="rr-toggle">
+                          <button type="button" data-action="approve">
+                            <i class="bi bi-check-lg"></i>Lulus
+                          </button>
+                          <button type="button" data-action="reject">
+                            <i class="bi bi-x-lg"></i>Tolak
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="review-row" data-row="doc" data-doc="ssm">
+                      <span class="rr-icon"
+                        ><i class="bi bi-file-earmark-text"></i
+                      ></span>
+                      <div class="rr-body">
+                        <p class="rr-name">Sijil Pendaftaran Syarikat</p>
+                        <p class="rr-meta">ssm_cert.pdf · 320 KB</p>
+                        <a href="#" class="rr-link"
+                          ><i class="bi bi-box-arrow-up-right"></i>Lihat
+                          dokumen</a
+                        >
+                      </div>
+                      <div class="rr-actions">
+                        <span class="rr-status is-approved"
+                          ><i class="bi bi-check-circle-fill"></i>Diluluskan</span
+                        >
+                        <span class="rr-status is-rejected"
+                          ><i class="bi bi-x-circle-fill"></i>Ditolak</span
+                        >
+                        <div class="rr-toggle">
+                          <button type="button" data-action="approve">
+                            <i class="bi bi-check-lg"></i>Lulus
+                          </button>
+                          <button type="button" data-action="reject">
+                            <i class="bi bi-x-lg"></i>Tolak
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 2: Senarai Semakan -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item" data-accordion="checklist">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="false"
+                    aria-controls="body-checklist"
+                  >
+                    <span class="onboard-icon is-amber">
+                      <i class="bi bi-list-check"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">
+                        Senarai Semakan
+                        <span
+                          class="tab-count ms-2"
+                          id="checklist-badge"
+                          >3</span
+                        >
+                      </h3>
+                      <p class="onboard-desc">
+                        Tandakan setiap item sebaik sahaja disemak.
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-checklist" hidden>
+                    <div class="checklist">
+                      <label class="checklist-item">
+                        <input type="checkbox" checked />
+                        <span class="cl-text">
+                          <strong>Sijil Pendaftaran Syarikat (SSM)</strong>
+                          <small>Disemak dan disahkan</small>
+                        </span>
+                      </label>
+                      <label class="checklist-item">
+                        <input type="checkbox" checked />
+                        <span class="cl-text">
+                          <strong>Kad Pengenalan Wakil</strong>
+                          <small>Disemak dan disahkan</small>
+                        </span>
+                      </label>
+                      <label class="checklist-item">
+                        <input type="checkbox" />
+                        <span class="cl-text">
+                          <strong>MSDS / SDS</strong>
+                          <small>Perlu semakan bahan kimia</small>
+                        </span>
+                      </label>
+                      <label class="checklist-item">
+                        <input type="checkbox" />
+                        <span class="cl-text">
+                          <strong>Certificate of Analysis (CoA)</strong>
+                          <small>Perlu pengesahan makmal</small>
+                        </span>
+                      </label>
+                      <label class="checklist-item">
+                        <input type="checkbox" />
+                        <span class="cl-text">
+                          <strong>Gambar Pembungkusan</strong>
+                          <small>Perlu pengesahan label</small>
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD 3: Wakil Syarikat -->
+              <div class="onboard-card mb-3">
+                <div class="onboard-item" data-accordion="wakil">
+                  <button
+                    type="button"
+                    class="onboard-row as-button"
+                    aria-expanded="false"
+                    aria-controls="body-wakil"
+                  >
+                    <span class="onboard-icon is-blue">
+                      <i class="bi bi-person-badge"></i>
+                    </span>
+                    <div class="onboard-main">
+                      <h3 class="onboard-title">
+                        Wakil Syarikat
+                        <span class="tab-count ms-2" id="wakil-badge">2</span>
+                      </h3>
+                      <p class="onboard-desc">
+                        Sahkan setiap individu yang diberi kuasa mewakili
+                        syarikat.
+                      </p>
+                    </div>
+                    <span class="onboard-action accordion-chevron">
+                      <i class="bi bi-chevron-down"></i>
+                    </span>
+                  </button>
+                  <div class="onboard-body" id="body-wakil" hidden>
+                    <div class="review-row" data-row="wakil" data-wakil="0">
+                      <span class="rr-icon is-user"
+                        ><i class="bi bi-person-check"></i
+                      ></span>
+                      <div class="rr-body">
+                        <p class="rr-name">Aisyah Hassan</p>
+                        <p class="rr-meta">
+                          Pengarah Urusan · KP 900101-12-3456 · +60 12 345 6789
+                        </p>
+                      </div>
+                      <div class="rr-actions">
+                        <span class="rr-status is-approved"
+                          ><i class="bi bi-check-circle-fill"></i>Diluluskan</span
+                        >
+                        <span class="rr-status is-rejected"
+                          ><i class="bi bi-x-circle-fill"></i>Ditolak</span
+                        >
+                        <div class="rr-toggle">
+                          <button type="button" data-action="approve">
+                            <i class="bi bi-check-lg"></i>Lulus
+                          </button>
+                          <button type="button" data-action="reject">
+                            <i class="bi bi-x-lg"></i>Tolak
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="review-row" data-row="wakil" data-wakil="1">
+                      <span class="rr-icon is-user"
+                        ><i class="bi bi-person-check"></i
+                      ></span>
+                      <div class="rr-body">
+                        <p class="rr-name">Lim Wei Ming</p>
+                        <p class="rr-meta">
+                          Pengurus Operasi · KP 880202-12-5566 · +60 13 888 9999
+                        </p>
+                      </div>
+                      <div class="rr-actions">
+                        <span class="rr-status is-approved"
+                          ><i class="bi bi-check-circle-fill"></i>Diluluskan</span
+                        >
+                        <span class="rr-status is-rejected"
+                          ><i class="bi bi-x-circle-fill"></i>Ditolak</span
+                        >
+                        <div class="rr-toggle">
+                          <button type="button" data-action="approve">
+                            <i class="bi bi-check-lg"></i>Lulus
+                          </button>
+                          <button type="button" data-action="reject">
+                            <i class="bi bi-x-lg"></i>Tolak
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Decision result -->
+              <div class="decision-result" id="decision-result" hidden></div>
+
+              <!-- ===== DECISION BAR (fixed) ===== -->
+              <div class="decision-bar" id="decision-bar">
+                <div class="db-status">
+                  <strong id="decision-title">Keputusan Semakan</strong>
+                  <span id="decision-sub"
+                    >Sila semak semua item sebelum meneruskan ke peringkat
+                    seterusnya.</span
+                  >
+                </div>
+
+                <div class="db-actions">
+                  <button
+                    type="button"
+                    class="btn btn-outline-danger btn-sm"
+                    data-decision="reject"
+                  >
+                    <i class="bi bi-x-circle"></i>Tolak Permohonan
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-success btn-sm"
+                    data-decision="advance"
+                  >
+                    <i class="bi bi-check2-all"></i>Terima Semua
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ============ RIGHT: Info ============ -->
+            <aside class="stepper-aside" style="top: 100px">
+              <div class="meta-card mb-3">
+                <h4>Ringkasan Semakan</h4>
+                <div class="meta-row">
+                  <i
+                    class="bi bi-clipboard2-check"
+                    style="color: var(--color-primary-600)"
+                  ></i>
+                  <div>
+                    <strong>Dokumen</strong>
+                    <span id="summary-docs">2 / 4 disemak</span>
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i
+                    class="bi bi-list-check"
+                    style="color: var(--color-primary-600)"
+                  ></i>
+                  <div>
+                    <strong>Senarai semakan</strong>
+                    <span id="summary-checklist">2 / 5 selesai</span>
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i
+                    class="bi bi-person-check"
+                    style="color: var(--color-primary-600)"
+                  ></i>
+                  <div>
+                    <strong>Wakil syarikat</strong>
+                    <span id="summary-wakil">0 / 2 disemak</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="meta-card mb-3">
+                <h4>Maklumat permohonan</h4>
+                <div class="meta-row">
+                  <i class="bi bi-calendar-check"></i>
+                  <div>
+                    <strong>Diterima pada</strong>
+                    18 Oktober 2026, 10:32 AM
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-clock-history"></i>
+                  <div>
+                    <strong>Tarikh sasaran</strong>
+                    25 Oktober 2026
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-flag"></i>
+                  <div>
+                    <strong>Keutamaan</strong>
+                    Tinggi
+                  </div>
+                </div>
+              </div>
+
+              <div class="help-box">
+                <span class="help-icon"><i class="bi bi-question-lg"></i></span>
+                <h4>Panduan ringkas</h4>
+                <p>
+                  Tandakan <strong>Lulus</strong> atau <strong>Tolak</strong>
+                  pada setiap item. Setelah semua disemak, butang keputusan di
+                  bar bawah akan diaktifkan.
+                </p>
+                <button type="button" class="btn btn-outline-primary btn-sm">
+                  Hubungi pentadbir
+                </button>
+              </div>
+            </aside>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Modal keputusan -->
+    <div
+      class="modal fade"
+      id="decisionModal"
+      tabindex="-1"
+      aria-labelledby="decisionTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title h5" id="decisionTitle">Keputusan</h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Tutup"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="dm-summary" id="dm-summary"></div>
+
+            <!-- Reject-type picker: only shown for the reject flow -->
+            <div class="mb-3 dm-type-picker" id="dm-reject-picker" hidden>
+              <label class="form-label">Pilih tindakan</label>
+              <div class="d-flex gap-2 flex-wrap">
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="dm-reject-type"
+                  id="dm-rt-info"
+                  value="info"
+                  checked
+                />
+                <label class="btn btn-outline-warning flex-fill" for="dm-rt-info">
+                  <i class="bi bi-info-lg me-1"></i>Perlu Maklumat
+                </label>
+                <input
+                  type="radio"
+                  class="btn-check"
+                  name="dm-reject-type"
+                  id="dm-rt-reject"
+                  value="rejected"
+                />
+                <label class="btn btn-outline-danger flex-fill" for="dm-rt-reject">
+                  <i class="bi bi-x-lg me-1"></i>Tolak Permohonan
+                </label>
+              </div>
+            </div>
+
+            <div class="mb-3" data-for="advance">
+              <div class="alert alert-info mb-0 small">
+                <i class="bi bi-info-circle me-1"></i>
+                Permohonan akan dibawa ke peringkat
+                <strong>Lesen Aktiviti</strong> untuk semakan lanjut.
+              </div>
+            </div>
+
+            <div class="mb-3" data-for="rejected">
+              <label class="form-label" for="dm-grounds">Asas penolakan</label>
+              <select class="form-select" id="dm-grounds">
+                <option value="">Pilih asas</option>
+                <option>Dokumen tidak lengkap atau tidak sah</option>
+                <option>
+                  Produk tidak menepati piawaian yang ditetapkan (s.18)
+                </option>
+                <option>
+                  Mengandungi ramuan atau sifat yang memudaratkan (s.19)
+                </option>
+                <option>Label tidak sepadan dengan dakwaan produk</option>
+                <option>Maklumat palsu atau mengelirukan</option>
+                <option>Lain-lain</option>
+              </select>
+            </div>
+
+            <div class="mb-3" data-for="info">
+              <label class="form-label" for="dm-deadline"
+                >Tarikh akhir maklum balas</label
+              >
+              <input type="date" class="form-control" id="dm-deadline" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="dm-comment" id="dm-comment-label"
+                >Komen</label
+              >
+              <textarea
+                class="form-control"
+                id="dm-comment"
+                rows="4"
+              ></textarea>
+              <div class="form-text">
+                Komen ini kelihatan kepada pemohon dan disimpan dalam log
+                aktiviti.
+              </div>
+            </div>
+
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="dm-notify"
+                checked
+              />
+              <label class="form-check-label" for="dm-notify"
+                >Maklumkan pemohon melalui e-mel</label
+              >
+            </div>
+
+            <div
+              class="alert alert-danger mt-3 mb-0 small"
+              id="dm-error"
+              role="alert"
+              hidden
+            ></div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Batal
+            </button>
+            <button type="button" class="btn btn-success" id="dm-confirm">
+              Sahkan
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/assesment.js"></script>
+  </body>
+</html>
