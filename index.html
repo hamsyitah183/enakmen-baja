@@ -354,6 +354,7 @@
               tagClass: "",
             },
            
+            
             {
               file: "semakan-teknikal-edit.html",
               title: "Semakan teknikal (sunting)",
@@ -426,6 +427,62 @@
               icon: "bi-x-octagon",
               tag: "Tidak berjaya",
               tagClass: "is-warning",
+            },
+          ],
+        },
+
+        /* ============================================================
+           PEMBAYARAN
+           ============================================================ */
+        {
+          title: "Pembayaran",
+          icon: "bi-credit-card",
+          pages: [
+            {
+              file: "penilaian-teknikal-bayaran.html",
+              title: "Pembayaran penilaian teknikal",
+              desc: "Halaman pembayaran selepas Semakan Teknikal diluluskan. Menunggu pembayaran fi untuk mengaktifkan perakuan.",
+              thumb: "is-assessment",
+              icon: "bi-cash-coin",
+              tag: "Menunggu bayaran",
+              tagClass: "is-warning",
+            },
+            {
+              file: "checkout.html",
+              title: "Checkout pembayaran",
+              desc: "Halaman checkout untuk pembayaran fi pendaftaran lesen aktiviti. Menyokong SabahPay dan YonoPay.",
+              thumb: "is-approved",
+              icon: "bi-wallet2",
+              tag: "Checkout",
+              tagClass: "is-success",
+            },
+          ],
+        },
+
+        /* ============================================================
+           SURAT & PERAKUAN
+           ============================================================ */
+        {
+          title: "Surat & Perakuan",
+          icon: "bi-file-earmark-text",
+          pages: [
+            {
+              file: "surat-perakuan.html",
+              title: "Surat perakuan",
+              desc: "Surat perakuan rasmi pendaftaran produk atau lesen.",
+              thumb: "is-approved",
+              icon: "bi-file-earmark-check",
+              tag: "Perakuan",
+              tagClass: "is-success",
+            },
+            {
+              file: "surat-perakuan-produk.html",
+              title: "Surat perakuan produk",
+              desc: "Surat perakuan khusus untuk produk yang telah didaftarkan.",
+              thumb: "is-approved",
+              icon: "bi-file-earmark-medical",
+              tag: "Produk",
+              tagClass: "is-success",
             },
           ],
         },

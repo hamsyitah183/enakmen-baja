@@ -1,0 +1,515 @@
+:root {
+  --cert-green: #1f5c3a;
+  --cert-green-soft: #2f7c52;
+  --cert-ink: #111827;
+  --cert-muted: #6b7280;
+  --cert-paper: #fafaf7;
+  --cert-border-inner: #d1d9d1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #eef1ee;
+  font-family: "Source Serif 4", Georgia, serif;
+  color: var(--cert-ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== Screen toolbar (hidden on print) ===== */
+.cert-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1.5rem;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  font-family: "Inter", system-ui, sans-serif;
+}
+.cert-toolbar .ct-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #374151;
+}
+.cert-toolbar .ct-left i {
+  color: var(--cert-green);
+  font-size: 1.1rem;
+}
+.cert-toolbar .ct-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.cert-toolbar button,
+.cert-toolbar a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.5rem 0.95rem;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #111827;
+  cursor: pointer;
+  text-decoration: none;
+  transition: 0.15s;
+}
+.cert-toolbar button:hover,
+.cert-toolbar a:hover {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+.cert-toolbar .btn-primary {
+  background: var(--cert-green);
+  border-color: var(--cert-green);
+  color: #ffffff;
+}
+.cert-toolbar .btn-primary:hover {
+  background: #17472c;
+  border-color: #17472c;
+}
+
+/* ===== Page wrapper ===== */
+.cert-page {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1.25rem;
+}
+
+/* ===== Certificate ===== */
+.certificate {
+  position: relative;
+  background: var(--cert-paper);
+  padding: 1.75rem;
+  box-shadow:
+    0 20px 50px rgba(15, 23, 42, 0.08),
+    0 2px 6px rgba(15, 23, 42, 0.04);
+}
+
+/* Outer double frame */
+.certificate::before,
+.certificate::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  border-radius: 2px;
+}
+.certificate::before {
+  inset: 1.75rem;
+  border: 2px solid var(--cert-green);
+}
+.certificate::after {
+  inset: calc(1.75rem + 6px);
+  border: 1px solid var(--cert-green-soft);
+  opacity: 0.55;
+}
+
+.cert-inner {
+  position: relative;
+  padding: 3.25rem 3.5rem 3.25rem;
+  z-index: 1;
+}
+
+/* ===== Logo ===== */
+.cert-logo {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 1.5rem;
+}
+.cert-logo img {
+  height: 84px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 2px rgba(15, 23, 42, 0.08));
+}
+
+/* ===== Header ===== */
+.cert-eyebrow {
+  text-align: center;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--cert-green-soft);
+  margin: 0 0 1.5rem;
+}
+
+/* ===== Title ===== */
+.cert-title {
+  text-align: center;
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 2.85rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: #0b3a23;
+  margin: 0 0 0.85rem;
+}
+
+.cert-ref {
+  text-align: center;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--cert-muted);
+  margin: 0 0 2.5rem;
+}
+
+/* ===== Given to ===== */
+.cert-section-label {
+  text-align: center;
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 1.05rem;
+  color: #4b5563;
+  margin: 0 0 0.6rem;
+}
+
+.cert-recipient {
+  text-align: center;
+  font-family: "Cormorant Garamond", "Source Serif 4", Georgia, serif;
+  font-size: 2.5rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--cert-ink);
+  margin: 0 0 1.75rem;
+}
+
+/* ===== Product block ===== */
+.cert-product {
+  text-align: center;
+  margin: 0 0 2rem;
+}
+.cert-product .cp-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 1.25rem;
+  color: #111827;
+}
+.cert-product .cp-brand {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.cert-product .cp-sep {
+  color: var(--cert-green);
+  font-weight: 400;
+}
+.cert-product .cp-category {
+  font-weight: 500;
+  color: #374151;
+}
+
+/* ===== Aktiviti lesen ===== */
+.cert-activities {
+  max-width: 560px;
+  margin: 0 auto 2.25rem;
+  padding: 1.1rem 1.25rem 1.15rem;
+  border: 1px dashed var(--cert-border-inner);
+  border-radius: 8px;
+  background: rgba(47, 124, 82, 0.03);
+}
+.cert-activities .ca-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cert-green-soft);
+  margin: 0 0 0.85rem;
+}
+.cert-activities .ca-head i {
+  font-size: 0.95rem;
+}
+.cert-activities .ca-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+.cert-activities .ca-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 0.85rem;
+  color: #1f2937;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+
+}
+.cert-activities .ca-list li .ca-icon {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--cert-green);
+  color: #ffffff;
+  font-size: 0.75rem;
+  flex: none;
+}
+.cert-activities .ca-list li .ca-text {
+  flex: 1;
+  min-width: 0;
+}
+.cert-activities .ca-list li .ca-text strong {
+  font-weight: 600;
+}
+
+/* ===== Dates ===== */
+.cert-dates {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  max-width: 520px;
+  margin: 0 auto 2.25rem;
+  text-align: center;
+}
+.cert-dates .cd-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.cert-dates .cd-label {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 0.95rem;
+  color: #4b5563;
+  font-weight: 400;
+}
+.cert-dates .cd-value {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #111827;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 2px solid var(--cert-green);
+  display: inline-block;
+  align-self: center;
+  min-width: 160px;
+}
+
+/* ===== Validity note ===== */
+.cert-note {
+  text-align: center;
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 1.05rem;
+  color: #374151;
+  margin: 0 0 3rem;
+}
+
+/* ===== Signature area ===== */
+.cert-signature {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: 1.5rem;
+  padding-top: 2rem;
+}
+.cert-signature .cs-block {
+  text-align: center;
+  flex: 1;
+  max-width: 260px;
+}
+.cert-signature .cs-seal {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 2px solid var(--cert-green-soft);
+  display: grid;
+  place-items: center;
+  margin: 0 auto 1rem;
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--cert-green);
+  line-height: 1.35;
+  padding: 1rem;
+  text-align: center;
+  opacity: 0.85;
+  position: relative;
+}
+.cert-signature .cs-seal::before {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 1px dashed var(--cert-green-soft);
+}
+.cert-signature .cs-line {
+  border-top: 1px solid #111827;
+  margin: 0 auto 0.5rem;
+  max-width: 220px;
+}
+.cert-signature .cs-name {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 0.15rem;
+}
+.cert-signature .cs-role {
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 0.75rem;
+  color: var(--cert-muted);
+  margin: 0;
+}
+
+/* ===== Footer ID ===== */
+.cert-footer {
+  text-align: center;
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--cert-border-inner);
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--cert-muted);
+}
+
+/* ===== Bottom info panel (holder details) ===== */
+.holder-panel {
+  max-width: 900px;
+  margin: 1.5rem auto 3rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.5rem 1.75rem 1.75rem;
+  font-family: "Inter", system-ui, sans-serif;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+}
+.holder-panel h2 {
+  font-family: "Source Serif 4", Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0 0 1.25rem;
+  color: #0b3a23;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.holder-panel h2 i {
+  color: var(--cert-green);
+}
+.holder-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 1.5rem;
+}
+.holder-grid .full {
+  grid-column: 1 / -1;
+}
+.holder-grid dt {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--cert-muted);
+  margin: 0 0 0.25rem;
+}
+.holder-grid dd {
+  font-size: 0.85rem;
+  color: var(--cert-ink);
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* =========================================================
+         PRINT STYLES
+         ========================================================= */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm;
+  }
+  html,
+  body {
+    background: #ffffff;
+  }
+  .cert-toolbar {
+    display: none !important;
+  }
+  .cert-page {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+  .certificate {
+    box-shadow: none;
+    padding: 0;
+  }
+  .certificate::before {
+    inset: 0;
+  }
+  .certificate::after {
+    inset: 6px;
+  }
+  .cert-inner {
+    padding: 20mm 22mm;
+  }
+  .cert-logo img {
+    height: 72px;
+  }
+  .cert-title {
+    font-size: 2.6rem;
+  }
+  .cert-recipient {
+    font-size: 2.2rem;
+  }
+  .holder-panel {
+    box-shadow: none;
+    page-break-before: always;
+  }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 640px) {
+  .cert-inner {
+    padding: 2rem 1.5rem;
+  }
+  .cert-logo img {
+    height: 64px;
+  }
+  .cert-title {
+    font-size: 1.85rem;
+  }
+  .cert-recipient {
+    font-size: 1.8rem;
+  }
+  .cert-dates {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .cert-signature {
+    flex-direction: column;
+    align-items: center;
+  }
+  .holder-grid {
+    grid-template-columns: 1fr;
+  }
+}

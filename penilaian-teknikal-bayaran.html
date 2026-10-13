@@ -1,0 +1,1335 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/components.css" rel="stylesheet" />
+    <link href="css/dashboard.css" rel="stylesheet" />
+    <link href="css/detail.css" rel="stylesheet" />
+    <title>Pembayaran Fi Pendaftaran | Portal Pendaftaran Baja</title>
+
+    <style>
+      /* ==========================================================
+         PENDING-PAYMENT BANNER (amber)
+         ========================================================== */
+      .assess-banner.is-pending {
+        background: linear-gradient(135deg, #d97706 0%, #92400e 100%);
+      }
+      .assess-banner.is-pending .assess-icon {
+        background: rgba(255, 255, 255, 0.22);
+      }
+
+      /* ==========================================================
+         PAYMENT ALERT CARD
+         ========================================================== */
+      .payment-alert {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1.25rem 1.5rem;
+        border-radius: var(--radius-lg, 14px);
+        background: #fffbeb;
+        border: 1px solid #fcd34d;
+        margin-bottom: 1.5rem;
+      }
+      .payment-alert .pa-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: #fff;
+        color: #b45309;
+        font-size: 1.25rem;
+        flex: none;
+        box-shadow: 0 1px 2px rgba(180, 83, 9, 0.12);
+      }
+      .payment-alert h3 {
+        font-size: 0.98rem;
+        font-weight: 700;
+        margin: 0 0 0.3rem;
+        color: #92400e;
+      }
+      .payment-alert p {
+        font-size: 0.85rem;
+        margin: 0;
+        color: #78350f;
+        line-height: 1.55;
+      }
+      .payment-alert .pa-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.25rem;
+        margin-top: 0.65rem;
+        font-size: 0.78rem;
+        color: #92400e;
+      }
+      .payment-alert .pa-meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+
+      /* ==========================================================
+         STAGE — current / pending step
+         ========================================================== */
+      .stage-step.is-current {
+        background: #fffbeb;
+        border-radius: 12px;
+        box-shadow: inset 0 0 0 1px #fcd34d;
+      }
+      .stage-step.is-current .stage-badge {
+        background: #f59e0b;
+        color: #fff;
+      }
+      .stage-step.is-current .stage-title {
+        color: #92400e;
+      }
+
+      /* ==========================================================
+         PAYMENT TAB — summary card
+         ========================================================== */
+      .pay-card {
+        background: var(--color-surface, #fff);
+        border: 1px solid var(--color-border, #e5e7eb);
+        border-radius: var(--radius-lg, 14px);
+        overflow: hidden;
+        box-shadow: 0 1px 2px rgba(15, 58, 36, 0.04);
+        margin-bottom: 1.25rem;
+      }
+      .pay-card-head {
+        padding: 1.25rem 1.5rem;
+        background: linear-gradient(135deg, #f59e0b 0%, #b45309 100%);
+        color: #fff;
+      }
+      .pay-card-head .pch-label {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        opacity: 0.9;
+        margin-bottom: 0.25rem;
+      }
+      .pay-card-head .pch-amount {
+        font-family: var(--font-serif, "Source Serif 4", Georgia, serif);
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin: 0;
+      }
+      .pay-card-head .pch-ref {
+        font-size: 0.8rem;
+        opacity: 0.92;
+        margin-top: 0.35rem;
+      }
+      .pay-card-body {
+        padding: 1.25rem 1.5rem;
+      }
+      .pay-rows {
+        display: grid;
+        gap: 0;
+        margin: 0;
+      }
+      .pay-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 0.75rem 0;
+        font-size: 0.85rem;
+      }
+      .pay-row + .pay-row {
+        border-top: 1px solid var(--color-border, #e5e7eb);
+      }
+      .pay-row dt {
+        color: var(--color-muted, #6b7280);
+        font-weight: 500;
+        margin: 0;
+      }
+      .pay-row dd {
+        margin: 0;
+        font-weight: 600;
+        color: var(--color-text, #111827);
+        text-align: right;
+      }
+      .pay-actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-top: 1.25rem;
+      }
+
+      /* ==========================================================
+         SIDEBAR PAYMENT CTA
+         ========================================================== */
+      .pay-cta {
+        background: #fffbeb;
+        border: 1px solid #fcd34d;
+        border-radius: var(--radius-lg, 14px);
+        padding: 1.25rem;
+      }
+      .pay-cta h4 {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #92400e;
+        margin: 0 0 0.35rem;
+      }
+      .pay-cta p {
+        font-size: 0.78rem;
+        color: #78350f;
+        line-height: 1.55;
+        margin: 0 0 0.85rem;
+      }
+
+      .pay-pill-amount {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        background: #fff;
+        color: #b45309;
+        border: 1px solid #fcd34d;
+        border-radius: 999px;
+        padding: 0.25rem 0.75rem;
+        margin-bottom: 0.75rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <script>
+        try {
+          if (localStorage.getItem("sidebar-collapsed") === "1")
+            document.querySelector(".app").classList.add("is-collapsed");
+        } catch (e) {}
+      </script>
+
+      <!-- Bar sisi -->
+      <aside
+        class="sidebar offcanvas-lg offcanvas-start"
+        tabindex="-1"
+        id="sidebar"
+        aria-label="Navigasi utama"
+      >
+        <div class="sidebar-inner">
+          <div class="sidebar-head border-bottom pb-2">
+            <a href="#" class="brand" aria-label="Enakmen Baja Sabah">
+              <span class="brand-mark brand-mark--img">
+                <img src="logo/image.png" alt="" width="40" height="40" />
+              </span>
+              <span class="brand-text">Enakmen Baja Sabah</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-icon sidebar-toggle d-none d-lg-inline-grid"
+              id="sidebar-toggle"
+              aria-controls="sidebar"
+              aria-expanded="true"
+              aria-label="Tutup bar sisi"
+              title="Tutup bar sisi"
+            >
+              <i class="bi bi-layout-sidebar"></i>
+            </button>
+            <button
+              type="button"
+              class="btn-close d-lg-none"
+              data-bs-dismiss="offcanvas"
+              data-bs-target="#sidebar"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <nav class="d-grid gap-1">
+            <a
+              href="filled-dashboard.html"
+              class="side-link"
+              title="Papan pemuka"
+              ><i class="bi bi-house-door"></i
+              ><span class="side-label">Papan pemuka</span></a
+            >
+            <a href="#" class="side-link active" title="Produk saya"
+              ><i class="bi bi-box-seam"></i
+              ><span class="side-label">Produk saya</span></a
+            >
+            <a href="#" class="side-link" title="Lesen"
+              ><i class="bi bi-patch-check"></i
+              ><span class="side-label">Lesen</span></a
+            >
+            <a href="#" class="side-link" title="Pembayaran"
+              ><i class="bi bi-receipt"></i
+              ><span class="side-label">Pembayaran</span
+              ><span class="count pill pill-danger">1</span></a
+            >
+            <a href="#" class="side-link" title="Notis dan rayuan"
+              ><i class="bi bi-envelope-exclamation"></i
+              ><span class="side-label">Notis dan rayuan</span
+              ><span class="count pill pill-danger">0</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Akaun</div>
+          <nav class="d-grid gap-1 mb-3">
+            <a
+              href="company-profile.html"
+              class="side-link"
+              title="Profil organisasi"
+              ><i class="bi bi-building"></i
+              ><span class="side-label">Profil organisasi</span></a
+            >
+            <a href="#" class="side-link" title="Tetapan"
+              ><i class="bi bi-gear"></i
+              ><span class="side-label">Tetapan</span></a
+            >
+            <a href="index.html" class="side-link" title="Log keluar"
+              ><i class="bi bi-box-arrow-right"></i
+              ><span class="side-label">Log keluar</span></a
+            >
+          </nav>
+
+          <div class="side-user">
+            <span class="avatar">AH</span>
+            <div class="lh-sm side-user-text">
+              <div class="fw-semibold">Aisyah Hassan</div>
+              <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Utama -->
+      <div class="app-main">
+        <header class="topbar border-bottom">
+          <button
+            class="btn btn-icon d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebar"
+            aria-controls="sidebar"
+            aria-label="Buka menu"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+          <h1 class="h5 mb-0 me-2">Butiran produk</h1>
+          <div class="topbar-search d-none d-md-block input-icon">
+            <i class="bi bi-search"></i>
+            <input
+              type="search"
+              class="form-control"
+              placeholder="Cari produk, lesen atau permit"
+              aria-label="Cari"
+            />
+          </div>
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <button
+              class="btn btn-icon position-relative"
+              type="button"
+              aria-label="Pemberitahuan"
+            >
+              <i class="bi bi-bell"></i><span class="notif-dot"></span>
+            </button>
+
+            <div class="dropdown">
+              <button
+                type="button"
+                class="avatar avatar-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Menu pengguna"
+              >
+                AH
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end user-menu">
+                <li class="user-menu-head">
+                  <div class="fw-semibold">Aisyah Hassan</div>
+                  <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="company-profile.html"
+                    ><i class="bi bi-building me-2"></i>Profil organisasi</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-gear me-2"></i>Tetapan</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="index.html"
+                    ><i class="bi bi-box-arrow-right me-2"></i>Log keluar</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <main class="app-content p-3 p-md-4 p-xl-5">
+          <div class="detail-layout">
+            <!-- ============ MAIN COLUMN ============ -->
+            <div class="detail-main">
+              <!-- ===== assess-banner (pending payment) ===== -->
+              <div class="assess-banner is-pending mb-4">
+                <span class="assess-icon">
+                  <i class="bi bi-cash-coin"></i>
+                </span>
+                <div class="flex-grow-1">
+                  <h2>Perakuan diluluskan — menunggu pembayaran</h2>
+                  <p>
+                    Tahniah! Perakuan pendaftaran produk anda telah diluluskan.
+                    Sila selesaikan pembayaran fi pendaftaran untuk
+                    mengaktifkan perakuan ini.
+                  </p>
+                  <div class="assess-meta">
+                    <span>
+                      <i class="bi bi-hash"></i>
+                      No. Rujukan: <strong>PB/2026/87128</strong>
+                    </span>
+                    <span>
+                      <i class="bi bi-cash-stack"></i>
+                      Jumlah: <strong>RM 350.00</strong>
+                    </span>
+                    <span>
+                      <i class="bi bi-calendar-x"></i>
+                      Bayar sebelum: <strong>12 Nov 2026</strong>
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ===== Main shell ===== -->
+              <div class="detail-shell">
+                <!-- Header -->
+                <div class="detail-header">
+                  <span class="head-avatar">
+                    <i class="bi bi-cash-coin"></i>
+                  </span>
+                  <div class="head-info">
+                    <h1 id="product-name-head">Semakan Teknikal</h1>
+                    <div class="head-sub">
+                      <span class="avatar-mini">AH</span>
+                      <span>Aisyah Hassan</span>
+                      <span class="dot">·</span>
+                      <span>Didaftarkan pada 18 Okt 2026</span>
+                    </div>
+                  </div>
+                  <div class="head-links">
+                    <a href="#" aria-label="Pautan dokumen">
+                      <i class="bi bi-file-earmark-text"></i>
+                    </a>
+                    <a href="#" aria-label="Perakuan">
+                      <i class="bi bi-patch-check-fill"></i>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Info strip -->
+                <div class="info-strip">
+                  <div class="strip-cell">
+                    <div class="strip-label">
+                      <i class="bi bi-hash"></i>No. Rujukan
+                    </div>
+                    <div class="strip-value">PB/2026/87128</div>
+                  </div>
+
+                  <div class="strip-cell">
+                    <div class="strip-label">
+                      <i class="bi bi-tag"></i>Kategori
+                    </div>
+                    <div class="strip-value" id="p-category">
+                      Baja – Baja Sebatian
+                    </div>
+                  </div>
+
+                  <div class="strip-cell">
+                    <div class="strip-label"><i class="bi bi-box"></i>Bentuk</div>
+                    <div class="strip-value" id="p-form">
+                      Butiran (Granular)
+                    </div>
+                  </div>
+
+                  <div class="strip-cell">
+                    <div class="strip-label">
+                      <i class="bi bi-clipboard-pulse"></i>Status
+                    </div>
+                    <div class="strip-value">
+                      <span class="strip-pill is-warning">
+                        <i class="bi bi-hourglass-split"></i>Menunggu
+                        Pembayaran
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="strip-cell">
+                    <div class="strip-label">
+                      <i class="bi bi-flag"></i>Keutamaan
+                    </div>
+                    <div class="strip-value">
+                      <span class="strip-pill is-warning">Sederhana</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tabs -->
+                <div class="detail-tabs" role="tablist">
+                  <button
+                    type="button"
+                    class="detail-tab active"
+                    role="tab"
+                    data-tab="progress"
+                  >
+                    <i class="bi bi-list-check"></i>Kemajuan Penilaian
+                  </button>
+                  <button
+                    type="button"
+                    class="detail-tab"
+                    role="tab"
+                    data-tab="payment"
+                  >
+                    <i class="bi bi-credit-card"></i>Pembayaran
+                    <span class="tab-count">1</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="detail-tab"
+                    role="tab"
+                    data-tab="company"
+                  >
+                    <i class="bi bi-building"></i>Butiran Syarikat
+                  </button>
+                  <button
+                    type="button"
+                    class="detail-tab"
+                    role="tab"
+                    data-tab="rep"
+                  >
+                    <i class="bi bi-person-badge"></i>Wakil Syarikat
+                  </button>
+                  <button
+                    type="button"
+                    class="detail-tab"
+                    role="tab"
+                    data-tab="docs"
+                  >
+                    <i class="bi bi-paperclip"></i>Dokumen Sokongan
+                    <span class="tab-count">4</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="detail-tab"
+                    role="tab"
+                    data-tab="activity"
+                  >
+                    <i class="bi bi-activity"></i>Log Aktiviti
+                    <span class="tab-count">7</span>
+                  </button>
+                </div>
+
+                <!-- ============ TAB PANEL: Kemajuan Penilaian ============ -->
+                <div class="detail-panel active" data-panel="progress">
+                  <h2 class="panel-title">Kemajuan Semakan Teknikal</h2>
+                  <p class="panel-desc" style="margin-bottom: 1.25rem">
+                    Berikut adalah ringkasan setiap peringkat dalam penilaian
+                    teknikal bagi produk ini. Perakuan telah
+                    <strong>diluluskan</strong> — langkah terakhir ialah
+                    pembayaran fi pendaftaran.
+                  </p>
+
+                  <!-- Payment alert -->
+                  <div class="payment-alert">
+                    <span class="pa-icon">
+                      <i class="bi bi-exclamation-triangle-fill"></i>
+                    </span>
+                    <div class="flex-grow-1">
+                      <h3>Tindakan diperlukan: Selesaikan pembayaran</h3>
+                      <p>
+                        Perakuan produk anda akan diaktifkan secara automatik
+                        selepas pembayaran disahkan. Sila bayar sebelum
+                        <strong>12 November 2026</strong> untuk mengelakkan
+                        permohonan ditangguhkan.
+                      </p>
+                      <div class="pa-meta">
+                        <span>
+                          <i class="bi bi-cash-stack"></i>
+                          Jumlah: <strong>RM 350.00</strong>
+                        </span>
+                        <span>
+                          <i class="bi bi-hourglass-split"></i>
+                          Status: <strong>Menunggu Pembayaran</strong>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="stage-card">
+                    <!-- Step 1: Dokumen sokongan (DONE) -->
+                    <div class="stage-step is-done">
+                      <span class="stage-badge">
+                        <i class="bi bi-check-lg"></i>
+                      </span>
+                      <div>
+                        <div class="stage-title">
+                          Semakan dokumen sokongan
+                        </div>
+                        <p class="stage-desc">
+                          Semua dokumen sokongan telah disemak dan didapati
+                          lengkap serta sah.
+                        </p>
+                        <p class="stage-note">
+                          Selesai pada 19 Oktober 2026, 10:13 AM
+                        </p>
+                      </div>
+                      <span class="pill pill-success">Selesai</span>
+                    </div>
+
+                    <!-- Step 2: Semakan Teknikal (DONE — APPROVED) -->
+                    <div class="stage-step is-done">
+                      <span class="stage-badge">
+                        <i class="bi bi-check-lg"></i>
+                      </span>
+                      <div>
+                        <div class="stage-title">
+                          Semakan Teknikal kandungan produk
+                        </div>
+                        <p class="stage-desc">
+                          Formulasi, kandungan nutrien, dan label produk telah
+                          dinilai dan mematuhi keperluan Enakmen Baja Sabah
+                          2024.
+                        </p>
+                        <p class="stage-note">
+                          Selesai pada 24 Oktober 2026, 3:40 PM
+                        </p>
+
+                        <!-- Officer note (approval) -->
+                        <div class="officer-note">
+                          <div class="officer-note-head">
+                            <span class="officer-note-avatar">ZA</span>
+                            <div>
+                              <p class="officer-note-meta">
+                                <strong>Nur binti Ahmad</strong>
+                                Pegawai Teknikal &middot; DOA Sabah
+                              </p>
+                            </div>
+                          </div>
+                          <p class="officer-note-text">
+                            Setelah semakan terperinci, formulasi bagi
+                            <strong>Baja Sawit Premium</strong> adalah
+                            memuaskan dan menepati keperluan Enakmen Baja
+                            Sabah 2024. Kandungan nutrien yang dinyatakan pada
+                            label adalah konsisten dengan Certificate of
+                            Analysis (CoA) yang dikemukakan. Tiada isu teknikal
+                            dikenal pasti bagi produk ini.
+                          </p>
+                        </div>
+                      </div>
+                      <span class="pill pill-success">Lulus</span>
+                    </div>
+
+                    <!-- Step 3: Lawatan tapak (DONE) -->
+                    <div class="stage-step is-done">
+                      <span class="stage-badge">
+                        <i class="bi bi-check-lg"></i>
+                      </span>
+                      <div>
+                        <div class="stage-title">Lawatan tapak premis</div>
+                        <p class="stage-desc">
+                          Lawatan tapak telah dijalankan di premis operasi
+                          syarikat bagi mengesahkan keadaan penyimpanan dan
+                          operasi harian. Premis didapati bersih dan mematuhi
+                          keperluan MSDS.
+                        </p>
+                        <p class="stage-note">
+                          Selesai pada 26 Oktober 2026, 11:20 AM
+                        </p>
+                      </div>
+                      <span class="pill pill-success">Lulus</span>
+                    </div>
+
+                    <!-- Step 4: Perakuan Diluluskan (DONE — APPROVED) -->
+                    <div class="stage-step is-done">
+                      <span class="stage-badge">
+                        <i class="bi bi-check-lg"></i>
+                      </span>
+                      <div>
+                        <div class="stage-title">
+                          Perakuan Diluluskan
+                        </div>
+                        <p class="stage-desc">
+                          Berdasarkan penilaian dokumen, teknikal dan lawatan
+                          tapak, perakuan pendaftaran produk anda telah
+                          <strong>diluluskan</strong>. Sila selesaikan
+                          pembayaran fi pendaftaran untuk mengaktifkan
+                          perakuan.
+                        </p>
+                        <p class="stage-note">
+                          Diluluskan pada 28 Oktober 2026, 9:15 AM
+                        </p>
+                      </div>
+                      <span class="pill pill-success">Lulus</span>
+                    </div>
+
+                    <!-- Step 5: Pembayaran (CURRENT — PENDING) -->
+                    <div class="stage-step is-current">
+                      <span class="stage-badge">
+                        <i class="bi bi-hourglass-split"></i>
+                      </span>
+                      <div>
+                        <div class="stage-title">
+                          Pembayaran fi pendaftaran
+                        </div>
+                        <p class="stage-desc">
+                          Sila buat pembayaran sebanyak
+                          <strong>RM 350.00</strong> untuk mengaktifkan
+                          perakuan pendaftaran produk. Perakuan akan
+                          diaktifkan secara automatik selepas pembayaran
+                          disahkan.
+                        </p>
+                        <p class="stage-note">
+                          Tarikh akhir: <strong>12 November 2026</strong>
+                        </p>
+                      </div>
+                      <span class="pill pill-warning">Menunggu</span>
+                    </div>
+
+                    <!-- Step 6: Perakuan Aktif (UPCOMING) -->
+                    <div class="stage-step">
+                      <span class="stage-badge">
+                        <i class="bi bi-flag"></i>
+                      </span>
+                      <div>
+                        <div class="stage-title">
+                          Perakuan Aktif
+                        </div>
+                        <p class="stage-desc">
+                          Perakuan pendaftaran produk akan diaktifkan dan
+                          dihantar ke e-mel berdaftar selepas pembayaran
+                          disahkan.
+                        </p>
+                      </div>
+                      <span class="pill">Belum mula</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- ============ TAB PANEL: Pembayaran ============ -->
+                <div class="detail-panel" data-panel="payment">
+                  <h2 class="panel-title">Pembayaran Fi Pendaftaran</h2>
+                  <p class="panel-desc" style="margin-bottom: 1.25rem">
+                    Sila selesaikan pembayaran untuk mengaktifkan perakuan
+                    pendaftaran produk ini.
+                  </p>
+
+                  <div class="pay-card">
+                    <div class="pay-card-head">
+                      <div class="pch-label">Jumlah perlu dibayar</div>
+                      <p class="pch-amount">RM 350.00</p>
+                      <div class="pch-ref">
+                        No. Rujukan: PB/2026/87128 &middot; Baja Sawit Premium
+                      </div>
+                    </div>
+                    <div class="pay-card-body">
+                      <dl class="pay-rows">
+                        <div class="pay-row">
+                          <dt>Status</dt>
+                          <dd>
+                            <span class="strip-pill is-warning">
+                              <i class="bi bi-hourglass-split"></i>Menunggu
+                              Pembayaran
+                            </span>
+                          </dd>
+                        </div>
+                        <div class="pay-row">
+                          <dt>Tarikh akhir pembayaran</dt>
+                          <dd>12 November 2026</dd>
+                        </div>
+                        <div class="pay-row">
+                          <dt>Kaedah pembayaran</dt>
+                          <dd>SabahPay / YonoPay</dd>
+                        </div>
+                        <div class="pay-row">
+                          <dt>Nama pemohon</dt>
+                          <dd>Borneo Agro Sdn Bhd</dd>
+                        </div>
+                      </dl>
+
+                      <div class="pay-actions">
+                        <a
+                          href="#"
+                          class="btn btn-primary d-flex align-items-center gap-1"
+                        >
+                          <i class="bi bi-credit-card"></i>Bayar Sekarang
+                        </a>
+                        <a
+                          href="#"
+                          class="btn btn-outline-secondary d-flex align-items-center gap-1"
+                        >
+                          <i class="bi bi-download"></i>Muat Turun Invois
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p class="panel-desc" style="font-size: 0.8rem">
+                    <i class="bi bi-info-circle me-1"></i>
+                    Pembayaran akan disahkan dalam masa 1–2 hari bekerja.
+                    Sila simpan resit pembayaran untuk rujukan anda.
+                  </p>
+                </div>
+
+                <!-- ============ TAB PANEL: Butiran Syarikat ============ -->
+                <div class="detail-panel" data-panel="company">
+                  <div class="panel-section">
+                    <h2 class="panel-title">Maklumat Syarikat</h2>
+                    <dl class="def-grid">
+                      <div class="full">
+                        <dt>Nama Syarikat</dt>
+                        <dd>Borneo Agro Sdn Bhd</dd>
+                      </div>
+                      <div>
+                        <dt>No. SSM</dt>
+                        <dd>202301012345</dd>
+                      </div>
+                      <div>
+                        <dt>Jenis Pemegang</dt>
+                        <dd>Syarikat Sendirian Berhad</dd>
+                      </div>
+                      <div>
+                        <dt>Tarikh Penubuhan</dt>
+                        <dd>14 Mac 2023</dd>
+                      </div>
+                      <div>
+                        <dt>Daerah</dt>
+                        <dd>Kota Kinabalu</dd>
+                      </div>
+                      <div>
+                        <dt>Negeri</dt>
+                        <dd>Sabah</dd>
+                      </div>
+                      <div>
+                        <dt>Negara</dt>
+                        <dd>Malaysia</dd>
+                      </div>
+                      <div class="full">
+                        <dt>Alamat Berdaftar</dt>
+                        <dd>
+                          Lot 5, Jalan Industri 3, Kawasan Perindustrian Kota
+                          Kinabalu, 88450 Kota Kinabalu, Sabah
+                        </dd>
+                      </div>
+                      <div class="full">
+                        <dt>Alamat Operasi</dt>
+                        <dd>
+                          Lot 5, Jalan Industri 3, Kawasan Perindustrian Kota
+                          Kinabalu, 88450 Kota Kinabalu, Sabah
+                        </dd>
+                      </div>
+                    </dl>
+                  </div>
+
+                  <div class="panel-section">
+                    <h2 class="panel-title">Maklumat Hubungan</h2>
+                    <dl class="def-grid">
+                      <div>
+                        <dt>No. Telefon</dt>
+                        <dd>+60 88 234 567</dd>
+                      </div>
+                      <div>
+                        <dt>No. Faks</dt>
+                        <dd>+60 88 234 568</dd>
+                      </div>
+                      <div>
+                        <dt>E-mel</dt>
+                        <dd>info@borneoagro.com.my</dd>
+                      </div>
+                      <div class="full">
+                        <dt>Laman Web</dt>
+                        <dd>www.borneoagro.com.my</dd>
+                      </div>
+                    </dl>
+                  </div>
+                </div>
+
+                <!-- ============ TAB PANEL: Wakil Syarikat ============ -->
+                <div class="detail-panel" data-panel="rep">
+                  <div class="panel-section">
+                    <h2 class="panel-title">Wakil Syarikat Berdaftar</h2>
+                    <dl class="def-grid">
+                      <div class="full">
+                        <dt>Nama Penuh</dt>
+                        <dd>Aisyah Hassan</dd>
+                      </div>
+                      <div>
+                        <dt>No. Kad Pengenalan</dt>
+                        <dd>900101-12-3456</dd>
+                      </div>
+                      <div>
+                        <dt>Jawatan</dt>
+                        <dd>Pengurus Operasi</dd>
+                      </div>
+                      <div>
+                        <dt>Warganegara</dt>
+                        <dd>Malaysia</dd>
+                      </div>
+                      <div>
+                        <dt>No. Telefon</dt>
+                        <dd>+60 12 345 6789</dd>
+                      </div>
+                      <div>
+                        <dt>E-mel</dt>
+                        <dd>aisyah@borneoagro.com.my</dd>
+                      </div>
+                      <div>
+                        <dt>Tarikh Lantikan</dt>
+                        <dd>1 April 2023</dd>
+                      </div>
+                      <div class="full">
+                        <dt>Alamat</dt>
+                        <dd>
+                          No. 12, Taman Sri Indah, Jalan Tuaran, 88450 Kota
+                          Kinabalu, Sabah
+                        </dd>
+                      </div>
+                    </dl>
+                  </div>
+
+                  <div class="panel-section">
+                    <h2 class="panel-title">Skop Tanggungjawab</h2>
+                    <p class="panel-desc">
+                      Wakil syarikat bertanggungjawab sepenuhnya terhadap
+                      pengurusan pendaftaran produk, pematuhan syarat perakuan,
+                      serta komunikasi rasmi dengan Jabatan Pertanian Sabah.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- ============ TAB PANEL: Dokumen Sokongan ============ -->
+                <div class="detail-panel" data-panel="docs">
+                  <h2 class="panel-title">Dokumen Sokongan</h2>
+                  <p class="panel-desc" style="margin-bottom: 1.25rem">
+                    Dokumen dan fail sokongan yang dimuat naik semasa
+                    pendaftaran produk.
+                  </p>
+
+                  <div class="attach-grid">
+                    <a href="#" class="attach-card">
+                      <span class="attach-icon is-pdf">
+                        <i class="bi bi-file-earmark-medical"></i>
+                      </span>
+                      <div class="attach-body">
+                        <p class="attach-name">MSDS / SDS</p>
+                        <p class="attach-meta">msds_baja_sawit.pdf · 245 KB</p>
+                      </div>
+                      <span class="attach-open"
+                        ><i class="bi bi-box-arrow-up-right"></i
+                      ></span>
+                    </a>
+
+                    <a href="#" class="attach-card">
+                      <span class="attach-icon is-pdf">
+                        <i class="bi bi-file-earmark-check"></i>
+                      </span>
+                      <div class="attach-body">
+                        <p class="attach-name">Certificate of Analysis (CoA)</p>
+                        <p class="attach-meta">coa_baja_sawit.pdf · 180 KB</p>
+                      </div>
+                      <span class="attach-open"
+                        ><i class="bi bi-box-arrow-up-right"></i
+                      ></span>
+                    </a>
+
+                    <a href="#" class="attach-card">
+                      <span class="attach-icon is-img">
+                        <i class="bi bi-image"></i>
+                      </span>
+                      <div class="attach-body">
+                        <p class="attach-name">Gambar Pembungkusan</p>
+                        <p class="attach-meta">
+                          packaging_baja_sawit.jpg · 1.2 MB
+                        </p>
+                      </div>
+                      <span class="attach-open"
+                        ><i class="bi bi-box-arrow-up-right"></i
+                      ></span>
+                    </a>
+
+                    <a href="#" class="attach-card">
+                      <span class="attach-icon is-pdf">
+                        <i class="bi bi-file-earmark-text"></i>
+                      </span>
+                      <div class="attach-body">
+                        <p class="attach-name">Invois Pembayaran</p>
+                        <p class="attach-meta">
+                          invois_PB-2026-87128.pdf · 110 KB
+                        </p>
+                      </div>
+                      <span class="attach-open"
+                        ><i class="bi bi-box-arrow-up-right"></i
+                      ></span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- ============ TAB PANEL: Log Aktiviti ============ -->
+                <div class="detail-panel" data-panel="activity">
+                  <h2 class="panel-title">Log Aktiviti Produk</h2>
+
+                  <div class="activity-log">
+                    <div class="log-day">
+                      <i class="bi bi-calendar-week"></i>
+                      Rabu, 28 Oktober 2026
+                    </div>
+
+                    <div class="log-item">
+                      <span class="log-badge is-warning">
+                        <i class="bi bi-cash-coin"></i>
+                      </span>
+                      <div class="log-body">
+                        <p class="log-title">
+                          <span class="log-actor">Sistem</span> menjana invois
+                          pembayaran
+                        </p>
+                        <p class="log-sub">
+                          Invois RM 350.00 dihantar ke e-mel berdaftar
+                        </p>
+                      </div>
+                      <span class="log-time">9:20 AM</span>
+                    </div>
+
+                    <div class="log-item">
+                      <span class="log-badge is-success">
+                        <i class="bi bi-patch-check-fill"></i>
+                      </span>
+                      <div class="log-body">
+                        <p class="log-title">
+                          <span class="log-actor">Nur binti Ahmad</span>
+                          meluluskan perakuan produk
+                        </p>
+                        <p class="log-sub">
+                          Perakuan diluluskan · Menunggu pembayaran
+                        </p>
+                      </div>
+                      <span class="log-time">9:15 AM</span>
+                    </div>
+
+                    <div class="log-item">
+                      <span class="log-badge is-info">
+                        <i class="bi bi-clipboard-check"></i>
+                      </span>
+                      <div class="log-body">
+                        <p class="log-title">
+                          <span class="log-actor">Nur binti Ahmad</span>
+                          menyelesaikan lawatan tapak premis
+                        </p>
+                        <p class="log-sub">
+                          Laporan lawatan tapak telah dimuat naik
+                        </p>
+                      </div>
+                      <span class="log-time">11:20 AM</span>
+                    </div>
+
+                    <div class="log-item">
+                      <span class="log-badge">
+                        <i class="bi bi-file-earmark-text"></i>
+                      </span>
+                      <div class="log-body">
+                        <p class="log-title">
+                          <span class="log-actor">Nur binti Ahmad</span>
+                          memulakan Semakan Teknikal
+                        </p>
+                        <p class="log-sub">
+                          Menilai formulasi, kandungan nutrien dan label
+                        </p>
+                      </div>
+                      <span class="log-time">3:40 PM</span>
+                    </div>
+
+                    <div class="log-day">
+                      <i class="bi bi-calendar-week"></i>
+                      Selasa, 20 Oktober 2026
+                    </div>
+
+                    <div class="log-item">
+                      <span class="log-badge is-warning">
+                        <i class="bi bi-arrow-repeat"></i>
+                      </span>
+                      <div class="log-body">
+                        <p class="log-title">
+                          <span class="log-actor">Aisyah Hassan</span>
+                          mengemas kini komposisi nutrien
+                        </p>
+                        <p class="log-sub">
+                          Perubahan pada: N 14% → N 15% · CoA baharu dimuat naik
+                        </p>
+                      </div>
+                      <span class="log-time">4:10 PM</span>
+                    </div>
+
+                    <div class="log-item">
+                      <span class="log-badge is-info">
+                        <i class="bi bi-cloud-arrow-up"></i>
+                      </span>
+                      <div class="log-body">
+                        <p class="log-title">
+                          <span class="log-actor">Aisyah Hassan</span>
+                          memuat naik 3 dokumen sokongan
+                        </p>
+                        <p class="log-sub">
+                          MSDS / SDS · CoA · Gambar Pembungkusan
+                        </p>
+                      </div>
+                      <span class="log-time">2:35 PM</span>
+                    </div>
+
+                    <div class="log-day">
+                      <i class="bi bi-calendar-week"></i>
+                      Isnin, 18 Oktober 2026
+                    </div>
+
+                    <div class="log-item">
+                      <span class="log-badge is-success">
+                        <i class="bi bi-plus-circle"></i>
+                      </span>
+                      <div class="log-body">
+                        <p class="log-title">
+                          <span class="log-actor">Aisyah Hassan</span>
+                          mendaftarkan produk ini
+                        </p>
+                        <p class="log-sub">
+                          Permohonan pendaftaran dihantar untuk semakan DOA
+                        </p>
+                      </div>
+                      <span class="log-time">5:00 PM</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ============ STEPPER ASIDE ============ -->
+            <aside class="stepper-aside">
+              <!-- Payment CTA -->
+              <div class="pay-cta mb-3">
+                <div class="pay-pill-amount">
+                  <i class="bi bi-cash-stack"></i>RM 350.00
+                </div>
+                <h4>Pembayaran diperlukan</h4>
+                <p>
+                  Perakuan telah diluluskan. Sila bayar sebelum
+                  <strong>12 Nov 2026</strong> untuk mengaktifkan perakuan.
+                </p>
+                <a
+                  href="#"
+                  class="btn btn-primary btn-sm w-100 d-flex align-items-center justify-content-center"
+                >
+                  <i class="bi bi-credit-card me-1"></i>Bayar Sekarang
+                </a>
+              </div>
+
+              <div class="meta-card mb-3">
+                <h4>Pemegang Perakuan</h4>
+                <div class="reviewer-card">
+                  <span class="reviewer-avatar">BA</span>
+                  <div>
+                    <p class="reviewer-name">Borneo Agro Sdn Bhd</p>
+                    <p class="reviewer-role">
+                      Syarikat &middot; No. SSM 202301012345
+                    </p>
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-envelope"></i>
+                  <div>
+                    <strong>E-mel</strong>
+                    info@borneoagro.com.my
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-telephone"></i>
+                  <div>
+                    <strong>Telefon</strong>
+                    +60 88 234 567
+                  </div>
+                </div>
+              </div>
+
+              <div class="meta-card mb-3">
+                <h4>Maklumat produk</h4>
+                <div class="meta-row">
+                  <i class="bi bi-hash"></i>
+                  <div>
+                    <strong>No. rujukan</strong>
+                    PB/2026/87128
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-calendar-event"></i>
+                  <div>
+                    <strong>Tarikh didaftarkan</strong>
+                    18 Oktober 2026, 5:00 PM
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-cash-stack"></i>
+                  <div>
+                    <strong>Jumlah bayaran</strong>
+                    RM 350.00
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-flag"></i>
+                  <div>
+                    <strong>Status</strong>
+                    <span class="strip-pill is-warning mt-1">
+                      <i class="bi bi-hourglass-split"></i>Menunggu Pembayaran
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="meta-card mb-3">
+                <h4>Ringkasan peringkat</h4>
+                <div class="meta-row">
+                  <i class="bi bi-check-circle-fill text-success"></i>
+                  <div>
+                    <strong>Semakan dokumen</strong>
+                    Lulus · 19 Okt 2026
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-check-circle-fill text-success"></i>
+                  <div>
+                    <strong>Semakan Teknikal</strong>
+                    Lulus · 24 Okt 2026
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-check-circle-fill text-success"></i>
+                  <div>
+                    <strong>Lawatan tapak</strong>
+                    Lulus · 26 Okt 2026
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-check-circle-fill text-success"></i>
+                  <div>
+                    <strong>Perakuan Diluluskan</strong>
+                    Diluluskan · 28 Okt 2026
+                  </div>
+                </div>
+                <div class="meta-row">
+                  <i class="bi bi-hourglass-split text-warning"></i>
+                  <div>
+                    <strong>Pembayaran</strong>
+                    Menunggu · sebelum 12 Nov 2026
+                  </div>
+                </div>
+              </div>
+
+              <div class="help-box">
+                <span class="help-icon"><i class="bi bi-question-lg"></i></span>
+                <h4>Ada pertanyaan?</h4>
+                <p>
+                  Hubungi pegawai penilai atau pasukan sokongan DOA untuk
+                  pertanyaan lanjut berkenaan pembayaran dan perakuan ini.
+                </p>
+                <button type="button" class="btn btn-outline-primary btn-sm">
+                  Hubungi pegawai
+                </button>
+              </div>
+            </aside>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /* ===== Sidebar toggle ===== */
+      (function () {
+        var app = document.querySelector(".app");
+        var btn = app.querySelector("#sidebar-toggle");
+        var KEY = "sidebar-collapsed";
+
+        function sync() {
+          var collapsed = app.classList.contains("is-collapsed");
+          var label = collapsed ? "Buka bar sisi" : "Tutup bar sisi";
+          btn.setAttribute("aria-expanded", String(!collapsed));
+          btn.setAttribute("aria-label", label);
+          btn.title = label;
+        }
+
+        btn.addEventListener("click", function () {
+          app.classList.toggle("is-collapsed");
+          sync();
+          try {
+            localStorage.setItem(
+              KEY,
+              app.classList.contains("is-collapsed") ? "1" : "0",
+            );
+          } catch (e) {}
+        });
+
+        sync();
+      })();
+
+      /* ===== Tabs ===== */
+      (function () {
+        var tabs = document.querySelectorAll(".detail-tab");
+        var panels = document.querySelectorAll(".detail-panel");
+
+        tabs.forEach(function (tab) {
+          tab.addEventListener("click", function () {
+            var target = tab.getAttribute("data-tab");
+
+            tabs.forEach(function (t) {
+              t.classList.toggle("active", t === tab);
+            });
+            panels.forEach(function (p) {
+              p.classList.toggle(
+                "active",
+                p.getAttribute("data-panel") === target,
+              );
+            });
+          });
+        });
+      })();
+
+      /* =========================================================
+         Load product from URL query string
+         ========================================================= */
+      (function () {
+        try {
+          var params = new URLSearchParams(window.location.search);
+
+          function setText(id, val) {
+            if (!val) return;
+            var el = document.getElementById(id);
+            if (el) el.textContent = val;
+          }
+
+          setText("product-name-head", params.get("name"));
+          setText("p-category", params.get("category"));
+          setText("p-form", params.get("form"));
+
+          var name = params.get("name");
+          if (name) document.title = name + " | Portal Pendaftaran Baja";
+        } catch (e) {}
+      })();
+    </script>
+  </body>
+</html>

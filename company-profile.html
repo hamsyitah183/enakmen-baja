@@ -16,11 +16,20 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
       rel="stylesheet"
     />
+    <link
+      href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css"
+      rel="stylesheet"
+    />
     <link href="css/base.css" rel="stylesheet" />
     <link href="css/components.css" rel="stylesheet" />
     <link href="css/dashboard.css" rel="stylesheet" />
     <link href="css/complete-account.css" rel="stylesheet" />
     <link href="css/list.css" rel="stylesheet" />
+    <link href="css/datatable.css" rel="stylesheet" />
     <link href="css/viewModal.css" rel="stylesheet" />
     <title>Profil Organisasi | Portal Pendaftaran Baja</title>
 
@@ -556,93 +565,204 @@
         font-size: 0.9rem;
       }
 
-      /* ---------- Activity log ---------- */
-      .activity-log {
+      /* ==========================================================
+         AKTIVITI LESEN — panel grid
+         ========================================================== */
+      .license-grid {
         display: grid;
-        gap: 0;
-        background: var(--color-surface);
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 0.85rem;
+      }
+      .license-card {
         border: 1px solid var(--color-border);
         border-radius: var(--radius-md);
-        padding: 0.5rem 1.25rem;
-      }
-      .log-item {
-        display: grid;
-        grid-template-columns: 36px minmax(0, 1fr) auto;
-        gap: 1rem;
+        padding: 1.15rem 1.25rem;
+        background: var(--color-surface);
+        display: flex;
         align-items: flex-start;
-        padding: 0.95rem 0;
-        position: relative;
+        gap: 1rem;
+        transition: 0.15s;
       }
-      .log-item + .log-item {
-        border-top: 1px solid var(--color-border);
+      .license-card:hover {
+        border-color: var(--color-primary-300);
       }
-      .log-badge {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
+      .license-card .lc-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
         display: grid;
         place-items: center;
-        background: var(--color-surface-2);
-        color: var(--color-muted);
-        font-size: 0.9rem;
+        font-size: 1.2rem;
+        flex: none;
       }
-      .log-badge.is-success {
-        background: var(--color-primary-50);
-        color: var(--color-primary-600);
+      .license-card .lc-icon.is-import {
+        background: #dbeafe;
+        color: #1d4ed8;
       }
-      .log-badge.is-warning {
-        background: var(--color-warning-bg);
-        color: var(--color-warning);
+      .license-card .lc-icon.is-export {
+        background: #ede9fe;
+        color: #6d28d9;
       }
-      .log-badge.is-info {
-        background: var(--color-info-bg);
-        color: var(--color-info);
+      .license-card .lc-icon.is-manufacture {
+        background: #dcfce7;
+        color: #166534;
       }
-      .log-body {
-        padding-top: 0.1rem;
+      .license-card .lc-icon.is-seller {
+        background: #fef3c7;
+        color: #b45309;
+      }
+      .license-card .lc-body {
+        flex: 1;
         min-width: 0;
       }
-      .log-title {
-        font-weight: 600;
-        font-size: 0.88rem;
-        margin: 0 0 0.2rem;
+      .license-card .lc-title {
+        font-size: 0.95rem;
+        font-weight: 700;
         color: var(--color-text);
-        line-height: 1.4;
+        margin: 0 0 0.2rem;
       }
-      .log-title .log-actor {
-        color: var(--color-primary-700);
-      }
-      .log-sub {
+      .license-card .lc-desc {
         font-size: 0.78rem;
         color: var(--color-muted);
-        margin: 0;
+        margin: 0 0 0.5rem;
         line-height: 1.5;
       }
-      .log-time {
-        font-size: 0.75rem;
-        color: var(--color-muted);
-        white-space: nowrap;
-        padding-top: 0.25rem;
-      }
-      .log-day {
+      .license-card .lc-meta {
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+      .license-card .lc-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 0.22rem 0.6rem;
+        border-radius: 999px;
+        background: var(--color-primary-100);
+        color: var(--color-primary-800);
+      }
+      .license-card .lc-pill.is-attach {
+        background: var(--color-surface-2);
+        color: var(--color-muted);
+      }
+
+      /* ==========================================================
+         SEMAKAN TEKNIKAL / SENARAI PRODUK — table cells
+         ========================================================== */
+      .cell-officer {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+      .officer-avatar {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-100);
+        color: var(--color-primary-800);
+        font-weight: 600;
+        font-size: 0.72rem;
+        flex: none;
+      }
+      .officer-name {
+        font-weight: 600;
+        font-size: 0.82rem;
+        margin: 0;
+        color: var(--color-text);
+        line-height: 1.3;
+      }
+      .officer-role {
+        font-size: 0.72rem;
+        color: var(--color-muted);
+        margin: 0;
+      }
+
+      .cell-account {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      .account-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-50);
+        color: var(--color-primary-700);
+        font-size: 1rem;
+        flex: none;
+      }
+      .account-title {
+        font-weight: 600;
+        font-size: 0.85rem;
+        margin: 0;
+        color: var(--color-text);
+        line-height: 1.3;
+      }
+      .account-sub {
+        font-size: 0.72rem;
+        color: var(--color-muted);
+        margin: 0;
+        line-height: 1.3;
+      }
+
+      /* ---------- Priority pill ---------- */
+      .priority-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 0.2rem 0.55rem;
+        border-radius: 999px;
+      }
+      .priority-pill.is-high {
+        background: #fee2e2;
+        color: #b91c1c;
+      }
+      .priority-pill.is-medium {
+        background: var(--color-warning-bg);
+        color: var(--color-warning);
+      }
+      .priority-pill.is-low {
+        background: var(--color-surface-2);
+        color: var(--color-muted);
+      }
+
+      /* ---------- Queue number badge ---------- */
+      .queue-no {
+        font-family: monospace;
         font-size: 0.72rem;
         font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
         color: var(--color-muted);
-        padding: 0.85rem 0 0.5rem;
-        margin-top: 0.25rem;
-        border-top: 1px solid var(--color-border);
+        background: var(--color-surface-2);
+        border-radius: 6px;
+        padding: 0.15rem 0.45rem;
       }
-      .log-day:first-child {
-        margin-top: 0;
-        border-top: 0;
-        padding-top: 0.75rem;
+
+      /* ---------- Table surface inside panel ---------- */
+      .detail-panel .table-surface {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        padding: 0.5rem 1rem 1rem;
+        overflow: hidden;
       }
-      .log-day i {
+      .detail-panel .filter-bar {
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        padding: 1rem 1.15rem;
+        margin-bottom: 1rem;
+      }
+      .detail-panel .dataTables_wrapper .form-control,
+      .detail-panel .dataTables_wrapper .form-select {
         font-size: 0.85rem;
       }
 
@@ -800,20 +920,17 @@
         .def-grid {
           grid-template-columns: 1fr;
         }
-        .log-item {
-          grid-template-columns: 36px minmax(0, 1fr);
-          gap: 0.75rem;
-        }
-        .log-time {
-          grid-column: 2 / -1;
-          padding-top: 0.15rem;
-        }
         .attach-grid {
           grid-template-columns: 1fr;
         }
         .detail-panel {
           padding-top: 1.25rem;
           padding-bottom: 1.25rem;
+        }
+        .detail-panel .filter-bar,
+        .detail-panel .table-surface {
+          padding-left: 0.75rem;
+          padding-right: 0.75rem;
         }
       }
     </style>
@@ -1102,10 +1219,10 @@
                     type="button"
                     class="detail-tab"
                     role="tab"
-                    data-tab="rep"
+                    data-tab="licenses"
                   >
-                    <i class="bi bi-person-badge"></i>Wakil Syarikat
-                    <span class="tab-count">2</span>
+                    <i class="bi bi-patch-check"></i>Aktiviti Lesen
+                    <span class="tab-count">4</span>
                   </button>
                   <button
                     type="button"
@@ -1120,10 +1237,19 @@
                     type="button"
                     class="detail-tab"
                     role="tab"
-                    data-tab="activity"
+                    data-tab="technical"
                   >
-                    <i class="bi bi-activity"></i>Log Aktiviti
+                    <i class="bi bi-clipboard2-check"></i>Semakan Teknikal
                     <span class="tab-count">5</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="detail-tab"
+                    role="tab"
+                    data-tab="products"
+                  >
+                    <i class="bi bi-box-seam"></i>Senarai Produk
+                    <span class="tab-count">7</span>
                   </button>
                 </div>
 
@@ -1204,7 +1330,107 @@
                       </div>
                     </div>
 
-                    <!-- Accordion 2: Cawangan -->
+                    <!-- Accordion 2: Wakil Syarikat -->
+                    <div class="onboard-item" data-accordion="reps">
+                      <button
+                        type="button"
+                        class="onboard-row as-button"
+                        aria-expanded="false"
+                        aria-controls="body-reps"
+                      >
+                        <span class="onboard-icon is-amber">
+                          <i class="bi bi-person-badge"></i>
+                        </span>
+                        <div class="onboard-main">
+                          <h3 class="onboard-title">Wakil syarikat</h3>
+                          <p class="onboard-desc">
+                            2 individu didaftarkan
+                          </p>
+                        </div>
+                        <span class="onboard-action accordion-chevron">
+                          <i class="bi bi-chevron-down"></i>
+                        </span>
+                      </button>
+                      <div class="onboard-body" id="body-reps" hidden>
+                        <p class="text-muted-2 small mb-3">
+                          Individu yang bertanggungjawab ke atas permohonan.
+                          Pengarah dan pengurus boleh dipertanggungjawabkan atas
+                          kesalahan di bawah Enakmen.
+                        </p>
+
+                        <div class="list">
+                          <div class="list-item">
+                            <div class="list-item-avatar">AH</div>
+                            <div class="list-item-body">
+                              <div class="list-item-head">
+                                <div>
+                                  <p class="list-item-title">
+                                    Aisyah Hassan
+                                  </p>
+                                  <p class="list-item-sub">
+                                    Pengarah Urusan
+                                  </p>
+                                </div>
+                                <span class="pill pill-success">
+                                  <i class="bi bi-patch-check-fill"></i
+                                  >Disahkan
+                                </span>
+                              </div>
+                              <dl class="list-item-meta">
+                                <div>
+                                  <dt>No. KP</dt>
+                                  <dd>900101-12-3456</dd>
+                                </div>
+                                <div>
+                                  <dt>Telefon</dt>
+                                  <dd>+60 12 345 6789</dd>
+                                </div>
+                                <div>
+                                  <dt>E-mel</dt>
+                                  <dd>aisyah@borneoagro.com.my</dd>
+                                </div>
+                              </dl>
+                            </div>
+                          </div>
+
+                          <div class="list-item">
+                            <div class="list-item-avatar">LM</div>
+                            <div class="list-item-body">
+                              <div class="list-item-head">
+                                <div>
+                                  <p class="list-item-title">
+                                    Lim Wei Ming
+                                  </p>
+                                  <p class="list-item-sub">
+                                    Pengurus Operasi
+                                  </p>
+                                </div>
+                                <span class="pill pill-warning">
+                                  <i class="bi bi-hourglass-split"></i>Dalam
+                                  semakan
+                                </span>
+                              </div>
+                              <dl class="list-item-meta">
+                                <div>
+                                  <dt>No. KP</dt>
+                                  <dd>880202-12-5566</dd>
+                                </div>
+                                <div>
+                                  <dt>Telefon</dt>
+                                  <dd>+60 13 888 9999</dd>
+                                </div>
+                                <div>
+                                  <dt>E-mel</dt>
+                                  <dd>weiming@borneoagro.com.my</dd>
+                                </div>
+                              </dl>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Accordion 3: Cawangan -->
                     <div class="onboard-item" data-accordion="branches">
                       <button
                         type="button"
@@ -1275,255 +1501,98 @@
                         </div>
                       </div>
                     </div>
-
-                    <!-- Accordion 3: Produk Berdaftar -->
-                    <div class="onboard-item" data-accordion="products">
-                      <button
-                        type="button"
-                        class="onboard-row as-button"
-                        aria-expanded="false"
-                        aria-controls="body-products"
-                      >
-                        <span class="onboard-icon is-amber">
-                          <i class="bi bi-box-seam"></i>
-                        </span>
-                        <div class="onboard-main">
-                          <h3 class="onboard-title">Produk berdaftar</h3>
-                          <p class="onboard-desc">3 produk didaftarkan</p>
-                        </div>
-                        <span class="onboard-action accordion-chevron">
-                          <i class="bi bi-chevron-down"></i>
-                        </span>
-                      </button>
-                      <div class="onboard-body" id="body-products" hidden>
-                        <div class="list">
-                          <div class="list-item">
-                            <div class="list-item-body">
-                              <div class="list-item-title">
-                                Baja Sawit Premium
-                              </div>
-                              <div class="list-item-sub">
-                                Baja Sebatian &middot; Butiran (Granular)
-                              </div>
-                            </div>
-                            <div class="list-item-side">
-                              <span class="pill pill-success">Berdaftar</span>
-                              <button
-                                type="button"
-                                class="btn btn-icon"
-                                data-view-product="0"
-                                aria-label="Lihat produk"
-                              >
-                                <i class="bi bi-eye"></i>
-                              </button>
-                            </div>
-                          </div>
-
-                          <div class="list-item">
-                            <div class="list-item-body">
-                              <div class="list-item-title">
-                                Baja Organik Plus
-                              </div>
-                              <div class="list-item-sub">
-                                Baja Organik &middot; Serbuk (Powder)
-                              </div>
-                            </div>
-                            <div class="list-item-side">
-                              <span class="pill pill-success">Berdaftar</span>
-                              <button
-                                type="button"
-                                class="btn btn-icon"
-                                data-view-product="1"
-                                aria-label="Lihat produk"
-                              >
-                                <i class="bi bi-eye"></i>
-                              </button>
-                            </div>
-                          </div>
-
-                          <div class="list-item">
-                            <div class="list-item-body">
-                              <div class="list-item-title">Baja Mikro N</div>
-                              <div class="list-item-sub">
-                                Baja Mikronutrien &middot; Cecair (Liquid)
-                              </div>
-                            </div>
-                            <div class="list-item-side">
-                              <span class="pill pill-success">Berdaftar</span>
-                              <button
-                                type="button"
-                                class="btn btn-icon"
-                                data-view-product="2"
-                                aria-label="Lihat produk"
-                              >
-                                <i class="bi bi-eye"></i>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- Accordion 4: Aktiviti Lesen -->
-                    <div class="onboard-item" data-accordion="licenses">
-                      <button
-                        type="button"
-                        class="onboard-row as-button"
-                        aria-expanded="false"
-                        aria-controls="body-licenses"
-                      >
-                        <span class="onboard-icon">
-                          <i class="bi bi-patch-check"></i>
-                        </span>
-                        <div class="onboard-main">
-                          <h3 class="onboard-title">Aktiviti lesen</h3>
-                          <p class="onboard-desc">
-                            4 aktiviti lesen didaftarkan
-                          </p>
-                        </div>
-                        <span class="onboard-action accordion-chevron">
-                          <i class="bi bi-chevron-down"></i>
-                        </span>
-                      </button>
-                      <div class="onboard-body" id="body-licenses" hidden>
-                        <div class="list">
-                          <div class="list-item">
-                            <div class="list-item-body">
-                              <div class="list-item-title">
-                                <i
-                                  class="bi bi-box-arrow-in-down text-muted-2"
-                                ></i>
-                                Pengimport
-                              </div>
-                              <div class="list-item-sub">
-                                2 fail dilampirkan
-                              </div>
-                            </div>
-                            <div class="list-item-side">
-                              <span class="pill pill-success">Aktif</span>
-                            </div>
-                          </div>
-
-                          <div class="list-item">
-                            <div class="list-item-body">
-                              <div class="list-item-title">
-                                <i
-                                  class="bi bi-box-arrow-up-right text-muted-2"
-                                ></i>
-                                Pengeksport
-                              </div>
-                              <div class="list-item-sub">
-                                1 fail dilampirkan
-                              </div>
-                            </div>
-                            <div class="list-item-side">
-                              <span class="pill pill-success">Aktif</span>
-                            </div>
-                          </div>
-
-                          <div class="list-item">
-                            <div class="list-item-body">
-                              <div class="list-item-title">
-                                <i
-                                  class="bi bi-gear-wide-connected text-muted-2"
-                                ></i>
-                                Pengilang
-                              </div>
-                              <div class="list-item-sub">
-                                3 fail dilampirkan
-                              </div>
-                            </div>
-                            <div class="list-item-side">
-                              <span class="pill pill-success">Aktif</span>
-                            </div>
-                          </div>
-
-                          <div class="list-item">
-                            <div class="list-item-body">
-                              <div class="list-item-title">
-                                <i class="bi bi-shop text-muted-2"></i>
-                                Penjual
-                              </div>
-                              <div class="list-item-sub">
-                                2 fail dilampirkan
-                              </div>
-                            </div>
-                            <div class="list-item-side">
-                              <span class="pill pill-success">Aktif</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
 
-                <!-- ============ TAB PANEL: Wakil Syarikat ============ -->
-                <div class="detail-panel" data-panel="rep">
-                  <div class="panel-section">
-                    <h2 class="panel-title">Wakil Syarikat Berdaftar</h2>
-                    <p class="panel-desc">
-                      Individu yang bertanggungjawab ke atas permohonan.
-                      Pengarah dan pengurus boleh dipertanggungjawabkan atas
-                      kesalahan di bawah Enakmen.
-                    </p>
+                <!-- ============ TAB PANEL: Aktiviti Lesen ============ -->
+                <div class="detail-panel" data-panel="licenses">
+                  <h2 class="panel-title">Aktiviti Lesen Berdaftar</h2>
+                  <p class="panel-desc" style="margin-bottom: 1.25rem">
+                    Aktiviti lesen yang diluluskan untuk organisasi ini di bawah
+                    Enakmen Baja Pertanian 2025.
+                  </p>
 
-                    <div class="list">
-                      <div class="list-item">
-                        <div class="list-item-avatar">AH</div>
-                        <div class="list-item-body">
-                          <div class="list-item-head">
-                            <div>
-                              <p class="list-item-title">Aisyah Hassan</p>
-                              <p class="list-item-sub">Pengarah Urusan</p>
-                            </div>
-                            <span class="pill pill-success">
-                              <i class="bi bi-patch-check-fill"></i>Disahkan
-                            </span>
-                          </div>
-                          <dl class="list-item-meta">
-                            <div>
-                              <dt>No. KP</dt>
-                              <dd>900101-12-3456</dd>
-                            </div>
-                            <div>
-                              <dt>Telefon</dt>
-                              <dd>+60 12 345 6789</dd>
-                            </div>
-                            <div>
-                              <dt>E-mel</dt>
-                              <dd>aisyah@borneoagro.com.my</dd>
-                            </div>
-                          </dl>
+                  <div class="license-grid">
+                    <div class="license-card">
+                      <span class="lc-icon is-import">
+                        <i class="bi bi-box-arrow-in-down"></i>
+                      </span>
+                      <div class="lc-body">
+                        <p class="lc-title">Pengimport</p>
+                        <p class="lc-desc">
+                          Import baja untuk kegunaan tempatan dan pengedaran
+                          dalam negeri.
+                        </p>
+                        <div class="lc-meta">
+                          <span class="lc-pill">
+                            <i class="bi bi-check-circle-fill"></i>Aktif
+                          </span>
+                          <span class="lc-pill is-attach">
+                            <i class="bi bi-paperclip"></i>2 fail
+                          </span>
                         </div>
                       </div>
+                    </div>
 
-                      <div class="list-item">
-                        <div class="list-item-avatar">LM</div>
-                        <div class="list-item-body">
-                          <div class="list-item-head">
-                            <div>
-                              <p class="list-item-title">Lim Wei Ming</p>
-                              <p class="list-item-sub">Pengurus Operasi</p>
-                            </div>
-                            <span class="pill pill-warning">
-                              <i class="bi bi-hourglass-split"></i>Dalam semakan
-                            </span>
-                          </div>
-                          <dl class="list-item-meta">
-                            <div>
-                              <dt>No. KP</dt>
-                              <dd>880202-12-5566</dd>
-                            </div>
-                            <div>
-                              <dt>Telefon</dt>
-                              <dd>+60 13 888 9999</dd>
-                            </div>
-                            <div>
-                              <dt>E-mel</dt>
-                              <dd>weiming@borneoagro.com.my</dd>
-                            </div>
-                          </dl>
+                    <div class="license-card">
+                      <span class="lc-icon is-export">
+                        <i class="bi bi-box-arrow-up-right"></i>
+                      </span>
+                      <div class="lc-body">
+                        <p class="lc-title">Pengeksport</p>
+                        <p class="lc-desc">
+                          Eksport baja ke pasaran luar negara dengan
+                          perakuan yang sah.
+                        </p>
+                        <div class="lc-meta">
+                          <span class="lc-pill">
+                            <i class="bi bi-check-circle-fill"></i>Aktif
+                          </span>
+                          <span class="lc-pill is-attach">
+                            <i class="bi bi-paperclip"></i>1 fail
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="license-card">
+                      <span class="lc-icon is-manufacture">
+                        <i class="bi bi-gear-wide-connected"></i>
+                      </span>
+                      <div class="lc-body">
+                        <p class="lc-title">Pengilang</p>
+                        <p class="lc-desc">
+                          Pengilangan dan pemprosesan baja untuk pengedaran
+                          komersial.
+                        </p>
+                        <div class="lc-meta">
+                          <span class="lc-pill">
+                            <i class="bi bi-check-circle-fill"></i>Aktif
+                          </span>
+                          <span class="lc-pill is-attach">
+                            <i class="bi bi-paperclip"></i>3 fail
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="license-card">
+                      <span class="lc-icon is-seller">
+                        <i class="bi bi-shop"></i>
+                      </span>
+                      <div class="lc-body">
+                        <p class="lc-title">Penjual</p>
+                        <p class="lc-desc">
+                          Pengedaran dan penjualan runcit baja kepada pemain
+                          industri.
+                        </p>
+                        <div class="lc-meta">
+                          <span class="lc-pill">
+                            <i class="bi bi-check-circle-fill"></i>Aktif
+                          </span>
+                          <span class="lc-pill is-attach">
+                            <i class="bi bi-paperclip"></i>2 fail
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -1623,106 +1692,649 @@
                   </div>
                 </div>
 
-                <!-- ============ TAB PANEL: Log Aktiviti ============ -->
-                <div class="detail-panel" data-panel="activity">
-                  <h2 class="panel-title">Log Aktiviti Profil</h2>
+                <!-- ============ TAB PANEL: Semakan Teknikal (Akaun) ============ -->
+                <div class="detail-panel" data-panel="technical">
+                  <h2 class="panel-title">Senarai Semakan Teknikal — Akaun</h2>
+                  <p class="panel-desc" style="margin-bottom: 1.25rem">
+                    Urus semakan teknikal bagi akaun yang menunggu pengesahan.
+                    Tapis dan susun mengikut keutamaan sebelum memulakan
+                    semakan.
+                  </p>
 
-                  <div class="activity-log">
-                    <div class="log-day">
-                      <i class="bi bi-calendar-week"></i>
-                      Isnin, 19 Oktober 2026
-                    </div>
-
-                    <div class="log-item">
-                      <span class="log-badge is-success">
-                        <i class="bi bi-patch-check-fill"></i>
-                      </span>
-                      <div class="log-body">
-                        <p class="log-title">
-                          <span class="log-actor">Nur binti Ahmad</span>
-                          mengesahkan profil organisasi
-                        </p>
-                        <p class="log-sub">
-                          Semua dokumen dan maklumat syarikat disahkan
-                        </p>
+                  <!-- Filters -->
+                  <div class="filter-bar">
+                    <div
+                      class="row g-2 g-md-3 align-items-md-end flex-grow-1 w-100 w-md-auto"
+                    >
+                      <div class="col-12 col-md-auto">
+                        <span class="filter-label d-block mb-1 mb-md-2">
+                          <i class="bi bi-funnel me-1"></i>Tapis:
+                        </span>
                       </div>
-                      <span class="log-time">10:13 AM</span>
-                    </div>
 
-                    <div class="log-item">
-                      <span class="log-badge is-info">
-                        <i class="bi bi-search"></i>
-                      </span>
-                      <div class="log-body">
-                        <p class="log-title">
-                          <span class="log-actor">Nur binti Ahmad</span>
-                          memulakan semakan profil
-                        </p>
-                        <p class="log-sub">
-                          Menyemak maklumat syarikat dan dokumen sokongan
-                        </p>
+                      <div class="col-12 col-sm-6 col-lg-3">
+                        <label
+                          class="form-label visually-hidden"
+                          for="acc-filter-type"
+                          >Jenis pemohon</label
+                        >
+                        <select class="form-select" id="acc-filter-type">
+                          <option value="">Semua jenis</option>
+                          <option>Syarikat</option>
+                          <option>Individu</option>
+                        </select>
                       </div>
-                      <span class="log-time">9:00 AM</span>
-                    </div>
 
-                    <div class="log-day">
-                      <i class="bi bi-calendar-week"></i>
-                      Selasa, 20 Februari 2024
-                    </div>
-
-                    <div class="log-item">
-                      <span class="log-badge is-warning">
-                        <i class="bi bi-arrow-repeat"></i>
-                      </span>
-                      <div class="log-body">
-                        <p class="log-title">
-                          <span class="log-actor">Aisyah Hassan</span>
-                          mengemas kini maklumat wakil syarikat
-                        </p>
-                        <p class="log-sub">
-                          Menambah Lim Wei Ming sebagai Pengurus Operasi
-                        </p>
+                      <div class="col-12 col-sm-6 col-lg-3">
+                        <label
+                          class="form-label visually-hidden"
+                          for="acc-filter-status"
+                          >Status</label
+                        >
+                        <select class="form-select" id="acc-filter-status">
+                          <option value="">Semua status</option>
+                          <option>Menunggu semakan</option>
+                          <option>Dalam semakan</option>
+                          <option>Perlu maklumat tambahan</option>
+                        </select>
                       </div>
-                      <span class="log-time">3:45 PM</span>
-                    </div>
 
-                    <div class="log-day">
-                      <i class="bi bi-calendar-week"></i>
-                      Isnin, 15 Januari 2024
-                    </div>
-
-                    <div class="log-item">
-                      <span class="log-badge is-info">
-                        <i class="bi bi-cloud-arrow-up"></i>
-                      </span>
-                      <div class="log-body">
-                        <p class="log-title">
-                          <span class="log-actor">Aisyah Hassan</span>
-                          memuat naik 6 dokumen sokongan
-                        </p>
-                        <p class="log-sub">
-                          Sijil SSM · Lesen Perniagaan · MIDA · ICA 10 · Kad
-                          Pengenalan · Surat Kuasa
-                        </p>
+                      <div class="col-12 col-sm-6 col-lg-3">
+                        <label
+                          class="form-label visually-hidden"
+                          for="acc-filter-priority"
+                          >Keutamaan</label
+                        >
+                        <select class="form-select" id="acc-filter-priority">
+                          <option value="">Semua keutamaan</option>
+                          <option>Tinggi</option>
+                          <option>Sederhana</option>
+                          <option>Rendah</option>
+                        </select>
                       </div>
-                      <span class="log-time">11:20 AM</span>
+
+                      <div class="col-12 col-sm-6 col-lg-auto">
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary w-100"
+                          id="acc-filter-reset"
+                        >
+                          <i class="bi bi-x-lg me-1"></i>Set semula
+                        </button>
+                      </div>
+
+                      <div class="col-12 d-md-none">
+                        <button
+                          type="button"
+                          class="btn btn-outline-primary w-100"
+                          id="acc-export-mobile"
+                        >
+                          <i class="bi bi-download me-1"></i>Eksport CSV
+                        </button>
+                      </div>
                     </div>
 
-                    <div class="log-item">
-                      <span class="log-badge is-success">
-                        <i class="bi bi-plus-circle"></i>
-                      </span>
-                      <div class="log-body">
-                        <p class="log-title">
-                          <span class="log-actor">Aisyah Hassan</span>
-                          mendaftarkan profil organisasi
-                        </p>
-                        <p class="log-sub">
-                          Profil Borneo Agro Sdn Bhd dihantar untuk semakan DOA
-                        </p>
-                      </div>
-                      <span class="log-time">10:30 AM</span>
+                    <div class="d-none d-md-flex ms-md-auto">
+                      <button
+                        type="button"
+                        class="btn btn-outline-primary"
+                        id="acc-export"
+                      >
+                        <i class="bi bi-download me-1"></i>Eksport CSV
+                      </button>
                     </div>
+                  </div>
+
+                  <!-- Accounts table -->
+                  <div class="table-surface">
+                    <table
+                      id="accounts-table"
+                      class="table align-middle nowrap"
+                      style="width: 100%"
+                    >
+                      <thead>
+                        <tr>
+                          <th>No. Giliran</th>
+                          <th>Akaun</th>
+                          <th>Jenis</th>
+                          <th>Tarikh Diterima</th>
+                          <th>Pegawai</th>
+                          <th>Keutamaan</th>
+                          <th>Status</th>
+                          <th class="text-end">Tindakan</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><span class="queue-no">Q-001</span></td>
+                          <td>
+                            <div class="cell-account">
+                              <span class="account-icon"
+                                ><i class="bi bi-building"></i
+                              ></span>
+                              <div>
+                                <p class="account-title">
+                                  Borneo Agro Sdn Bhd
+                                </p>
+                                <p class="account-sub">SSM 202301012345</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>Syarikat</td>
+                          <td>16 Okt 2026</td>
+                          <td>
+                            <div class="cell-officer">
+                              <span class="officer-avatar">ZA</span>
+                              <div>
+                                <p class="officer-name">Nur binti Ahmad</p>
+                                <p class="officer-role">Pegawai Teknikal</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>
+                            <span class="priority-pill is-high">
+                              <i class="bi bi-arrow-up"></i>Tinggi
+                            </span>
+                          </td>
+                          <td>
+                            <span class="status-pill is-pending">
+                              <i class="bi bi-hourglass-split"></i>Dalam semakan
+                            </span>
+                          </td>
+                          <td>
+                            <div class="row-actions">
+                              <button
+                                type="button"
+                                class="btn btn-icon"
+                                title="Lihat"
+                                data-action="view"
+                              >
+                                <i class="bi bi-eye"></i>
+                              </button>
+                              <button
+                                type="button"
+                                class="btn btn-icon"
+                                title="Semak"
+                                data-action="review"
+                              >
+                                <i class="bi bi-clipboard2-check"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+
+                     
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- ============ TAB PANEL: Senarai Produk ============ -->
+                <div class="detail-panel" data-panel="products">
+                  <h2 class="panel-title">Senarai Semakan Teknikal — Produk</h2>
+                  <p class="panel-desc" style="margin-bottom: 1.25rem">
+                    Urus semakan teknikal bagi produk yang menunggu pengesahan.
+                    Tapis mengikut kategori, status dan keutamaan.
+                  </p>
+
+                  <!-- Filters -->
+                  <div class="filter-bar">
+                    <div
+                      class="row g-2 g-md-3 align-items-md-end flex-grow-1 w-100 w-md-auto"
+                    >
+                      <div class="col-12 col-md-auto">
+                        <span class="filter-label d-block mb-1 mb-md-2">
+                          <i class="bi bi-funnel me-1"></i>Tapis:
+                        </span>
+                      </div>
+
+                      <div class="col-12 col-sm-6 col-lg-3">
+                        <label
+                          class="form-label visually-hidden"
+                          for="prod-filter-category"
+                          >Kategori</label
+                        >
+                        <select class="form-select" id="prod-filter-category">
+                          <option value="">Semua kategori</option>
+                          <option>Baja Tunggal</option>
+                          <option>Baja Campuran</option>
+                          <option>Baja Sebatian</option>
+                          <option>Baja Organik</option>
+                          <option>Baja Mikronutrien</option>
+                          <option>Baja Tambahan</option>
+                          <option>Bahan Mentah</option>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-sm-6 col-lg-3">
+                        <label
+                          class="form-label visually-hidden"
+                          for="prod-filter-status"
+                          >Status</label
+                        >
+                        <select class="form-select" id="prod-filter-status">
+                          <option value="">Semua status</option>
+                          <option>Menunggu semakan</option>
+                          <option>Dalam semakan</option>
+                          <option>Perlu maklumat tambahan</option>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-sm-6 col-lg-3">
+                        <label
+                          class="form-label visually-hidden"
+                          for="prod-filter-priority"
+                          >Keutamaan</label
+                        >
+                        <select class="form-select" id="prod-filter-priority">
+                          <option value="">Semua keutamaan</option>
+                          <option>Tinggi</option>
+                          <option>Sederhana</option>
+                          <option>Rendah</option>
+                        </select>
+                      </div>
+
+                      <div class="col-12 col-sm-6 col-lg-auto">
+                        <button
+                          type="button"
+                          class="btn btn-outline-secondary w-100"
+                          id="prod-filter-reset"
+                        >
+                          <i class="bi bi-x-lg me-1"></i>Set semula
+                        </button>
+                      </div>
+
+                      <div class="col-12 d-md-none">
+                        <button
+                          type="button"
+                          class="btn btn-outline-primary w-100"
+                          id="prod-export-mobile"
+                        >
+                          <i class="bi bi-download me-1"></i>Eksport CSV
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="d-none d-md-flex ms-md-auto">
+                      <button
+                        type="button"
+                        class="btn btn-outline-primary"
+                        id="prod-export"
+                      >
+                        <i class="bi bi-download me-1"></i>Eksport CSV
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Products table -->
+                  <div class="table-surface">
+                    <table
+                      id="products-table"
+                      class="table align-middle nowrap"
+                      style="width: 100%"
+                    >
+                      <thead>
+                        <tr>
+                          <th>No. Giliran</th>
+                          <th>Produk</th>
+                          <th>Kategori</th>
+                          <th>Pemohon</th>
+                          <th>Tarikh Diterima</th>
+                          <th>Keutamaan</th>
+                          <th>Status</th>
+                          <th class="text-end">Tindakan</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><span class="queue-no">P-101</span></td>
+                          <td>
+                            <div class="cell-product">
+                              <span class="product-icon"
+                                ><i class="bi bi-flower2"></i
+                              ></span>
+                              <div>
+                                <p class="product-title">Baja Sawit Premium</p>
+                                <p class="product-sub">
+                                  N 15%, P2O5 15%, K2O 15%
+                                </p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>Baja Sebatian</td>
+                          <td>Borneo Agro Sdn Bhd</td>
+                          <td>16 Okt 2026</td>
+                          <td>
+                            <span class="priority-pill is-high">
+                              <i class="bi bi-arrow-up"></i>Tinggi
+                            </span>
+                          </td>
+                          <td>
+                            <span class="status-pill is-pending">
+                              <i class="bi bi-hourglass-split"></i>Dalam semakan
+                            </span>
+                          </td>
+                          <td>
+                            <div class="row-actions">
+                              <button
+                                type="button"
+                                class="btn btn-icon"
+                                title="Lihat"
+                                data-action="view"
+                              >
+                                <i class="bi bi-eye"></i>
+                              </button>
+                              <button
+                                type="button"
+                                class="btn btn-icon"
+                                title="Semak"
+                                data-action="review"
+                              >
+                                <i class="bi bi-clipboard2-check"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><span class="queue-no">P-102</span></td>
+                          <td>
+                            <div class="cell-product">
+                              <span class="product-icon"
+                                ><i class="bi bi-flower2"></i
+                              ></span>
+                              <div>
+                                <p class="product-title">Baja Organik Plus</p>
+                                <p class="product-sub">
+                                  Bahan organik 60%, N 3%
+                                </p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>Baja Organik</td>
+                          <td>GreenLife Organics</td>
+                          <td>17 Okt 2026</td>
+                          <td>
+                            <span class="priority-pill is-medium">
+                              <i class="bi bi-dash"></i>Sederhana
+                            </span>
+                          </td>
+                          <td>
+                            <span class="status-pill is-pending">
+                              <i class="bi bi-hourglass-split"></i>Dalam semakan
+                            </span>
+                          </td>
+                          <td>
+                            <div class="row-actions">
+                              <button
+                                type="button"
+                                class="btn btn-icon"
+                                title="Lihat"
+                                data-action="view"
+                              >
+                                <i class="bi bi-eye"></i>
+                              </button>
+                              <button
+                                type="button"
+                                class="btn btn-icon"
+                                title="Semak"
+                                data-action="review"
+                              >
+                                <i class="bi bi-clipboard2-check"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><span class="queue-no">P-103</span></td>
+                          <td>
+                            <div class="cell-product">
+                              <span class="product-icon"
+                                ><i class="bi bi-flower2"></i
+                              ></span>
+                              <div>
+                                <p class="product-title">Baja Mikro N</p>
+                                <p class="product-sub">Zn 5%, B 2%, Cu 1%</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>Baja Mikronutrien</td>
+                          <td>AgriChem Supplies</td>
+                          <td>17 Okt 2026</td>
+                          <td>
+                            <span class="priority-pill is-low">
+                              <i class="bi bi-arrow-down"></i>Rendah
+                            </span>
+                          </td>
+                          <td>
+                            <span class="status-pill is-pending">
+                              <i class="bi bi-hourglass-split"></i>Menunggu
+                              semakan
+                            </span>
+                          </td>
+                          <td>
+                            <div class="row-actions">
+                              <button
+                                type="button"
+                                class="btn btn-icon"
+                                title="Lihat"
+                                data-action="view"
+                              >
+                                <i class="bi bi-eye"></i>
+                              </button>
+                              <button
+                                type="button"
+                                class="btn btn-icon"
+                                title="Semak"
+                                data-action="review"
+                              >
+                                <i class="bi bi-clipboard2-check"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><span class="queue-no">P-104</span></td>
+                          <td>
+                            <div class="cell-product">
+                              <span class="product-icon"
+                                ><i class="bi bi-flower2"></i
+                              ></span>
+                              <div>
+                                <p class="product-title">
+                                  Baja Kelapa Organik
+                                </p>
+                                <p class="product-sub">
+                                  Bahan organik 55%, K 5%
+                                </p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>Baja Organik</td>
+                          <td>Sabah Organic Fertilizers</td>
+                          <td>18 Okt 2026</td>
+                          <td>
+                            <span class="priority-pill is-medium">
+                              <i class="bi bi-dash"></i>Sederhana
+                            </span>
+                          </td>
+                          <td>
+                            <span class="status-pill is-warning">
+                              <i class="bi bi-info-circle"></i>Perlu maklumat
+                            </span>
+                          </td>
+                          <td>
+                            <div class="row-actions">
+                              <button
+                                type="button"
+                                class="btn btn-icon"
+                                title="Lihat"
+                                data-action="view"
+                              >
+                                <i class="bi bi-eye"></i>
+                              </button>
+                              <button
+                                type="button"
+                                class="btn btn-icon"
+                                title="Semak"
+                                data-action="review"
+                              >
+                                <i class="bi bi-clipboard2-check"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><span class="queue-no">P-105</span></td>
+                          <td>
+                            <div class="cell-product">
+                              <span class="product-icon"
+                                ><i class="bi bi-flower2"></i
+                              ></span>
+                              <div>
+                                <p class="product-title">Baja Padi Super</p>
+                                <p class="product-sub">
+                                  N 20%, P2O5 10%, K2O 10%
+                                </p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>Baja Campuran</td>
+                          <td>PadiTech Industries</td>
+                          <td>18 Okt 2026</td>
+                          <td>
+                            <span class="priority-pill is-high">
+                              <i class="bi bi-arrow-up"></i>Tinggi
+                            </span>
+                          </td>
+                          <td>
+                            <span class="status-pill is-pending">
+                              <i class="bi bi-hourglass-split"></i>Dalam semakan
+                            </span>
+                          </td>
+                          <td>
+                            <div class="row-actions">
+                              <button
+                                type="button"
+                                class="btn btn-icon"
+                                title="Lihat"
+                                data-action="view"
+                              >
+                                <i class="bi bi-eye"></i>
+                              </button>
+                              <button
+                                type="button"
+                                class="btn btn-icon"
+                                title="Semak"
+                                data-action="review"
+                              >
+                                <i class="bi bi-clipboard2-check"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><span class="queue-no">P-106</span></td>
+                          <td>
+                            <div class="cell-product">
+                              <span class="product-icon"
+                                ><i class="bi bi-flower2"></i
+                              ></span>
+                              <div>
+                                <p class="product-title">Baja Sawit K2</p>
+                                <p class="product-sub">K 25%, Mg 5%, B 1%</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>Baja Tunggal</td>
+                          <td>PalmNutrients Bhd</td>
+                          <td>19 Okt 2026</td>
+                          <td>
+                            <span class="priority-pill is-medium">
+                              <i class="bi bi-dash"></i>Sederhana
+                            </span>
+                          </td>
+                          <td>
+                            <span class="status-pill is-pending">
+                              <i class="bi bi-hourglass-split"></i>Dalam semakan
+                            </span>
+                          </td>
+                          <td>
+                            <div class="row-actions">
+                              <button
+                                type="button"
+                                class="btn btn-icon"
+                                title="Lihat"
+                                data-action="view"
+                              >
+                                <i class="bi bi-eye"></i>
+                              </button>
+                              <button
+                                type="button"
+                                class="btn btn-icon"
+                                title="Semak"
+                                data-action="review"
+                              >
+                                <i class="bi bi-clipboard2-check"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td><span class="queue-no">P-107</span></td>
+                          <td>
+                            <div class="cell-product">
+                              <span class="product-icon"
+                                ><i class="bi bi-flower2"></i
+                              ></span>
+                              <div>
+                                <p class="product-title">Bahan Mentah Urea</p>
+                                <p class="product-sub">N 46%</p>
+                              </div>
+                            </div>
+                          </td>
+                          <td>Bahan Mentah</td>
+                          <td>Chemical Supplies Sabah</td>
+                          <td>19 Okt 2026</td>
+                          <td>
+                            <span class="priority-pill is-low">
+                              <i class="bi bi-arrow-down"></i>Rendah
+                            </span>
+                          </td>
+                          <td>
+                            <span class="status-pill is-pending">
+                              <i class="bi bi-hourglass-split"></i>Menunggu
+                              semakan
+                            </span>
+                          </td>
+                          <td>
+                            <div class="row-actions">
+                              <button
+                                type="button"
+                                class="btn btn-icon"
+                                title="Lihat"
+                                data-action="view"
+                              >
+                                <i class="bi bi-eye"></i>
+                              </button>
+                              <button
+                                type="button"
+                                class="btn btn-icon"
+                                title="Semak"
+                                data-action="review"
+                              >
+                                <i class="bi bi-clipboard2-check"></i>
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -1779,13 +2391,6 @@
                   </div>
                 </div>
                 <div class="meta-row">
-                  <i class="bi bi-box-seam"></i>
-                  <div>
-                    <strong>Produk berdaftar</strong>
-                    3 produk
-                  </div>
-                </div>
-                <div class="meta-row">
                   <i class="bi bi-patch-check"></i>
                   <div>
                     <strong>Aktiviti lesen</strong>
@@ -1822,79 +2427,6 @@
             </aside>
           </div>
         </main>
-      </div>
-    </div>
-
-    <!-- =========================================================
-         Modal: Lihat produk (tab: Butiran Baja | Lampiran)
-         ========================================================= -->
-    <div
-      class="modal fade"
-      id="viewProductModal"
-      tabindex="-1"
-      aria-hidden="true"
-    >
-      <div
-        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
-      >
-        <div class="modal-content view-product">
-          <div class="view-hero">
-            <span class="view-hero-icon">
-              <i class="bi bi-flower2"></i>
-            </span>
-            <div class="flex-grow-1 min-w-0">
-              <h5 class="view-hero-title" id="vp_title">Nama Produk</h5>
-              <div class="view-hero-sub" id="vp_category">Kategori</div>
-            </div>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Tutup"
-            ></button>
-          </div>
-
-          <ul class="nav view-tabs" role="tablist">
-            <li class="nav-item" role="presentation">
-              <button
-                class="nav-link active"
-                id="vp-tab-details"
-                data-bs-toggle="tab"
-                data-bs-target="#vp-details-pane"
-                type="button"
-                role="tab"
-              >
-                <i class="bi bi-info-circle me-1"></i>Butiran Baja
-              </button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button
-                class="nav-link"
-                id="vp-tab-attachments"
-                data-bs-toggle="tab"
-                data-bs-target="#vp-attachments-pane"
-                type="button"
-                role="tab"
-              >
-                <i class="bi bi-paperclip me-1"></i>Lampiran
-              </button>
-            </li>
-          </ul>
-
-          <div class="tab-content">
-            <div
-              class="tab-pane fade show active"
-              id="vp-details-pane"
-              role="tabpanel"
-            >
-              <dl class="detail-list" id="vp-details-list"></dl>
-            </div>
-
-            <div class="tab-pane fade" id="vp-attachments-pane" role="tabpanel">
-              <div class="attach-grid" id="vp-attachments-list"></div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -1971,6 +2503,13 @@
       </div>
     </div>
 
+    <!-- jQuery + DataTables -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       /* ===== Sidebar toggle ===== */
@@ -2019,6 +2558,14 @@
                 p.getAttribute("data-panel") === target,
               );
             });
+
+            /* Recalculate responsive columns when a table tab is shown */
+            if (target === "technical" && window.accountsTable) {
+              window.accountsTable.columns.adjust().responsive.recalc();
+            }
+            if (target === "products" && window.productsTable) {
+              window.productsTable.columns.adjust().responsive.recalc();
+            }
           });
         });
       })();
@@ -2067,48 +2614,8 @@
         }
       })();
 
-      /* ===== View product / branch modals ===== */
+      /* ===== View branch modal ===== */
       (function () {
-        var productsData = [
-          {
-            name: "Baja Sawit Premium",
-            category: "Baja Sebatian",
-            form: "Butiran (Granular)",
-            formula: "N 15%, P2O5 15%, K2O 15% + unsur mikro (B, Cu, Zn)",
-            micro: "",
-            supplier: "Borneo Agro Sdn Bhd",
-            supplierAddr:
-              "Lot 5, Jalan Industri 3, Kawasan Perindustrian Kota Kinabalu, 88450 Kota Kinabalu, Sabah",
-            msds: "msds_baja_sawit.pdf",
-            coa: "coa_baja_sawit.pdf",
-            packaging: "packaging_baja_sawit.jpg",
-          },
-          {
-            name: "Baja Organik Plus",
-            category: "Baja Organik",
-            form: "Serbuk (Powder)",
-            formula: "Bahan organik 60%, N 3%, P 2%, K 2%",
-            micro: "Azotobacter, Rhizobium, Trichoderma",
-            supplier: "GreenLife Organics",
-            supplierAddr: "No. 12, Jalan Tani 4, 89000 Sandakan, Sabah",
-            msds: "msds_baja_organik.pdf",
-            coa: "coa_baja_organik.pdf",
-            packaging: "packaging_baja_organik.png",
-          },
-          {
-            name: "Baja Mikro N",
-            category: "Baja Mikronutrien",
-            form: "Cecair (Liquid)",
-            formula: "Zn 5%, B 2%, Cu 1%, Fe 1%, Mn 0.5%",
-            micro: "",
-            supplier: "AgriChem Supplies",
-            supplierAddr: "Lot 22, Jalan Perindustrian, 90000 Sandakan, Sabah",
-            msds: "msds_mikro_n.pdf",
-            coa: "coa_mikro_n.pdf",
-            packaging: "packaging_mikro_n.jpg",
-          },
-        ];
-
         var branchesData = [
           {
             type: "Syarikat",
@@ -2169,98 +2676,6 @@
           if (["jpg", "jpeg", "png", "gif", "webp"].indexOf(ext) !== -1)
             return "bi-file-earmark-image";
           return "bi-file-earmark";
-        }
-
-        function openViewProduct(index) {
-          var p = productsData[index];
-          if (!p) return;
-
-          document.getElementById("vp_title").textContent = p.name;
-          document.getElementById("vp_category").textContent =
-            p.category + (p.form ? " \u00b7 " + p.form : "");
-
-          var dl = document.getElementById("vp-details-list");
-          dl.innerHTML = "";
-
-          var pairs = [
-            ["Nama Dagangan (Jenama)", p.name],
-            ["Kategori Item", p.category],
-            ["Bentuk Baja", p.form],
-          ];
-          var single = [["Formulasi / Komposisi Kandungan Nutrien", p.formula]];
-          if (p.category === "Baja Organik" && p.micro) {
-            single.push(["Jenis Mikroorganisma", p.micro]);
-          }
-          single.push(["Nama Pengilang / Pembekal Asal", p.supplier]);
-          single.push(["Alamat Pengilang / Pembekal Asal", p.supplierAddr]);
-
-          var pairRow = document.createElement("div");
-          pairRow.className = "detail-pair";
-          pairs.forEach(function (item) {
-            var cell = document.createElement("div");
-            cell.innerHTML =
-              "<dt>" +
-              escapeHtml(item[0]) +
-              "</dt><dd>" +
-              escapeHtml(item[1] || "-") +
-              "</dd>";
-            pairRow.appendChild(cell);
-          });
-          dl.appendChild(pairRow);
-
-          single.forEach(function (item) {
-            var row = document.createElement("div");
-            row.innerHTML =
-              "<dt>" +
-              escapeHtml(item[0]) +
-              "</dt><dd>" +
-              escapeHtml(item[1] || "-") +
-              "</dd>";
-            dl.appendChild(row);
-          });
-
-          var att = document.getElementById("vp-attachments-list");
-          att.innerHTML = "";
-
-          [
-            {
-              label: "MSDS / SDS",
-              file: p.msds,
-              icon: "bi-file-earmark-medical",
-            },
-            {
-              label: "Certificate of Analysis (CoA)",
-              file: p.coa,
-              icon: "bi-file-earmark-check",
-            },
-            {
-              label: "Gambar Pembungkusan",
-              file: p.packaging,
-              icon: "bi-image",
-            },
-          ].forEach(function (a) {
-            var card = document.createElement("div");
-            card.className = "attach-card" + (a.file ? "" : " is-empty");
-            card.innerHTML =
-              '<span class="attach-open"><i class="bi bi-box-arrow-up-right"></i></span>' +
-              '<span class="attach-icon"><i class="bi ' +
-              a.icon +
-              '"></i></span>' +
-              '<div class="attach-name">' +
-              escapeHtml(a.label) +
-              "</div>" +
-              '<div class="attach-file">' +
-              (a.file ? escapeHtml(a.file) : "Tiada fail dilampirkan") +
-              "</div>";
-            att.appendChild(card);
-          });
-
-          var tab = document.getElementById("vp-tab-details");
-          if (tab) bootstrap.Tab.getOrCreateInstance(tab).show();
-
-          bootstrap.Modal.getOrCreateInstance(
-            document.getElementById("viewProductModal"),
-          ).show();
         }
 
         function openViewBranch(index) {
@@ -2346,17 +2761,243 @@
         }
 
         document.addEventListener("click", function (e) {
-          var vp = e.target.closest("[data-view-product]");
-          if (vp) {
-            openViewProduct(parseInt(vp.getAttribute("data-view-product"), 10));
-            return;
-          }
           var vb = e.target.closest("[data-view-branch]");
           if (vb) {
             openViewBranch(parseInt(vb.getAttribute("data-view-branch"), 10));
           }
         });
       })();
+
+      /* ==========================================================
+         DataTables — Semakan Teknikal (Akaun) & Senarai Produk
+         ========================================================== */
+      var accountsTable;
+      var productsTable;
+
+      $(function () {
+        /* ---------- Accounts filter logic ---------- */
+        $.fn.dataTable.ext.search.push(function (settings, data) {
+          if (settings.nTable.id !== "accounts-table") return true;
+
+          var type = $("#acc-filter-type").val();
+          var status = $("#acc-filter-status").val();
+          var priority = $("#acc-filter-priority").val();
+
+          var rowType = data[2] || "";
+          var rowPriority = (data[5] || "").replace(/<[^>]*>/g, "").trim();
+          var rowStatus = (data[6] || "").replace(/<[^>]*>/g, "").trim();
+
+          if (type && rowType.indexOf(type) === -1) return false;
+          if (priority && rowPriority.indexOf(priority) === -1) return false;
+          if (status && rowStatus.indexOf(status) === -1) return false;
+          return true;
+        });
+
+        /* ---------- Products filter logic ---------- */
+        $.fn.dataTable.ext.search.push(function (settings, data) {
+          if (settings.nTable.id !== "products-table") return true;
+
+          var category = $("#prod-filter-category").val();
+          var status = $("#prod-filter-status").val();
+          var priority = $("#prod-filter-priority").val();
+
+          var rowCategory = data[2] || "";
+          var rowPriority = (data[5] || "").replace(/<[^>]*>/g, "").trim();
+          var rowStatus = (data[6] || "").replace(/<[^>]*>/g, "").trim();
+
+          if (category && rowCategory.indexOf(category) === -1) return false;
+          if (priority && rowPriority.indexOf(priority) === -1) return false;
+          if (status && rowStatus.indexOf(status) === -1) return false;
+          return true;
+        });
+
+        /* ---------- Common language pack ---------- */
+        var dtLang = {
+          search: "",
+          searchPlaceholder: "Cari…",
+          lengthMenu: "Tunjuk _MENU_ baris",
+          info: "Menunjukkan _START_–_END_ daripada _TOTAL_",
+          infoEmpty: "Tiada rekod",
+          infoFiltered: "(ditapis daripada _MAX_ rekod)",
+          zeroRecords: "Tiada rekod sepadan dijumpai",
+          emptyTable: "Belum ada rekod",
+          paginate: {
+            first: "Pertama",
+            last: "Akhir",
+            next: "Seterusnya",
+            previous: "Sebelum",
+          },
+        };
+
+        /* ---------- Init accounts table ---------- */
+        accountsTable = $("#accounts-table").DataTable({
+          responsive: {
+            details: { type: "inline", target: "tr" },
+          },
+          order: [[0, "asc"]],
+          columnDefs: [
+            { orderable: false, targets: [7] },
+            { className: "text-end", targets: [7] },
+          ],
+          language: dtLang,
+        });
+        window.accountsTable = accountsTable;
+
+        /* ---------- Init products table ---------- */
+        productsTable = $("#products-table").DataTable({
+          responsive: {
+            details: { type: "inline", target: "tr" },
+          },
+          order: [[0, "asc"]],
+          columnDefs: [
+            { orderable: false, targets: [7] },
+            { className: "text-end", targets: [7] },
+          ],
+          language: dtLang,
+        });
+        window.productsTable = productsTable;
+
+        /* ---------- Accounts filter bindings ---------- */
+        $("#acc-filter-type, #acc-filter-status, #acc-filter-priority").on(
+          "change",
+          function () {
+            accountsTable.draw();
+          },
+        );
+
+        $("#acc-filter-reset").on("click", function () {
+          $("#acc-filter-type").val("");
+          $("#acc-filter-status").val("");
+          $("#acc-filter-priority").val("");
+          $("#accounts-table_filter input").val("");
+          accountsTable.search("").draw();
+        });
+
+        /* ---------- Products filter bindings ---------- */
+        $(
+          "#prod-filter-category, #prod-filter-status, #prod-filter-priority",
+        ).on("change", function () {
+          productsTable.draw();
+        });
+
+        $("#prod-filter-reset").on("click", function () {
+          $("#prod-filter-category").val("");
+          $("#prod-filter-status").val("");
+          $("#prod-filter-priority").val("");
+          $("#products-table_filter input").val("");
+          productsTable.search("").draw();
+        });
+
+        /* ---------- Export CSV helper ---------- */
+        function exportTable(table, filename, headers, rowMapper) {
+          var rows = table.rows({ search: "applied" }).data();
+          var csv = [headers];
+
+          rows.each(function (row) {
+            csv.push(rowMapper(row));
+          });
+
+          var csvStr = csv
+            .map(function (r) {
+              return r
+                .map(function (c) {
+                  return '"' + String(c).replace(/"/g, '""') + '"';
+                })
+                .join(",");
+            })
+            .join("\n");
+
+          var blob = new Blob([csvStr], { type: "text/csv;charset=utf-8;" });
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement("a");
+          a.href = url;
+          a.download = filename;
+          a.click();
+          URL.revokeObjectURL(url);
+        }
+
+        /* ---------- Accounts export ---------- */
+        $("#acc-export, #acc-export-mobile").on("click", function () {
+          exportTable(
+            accountsTable,
+            "senarai-semakan-akaun.csv",
+            [
+              "No. Giliran",
+              "Akaun",
+              "Jenis",
+              "Tarikh Diterima",
+              "Pegawai",
+              "Keutamaan",
+              "Status",
+            ],
+            function (row) {
+              return [
+                (row[0] || "").replace(/<[^>]*>/g, "").trim(),
+                $(row[1]).find(".account-title").text().trim(),
+                row[2],
+                row[3],
+                $(row[4]).find(".officer-name").text().trim(),
+                (row[5] || "").replace(/<[^>]*>/g, "").trim(),
+                (row[6] || "").replace(/<[^>]*>/g, "").trim(),
+              ];
+            },
+          );
+        });
+
+        /* ---------- Products export ---------- */
+        $("#prod-export, #prod-export-mobile").on("click", function () {
+          exportTable(
+            productsTable,
+            "senarai-semakan-produk.csv",
+            [
+              "No. Giliran",
+              "Produk",
+              "Kategori",
+              "Pemohon",
+              "Tarikh Diterima",
+              "Keutamaan",
+              "Status",
+            ],
+            function (row) {
+              return [
+                (row[0] || "").replace(/<[^>]*>/g, "").trim(),
+                $(row[1]).find(".product-title").text().trim(),
+                row[2],
+                row[3],
+                row[4],
+                (row[5] || "").replace(/<[^>]*>/g, "").trim(),
+                (row[6] || "").replace(/<[^>]*>/g, "").trim(),
+              ];
+            },
+          );
+        });
+
+        /* ---------- Row actions (both tables) ---------- */
+        $("#accounts-table tbody, #products-table tbody").on(
+          "click",
+          "[data-action]",
+          function () {
+            var action = $(this).data("action");
+            var $row = $(this).closest("tr");
+            var isAccount =
+              $row.closest("table").attr("id") === "accounts-table";
+
+            if (action === "view") {
+              if (isAccount) {
+                window.location.href = "keputusan-penilaian-teknikal.html";
+              } else {
+                window.location.href = "produk-butiran.html";
+              }
+            } else if (action === "review") {
+              if (isAccount) {
+                window.location.href = "semakan-akaun.html";
+              } else {
+                window.location.href = "semakan-produk.html";
+              }
+            }
+          },
+        );
+      });
     </script>
   </body>
 </html>

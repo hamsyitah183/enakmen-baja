@@ -1,0 +1,1116 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/components.css" rel="stylesheet" />
+    <link href="css/dashboard.css" rel="stylesheet" />
+    <title>Pembayaran Aktiviti Lesen | Portal Pendaftaran Baja</title>
+
+    <style>
+      /* ==========================================================
+         CHECKOUT LAYOUT
+         ========================================================== */
+      .checkout-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 380px;
+        gap: 1.5rem;
+        align-items: start;
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      @media (max-width: 991.98px) {
+        .checkout-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ==========================================================
+         CHECKOUT HEADER
+         ========================================================== */
+      .checkout-head {
+        margin-bottom: 1.75rem;
+      }
+      .checkout-head .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: var(--color-muted);
+        text-decoration: none;
+        margin-bottom: 0.85rem;
+        transition: 0.15s;
+      }
+      .checkout-head .back-link:hover {
+        color: var(--color-primary-700);
+      }
+      .checkout-head h1 {
+        font-family: var(--font-serif, "Source Serif 4", Georgia, serif);
+        font-size: 1.65rem;
+        font-weight: 600;
+        margin: 0 0 0.35rem;
+        color: var(--color-text);
+        letter-spacing: -0.015em;
+      }
+      .checkout-head p {
+        font-size: 0.88rem;
+        color: var(--color-muted);
+        margin: 0;
+        line-height: 1.6;
+        max-width: 60ch;
+      }
+
+      /* ==========================================================
+         STEP INDICATOR
+         ========================================================== */
+      .checkout-steps {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.75rem;
+        padding: 0.9rem 1.15rem;
+        background: var(--color-surface, #fff);
+        border: 1px solid var(--color-border, #e5e7eb);
+        border-radius: var(--radius-lg, 14px);
+      }
+      .cs-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--color-muted);
+      }
+      .cs-item .cs-dot {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-size: 0.7rem;
+        font-weight: 700;
+        background: var(--color-surface-2, #f3f4f6);
+        color: var(--color-muted);
+        flex: none;
+      }
+      .cs-item.is-done .cs-dot {
+        background: var(--color-primary-600, #16a34a);
+        color: #fff;
+      }
+      .cs-item.is-done {
+        color: var(--color-text);
+      }
+      .cs-item.is-active .cs-dot {
+        background: #f59e0b;
+        color: #fff;
+        box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.18);
+      }
+      .cs-item.is-active {
+        color: #92400e;
+        font-weight: 600;
+      }
+      .cs-sep {
+        flex: 1;
+        min-width: 12px;
+        height: 1px;
+        background: var(--color-border, #e5e7eb);
+      }
+
+      /* ==========================================================
+         CHECKOUT CARD
+         ========================================================== */
+      .checkout-card {
+        background: var(--color-surface, #fff);
+        border: 1px solid var(--color-border, #e5e7eb);
+        border-radius: var(--radius-lg, 14px);
+        box-shadow: 0 1px 2px rgba(15, 58, 36, 0.04);
+        margin-bottom: 1.25rem;
+        overflow: hidden;
+      }
+      .checkout-card-head {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1.15rem 1.5rem;
+        border-bottom: 1px solid var(--color-border, #e5e7eb);
+      }
+      .checkout-card-head .cch-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-50, #ecfdf5);
+        color: var(--color-primary-700, #15803d);
+        font-size: 1rem;
+        flex: none;
+      }
+      .checkout-card-head h2 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        margin: 0;
+        color: var(--color-text);
+      }
+      .checkout-card-head .cch-sub {
+        font-size: 0.75rem;
+        color: var(--color-muted);
+        margin: 0.1rem 0 0;
+      }
+      .checkout-card-body {
+        padding: 1.5rem;
+      }
+
+      /* ==========================================================
+         PAYMENT METHOD OPTIONS
+         ========================================================== */
+      .pm-list {
+        display: grid;
+        gap: 0.65rem;
+      }
+      .pm-option {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        padding: 1.15rem 1.25rem;
+        border: 1.5px solid var(--color-border, #e5e7eb);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: 0.15s;
+        background: var(--color-surface, #fff);
+      }
+      .pm-option:hover {
+        border-color: var(--color-primary-300, #86efac);
+        background: var(--color-primary-50, #f0fdf4);
+      }
+      .pm-option input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .pm-option.is-selected {
+        border-color: var(--color-primary-600, #16a34a);
+        background: var(--color-primary-50, #f0fdf4);
+        box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.1);
+      }
+      .pm-radio {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        border: 2px solid var(--color-border, #d1d5db);
+        display: grid;
+        place-items: center;
+        flex: none;
+        transition: 0.15s;
+      }
+      .pm-option.is-selected .pm-radio {
+        border-color: var(--color-primary-600, #16a34a);
+      }
+      .pm-option.is-selected .pm-radio::after {
+        content: "";
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--color-primary-600, #16a34a);
+      }
+      .pm-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        font-size: 1.4rem;
+        flex: none;
+      }
+      .pm-icon.is-sabahpay {
+        background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+        color: #1d4ed8;
+      }
+      .pm-icon.is-yonopay {
+        background: linear-gradient(135deg, #ede9fe 0%, #ddd6fe 100%);
+        color: #6d28d9;
+      }
+      .pm-body {
+        flex: 1;
+        min-width: 0;
+      }
+      .pm-title {
+        font-size: 0.92rem;
+        font-weight: 700;
+        margin: 0 0 0.15rem;
+        color: var(--color-text);
+      }
+      .pm-desc {
+        font-size: 0.76rem;
+        color: var(--color-muted);
+        margin: 0;
+        line-height: 1.4;
+      }
+      .pm-badge {
+        font-size: 0.65rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        padding: 0.2rem 0.5rem;
+        border-radius: 999px;
+        background: var(--color-primary-100, #dcfce7);
+        color: var(--color-primary-800, #166534);
+        flex: none;
+      }
+      .pm-badge.is-alt {
+        background: #ede9fe;
+        color: #6d28d9;
+      }
+
+      /* ==========================================================
+         PAYMENT DETAIL PANELS
+         ========================================================== */
+      .pm-detail {
+        display: none;
+        margin-top: 1rem;
+        padding: 1.15rem 1.25rem;
+        background: var(--color-surface-2, #f9fafb);
+        border: 1px dashed var(--color-border, #d1d5db);
+        border-radius: 12px;
+        font-size: 0.82rem;
+        color: var(--color-text);
+        line-height: 1.6;
+      }
+      .pm-detail.is-open {
+        display: block;
+      }
+      .pm-detail .steps-list {
+        margin: 0.5rem 0 0;
+        padding: 0;
+        list-style: none;
+        display: grid;
+        gap: 0.5rem;
+      }
+      .pm-detail .steps-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.6rem;
+        font-size: 0.8rem;
+        line-height: 1.5;
+      }
+      .pm-detail .steps-list .num {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: #fff;
+        border: 1px solid var(--color-border, #d1d5db);
+        display: grid;
+        place-items: center;
+        font-size: 0.68rem;
+        font-weight: 700;
+        color: var(--color-primary-700, #15803d);
+        flex: none;
+      }
+
+      /* ==========================================================
+         SUMMARY TABLE (right column)
+         ========================================================== */
+      .summary-card {
+        background: var(--color-surface, #fff);
+        border: 1px solid var(--color-border, #e5e7eb);
+        border-radius: var(--radius-lg, 14px);
+        box-shadow: 0 1px 2px rgba(15, 58, 36, 0.04);
+        top: 1.5rem;
+      }
+      .summary-head {
+        padding: 1.15rem 1.5rem;
+        border-bottom: 1px solid var(--color-border, #e5e7eb);
+        background: linear-gradient(135deg, #15803d 0%, #14532d 100%);
+        color: #fff;
+      }
+      .summary-head .sh-label {
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        opacity: 0.88;
+        margin-bottom: 0.35rem;
+      }
+      .summary-head .sh-amount {
+        font-family: var(--font-serif, "Source Serif 4", Georgia, serif);
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin: 0;
+        line-height: 1;
+      }
+      .summary-body {
+        padding: 1.25rem 1.5rem;
+      }
+      .summary-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.85rem;
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--color-border, #e5e7eb);
+      }
+      .summary-item .si-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-50, #f0fdf4);
+        color: var(--color-primary-700, #15803d);
+        font-size: 1.1rem;
+        flex: none;
+      }
+      .summary-item .si-title {
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin: 0 0 0.15rem;
+        color: var(--color-text);
+      }
+      .summary-item .si-sub {
+        font-size: 0.73rem;
+        color: var(--color-muted);
+        margin: 0;
+        line-height: 1.4;
+      }
+      .summary-rows {
+        display: grid;
+        gap: 0;
+        margin: 0 0 0.5rem;
+      }
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.55rem 0;
+        font-size: 0.83rem;
+      }
+      .summary-row dt {
+        color: var(--color-muted);
+        font-weight: 500;
+        margin: 0;
+      }
+      .summary-row dd {
+        margin: 0;
+        font-weight: 600;
+        color: var(--color-text);
+        text-align: right;
+      }
+      .summary-total {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 0.9rem;
+        margin-top: 0.5rem;
+        border-top: 2px solid var(--color-border, #e5e7eb);
+      }
+      .summary-total .st-label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--color-text);
+      }
+      .summary-total .st-value {
+        font-family: var(--font-serif, "Source Serif 4", Georgia, serif);
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--color-primary-700, #15803d);
+      }
+
+      /* ==========================================================
+         TERMS + PAY BUTTON
+         ========================================================== */
+      .terms-check {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.6rem;
+        padding: 1rem 1.1rem;
+        background: var(--color-surface-2, #f9fafb);
+        border: 1px solid var(--color-border, #e5e7eb);
+        border-radius: 12px;
+        margin-bottom: 1rem;
+      }
+      .terms-check .form-check-input {
+        margin-top: 0.15rem;
+        flex: none;
+      }
+      .terms-check label {
+        font-size: 0.8rem;
+        color: var(--color-text);
+        line-height: 1.55;
+        margin: 0;
+      }
+      .terms-check a {
+        color: var(--color-primary-700, #15803d);
+        font-weight: 500;
+        text-decoration: none;
+      }
+      .terms-check a:hover {
+        text-decoration: underline;
+      }
+
+      .btn-pay {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.85rem 1.25rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        border-radius: 12px;
+      }
+
+      .secure-note {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        font-size: 0.72rem;
+        color: var(--color-muted);
+        margin-top: 0.9rem;
+        text-align: center;
+      }
+
+      .deadline-note {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.6rem;
+        padding: 0.85rem 1rem;
+        background: #fffbeb;
+        border: 1px solid #fcd34d;
+        border-radius: 10px;
+        font-size: 0.78rem;
+        color: #78350f;
+        line-height: 1.5;
+        margin-bottom: 1rem;
+      }
+      .deadline-note i {
+        color: #b45309;
+        font-size: 1rem;
+        flex: none;
+        margin-top: 0.05rem;
+      }
+
+      /* ==========================================================
+         SUCCESS MODAL
+         ========================================================== */
+      .success-icon {
+        width: 72px;
+        height: 72px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-100, #dcfce7);
+        color: var(--color-primary-700, #15803d);
+        font-size: 2.2rem;
+        margin: 0 auto 1.25rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <script>
+        try {
+          if (localStorage.getItem("sidebar-collapsed") === "1")
+            document.querySelector(".app").classList.add("is-collapsed");
+        } catch (e) {}
+      </script>
+
+      <!-- Bar sisi -->
+      <aside
+        class="sidebar offcanvas-lg offcanvas-start"
+        tabindex="-1"
+        id="sidebar"
+        aria-label="Navigasi utama"
+      >
+        <div class="sidebar-inner">
+          <div class="sidebar-head border-bottom pb-2">
+            <a href="#" class="brand" aria-label="Enakmen Baja Sabah">
+              <span class="brand-mark brand-mark--img">
+                <img src="logo/image.png" alt="" width="40" height="40" />
+              </span>
+              <span class="brand-text">Enakmen Baja Sabah</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-icon sidebar-toggle d-none d-lg-inline-grid"
+              id="sidebar-toggle"
+              aria-controls="sidebar"
+              aria-expanded="true"
+              aria-label="Tutup bar sisi"
+              title="Tutup bar sisi"
+            >
+              <i class="bi bi-layout-sidebar"></i>
+            </button>
+            <button
+              type="button"
+              class="btn-close d-lg-none"
+              data-bs-dismiss="offcanvas"
+              data-bs-target="#sidebar"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <nav class="d-grid gap-1">
+            <a
+              href="filled-dashboard.html"
+              class="side-link"
+              title="Papan pemuka"
+              ><i class="bi bi-house-door"></i
+              ><span class="side-label">Papan pemuka</span></a
+            >
+            <a href="#" class="side-link" title="Produk saya"
+              ><i class="bi bi-box-seam"></i
+              ><span class="side-label">Produk saya</span></a
+            >
+            <a href="#" class="side-link" title="Lesen"
+              ><i class="bi bi-patch-check"></i
+              ><span class="side-label">Lesen</span></a
+            >
+            <a href="#" class="side-link active" title="Pembayaran"
+              ><i class="bi bi-receipt"></i
+              ><span class="side-label">Pembayaran</span
+              ><span class="count pill pill-danger">1</span></a
+            >
+            <a href="#" class="side-link" title="Notis dan rayuan"
+              ><i class="bi bi-envelope-exclamation"></i
+              ><span class="side-label">Notis dan rayuan</span
+              ><span class="count pill pill-danger">0</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Akaun</div>
+          <nav class="d-grid gap-1 mb-3">
+            <a
+              href="company-profile.html"
+              class="side-link"
+              title="Profil organisasi"
+              ><i class="bi bi-building"></i
+              ><span class="side-label">Profil organisasi</span></a
+            >
+            <a href="#" class="side-link" title="Tetapan"
+              ><i class="bi bi-gear"></i
+              ><span class="side-label">Tetapan</span></a
+            >
+            <a href="index.html" class="side-link" title="Log keluar"
+              ><i class="bi bi-box-arrow-right"></i
+              ><span class="side-label">Log keluar</span></a
+            >
+          </nav>
+
+          <div class="side-user">
+            <span class="avatar">AH</span>
+            <div class="lh-sm side-user-text">
+              <div class="fw-semibold">Aisyah Hassan</div>
+              <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Utama -->
+      <div class="app-main">
+        <header class="topbar border-bottom">
+          <button
+            class="btn btn-icon d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebar"
+            aria-controls="sidebar"
+            aria-label="Buka menu"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+          <h1 class="h5 mb-0 me-2">Pembayaran</h1>
+          <div class="topbar-search d-none d-md-block input-icon">
+            <i class="bi bi-search"></i>
+            <input
+              type="search"
+              class="form-control"
+              placeholder="Cari produk, lesen atau permit"
+              aria-label="Cari"
+            />
+          </div>
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <button
+              class="btn btn-icon position-relative"
+              type="button"
+              aria-label="Pemberitahuan"
+            >
+              <i class="bi bi-bell"></i><span class="notif-dot"></span>
+            </button>
+
+            <div class="dropdown">
+              <button
+                type="button"
+                class="avatar avatar-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Menu pengguna"
+              >
+                AH
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end user-menu">
+                <li class="user-menu-head">
+                  <div class="fw-semibold">Aisyah Hassan</div>
+                  <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="company-profile.html"
+                    ><i class="bi bi-building me-2"></i>Profil organisasi</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-gear me-2"></i>Tetapan</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="index.html"
+                    ><i class="bi bi-box-arrow-right me-2"></i>Log keluar</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <main class="app-content p-3 p-md-4 p-xl-5">
+          <div class="checkout-layout">
+            <!-- ============ LEFT: FORM COLUMN ============ -->
+            <div>
+              <!-- Header -->
+              <div class="checkout-head">
+                <a href="butiran-lesen.html" class="back-link">
+                  <i class="bi bi-arrow-left"></i>Kembali ke butiran lesen
+                </a>
+                <h1>Pembayaran fi aktiviti lesen</h1>
+                <p>
+                  Permohonan aktiviti lesen anda telah diluluskan. Sila
+                  selesaikan pembayaran di bawah untuk mengaktifkan lesen
+                  aktiviti anda.
+                </p>
+              </div>
+
+              <!-- Step indicator -->
+              <div class="checkout-steps">
+                <span class="cs-item is-done">
+                  <span class="cs-dot"><i class="bi bi-check-lg"></i></span>
+                  Permohonan Lesen
+                </span>
+                <span class="cs-sep"></span>
+                <span class="cs-item is-done">
+                  <span class="cs-dot"><i class="bi bi-check-lg"></i></span>
+                  Lesen Diluluskan
+                </span>
+                <span class="cs-sep"></span>
+                <span class="cs-item is-active">
+                  <span class="cs-dot">3</span>
+                  Pembayaran
+                </span>
+                <span class="cs-sep"></span>
+                <span class="cs-item">
+                  <span class="cs-dot">4</span>
+                  Lesen Aktif
+                </span>
+              </div>
+
+              <!-- Deadline note -->
+              <div class="deadline-note">
+                <i class="bi bi-clock-history"></i>
+                <div>
+                  Sila selesaikan pembayaran sebelum
+                  <strong>12 November 2026</strong> untuk mengelakkan
+                  permohonan lesen anda ditangguhkan atau dibatalkan.
+                </div>
+              </div>
+
+              <!-- Payment method card -->
+              <div class="checkout-card">
+                <div class="checkout-card-head">
+                  <span class="cch-icon">
+                    <i class="bi bi-wallet2"></i>
+                  </span>
+                  <div>
+                    <h2>Kaedah pembayaran</h2>
+                    <p class="cch-sub">Pilih platform pembayaran digital anda</p>
+                  </div>
+                </div>
+                <div class="checkout-card-body">
+                  <div class="pm-list" id="pm-list">
+                    <!-- SabahPay -->
+                    <label class="pm-option is-selected" data-method="sabahpay">
+                      <input
+                        type="radio"
+                        name="payment-method"
+                        value="sabahpay"
+                        checked
+                      />
+                      <span class="pm-radio"></span>
+                      <span class="pm-icon is-sabahpay">
+                        <i class="bi bi-phone"></i>
+                      </span>
+                      <span class="pm-body">
+                        <span class="pm-title">SabahPay</span>
+                        <span class="pm-desc">
+                          Aplikasi pembayaran digital rasmi Kerajaan Negeri
+                          Sabah
+                        </span>
+                      </span>
+                      <span class="pm-badge">Disyorkan</span>
+                    </label>
+
+                    <!-- YonoPay -->
+                    <label class="pm-option" data-method="yonopay">
+                      <input type="radio" name="payment-method" value="yonopay" />
+                      <span class="pm-radio"></span>
+                      <span class="pm-icon is-yonopay">
+                        <i class="bi bi-credit-card-2-front"></i>
+                      </span>
+                      <span class="pm-body">
+                        <span class="pm-title">YonoPay</span>
+                        <span class="pm-desc">
+                          Portal pembayaran digital melalui aplikasi Yono
+                        </span>
+                      </span>
+                      <span class="pm-badge is-alt">Alternatif</span>
+                    </label>
+                  </div>
+
+                  <!-- SabahPay detail -->
+                  <div class="pm-detail is-open" data-detail="sabahpay">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                      <i class="bi bi-info-circle text-primary"></i>
+                      <strong style="font-size: 0.85rem"
+                        >Cara bayar melalui SabahPay</strong
+                      >
+                    </div>
+                    <ul class="steps-list">
+                      <li>
+                        <span class="num">1</span>
+                        Buka aplikasi <strong>SabahPay</strong> pada telefon
+                        anda.
+                      </li>
+                      <li>
+                        <span class="num">2</span>
+                        Imbas kod QR yang dipaparkan pada skrin seterusnya
+                        atau masukkan nombor rujukan
+                        <strong>LS/2026/4512</strong>.
+                      </li>
+                      <li>
+                        <span class="num">3</span>
+                        Sahkan jumlah <strong>RM 500.00</strong> dan selesaikan
+                        pembayaran.
+                      </li>
+                      <li>
+                        <span class="num">4</span>
+                        Setelah berjaya, anda akan kembali ke portal ini secara
+                        automatik.
+                      </li>
+                    </ul>
+                  </div>
+
+                  <!-- YonoPay detail -->
+                  <div class="pm-detail" data-detail="yonopay">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                      <i class="bi bi-info-circle text-primary"></i>
+                      <strong style="font-size: 0.85rem"
+                        >Cara bayar melalui YonoPay</strong
+                      >
+                    </div>
+                    <ul class="steps-list">
+                      <li>
+                        <span class="num">1</span>
+                        Anda akan diarahkan ke portal <strong>YonoPay</strong>
+                        dalam tetingkap baharu.
+                      </li>
+                      <li>
+                        <span class="num">2</span>
+                        Log masuk ke akaun Yono anda atau daftar jika belum
+                        mempunyai akaun.
+                      </li>
+                      <li>
+                        <span class="num">3</span>
+                        Sahkan pembayaran bagi rujukan
+                        <strong>LS/2026/4512</strong> berjumlah
+                        <strong>RM 500.00</strong>.
+                      </li>
+                      <li>
+                        <span class="num">4</span>
+                        Selepas berjaya, kembali ke portal ini untuk melihat
+                        status lesen.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ============ RIGHT: ORDER SUMMARY ============ -->
+            <aside>
+              <div class="summary-card">
+                <div class="summary-head">
+                  <div class="sh-label">Jumlah perlu dibayar</div>
+                  <p class="sh-amount">RM 500.00</p>
+                </div>
+                <div class="summary-body">
+                  <!-- Item -->
+                  <div class="summary-item">
+                    <span class="si-icon">
+                      <i class="bi bi-patch-check"></i>
+                    </span>
+                    <div>
+                      <p class="si-title">Aktiviti Lesen — Pengilang</p>
+                      <p class="si-sub">
+                        Lesen Aktiviti Baja &middot; LS/2026/4512
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Summary rows -->
+                  <dl class="summary-rows">
+                    <div class="summary-row">
+                      <dt>Fi lesen aktiviti</dt>
+                      <dd>RM 500.00</dd>
+                    </div>
+                  </dl>
+
+                  <!-- Total -->
+                  <div class="summary-total">
+                    <span class="st-label">Jumlah keseluruhan</span>
+                    <span class="st-value">RM 500.00</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Terms + pay -->
+              <div style="margin-top: 1.25rem">
+                <div class="terms-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="terms-check"
+                  />
+                  <label for="terms-check">
+                    Saya telah membaca dan bersetuju dengan
+                    <a href="#">Terma dan Syarat</a> serta
+                    <a href="#">Dasar Privasi</a> Portal Pendaftaran Baja.
+                  </label>
+                </div>
+
+                <button
+                  type="button"
+                  class="btn btn-primary btn-pay"
+                  id="pay-btn"
+                  disabled
+                >
+                  <i class="bi bi-lock-fill"></i>
+                  Bayar RM 500.00
+                </button>
+
+                <div class="secure-note">
+                  <i class="bi bi-shield-check"></i>
+                  Transaksi dilindungi dengan penyulitan SSL 256-bit
+                </div>
+              </div>
+
+              <!-- Help -->
+              <div
+                style="
+                  margin-top: 1.25rem;
+                  padding: 1.15rem 1.25rem;
+                  background: var(--color-surface, #fff);
+                  border: 1px solid var(--color-border, #e5e7eb);
+                  border-radius: 14px;
+                "
+              >
+                <div class="d-flex align-items-center gap-2 mb-2">
+                  <i
+                    class="bi bi-question-circle"
+                    style="color: var(--color-primary-600, #16a34a)"
+                  ></i>
+                  <strong style="font-size: 0.85rem">Perlukan bantuan?</strong>
+                </div>
+                <p
+                  style="
+                    font-size: 0.78rem;
+                    color: var(--color-muted);
+                    line-height: 1.55;
+                    margin: 0 0 0.75rem;
+                  "
+                >
+                  Hubungi pasukan sokongan DOA jika anda menghadapi masalah
+                  semasa pembayaran lesen.
+                </p>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary btn-sm w-100"
+                >
+                  Hubungi sokongan
+                </button>
+              </div>
+            </aside>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         Success Modal
+         ========================================================= -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border: 0; border-radius: 16px">
+          <div class="modal-body text-center p-4 p-md-5">
+            <div class="success-icon">
+              <i class="bi bi-check-lg"></i>
+            </div>
+            <h4 class="mb-2" style="font-weight: 700">Pembayaran berjaya!</h4>
+            <p
+              class="mb-4"
+              style="font-size: 0.88rem; color: var(--color-muted); line-height: 1.6"
+            >
+              Pembayaran sebanyak <strong>RM 500.00</strong> telah diterima.
+              Lesen aktiviti anda kini sedang diproses dan akan diaktifkan
+              dalam masa 1–2 hari bekerja.
+            </p>
+            <div
+              class="d-flex align-items-center justify-content-between p-3 mb-4"
+              style="
+                background: var(--color-surface-2, #f9fafb);
+                border-radius: 10px;
+                font-size: 0.82rem;
+              "
+            >
+              <span style="color: var(--color-muted)">No. Rujukan</span>
+              <strong>LS/2026/4512</strong>
+            </div>
+            <div class="d-grid gap-2">
+              <a href="butiran-lesen.html" class="btn btn-primary">
+                Kembali ke butiran lesen
+              </a>
+              <a href="lesen-saya.html" class="btn btn-outline-secondary">
+                Lihat lesen saya
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /* ===== Sidebar toggle ===== */
+      (function () {
+        var app = document.querySelector(".app");
+        var btn = app.querySelector("#sidebar-toggle");
+        var KEY = "sidebar-collapsed";
+
+        function sync() {
+          var collapsed = app.classList.contains("is-collapsed");
+          var label = collapsed ? "Buka bar sisi" : "Tutup bar sisi";
+          btn.setAttribute("aria-expanded", String(!collapsed));
+          btn.setAttribute("aria-label", label);
+          btn.title = label;
+        }
+
+        btn.addEventListener("click", function () {
+          app.classList.toggle("is-collapsed");
+          sync();
+          try {
+            localStorage.setItem(
+              KEY,
+              app.classList.contains("is-collapsed") ? "1" : "0",
+            );
+          } catch (e) {}
+        });
+
+        sync();
+      })();
+
+      /* ===== Payment method selection ===== */
+      (function () {
+        var options = document.querySelectorAll(".pm-option");
+        var details = document.querySelectorAll(".pm-detail");
+
+        options.forEach(function (opt) {
+          var radio = opt.querySelector('input[type="radio"]');
+
+          opt.addEventListener("click", function (e) {
+            if (e.target.tagName !== "INPUT") {
+              radio.checked = true;
+            }
+            applySelection(opt.getAttribute("data-method"));
+          });
+
+          radio.addEventListener("change", function () {
+            applySelection(opt.getAttribute("data-method"));
+          });
+        });
+
+        function applySelection(method) {
+          options.forEach(function (o) {
+            o.classList.toggle(
+              "is-selected",
+              o.getAttribute("data-method") === method,
+            );
+          });
+          details.forEach(function (d) {
+            d.classList.toggle(
+              "is-open",
+              d.getAttribute("data-detail") === method,
+            );
+          });
+        }
+      })();
+
+      /* ===== Terms checkbox -> enable pay button ===== */
+      (function () {
+        var check = document.getElementById("terms-check");
+        var btn = document.getElementById("pay-btn");
+
+        check.addEventListener("change", function () {
+          btn.disabled = !check.checked;
+        });
+      })();
+
+      /* ===== Pay button -> show success modal ===== */
+      (function () {
+        var btn = document.getElementById("pay-btn");
+        var modalEl = document.getElementById("successModal");
+
+        btn.addEventListener("click", function () {
+          var original = btn.innerHTML;
+          btn.disabled = true;
+          btn.innerHTML =
+            '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Memproses…';
+
+          setTimeout(function () {
+            btn.innerHTML = original;
+            btn.disabled = false;
+            bootstrap.Modal.getOrCreateInstance(modalEl).show();
+          }, 1200);
+        });
+      })();
+    </script>
+  </body>
+</html>
