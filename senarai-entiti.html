@@ -1,0 +1,1909 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/components.css" rel="stylesheet" />
+    <link href="css/dashboard.css" rel="stylesheet" />
+    <title>Semakan Entiti | Pentadbir</title>
+
+    <style>
+      .admin-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        background: linear-gradient(135deg, #7c3aed, #4f46e5);
+        color: #fff;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 0.25rem 0.6rem;
+        border-radius: 999px;
+      }
+
+      .stat.clickable {
+        cursor: pointer;
+        transition: 0.15s;
+      }
+      .stat.clickable:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+      .stat.is-active {
+        outline: 2px solid var(--color-primary-500);
+        outline-offset: -1px;
+      }
+
+      .review-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+      .review-table thead th {
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--color-muted);
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid var(--color-border);
+        background: var(--color-surface-2, #f8fafc);
+        text-align: left;
+        white-space: nowrap;
+      }
+      .review-table tbody td {
+        padding: 0.9rem 1rem;
+        border-bottom: 1px solid var(--color-border);
+        font-size: 0.85rem;
+        color: var(--color-text);
+        vertical-align: middle;
+      }
+      .review-table tbody tr:last-child td {
+        border-bottom: 0;
+      }
+      .review-table tbody tr:hover {
+        background: var(--color-surface-2, #f8fafc);
+      }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 0.28rem 0.65rem;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+      .status-pending {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .status-approved {
+        background: #dcfce7;
+        color: #166534;
+      }
+      .status-rejected {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      /* Type chips */
+      .type-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.68rem;
+        font-weight: 700;
+        padding: 0.2rem 0.55rem;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+      .type-syarikat {
+        background: #dbeafe;
+        color: #1e40af;
+      }
+      .type-individu {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      .avatar-initials {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-100);
+        color: var(--color-primary-800);
+        font-size: 0.78rem;
+        font-weight: 700;
+        flex: none;
+      }
+      .applicant-cell {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        min-width: 0;
+      }
+      .applicant-cell .name {
+        font-weight: 600;
+        line-height: 1.2;
+      }
+      .applicant-cell .meta {
+        font-size: 0.72rem;
+        color: var(--color-muted);
+      }
+
+      /* Review modal */
+      .review-hero {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.25rem 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--color-primary-50) 0%,
+          #eef2ff 100%
+        );
+        position: relative;
+      }
+      .review-hero-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: #fff;
+        color: var(--color-primary-600);
+        font-size: 1.5rem;
+        box-shadow: var(--shadow-sm);
+        flex: none;
+      }
+      .review-hero-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin: 0 0 0.15rem;
+      }
+      .review-hero-sub {
+        font-size: 0.78rem;
+        color: var(--color-muted);
+      }
+
+      .detail-list {
+        display: grid;
+        gap: 1rem;
+        margin: 0;
+      }
+      .detail-list dt {
+        font-size: 0.68rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-muted);
+        margin-bottom: 0.25rem;
+      }
+      .detail-list dd {
+        font-size: 0.85rem;
+        margin: 0;
+        color: var(--color-text);
+        line-height: 1.5;
+      }
+      .detail-pair {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      @media (max-width: 575.98px) {
+        .detail-pair {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .rv-section-title {
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--color-muted);
+        margin: 0 0 0.85rem;
+      }
+      .rv-section-title:not(:first-child) {
+        margin-top: 1.5rem;
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--color-border);
+      }
+
+      /* Block (used for entity card + cawangan card) */
+      .rv-block {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        margin-bottom: 0.75rem;
+      }
+      .rv-block:last-child {
+        margin-bottom: 0;
+      }
+      .rv-block-head {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        padding: 0.75rem 1rem;
+        background: var(--color-surface-2, #f8fafc);
+        border-bottom: 1px solid var(--color-border);
+      }
+      .rv-block-head .rb-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 9px;
+        display: grid;
+        place-items: center;
+        font-size: 1rem;
+        flex: none;
+        background: var(--color-primary-50);
+        color: var(--color-primary-700);
+      }
+      .rv-block-head .rb-icon.is-blue {
+        background: #dbeafe;
+        color: #1e40af;
+      }
+      .rv-block-head .rb-icon.is-green {
+        background: #dcfce7;
+        color: #166534;
+      }
+      .rv-block-head .rb-title {
+        font-size: 0.88rem;
+        font-weight: 700;
+        margin: 0;
+      }
+      .rv-block-head .rb-meta {
+        font-size: 0.72rem;
+        color: var(--color-muted);
+        margin: 0.1rem 0 0;
+      }
+      .rv-block-head .rb-actions {
+        display: flex;
+        gap: 0.35rem;
+        margin-left: auto;
+        flex: none;
+      }
+
+      /* Document preview rows */
+      .doc-preview {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 0.75rem 0.85rem;
+        background: var(--color-surface);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.5rem;
+        transition: 0.15s;
+      }
+      .doc-preview:last-child {
+        margin-bottom: 0;
+      }
+      .doc-preview:hover {
+        border-color: var(--color-primary-400);
+      }
+      .doc-preview-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-50);
+        color: var(--color-primary-600);
+        font-size: 1.05rem;
+        flex: none;
+        border: 1px solid var(--color-border);
+      }
+      .doc-preview-body {
+        flex: 1;
+        min-width: 0;
+      }
+      .doc-preview-name {
+        font-size: 0.82rem;
+        font-weight: 600;
+        margin: 0;
+        line-height: 1.3;
+      }
+      .doc-preview-file {
+        font-size: 0.72rem;
+        color: var(--color-muted);
+        word-break: break-all;
+      }
+      .doc-preview-actions {
+        display: flex;
+        gap: 0.35rem;
+        flex: none;
+      }
+      .btn-verdict {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        border: 1px solid var(--color-border);
+        background: #fff;
+        display: grid;
+        place-items: center;
+        font-size: 0.9rem;
+        color: var(--color-muted);
+        transition: 0.15s;
+      }
+      .btn-verdict:hover {
+        border-color: var(--color-primary-400);
+        color: var(--color-primary-700);
+      }
+      .btn-verdict.is-approve.is-active {
+        background: #dcfce7;
+        border-color: #22c55e;
+        color: #166534;
+      }
+      .btn-verdict.is-reject.is-active {
+        background: #fee2e2;
+        border-color: #ef4444;
+        color: #991b1b;
+      }
+
+      /* Small doc pills inside cawangan head */
+      .doc-count-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.68rem;
+        font-weight: 700;
+        padding: 0.15rem 0.5rem;
+        border-radius: 999px;
+        background: var(--color-primary-50);
+        color: var(--color-primary-700);
+      }
+
+      /* Reject/approve note */
+      .reject-note {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface-2, #f8fafc);
+        padding: 0.85rem 1rem;
+      }
+      .reject-note textarea {
+        font-size: 0.82rem;
+      }
+
+      /* Empty state */
+      .empty-state {
+        padding: 3rem 1.5rem;
+        text-align: center;
+      }
+      .empty-state i {
+        font-size: 2rem;
+        color: var(--color-muted);
+        margin-bottom: 0.5rem;
+      }
+
+      /* Filter tabs */
+      .filter-tabs {
+        display: flex;
+        gap: 0.35rem;
+        flex-wrap: wrap;
+      }
+      .filter-tab {
+        border: 1px solid var(--color-border);
+        background: #fff;
+        color: var(--color-muted);
+        font-size: 0.78rem;
+        font-weight: 600;
+        padding: 0.4rem 0.85rem;
+        border-radius: 999px;
+        transition: 0.15s;
+      }
+      .filter-tab:hover {
+        border-color: var(--color-primary-400);
+        color: var(--color-primary-700);
+      }
+      .filter-tab.is-active {
+        background: var(--color-primary-600);
+        border-color: var(--color-primary-600);
+        color: #fff;
+      }
+      .filter-tab .tab-count {
+        font-weight: 700;
+        margin-left: 0.2rem;
+        opacity: 0.85;
+      }
+
+      .type-filter {
+        display: flex;
+        gap: 0.3rem;
+        flex-wrap: wrap;
+      }
+      .type-filter-btn {
+        border: 1px solid var(--color-border);
+        background: #fff;
+        color: var(--color-muted);
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 0.35rem 0.7rem;
+        border-radius: 999px;
+        transition: 0.15s;
+      }
+      .type-filter-btn.is-active {
+        background: var(--color-primary-100);
+        border-color: var(--color-primary-400);
+        color: var(--color-primary-800);
+      }
+
+      @media (max-width: 767.98px) {
+        .review-table thead {
+          display: none;
+        }
+        .review-table tbody tr {
+          display: block;
+          border-bottom: 1px solid var(--color-border);
+          padding: 0.75rem 0;
+        }
+        .review-table tbody td {
+          display: block;
+          border: 0;
+          padding: 0.25rem 1rem;
+        }
+        .review-table tbody td::before {
+          content: attr(data-label);
+          font-size: 0.68rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          color: var(--color-muted);
+          display: block;
+          margin-bottom: 0.15rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <script>
+        try {
+          if (localStorage.getItem("sidebar-collapsed") === "1")
+            document.querySelector(".app").classList.add("is-collapsed");
+        } catch (e) {}
+      </script>
+
+      <!-- ===== Sidebar (Admin) ===== -->
+      <aside
+        class="sidebar offcanvas-lg offcanvas-start"
+        tabindex="-1"
+        id="sidebar"
+        aria-label="Navigasi utama"
+      >
+        <div class="sidebar-inner">
+          <div class="sidebar-head border-bottom pb-2">
+            <a href="index.html" class="brand" aria-label="Enakmen Baja Sabah">
+              <span class="brand-mark brand-mark--img">
+                <img src="logo/image.png" alt="" width="40" height="40" />
+              </span>
+              <span class="brand-text">Enakmen Baja Sabah</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-icon sidebar-toggle d-none d-lg-inline-grid"
+              id="sidebar-toggle"
+              aria-controls="sidebar"
+              aria-expanded="true"
+              aria-label="Tutup bar sisi"
+              title="Tutup bar sisi"
+            >
+              <i class="bi bi-layout-sidebar"></i>
+            </button>
+            <button
+              type="button"
+              class="btn-close d-lg-none"
+              data-bs-dismiss="offcanvas"
+              data-bs-target="#sidebar"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <div class="px-3 py-2 mb-2">
+            <span class="admin-badge">
+              <i class="bi bi-shield-lock-fill"></i>Pentadbir
+            </span>
+          </div>
+
+          <nav class="d-grid gap-1">
+            <a href="admin-dashboard.html" class="side-link" title="Papan pemuka admin"
+              ><i class="bi bi-house-door"></i
+              ><span class="side-label">Papan pemuka</span></a
+            >
+            <a href="admin-review.html" class="side-link" title="Semakan dokumen"
+              ><i class="bi bi-clipboard-check"></i
+              ><span class="side-label">Semakan dokumen</span></a
+            >
+            <a href="admin-review-produk.html" class="side-link" title="Semakan produk"
+              ><i class="bi bi-box-seam"></i
+              ><span class="side-label">Semakan produk</span></a
+            >
+            <a href="admin-review-lesen.html" class="side-link" title="Semakan lesen"
+              ><i class="bi bi-patch-check"></i
+              ><span class="side-label">Semakan lesen</span></a
+            >
+            <a href="admin-review-entiti.html" class="side-link active" title="Semakan entiti"
+              ><i class="bi bi-diagram-3"></i
+              ><span class="side-label">Semakan entiti</span
+              ><span class="count pill pill-warning">3</span></a
+            >
+            <a href="#" class="side-link" title="Pengguna"
+              ><i class="bi bi-people"></i
+              ><span class="side-label">Pengguna</span></a
+            >
+            <a href="#" class="side-link" title="Laporan"
+              ><i class="bi bi-bar-chart"></i
+              ><span class="side-label">Laporan</span></a
+            >
+            <a href="#" class="side-link" title="Log audit"
+              ><i class="bi bi-journal-text"></i
+              ><span class="side-label">Log audit</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Akaun</div>
+          <nav class="d-grid gap-1 mb-3">
+            <a href="#" class="side-link" title="Tetapan sistem"
+              ><i class="bi bi-gear"></i
+              ><span class="side-label">Tetapan sistem</span></a
+            >
+            <a href="login.html" class="side-link" title="Log keluar"
+              ><i class="bi bi-box-arrow-right"></i
+              ><span class="side-label">Log keluar</span></a
+            >
+          </nav>
+
+          <div class="side-user">
+            <span class="avatar">AD</span>
+            <div class="lh-sm side-user-text">
+              <div class="fw-semibold">Admin DOA</div>
+              <small class="text-muted-2">Pegawai Semakan</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ===== Main ===== -->
+      <div class="app-main">
+        <header class="topbar border-bottom">
+          <button
+            class="btn btn-icon d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebar"
+            aria-controls="sidebar"
+            aria-label="Buka menu"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+          <h1 class="h5 mb-0 me-2">Semakan entiti</h1>
+          <div class="topbar-search d-none d-md-block input-icon">
+            <i class="bi bi-search"></i>
+            <input
+              type="search"
+              class="form-control"
+              id="search-input"
+              placeholder="Cari nama pemohon, nama entiti atau no. rujukan"
+              aria-label="Cari"
+            />
+          </div>
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <button
+              class="btn btn-icon position-relative"
+              type="button"
+              aria-label="Pemberitahuan"
+            >
+              <i class="bi bi-bell"></i><span class="notif-dot"></span>
+            </button>
+            <div class="dropdown">
+              <button
+                type="button"
+                class="avatar avatar-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Menu pengguna"
+              >
+                AD
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end user-menu">
+                <li class="user-menu-head">
+                  <div class="fw-semibold">Admin DOA</div>
+                  <small class="text-muted-2">Pegawai Semakan</small>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-gear me-2"></i>Tetapan</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="login.html"
+                    ><i class="bi bi-box-arrow-right me-2"></i>Log keluar</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <main class="app-content p-5">
+          <!-- Hero -->
+          <div class="mb-4">
+            <h2 class="h4 mb-1">Semakan pendaftaran entiti</h2>
+            <p class="text-muted-2 mb-0">
+              Sahkan maklumat entiti (Syarikat atau Individu) dan cawangan
+              yang didaftarkan sebelum meluluskan.
+            </p>
+          </div>
+
+          <!-- Stat cards -->
+          <div class="row g-3 mb-4">
+            <div class="col-6 col-xl-3">
+              <div
+                class="surface stat clickable is-active"
+                data-filter="pending"
+                role="button"
+                tabindex="0"
+              >
+                <div class="stat-top">
+                  <span>Menunggu semakan</span>
+                  <i class="bi bi-hourglass-split"></i>
+                </div>
+                <div class="stat-value" id="stat-pending">3</div>
+                <div class="stat-note">Perlu tindakan segera</div>
+              </div>
+            </div>
+            <div class="col-6 col-xl-3">
+              <div
+                class="surface stat clickable"
+                data-filter="approved"
+                role="button"
+                tabindex="0"
+              >
+                <div class="stat-top">
+                  <span>Diluluskan</span>
+                  <i class="bi bi-check-circle"></i>
+                </div>
+                <div class="stat-value" id="stat-approved">0</div>
+                <div class="stat-note">Bulan ini</div>
+              </div>
+            </div>
+            <div class="col-6 col-xl-3">
+              <div
+                class="surface stat clickable"
+                data-filter="rejected"
+                role="button"
+                tabindex="0"
+              >
+                <div class="stat-top">
+                  <span>Ditolak</span>
+                  <i class="bi bi-x-circle"></i>
+                </div>
+                <div class="stat-value" id="stat-rejected">0</div>
+                <div class="stat-note">Bulan ini</div>
+              </div>
+            </div>
+            <div class="col-6 col-xl-3">
+              <div
+                class="surface stat clickable"
+                data-filter="all"
+                role="button"
+                tabindex="0"
+              >
+                <div class="stat-top">
+                  <span>Jumlah</span>
+                  <i class="bi bi-diagram-3"></i>
+                </div>
+                <div class="stat-value" id="stat-all">3</div>
+                <div class="stat-note">Semua permohonan</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review list -->
+          <section class="surface">
+            <div
+              class="surface-header flex-wrap gap-2"
+              style="padding: 1rem 1.25rem"
+            >
+              <div>
+                <h2 class="h6 mb-0">Senarai entiti</h2>
+                <small class="text-muted-2" id="list-subtitle">
+                  Menunjukkan 3 permohonan
+                </small>
+              </div>
+              <div class="d-flex flex-wrap gap-2">
+                <div class="type-filter" id="type-filter">
+                  <button type="button" class="type-filter-btn is-active" data-type="all">
+                    Semua jenis
+                  </button>
+                  <button type="button" class="type-filter-btn" data-type="syarikat">
+                    Syarikat
+                  </button>
+                  <button type="button" class="type-filter-btn" data-type="individu">
+                    Individu
+                  </button>
+                </div>
+                <div class="filter-tabs" id="filter-tabs">
+                  <button
+                    type="button"
+                    class="filter-tab is-active"
+                    data-filter="pending"
+                  >
+                    Menunggu<span class="tab-count" id="tab-pending">3</span>
+                  </button>
+                  <button type="button" class="filter-tab" data-filter="approved">
+                    Diluluskan<span class="tab-count" id="tab-approved">0</span>
+                  </button>
+                  <button type="button" class="filter-tab" data-filter="rejected">
+                    Ditolak<span class="tab-count" id="tab-rejected">0</span>
+                  </button>
+                  <button type="button" class="filter-tab" data-filter="all">
+                    Semua<span class="tab-count" id="tab-all">3</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="review-table">
+                <thead>
+                  <tr>
+                    <th>Pemohon</th>
+                    <th>No. Rujukan</th>
+                    <th>Jenis</th>
+                    <th>Cawangan</th>
+                    <th>Lampiran</th>
+                    <th>Tarikh hantar</th>
+                    <th>Status</th>
+                    <th style="width: 1%"></th>
+                  </tr>
+                </thead>
+                <tbody id="review-tbody"></tbody>
+              </table>
+            </div>
+
+            <div class="empty-state" id="empty-state" hidden>
+              <i class="bi bi-inbox d-block"></i>
+              <p class="mb-0 text-muted-2">
+                Tiada permohonan dalam kategori ini.
+              </p>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         Modal: Review entity
+         ========================================================= -->
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-hidden="true">
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div class="modal-content" style="border: 0; border-radius: var(--radius-lg); overflow: hidden">
+          <div class="review-hero">
+            <span class="review-hero-icon" id="rv-hero-icon">
+              <i class="bi bi-building"></i>
+            </span>
+            <div class="flex-grow-1 min-w-0">
+              <h5 class="review-hero-title" id="rv-name">Nama Entiti</h5>
+              <div class="review-hero-sub" id="rv-ref">No. Rujukan</div>
+            </div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <div class="modal-body" style="padding: 1.25rem 1.5rem">
+            <!-- Ringkasan entiti -->
+            <h6 class="rv-section-title">Maklumat entiti</h6>
+            <dl class="detail-list">
+              <div class="detail-pair">
+                <div>
+                  <dt>Jenis Entiti</dt>
+                  <dd id="rv-type">—</dd>
+                </div>
+                <div>
+                  <dt>Tarikh Hantar</dt>
+                  <dd id="rv-date">—</dd>
+                </div>
+              </div>
+              <div class="detail-pair">
+                <div>
+                  <dt>Pemohon</dt>
+                  <dd id="rv-applicant">—</dd>
+                </div>
+                <div>
+                  <dt>Bilangan Cawangan</dt>
+                  <dd id="rv-branch-count">—</dd>
+                </div>
+              </div>
+            </dl>
+
+            <!-- Maklumat entiti penuh (dynamic) -->
+            <h6 class="rv-section-title">Butiran penuh</h6>
+            <div id="rv-entity-details"></div>
+
+            <!-- Cawangan -->
+            <h6 class="rv-section-title">
+              Cawangan
+              <span class="text-muted-2" id="rv-branch-summary"></span>
+            </h6>
+            <div id="rv-branches"></div>
+
+            <!-- Rejection note -->
+            <div class="reject-note mt-3" id="reject-note-wrap" hidden>
+              <label
+                class="form-label"
+                for="reject-note"
+                style="font-size: 0.78rem; font-weight: 600"
+              >
+                Sebab penolakan <span class="text-danger">*</span>
+              </label>
+              <textarea
+                class="form-control"
+                id="reject-note"
+                rows="3"
+                placeholder="cth. Sijil SSM tidak jelas. Sila muat naik semula."
+              ></textarea>
+            </div>
+
+            <!-- Approval note -->
+            <div class="reject-note mt-3" id="approve-note-wrap">
+              <label
+                class="form-label"
+                for="approve-note"
+                style="font-size: 0.78rem; font-weight: 600"
+              >
+                Catatan (pilihan)
+              </label>
+              <textarea
+                class="form-control"
+                id="approve-note"
+                rows="2"
+                placeholder="cth. Semua maklumat dan lampiran lengkap."
+              ></textarea>
+            </div>
+          </div>
+
+          <div
+            class="modal-footer"
+            style="padding: 1rem 1.5rem; border-top: 1px solid var(--color-border)"
+          >
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              data-bs-dismiss="modal"
+            >
+              Tutup
+            </button>
+            <div class="d-flex gap-2 ms-auto">
+              <button
+                type="button"
+                class="btn btn-outline-danger"
+                id="rv-reject-btn"
+              >
+                <i class="bi bi-x-lg me-1"></i>Tolak
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="rv-approve-btn"
+              >
+                <i class="bi bi-check-lg me-1"></i>Luluskan
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div
+      class="toast-container position-fixed bottom-0 end-0 p-3"
+      style="z-index: 1080"
+    >
+      <div
+        id="actionToast"
+        class="toast align-items-center text-bg-dark border-0"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="d-flex">
+          <div class="toast-body" id="actionToastMsg">Tindakan disimpan.</div>
+          <button
+            type="button"
+            class="btn-close btn-close-white me-2 m-auto"
+            data-bs-dismiss="toast"
+            aria-label="Tutup"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /* ===== Sidebar toggle ===== */
+      (function () {
+        var app = document.querySelector(".app");
+        var btn = app.querySelector("#sidebar-toggle");
+        var KEY = "sidebar-collapsed";
+        function sync() {
+          var collapsed = app.classList.contains("is-collapsed");
+          var label = collapsed ? "Buka bar sisi" : "Tutup bar sisi";
+          btn.setAttribute("aria-expanded", String(!collapsed));
+          btn.setAttribute("aria-label", label);
+          btn.title = label;
+        }
+        btn.addEventListener("click", function () {
+          app.classList.toggle("is-collapsed");
+          sync();
+          try {
+            localStorage.setItem(
+              KEY,
+              app.classList.contains("is-collapsed") ? "1" : "0",
+            );
+          } catch (e) {}
+        });
+        sync();
+      })();
+
+      /* ===== Review queue ===== */
+      (function () {
+        // Mock data — replace with backend fetch
+        var submissions = [
+          {
+            id: "EN-2026-10001",
+            applicant: "Aisyah Hassan",
+            entityType: "syarikat",
+            name: "Borneo Agro Sdn Bhd",
+            submitted: "2026-10-14",
+            status: "pending",
+
+            // Syarikat fields
+            ssm: "202101234567",
+            ssmExpiry: "2027-06-30",
+            licenseNo: "BL-2024-001",
+            licenseExpiry: "31 Disember",
+            mida: "MIDA/2023/4567",
+            ica10: "",
+            address:
+              "Lot 5, Jalan Industri 3, Kawasan Perindustrian Kota Kinabalu, 88450 Kota Kinabalu, Sabah",
+            phone: "+60 88 123 456",
+            email: "admin@borneoagro.com",
+
+            // Wakil
+            repName: "Aisyah Hassan",
+            repIc: "900101-12-3456",
+            repRole: "Pengarah Urusan",
+            repPhone: "+60 12-345 6789",
+
+            // Docs
+            docs: [
+              {
+                key: "ssm",
+                label: "Sijil Pendaftaran Syarikat",
+                file: "sijil_ssm.pdf",
+                size: "412 KB",
+                required: true,
+                verdict: null,
+              },
+              {
+                key: "business",
+                label: "Lesen Perniagaan",
+                file: "lesen_niaga.pdf",
+                size: "780 KB",
+                required: true,
+                verdict: null,
+              },
+              {
+                key: "mida",
+                label: "Lesen Pengilang (MIDA)",
+                file: "mida_2023.pdf",
+                size: "620 KB",
+                required: false,
+                verdict: null,
+              },
+              {
+                key: "rep_ic",
+                label: "Kad Pengenalan Wakil",
+                file: "ic_aisyah.pdf",
+                size: "290 KB",
+                required: true,
+                verdict: null,
+              },
+              {
+                key: "rep_auth",
+                label: "Surat Kuasa Wakil",
+                file: "surat_kuasa.pdf",
+                size: "340 KB",
+                required: true,
+                verdict: null,
+              },
+            ],
+
+            // Cawangan
+            branches: [
+              {
+                name: "Cawangan Kota Kinabalu",
+                type: "Syarikat",
+                address:
+                  "Lot 10, Jalan Industri 5, 88450 Kota Kinabalu, Sabah",
+                phone: "+60 88 456 789",
+                manager: "Muhammad Rizal",
+                email: "kk@borneoagro.com",
+                verdict: null,
+                docs: [
+                  {
+                    label: "Sijil SSM Cawangan",
+                    file: "ssm_kk.pdf",
+                    size: "220 KB",
+                    verdict: null,
+                  },
+                  {
+                    label: "Gambar Premis",
+                    file: "premis_kk.jpg",
+                    size: "1.2 MB",
+                    verdict: null,
+                  },
+                ],
+              },
+              {
+                name: "Cawangan Sandakan",
+                type: "Syarikat",
+                address: "Lot 5, Jalan Pelabuhan, 90000 Sandakan, Sabah",
+                phone: "+60 89 222 333",
+                manager: "Lim Wei Ming",
+                email: "sandakan@borneoagro.com",
+                verdict: null,
+                docs: [
+                  {
+                    label: "Lesen Premis Cawangan",
+                    file: "lesen_sdk.pdf",
+                    size: "180 KB",
+                    verdict: null,
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            id: "EN-2026-10002",
+            applicant: "Chong Wei Ling",
+            entityType: "individu",
+            name: "Chong Wei Ling",
+            submitted: "2026-10-13",
+            status: "pending",
+
+            // Individu fields
+            ic: "920303-12-7788",
+            phone: "+60 16-222 3344",
+            email: "weiling.chong@email.com",
+            corrAddr: "No. 45, Jalan Gaya, 88000 Kota Kinabalu, Sabah",
+            homeAddr: "No. 45, Jalan Gaya, 88000 Kota Kinabalu, Sabah",
+
+            docs: [
+              {
+                key: "ic",
+                label: "Salinan Kad Pengenalan",
+                file: "ic_weiling.png",
+                size: "355 KB",
+                required: true,
+                verdict: null,
+              },
+              {
+                key: "business",
+                label: "Salinan Lesen Perniagaan",
+                file: "lesen_wl.pdf",
+                size: "620 KB",
+                required: true,
+                verdict: null,
+              },
+            ],
+
+            branches: [],
+          },
+          {
+            id: "EN-2026-10003",
+            applicant: "Muhammad Rizal bin Ahmad",
+            entityType: "syarikat",
+            name: "Rizal Agro Supplies Sdn Bhd",
+            submitted: "2026-10-12",
+            status: "pending",
+
+            ssm: "202201998877",
+            ssmExpiry: "2026-12-31",
+            licenseNo: "BL-2023-045",
+            licenseExpiry: "31 Disember",
+            mida: "",
+            ica10: "ICA10/2023/1234",
+            address: "Lot 8, Jalan Industri 2, 88000 Kota Kinabalu, Sabah",
+            phone: "+60 13-888 9900",
+            email: "rizal.ahmad@email.com",
+
+            repName: "Muhammad Rizal bin Ahmad",
+            repIc: "880505-08-5432",
+            repRole: "Pengurus",
+            repPhone: "+60 13-888 9900",
+
+            docs: [
+              {
+                key: "ssm",
+                label: "Sijil Pendaftaran Syarikat",
+                file: "ssm_rizal.pdf",
+                size: "380 KB",
+                required: true,
+                verdict: null,
+              },
+              {
+                key: "business",
+                label: "Lesen Perniagaan",
+                file: "lesen_rizal.pdf",
+                size: "720 KB",
+                required: true,
+                verdict: null,
+              },
+              {
+                key: "ica10",
+                label: "Surat Pengecualian ICA 10",
+                file: "ica10_rizal.pdf",
+                size: "480 KB",
+                required: false,
+                verdict: null,
+              },
+              {
+                key: "rep_ic",
+                label: "Kad Pengenalan Wakil",
+                file: "ic_rizal.jpg",
+                size: "310 KB",
+                required: true,
+                verdict: null,
+              },
+              {
+                key: "rep_auth",
+                label: "Surat Kuasa Wakil",
+                file: "surat_kuasa_rizal.pdf",
+                size: "290 KB",
+                required: true,
+                verdict: null,
+              },
+            ],
+
+            branches: [],
+          },
+        ];
+
+        var state = {
+          filter: "pending",
+          typeFilter: "all",
+          search: "",
+          activeId: null,
+        };
+
+        /* ---- Helpers ---- */
+        function iconForFile(name) {
+          var ext = (name || "").split(".").pop().toLowerCase();
+          if (ext === "pdf") return "bi-file-earmark-pdf";
+          if (["jpg", "jpeg", "png", "gif", "webp"].indexOf(ext) !== -1)
+            return "bi-file-earmark-image";
+          return "bi-file-earmark";
+        }
+
+        function statusLabel(s) {
+          return {
+            pending: "Menunggu",
+            approved: "Diluluskan",
+            rejected: "Ditolak",
+          }[s] || s;
+        }
+
+        function statusClass(s) {
+          return {
+            pending: "status-pending",
+            approved: "status-approved",
+            rejected: "status-rejected",
+          }[s] || "status-pending";
+        }
+
+        function typeLabel(t) {
+          return t === "syarikat" ? "Syarikat" : "Individu";
+        }
+
+        function typeClass(t) {
+          return t === "syarikat" ? "type-syarikat" : "type-individu";
+        }
+
+        function initials(name) {
+          return name
+            .split(" ")
+            .filter(Boolean)
+            .slice(0, 2)
+            .map(function (p) {
+              return p[0].toUpperCase();
+            })
+            .join("");
+        }
+
+        function formatDate(iso) {
+          var d = new Date(iso + "T00:00:00");
+          var months = [
+            "Jan",
+            "Feb",
+            "Mac",
+            "Apr",
+            "Mei",
+            "Jun",
+            "Jul",
+            "Ogo",
+            "Sep",
+            "Okt",
+            "Nov",
+            "Dis",
+          ];
+          return (
+            d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear()
+          );
+        }
+
+        function escapeHtml(s) {
+          return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+            return {
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            }[c];
+          });
+        }
+
+        function totalAttachments(s) {
+          var n = s.docs.length;
+          s.branches.forEach(function (b) {
+            n += (b.docs || []).length;
+          });
+          return n;
+        }
+
+        /* ---- Counting ---- */
+        function counts() {
+          var c = { pending: 0, approved: 0, rejected: 0, all: submissions.length };
+          submissions.forEach(function (s) {
+            if (c[s.status] !== undefined) c[s.status]++;
+          });
+          return c;
+        }
+
+        function refreshCounters() {
+          var c = counts();
+          document.getElementById("stat-pending").textContent = c.pending;
+          document.getElementById("stat-approved").textContent = c.approved;
+          document.getElementById("stat-rejected").textContent = c.rejected;
+          document.getElementById("stat-all").textContent = c.all;
+
+          document.getElementById("tab-pending").textContent = c.pending;
+          document.getElementById("tab-approved").textContent = c.approved;
+          document.getElementById("tab-rejected").textContent = c.rejected;
+          document.getElementById("tab-all").textContent = c.all;
+
+          var badge = document.querySelector(
+            '.side-link[title="Semakan entiti"] .count',
+          );
+          if (badge) {
+            badge.textContent = c.pending;
+            badge.style.display = c.pending ? "" : "none";
+          }
+        }
+
+        /* ---- Filtering ---- */
+        function filtered() {
+          var q = state.search.trim().toLowerCase();
+          return submissions.filter(function (s) {
+            if (state.filter !== "all" && s.status !== state.filter)
+              return false;
+            if (state.typeFilter !== "all" && s.entityType !== state.typeFilter)
+              return false;
+            if (!q) return true;
+            return (
+              s.applicant.toLowerCase().indexOf(q) !== -1 ||
+              s.name.toLowerCase().indexOf(q) !== -1 ||
+              s.id.toLowerCase().indexOf(q) !== -1
+            );
+          });
+        }
+
+        /* ---- Render list ---- */
+        function renderList() {
+          var tbody = document.getElementById("review-tbody");
+          var empty = document.getElementById("empty-state");
+          var subtitle = document.getElementById("list-subtitle");
+          var rows = filtered();
+
+          tbody.innerHTML = "";
+
+          if (rows.length === 0) {
+            empty.hidden = false;
+          } else {
+            empty.hidden = true;
+          }
+
+          subtitle.textContent =
+            "Menunjukkan " +
+            rows.length +
+            " permohonan" +
+            (state.filter === "all"
+              ? ""
+              : " (" + statusLabel(state.filter).toLowerCase() + ")");
+
+          rows.forEach(function (s) {
+            var tr = document.createElement("tr");
+
+            var branchCount = s.branches.length;
+            var branchChip =
+              branchCount === 0
+                ? '<span class="text-muted-2">—</span>'
+                : '<span class="doc-count-pill"><i class="bi bi-shop-window"></i>' +
+                  branchCount +
+                  "</span>";
+
+            tr.innerHTML =
+              '<td data-label="Pemohon">' +
+              '<div class="applicant-cell">' +
+              '<span class="avatar-initials">' +
+              escapeHtml(initials(s.applicant)) +
+              "</span>" +
+              '<div class="min-w-0">' +
+              '<div class="name">' +
+              escapeHtml(s.name) +
+              "</div>" +
+              '<div class="meta">' +
+              escapeHtml(s.applicant) +
+              "</div>" +
+              "</div>" +
+              "</div>" +
+              "</td>" +
+              '<td data-label="No. Rujukan">' +
+              escapeHtml(s.id) +
+              "</td>" +
+              '<td data-label="Jenis">' +
+              '<span class="type-chip ' +
+              typeClass(s.entityType) +
+              '">' +
+              '<i class="bi ' +
+              (s.entityType === "syarikat" ? "bi-building" : "bi-person") +
+              '"></i>' +
+              typeLabel(s.entityType) +
+              "</span>" +
+              "</td>" +
+              '<td data-label="Cawangan">' +
+              branchChip +
+              "</td>" +
+              '<td data-label="Lampiran">' +
+              totalAttachments(s) +
+              " fail" +
+              "</td>" +
+              '<td data-label="Tarikh hantar">' +
+              formatDate(s.submitted) +
+              "</td>" +
+              '<td data-label="Status">' +
+              '<span class="status-badge ' +
+              statusClass(s.status) +
+              '">' +
+              statusLabel(s.status) +
+              "</span>" +
+              "</td>" +
+              '<td data-label="">' +
+              '<button type="button" class="btn btn-outline-primary btn-sm" data-review="' +
+              s.id +
+              '">' +
+              '<i class="bi bi-eye me-1"></i>Semak' +
+              "</button>" +
+              "</td>";
+
+            tbody.appendChild(tr);
+          });
+
+          refreshCounters();
+        }
+
+        /* ---- Filters ---- */
+        function setFilter(f) {
+          state.filter = f;
+          document.querySelectorAll(".filter-tab").forEach(function (t) {
+            t.classList.toggle("is-active", t.getAttribute("data-filter") === f);
+          });
+          document.querySelectorAll(".stat.clickable").forEach(function (c) {
+            c.classList.toggle("is-active", c.getAttribute("data-filter") === f);
+          });
+          renderList();
+        }
+
+        document.querySelectorAll(".filter-tab").forEach(function (t) {
+          t.addEventListener("click", function () {
+            setFilter(t.getAttribute("data-filter"));
+          });
+        });
+
+        document.querySelectorAll(".stat.clickable").forEach(function (c) {
+          c.addEventListener("click", function () {
+            setFilter(c.getAttribute("data-filter"));
+          });
+          c.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              setFilter(c.getAttribute("data-filter"));
+            }
+          });
+        });
+
+        document.querySelectorAll(".type-filter-btn").forEach(function (b) {
+          b.addEventListener("click", function () {
+            document
+              .querySelectorAll(".type-filter-btn")
+              .forEach(function (x) {
+                x.classList.remove("is-active");
+              });
+            b.classList.add("is-active");
+            state.typeFilter = b.getAttribute("data-type");
+            renderList();
+          });
+        });
+
+        document
+          .getElementById("search-input")
+          .addEventListener("input", function () {
+            state.search = this.value;
+            renderList();
+          });
+
+        /* ---- Review modal ---- */
+        var reviewModalEl = document.getElementById("reviewModal");
+        var reviewModal = bootstrap.Modal.getOrCreateInstance(reviewModalEl);
+        var rejectNoteWrap = document.getElementById("reject-note-wrap");
+        var approveNoteWrap = document.getElementById("approve-note-wrap");
+
+        function renderEntityDetails(s) {
+          var wrap = document.getElementById("rv-entity-details");
+          wrap.innerHTML = "";
+
+          var pairs = [];
+          if (s.entityType === "syarikat") {
+            pairs.push(["Nama Syarikat", s.name]);
+            pairs.push(["No. Pendaftaran SSM", s.ssm]);
+            pairs.push(["Tamat Tempoh SSM", s.ssmExpiry]);
+            pairs.push(["No. Lesen Berniaga", s.licenseNo]);
+            pairs.push(["Tamat Tempoh Lesen", s.licenseExpiry]);
+            if (s.mida) pairs.push(["No. Lesen MIDA", s.mida]);
+            if (s.ica10) pairs.push(["No. Surat ICA 10", s.ica10]);
+            pairs.push(["Nombor Telefon Syarikat", s.phone]);
+            pairs.push(["Alamat E-mel Syarikat", s.email]);
+            pairs.push(["Nama Wakil Syarikat", s.repName]);
+            pairs.push(["No. KP Wakil", s.repIc]);
+            pairs.push(["Jawatan Wakil", s.repRole]);
+            if (s.repPhone) pairs.push(["Telefon Wakil", s.repPhone]);
+          } else {
+            pairs.push(["Nama Penuh", s.name]);
+            pairs.push(["Nombor Kad Pengenalan", s.ic]);
+            pairs.push(["Nombor Telefon Bimbit", s.phone]);
+            pairs.push(["Alamat E-mel", s.email]);
+            pairs.push(["Alamat Surat-menyurat", s.corrAddr]);
+            pairs.push(["Alamat Kediaman", s.homeAddr]);
+          }
+
+          var grid = document.createElement("dl");
+          grid.className = "detail-list";
+
+          var pairRow = document.createElement("div");
+          pairRow.className = "detail-pair";
+          pairs.forEach(function (item, i) {
+            var cell = document.createElement("div");
+            cell.innerHTML =
+              "<dt>" +
+              escapeHtml(item[0]) +
+              "</dt><dd>" +
+              escapeHtml(item[1] || "-") +
+              "</dd>";
+            pairRow.appendChild(cell);
+            if (i % 2 === 1 || i === pairs.length - 1) {
+              grid.appendChild(pairRow);
+              pairRow = document.createElement("div");
+              pairRow.className = "detail-pair";
+            }
+          });
+          wrap.appendChild(grid);
+
+          // Address always in its own row
+          var addrRow = document.createElement("div");
+          addrRow.style.marginTop = "1rem";
+          addrRow.innerHTML =
+            "<dt>Alamat Premis</dt><dd>" +
+            escapeHtml(s.address || "-") +
+            "</dd>";
+          wrap.appendChild(addrRow);
+        }
+
+        function renderDocsBlock(docs, context) {
+          // context: { entityLevel: true/false }
+          var wrap = document.createElement("div");
+
+          docs.forEach(function (doc, di) {
+            var row = document.createElement("div");
+            row.className = "doc-preview";
+            row.innerHTML =
+              '<span class="doc-preview-icon"><i class="bi ' +
+              iconForFile(doc.file) +
+              '"></i></span>' +
+              '<div class="doc-preview-body">' +
+              '<p class="doc-preview-name">' +
+              escapeHtml(doc.label) +
+              (doc.required
+                ? ' <span style="color:#dc2626;font-weight:700">*</span>'
+                : "") +
+              "</p>" +
+              '<div class="doc-preview-file">' +
+              escapeHtml(doc.file) +
+              " &middot; " +
+              escapeHtml(doc.size) +
+              "</div>" +
+              "</div>" +
+              '<div class="doc-preview-actions">' +
+              '<button type="button" class="btn-verdict" data-action="view" data-di="' +
+              di +
+              '" data-ctx="' +
+              (context.entityLevel ? "entity" : "branch") +
+              '" data-branch-idx="' +
+              (context.branchIdx == null ? "" : context.branchIdx) +
+              '" title="Lihat dokumen"><i class="bi bi-box-arrow-up-right"></i></button>' +
+              '<button type="button" class="btn-verdict is-approve' +
+              (doc.verdict === "approve" ? " is-active" : "") +
+              '" data-action="approve" data-di="' +
+              di +
+              '" data-ctx="' +
+              (context.entityLevel ? "entity" : "branch") +
+              '" data-branch-idx="' +
+              (context.branchIdx == null ? "" : context.branchIdx) +
+              '" title="Sahkan dokumen ini"><i class="bi bi-check-lg"></i></button>' +
+              '<button type="button" class="btn-verdict is-reject' +
+              (doc.verdict === "reject" ? " is-active" : "") +
+              '" data-action="reject" data-di="' +
+              di +
+              '" data-ctx="' +
+              (context.entityLevel ? "entity" : "branch") +
+              '" data-branch-idx="' +
+              (context.branchIdx == null ? "" : context.branchIdx) +
+              '" title="Tolak dokumen ini"><i class="bi bi-x-lg"></i></button>' +
+              "</div>";
+            wrap.appendChild(row);
+          });
+
+          return wrap;
+        }
+
+        function renderBranches(s) {
+          var wrap = document.getElementById("rv-branches");
+          var summary = document.getElementById("rv-branch-summary");
+          wrap.innerHTML = "";
+
+          if (!s.branches.length) {
+            summary.textContent = "(tiada cawangan)";
+            var empty = document.createElement("div");
+            empty.className = "rv-block";
+            empty.innerHTML =
+              '<div style="padding:1.25rem 1rem;text-align:center;color:var(--color-muted);font-size:0.82rem">' +
+              '<i class="bi bi-shop-window d-block" style="font-size:1.5rem;margin-bottom:0.35rem;opacity:0.6"></i>' +
+              "Tiada cawangan didaftarkan untuk entiti ini." +
+              "</div>";
+            wrap.appendChild(empty);
+            return;
+          }
+
+          summary.textContent = "(" + s.branches.length + " cawangan)";
+
+          s.branches.forEach(function (b, bi) {
+            var block = document.createElement("div");
+            block.className = "rv-block";
+
+            var head = document.createElement("div");
+            head.className = "rv-block-head";
+            head.innerHTML =
+              '<span class="rb-icon is-blue"><i class="bi bi-shop-window"></i></span>' +
+              "<div class='flex-grow-1 min-w-0'>" +
+              '<p class="rb-title">' +
+              escapeHtml(b.name) +
+              "</p>" +
+              '<p class="rb-meta">' +
+              escapeHtml(b.type) +
+              " &middot; " +
+              escapeHtml(b.address) +
+              "</p>" +
+              "</div>" +
+              '<div class="rb-actions">' +
+              '<span class="doc-count-pill">' +
+              (b.docs ? b.docs.length : 0) +
+              ' lampiran</span>' +
+              "</div>";
+            block.appendChild(head);
+
+            // Branch body: details + docs
+            var body = document.createElement("div");
+            body.style.padding = "0.85rem 1rem";
+
+            var info = document.createElement("dl");
+            info.className = "detail-list";
+            info.style.marginBottom = "1rem";
+            var pairRow = document.createElement("div");
+            pairRow.className = "detail-pair";
+            [
+              ["Telefon", b.phone],
+              ["Pengurus", b.manager],
+              ["E-mel", b.email],
+            ].forEach(function (item) {
+              var cell = document.createElement("div");
+              cell.innerHTML =
+                "<dt>" +
+                escapeHtml(item[0]) +
+                "</dt><dd>" +
+                escapeHtml(item[1] || "-") +
+                "</dd>";
+              pairRow.appendChild(cell);
+            });
+            info.appendChild(pairRow);
+            body.appendChild(info);
+
+            if (b.docs && b.docs.length) {
+              body.appendChild(
+                renderDocsBlock(b.docs, {
+                  entityLevel: false,
+                  branchIdx: bi,
+                }),
+              );
+            } else {
+              var noDocs = document.createElement("div");
+              noDocs.style.cssText =
+                "font-size:0.78rem;color:var(--color-muted);text-align:center;padding:0.75rem;border:1px dashed var(--color-border);border-radius:var(--radius-md);background:var(--color-surface-2)";
+              noDocs.textContent = "Tiada lampiran cawangan dimuat naik.";
+              body.appendChild(noDocs);
+            }
+
+            block.appendChild(body);
+            wrap.appendChild(block);
+          });
+        }
+
+        function openReview(id) {
+          var s = submissions.find(function (x) {
+            return x.id === id;
+          });
+          if (!s) return;
+
+          state.activeId = id;
+
+          document.getElementById("rv-hero-icon").innerHTML =
+            '<i class="bi ' +
+            (s.entityType === "syarikat" ? "bi-building" : "bi-person") +
+            '"></i>';
+          document.getElementById("rv-name").textContent = s.name;
+          document.getElementById("rv-ref").textContent =
+            "No. Rujukan: " + s.id;
+
+          document.getElementById("rv-type").textContent = typeLabel(
+            s.entityType,
+          );
+          document.getElementById("rv-date").textContent = formatDate(
+            s.submitted,
+          );
+          document.getElementById("rv-applicant").textContent = s.applicant;
+          document.getElementById("rv-branch-count").textContent =
+            s.branches.length + " cawangan";
+
+          renderEntityDetails(s);
+          renderBranches(s);
+
+          // Entity-level documents
+          var entityDocsWrap = document.getElementById("rv-entity-details");
+          // Add documents block after details
+          var docsTitle = document.createElement("h6");
+          docsTitle.className = "rv-section-title";
+          docsTitle.style.marginTop = "1.5rem";
+          docsTitle.style.paddingTop = "1.25rem";
+          docsTitle.style.borderTop = "1px solid var(--color-border)";
+          docsTitle.textContent = "Lampiran entiti";
+          entityDocsWrap.appendChild(docsTitle);
+          entityDocsWrap.appendChild(
+            renderDocsBlock(s.docs, { entityLevel: true }),
+          );
+
+          document.getElementById("reject-note").value = "";
+          document.getElementById("approve-note").value = "";
+          rejectNoteWrap.hidden = true;
+          approveNoteWrap.hidden = false;
+
+          reviewModal.show();
+        }
+
+        /* ---- Delegated click for review + doc verdicts ---- */
+        document.addEventListener("click", function (e) {
+          var openBtn = e.target.closest("[data-review]");
+          if (openBtn) {
+            openReview(openBtn.getAttribute("data-review"));
+            return;
+          }
+
+          var actionBtn = e.target.closest("[data-action]");
+          if (!actionBtn) return;
+
+          var s = submissions.find(function (x) {
+            return x.id === state.activeId;
+          });
+          if (!s) return;
+
+          var di = parseInt(actionBtn.getAttribute("data-di"), 10);
+          var ctx = actionBtn.getAttribute("data-ctx");
+          var branchIdx = actionBtn.getAttribute("data-branch-idx");
+          var action = actionBtn.getAttribute("data-action");
+
+          var doc = null;
+          if (ctx === "entity") {
+            doc = s.docs[di];
+          } else if (ctx === "branch" && branchIdx !== "") {
+            var bIdx = parseInt(branchIdx, 10);
+            var branch = s.branches[bIdx];
+            if (branch) doc = branch.docs[di];
+          }
+          if (!doc) return;
+
+          if (action === "view") {
+            showToast("Pratonton dokumen: " + doc.file);
+            return;
+          }
+
+          if (action === "approve") {
+            doc.verdict = doc.verdict === "approve" ? null : "approve";
+          } else if (action === "reject") {
+            doc.verdict = doc.verdict === "reject" ? null : "reject";
+          }
+
+          // Re-render to reflect state
+          renderBranches(s);
+          // Re-render entity docs by reopening (simplest approach)
+          var entityDocsWrap = document.getElementById("rv-entity-details");
+          // Remove all after the details dl
+          while (entityDocsWrap.children.length > 1) {
+            entityDocsWrap.removeChild(entityDocsWrap.lastChild);
+          }
+          var docsTitle = document.createElement("h6");
+          docsTitle.className = "rv-section-title";
+          docsTitle.style.marginTop = "1.5rem";
+          docsTitle.style.paddingTop = "1.25rem";
+          docsTitle.style.borderTop = "1px solid var(--color-border)";
+          docsTitle.textContent = "Lampiran entiti";
+          entityDocsWrap.appendChild(docsTitle);
+          entityDocsWrap.appendChild(
+            renderDocsBlock(s.docs, { entityLevel: true }),
+          );
+        });
+
+        /* ---- Toast ---- */
+        function showToast(msg) {
+          var t = document.getElementById("actionToast");
+          document.getElementById("actionToastMsg").textContent = msg;
+          bootstrap.Toast.getOrCreateInstance(t, { delay: 2500 }).show();
+        }
+
+        /* ---- Approve whole submission ---- */
+        document
+          .getElementById("rv-approve-btn")
+          .addEventListener("click", function () {
+            var s = submissions.find(function (x) {
+              return x.id === state.activeId;
+            });
+            if (!s) return;
+
+            // Every entity doc + every branch doc must be approved (or at least no rejects)
+            var hasRejected = false;
+            var unapproved = 0;
+
+            s.docs.forEach(function (doc) {
+              if (doc.verdict === "reject") hasRejected = true;
+              if (doc.verdict !== "approve") unapproved++;
+            });
+
+            s.branches.forEach(function (b) {
+              (b.docs || []).forEach(function (doc) {
+                if (doc.verdict === "reject") hasRejected = true;
+                if (doc.verdict !== "approve") unapproved++;
+              });
+            });
+
+            if (hasRejected) {
+              showToast(
+                "Terdapat lampiran yang ditolak. Sila tukar atau tolak permohonan.",
+              );
+              return;
+            }
+            if (unapproved > 0) {
+              showToast(
+                "Sila sahkan semua lampiran sebelum meluluskan permohonan.",
+              );
+              return;
+            }
+
+            s.status = "approved";
+            s.docs.forEach(function (doc) {
+              doc.verdict = "approve";
+            });
+            s.branches.forEach(function (b) {
+              b.verdict = "approve";
+              (b.docs || []).forEach(function (doc) {
+                doc.verdict = "approve";
+              });
+            });
+
+            reviewModal.hide();
+            renderList();
+            showToast("Entiti " + s.id + " telah diluluskan.");
+          });
+
+        /* ---- Reject whole submission ---- */
+        document
+          .getElementById("rv-reject-btn")
+          .addEventListener("click", function () {
+            var s = submissions.find(function (x) {
+              return x.id === state.activeId;
+            });
+            if (!s) return;
+
+            if (rejectNoteWrap.hidden) {
+              rejectNoteWrap.hidden = false;
+              approveNoteWrap.hidden = true;
+              document.getElementById("reject-note").focus();
+              return;
+            }
+
+            var reason = document.getElementById("reject-note").value.trim();
+            if (!reason) {
+              showToast("Sila masukkan sebab penolakan.");
+              document.getElementById("reject-note").focus();
+              return;
+            }
+
+            s.status = "rejected";
+            s.rejectReason = reason;
+
+            reviewModal.hide();
+            renderList();
+            showToast("Entiti " + s.id + " telah ditolak.");
+          });
+
+        /* ---- Initial render ---- */
+        setFilter("pending");
+        refreshCounters();
+      })();
+    </script>
+  </body>
+</html>
