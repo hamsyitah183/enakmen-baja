@@ -1,0 +1,1376 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/components.css" rel="stylesheet" />
+    <link href="css/dashboard.css" rel="stylesheet" />
+    <title>Semakan Dokumen | Pentadbir</title>
+
+    <style>
+      /* Admin-specific styles */
+     
+
+      .stat.clickable {
+        cursor: pointer;
+        transition: 0.15s;
+      }
+      .stat.clickable:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-md);
+      }
+      .stat.is-active {
+        outline: 2px solid var(--color-primary-500);
+        outline-offset: -1px;
+      }
+
+      /* Table-like review list */
+      .review-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+      .review-table thead th {
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--color-muted);
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid var(--color-border);
+        background: var(--color-surface-2, #f8fafc);
+        text-align: left;
+        white-space: nowrap;
+      }
+      .review-table tbody td {
+        padding: 0.9rem 1rem;
+        border-bottom: 1px solid var(--color-border);
+        font-size: 0.85rem;
+        color: var(--color-text);
+        vertical-align: middle;
+      }
+      .review-table tbody tr:last-child td {
+        border-bottom: 0;
+      }
+      .review-table tbody tr:hover {
+        background: var(--color-surface-2, #f8fafc);
+      }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 0.28rem 0.65rem;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+      .status-pending {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .status-approved {
+        background: #dcfce7;
+        color: #166534;
+      }
+      .status-rejected {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+      .status-review {
+        background: #dbeafe;
+        color: #1e40af;
+      }
+
+      .avatar-initials {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-100);
+        color: var(--color-primary-800);
+        font-size: 0.78rem;
+        font-weight: 700;
+        flex: none;
+      }
+      .applicant-cell {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        min-width: 0;
+      }
+      .applicant-cell .name {
+        font-weight: 600;
+        line-height: 1.2;
+      }
+      .applicant-cell .meta {
+        font-size: 0.72rem;
+        color: var(--color-muted);
+      }
+
+      /* ---- Review modal ---- */
+      .review-hero {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.25rem 1.5rem;
+        background: linear-gradient(
+          135deg,
+          var(--color-primary-50) 0%,
+          #eef2ff 100%
+        );
+        position: relative;
+      }
+      .review-hero-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        background: #fff;
+        color: var(--color-primary-600);
+        font-size: 1.5rem;
+        box-shadow: var(--shadow-sm);
+        flex: none;
+      }
+      .review-hero-title {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin: 0 0 0.15rem;
+      }
+      .review-hero-sub {
+        font-size: 0.78rem;
+        color: var(--color-muted);
+      }
+
+      .detail-list {
+        display: grid;
+        gap: 1rem;
+        margin: 0;
+      }
+      .detail-list dt {
+        font-size: 0.68rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-muted);
+        margin-bottom: 0.25rem;
+      }
+      .detail-list dd {
+        font-size: 0.85rem;
+        margin: 0;
+        color: var(--color-text);
+        line-height: 1.5;
+      }
+      .detail-pair {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      /* Document preview tiles */
+      .doc-preview {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 0.85rem;
+        background: var(--color-surface);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        transition: 0.15s;
+      }
+      .doc-preview:hover {
+        border-color: var(--color-primary-400);
+      }
+      .doc-preview-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-50);
+        color: var(--color-primary-600);
+        font-size: 1.1rem;
+        flex: none;
+        border: 1px solid var(--color-border);
+      }
+      .doc-preview-body {
+        flex: 1;
+        min-width: 0;
+      }
+      .doc-preview-name {
+        font-size: 0.82rem;
+        font-weight: 600;
+        margin: 0;
+        line-height: 1.3;
+      }
+      .doc-preview-file {
+        font-size: 0.72rem;
+        color: var(--color-muted);
+        word-break: break-all;
+      }
+      .doc-preview-actions {
+        display: flex;
+        gap: 0.35rem;
+        flex: none;
+      }
+      .btn-verdict {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        border: 1px solid var(--color-border);
+        background: #fff;
+        display: grid;
+        place-items: center;
+        font-size: 0.9rem;
+        color: var(--color-muted);
+        transition: 0.15s;
+      }
+      .btn-verdict:hover {
+        border-color: var(--color-primary-400);
+        color: var(--color-primary-700);
+      }
+      .btn-verdict.is-approve.is-active {
+        background: #dcfce7;
+        border-color: #22c55e;
+        color: #166534;
+      }
+      .btn-verdict.is-reject.is-active {
+        background: #fee2e2;
+        border-color: #ef4444;
+        color: #991b1b;
+      }
+
+      /* Rejection note */
+      .reject-note {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface-2, #f8fafc);
+        padding: 0.85rem 1rem;
+      }
+      .reject-note textarea {
+        font-size: 0.82rem;
+      }
+
+      /* Empty state */
+      .empty-state {
+        padding: 3rem 1.5rem;
+        text-align: center;
+      }
+      .empty-state i {
+        font-size: 2rem;
+        color: var(--color-muted);
+        margin-bottom: 0.5rem;
+      }
+
+      /* Filter tabs */
+      .filter-tabs {
+        display: flex;
+        gap: 0.35rem;
+        flex-wrap: wrap;
+      }
+      .filter-tab {
+        border: 1px solid var(--color-border);
+        background: #fff;
+        color: var(--color-muted);
+        font-size: 0.78rem;
+        font-weight: 600;
+        padding: 0.4rem 0.85rem;
+        border-radius: 999px;
+        transition: 0.15s;
+      }
+      .filter-tab:hover {
+        border-color: var(--color-primary-400);
+        color: var(--color-primary-700);
+      }
+      .filter-tab.is-active {
+        background: var(--color-primary-600);
+        border-color: var(--color-primary-600);
+        color: #fff;
+      }
+      .filter-tab .tab-count {
+        font-weight: 700;
+        margin-left: 0.2rem;
+        opacity: 0.85;
+      }
+
+      @media (max-width: 767.98px) {
+        .review-table thead {
+          display: none;
+        }
+        .review-table tbody tr {
+          display: block;
+          border-bottom: 1px solid var(--color-border);
+          padding: 0.75rem 0;
+        }
+        .review-table tbody td {
+          display: block;
+          border: 0;
+          padding: 0.25rem 1rem;
+        }
+        .review-table tbody td::before {
+          content: attr(data-label);
+          font-size: 0.68rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          color: var(--color-muted);
+          display: block;
+          margin-bottom: 0.15rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <script>
+        try {
+          if (localStorage.getItem("sidebar-collapsed") === "1")
+            document.querySelector(".app").classList.add("is-collapsed");
+        } catch (e) {}
+      </script>
+
+      <!-- ===== Sidebar (Admin) ===== -->
+      <aside
+        class="sidebar offcanvas-lg offcanvas-start"
+        tabindex="-1"
+        id="sidebar"
+        aria-label="Navigasi utama"
+      >
+        <div class="sidebar-inner">
+          <div class="sidebar-head border-bottom pb-2">
+            <a href="index.html" class="brand" aria-label="Enakmen Baja Sabah">
+              <span class="brand-mark brand-mark--img">
+                <img src="logo/image.png" alt="" width="40" height="40" />
+              </span>
+              <span class="brand-text">Enakmen Baja Sabah</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-icon sidebar-toggle d-none d-lg-inline-grid"
+              id="sidebar-toggle"
+              aria-controls="sidebar"
+              aria-expanded="true"
+              aria-label="Tutup bar sisi"
+              title="Tutup bar sisi"
+            >
+              <i class="bi bi-layout-sidebar"></i>
+            </button>
+            <button
+              type="button"
+              class="btn-close d-lg-none"
+              data-bs-dismiss="offcanvas"
+              data-bs-target="#sidebar"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          
+
+          <nav class="d-grid gap-1">
+            <a href="admin-dashboard.html" class="side-link" title="Papan pemuka admin"
+              ><i class="bi bi-house-door"></i
+              ><span class="side-label">Papan pemuka</span></a
+            >
+            <a href="admin-review.html" class="side-link active" title="Semakan dokumen"
+              ><i class="bi bi-clipboard-check"></i
+              ><span class="side-label">Semakan dokumen</span
+              ><span class="count pill pill-warning">3</span></a
+            >
+            <a href="#" class="side-link" title="Pengguna"
+              ><i class="bi bi-people"></i
+              ><span class="side-label">Pengguna</span></a
+            >
+            <a href="#" class="side-link" title="Permohonan lesen"
+              ><i class="bi bi-patch-check"></i
+              ><span class="side-label">Permohonan lesen</span></a
+            >
+            <a href="#" class="side-link" title="Laporan"
+              ><i class="bi bi-bar-chart"></i
+              ><span class="side-label">Laporan</span></a
+            >
+            <a href="#" class="side-link" title="Log audit"
+              ><i class="bi bi-journal-text"></i
+              ><span class="side-label">Log audit</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Akaun</div>
+          <nav class="d-grid gap-1 mb-3">
+            <a href="#" class="side-link" title="Tetapan sistem"
+              ><i class="bi bi-gear"></i
+              ><span class="side-label">Tetapan sistem</span></a
+            >
+            <a href="login.html" class="side-link" title="Log keluar"
+              ><i class="bi bi-box-arrow-right"></i
+              ><span class="side-label">Log keluar</span></a
+            >
+          </nav>
+
+          <div class="side-user">
+            <span class="avatar">AD</span>
+            <div class="lh-sm side-user-text">
+              <div class="fw-semibold">Admin DOA</div>
+              <small class="text-muted-2">Pegawai Semakan</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ===== Main ===== -->
+      <div class="app-main">
+        <header class="topbar border-bottom">
+          <button
+            class="btn btn-icon d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebar"
+            aria-controls="sidebar"
+            aria-label="Buka menu"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+          <h1 class="h5 mb-0 me-2">Semakan dokumen</h1>
+          <div class="topbar-search d-none d-md-block input-icon">
+            <i class="bi bi-search"></i>
+            <input
+              type="search"
+              class="form-control"
+              id="search-input"
+              placeholder="Cari nama atau no. kad pengenalan"
+              aria-label="Cari"
+            />
+          </div>
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <button
+              class="btn btn-icon position-relative"
+              type="button"
+              aria-label="Pemberitahuan"
+            >
+              <i class="bi bi-bell"></i><span class="notif-dot"></span>
+            </button>
+            <div class="dropdown">
+              <button
+                type="button"
+                class="avatar avatar-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Menu pengguna"
+              >
+                AD
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end user-menu">
+                <li class="user-menu-head">
+                  <div class="fw-semibold">Admin DOA</div>
+                  <small class="text-muted-2">Pegawai Semakan</small>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-gear me-2"></i>Tetapan</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="login.html"
+                    ><i class="bi bi-box-arrow-right me-2"></i>Log keluar</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <main class="app-content p-5">
+          <!-- Hero -->
+          <div class="mb-4">
+            <h2 class="h4 mb-1">Semakan dokumen pengguna</h2>
+            <p class="text-muted-2 mb-0">
+              Sahkan dokumen sokongan yang dimuat naik oleh pengguna sebelum
+              profil mereka diluluskan.
+            </p>
+          </div>
+
+          <!-- Stat cards (clickable filters) -->
+          <div class="row g-3 mb-4">
+            <div class="col-6 col-xl-3">
+              <div
+                class="surface stat clickable"
+                data-filter="pending"
+                role="button"
+                tabindex="0"
+              >
+                <div class="stat-top">
+                  <span>Menunggu semakan</span>
+                  <i class="bi bi-hourglass-split"></i>
+                </div>
+                <div class="stat-value" id="stat-pending">3</div>
+                <div class="stat-note">Perlu tindakan segera</div>
+              </div>
+            </div>
+            <div class="col-6 col-xl-3">
+              <div
+                class="surface stat clickable"
+                data-filter="approved"
+                role="button"
+                tabindex="0"
+              >
+                <div class="stat-top">
+                  <span>Diluluskan</span>
+                  <i class="bi bi-check-circle"></i>
+                </div>
+                <div class="stat-value" id="stat-approved">0</div>
+                <div class="stat-note">Bulan ini</div>
+              </div>
+            </div>
+            <div class="col-6 col-xl-3">
+              <div
+                class="surface stat clickable"
+                data-filter="rejected"
+                role="button"
+                tabindex="0"
+              >
+                <div class="stat-top">
+                  <span>Ditolak</span>
+                  <i class="bi bi-x-circle"></i>
+                </div>
+                <div class="stat-value" id="stat-rejected">0</div>
+                <div class="stat-note">Bulan ini</div>
+              </div>
+            </div>
+            <div class="col-6 col-xl-3">
+              <div
+                class="surface stat clickable"
+                data-filter="all"
+                role="button"
+                tabindex="0"
+              >
+                <div class="stat-top">
+                  <span>Jumlah</span>
+                  <i class="bi bi-people"></i>
+                </div>
+                <div class="stat-value" id="stat-all">3</div>
+                <div class="stat-note">Semua permohonan</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review list -->
+          <section class="surface">
+            <div
+              class="surface-header flex-wrap gap-2"
+              style="padding: 1rem 1.25rem"
+            >
+              <div>
+                <h2 class="h6 mb-0">Senarai permohonan</h2>
+                <small class="text-muted-2" id="list-subtitle">
+                  Menunjukkan 3 permohonan
+                </small>
+              </div>
+              <div class="filter-tabs" id="filter-tabs">
+                <button
+                  type="button"
+                  class="filter-tab is-active"
+                  data-filter="pending"
+                >
+                  Menunggu<span class="tab-count" id="tab-pending">3</span>
+                </button>
+                <button type="button" class="filter-tab" data-filter="approved">
+                  Diluluskan<span class="tab-count" id="tab-approved">0</span>
+                </button>
+                <button type="button" class="filter-tab" data-filter="rejected">
+                  Ditolak<span class="tab-count" id="tab-rejected">0</span>
+                </button>
+                <button type="button" class="filter-tab" data-filter="all">
+                  Semua<span class="tab-count" id="tab-all">3</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="review-table">
+                <thead>
+                  <tr>
+                    <th>Pemohon</th>
+                    <th>No. Kad Pengenalan</th>
+                    <th>Dokumen</th>
+                    <th>Tarikh hantar</th>
+                    <th>Status</th>
+                    <th style="width: 1%"></th>
+                  </tr>
+                </thead>
+                <tbody id="review-tbody">
+                  <!-- filled by JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="empty-state" id="empty-state" hidden>
+              <i class="bi bi-inbox d-block"></i>
+              <p class="mb-0 text-muted-2">
+                Tiada permohonan dalam kategori ini.
+              </p>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         Modal: Review user documents
+         ========================================================= -->
+    <div
+      class="modal fade"
+      id="reviewModal"
+      tabindex="-1"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div class="modal-content" style="border: 0; border-radius: var(--radius-lg); overflow: hidden">
+          <div class="review-hero">
+            <span class="review-hero-icon">
+              <i class="bi bi-person-vcard"></i>
+            </span>
+            <div class="flex-grow-1 min-w-0">
+              <h5 class="review-hero-title" id="rv-name">Nama Pemohon</h5>
+              <div class="review-hero-sub" id="rv-ic">
+                No. Kad Pengenalan
+              </div>
+            </div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <div class="modal-body" style="padding: 1.25rem 1.5rem">
+            <!-- Applicant details -->
+            <h6
+              style="
+                font-size: 0.68rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                color: var(--color-muted);
+                margin-bottom: 0.85rem;
+              "
+            >
+              Butiran pemohon
+            </h6>
+            <dl class="detail-list">
+              <div class="detail-pair">
+                <div>
+                  <dt>Nama Penuh</dt>
+                  <dd id="rv-fullname">—</dd>
+                </div>
+                <div>
+                  <dt>No. Kad Pengenalan</dt>
+                  <dd id="rv-icno">—</dd>
+                </div>
+              </div>
+              <div>
+                <dt>Alamat Surat-menyurat</dt>
+                <dd id="rv-address">—</dd>
+              </div>
+              <div class="detail-pair">
+                <div>
+                  <dt>No. Telefon</dt>
+                  <dd id="rv-phone">—</dd>
+                </div>
+                <div>
+                  <dt>E-mel</dt>
+                  <dd id="rv-email">—</dd>
+                </div>
+              </div>
+            </dl>
+
+            <!-- Documents -->
+            <h6
+              style="
+                font-size: 0.68rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.06em;
+                color: var(--color-muted);
+                margin: 1.5rem 0 0.85rem;
+                padding-top: 1.25rem;
+                border-top: 1px solid var(--color-border);
+              "
+            >
+              Dokumen sokongan
+            </h6>
+            <div class="d-grid gap-2" id="rv-docs"></div>
+
+            <!-- Rejection note -->
+            <div class="reject-note mt-3" id="reject-note-wrap" hidden>
+              <label
+                class="form-label"
+                for="reject-note"
+                style="font-size: 0.78rem; font-weight: 600"
+              >
+                Sebab penolakan <span class="text-danger">*</span>
+              </label>
+              <textarea
+                class="form-control"
+                id="reject-note"
+                rows="3"
+                placeholder="cth. Kad pengenalan tidak jelas. Sila muat naik semula."
+              ></textarea>
+            </div>
+
+            <!-- Overall note (approval) -->
+            <div class="reject-note mt-3" id="approve-note-wrap">
+              <label
+                class="form-label"
+                for="approve-note"
+                style="font-size: 0.78rem; font-weight: 600"
+              >
+                Catatan (pilihan)
+              </label>
+              <textarea
+                class="form-control"
+                id="approve-note"
+                rows="2"
+                placeholder="cth. Semua dokumen lengkap dan jelas."
+              ></textarea>
+            </div>
+          </div>
+
+          <div
+            class="modal-footer"
+            style="padding: 1rem 1.5rem; border-top: 1px solid var(--color-border)"
+          >
+            <button
+              type="button"
+              class="btn btn-outline-primary"
+              data-bs-dismiss="modal"
+            >
+              Tutup
+            </button>
+            <div class="d-flex gap-2 ms-auto">
+              <button
+                type="button"
+                class="btn btn-outline-danger"
+                id="rv-reject-btn"
+              >
+                <i class="bi bi-x-lg me-1"></i>Tolak
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                id="rv-approve-btn"
+              >
+                <i class="bi bi-check-lg me-1"></i>Luluskan
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast for feedback -->
+    <div
+      class="toast-container position-fixed bottom-0 end-0 p-3"
+      style="z-index: 1080"
+    >
+      <div
+        id="actionToast"
+        class="toast align-items-center text-bg-dark border-0"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="d-flex">
+          <div class="toast-body" id="actionToastMsg">Tindakan disimpan.</div>
+          <button
+            type="button"
+            class="btn-close btn-close-white me-2 m-auto"
+            data-bs-dismiss="toast"
+            aria-label="Tutup"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /* ===== Sidebar toggle ===== */
+      (function () {
+        var app = document.querySelector(".app");
+        var btn = app.querySelector("#sidebar-toggle");
+        var KEY = "sidebar-collapsed";
+
+        function sync() {
+          var collapsed = app.classList.contains("is-collapsed");
+          var label = collapsed ? "Buka bar sisi" : "Tutup bar sisi";
+          btn.setAttribute("aria-expanded", String(!collapsed));
+          btn.setAttribute("aria-label", label);
+          btn.title = label;
+        }
+
+        btn.addEventListener("click", function () {
+          app.classList.toggle("is-collapsed");
+          sync();
+          try {
+            localStorage.setItem(
+              KEY,
+              app.classList.contains("is-collapsed") ? "1" : "0",
+            );
+          } catch (e) {}
+        });
+
+        sync();
+      })();
+
+      /* ===== Review queue ===== */
+      (function () {
+        // Mock data — replace with backend fetch
+        var submissions = [
+          {
+            id: "SUB-001",
+            name: "Aisyah Hassan",
+            ic: "900101-12-3456",
+            address:
+              "No. 12, Lorong Bunga Raya, Taman Jaya, 88000 Kota Kinabalu, Sabah",
+            phone: "+60 12-345 6789",
+            email: "aisyah.hassan@email.com",
+            submitted: "2026-10-12",
+            status: "pending",
+            docs: [
+              {
+                key: "ic",
+                label: "Salinan Kad Pengenalan",
+                file: "ic_aisyah.pdf",
+                size: "412 KB",
+                required: true,
+                verdict: null,
+              },
+              {
+                key: "business",
+                label: "Salinan Lesen Perniagaan",
+                file: "lesen_niaga.pdf",
+                size: "780 KB",
+                required: true,
+                verdict: null,
+              },
+            ],
+          },
+          {
+            id: "SUB-002",
+            name: "Muhammad Rizal bin Ahmad",
+            ic: "880505-08-5432",
+            address: "Lot 8, Jalan Industri 2, 88000 Kota Kinabalu, Sabah",
+            phone: "+60 13-888 9900",
+            email: "rizal.ahmad@email.com",
+            submitted: "2026-10-11",
+            status: "pending",
+            docs: [
+              {
+                key: "ic",
+                label: "Salinan Kad Pengenalan",
+                file: "ic_rizal.jpg",
+                size: "290 KB",
+                required: true,
+                verdict: null,
+              },
+              {
+                key: "business",
+                label: "Salinan Lesen Perniagaan",
+                file: "lesen_rizal.pdf",
+                size: "1.2 MB",
+                required: true,
+                verdict: null,
+              },
+            ],
+          },
+          {
+            id: "SUB-003",
+            name: "Chong Wei Ling",
+            ic: "920303-12-7788",
+            address: "No. 45, Jalan Gaya, 88000 Kota Kinabalu, Sabah",
+            phone: "+60 16-222 3344",
+            email: "weiling.chong@email.com",
+            submitted: "2026-10-10",
+            status: "pending",
+            docs: [
+              {
+                key: "ic",
+                label: "Salinan Kad Pengenalan",
+                file: "ic_weiling.png",
+                size: "355 KB",
+                required: true,
+                verdict: null,
+              },
+              {
+                key: "business",
+                label: "Salinan Lesen Perniagaan",
+                file: "lesen_wl.pdf",
+                size: "620 KB",
+                required: true,
+                verdict: null,
+              },
+            ],
+          },
+        ];
+
+        var state = {
+          filter: "pending",
+          search: "",
+          activeId: null,
+        };
+
+        /* ---- Helpers ---- */
+        function iconForFile(name) {
+          var ext = (name || "").split(".").pop().toLowerCase();
+          if (ext === "pdf") return "bi-file-earmark-pdf";
+          if (["jpg", "jpeg", "png", "gif", "webp"].indexOf(ext) !== -1)
+            return "bi-file-earmark-image";
+          return "bi-file-earmark";
+        }
+
+        function statusLabel(s) {
+          return {
+            pending: "Menunggu",
+            approved: "Diluluskan",
+            rejected: "Ditolak",
+            review: "Dalam semakan",
+          }[s] || s;
+        }
+
+        function statusClass(s) {
+          return {
+            pending: "status-pending",
+            approved: "status-approved",
+            rejected: "status-rejected",
+            review: "status-review",
+          }[s] || "status-pending";
+        }
+
+        function initials(name) {
+          return name
+            .split(" ")
+            .filter(Boolean)
+            .slice(0, 2)
+            .map(function (p) {
+              return p[0].toUpperCase();
+            })
+            .join("");
+        }
+
+        function formatDate(iso) {
+          var d = new Date(iso + "T00:00:00");
+          var months = [
+            "Jan",
+            "Feb",
+            "Mac",
+            "Apr",
+            "Mei",
+            "Jun",
+            "Jul",
+            "Ogo",
+            "Sep",
+            "Okt",
+            "Nov",
+            "Dis",
+          ];
+          return (
+            d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear()
+          );
+        }
+
+        function escapeHtml(s) {
+          return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+            return {
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            }[c];
+          });
+        }
+
+        /* ---- Counting ---- */
+        function counts() {
+          var c = { pending: 0, approved: 0, rejected: 0, all: submissions.length };
+          submissions.forEach(function (s) {
+            if (c[s.status] !== undefined) c[s.status]++;
+          });
+          return c;
+        }
+
+        function refreshCounters() {
+          var c = counts();
+          document.getElementById("stat-pending").textContent = c.pending;
+          document.getElementById("stat-approved").textContent = c.approved;
+          document.getElementById("stat-rejected").textContent = c.rejected;
+          document.getElementById("stat-all").textContent = c.all;
+
+          document.getElementById("tab-pending").textContent = c.pending;
+          document.getElementById("tab-approved").textContent = c.approved;
+          document.getElementById("tab-rejected").textContent = c.rejected;
+          document.getElementById("tab-all").textContent = c.all;
+
+          // sidebar badge
+          var badge = document.querySelector(
+            '.side-link[title="Semakan dokumen"] .count',
+          );
+          if (badge) {
+            badge.textContent = c.pending;
+            badge.style.display = c.pending ? "" : "none";
+          }
+        }
+
+        /* ---- Filtering ---- */
+        function filtered() {
+          var q = state.search.trim().toLowerCase();
+          return submissions.filter(function (s) {
+            if (state.filter !== "all" && s.status !== state.filter)
+              return false;
+            if (!q) return true;
+            return (
+              s.name.toLowerCase().indexOf(q) !== -1 ||
+              s.ic.toLowerCase().indexOf(q) !== -1
+            );
+          });
+        }
+
+        /* ---- Render list ---- */
+        function renderList() {
+          var tbody = document.getElementById("review-tbody");
+          var empty = document.getElementById("empty-state");
+          var subtitle = document.getElementById("list-subtitle");
+          var rows = filtered();
+
+          tbody.innerHTML = "";
+
+          if (rows.length === 0) {
+            empty.hidden = false;
+          } else {
+            empty.hidden = true;
+          }
+
+          subtitle.textContent =
+            "Menunjukkan " +
+            rows.length +
+            " permohonan" +
+            (state.filter === "all"
+              ? ""
+              : " (" + statusLabel(state.filter).toLowerCase() + ")");
+
+          rows.forEach(function (s) {
+            var tr = document.createElement("tr");
+
+            var docChips = s.docs
+              .map(function (d) {
+                var cls =
+                  d.verdict === "approve"
+                    ? "status-approved"
+                    : d.verdict === "reject"
+                    ? "status-rejected"
+                    : "status-review";
+                return (
+                  '<span class="status-badge ' +
+                  cls +
+                  '" style="margin:0.1rem 0.15rem 0.1rem 0">' +
+                  '<i class="bi ' +
+                  iconForFile(d.file) +
+                  '"></i>' +
+                  escapeHtml(d.label.split(" ").slice(-2).join(" ")) +
+                  "</span>"
+                );
+              })
+              .join("");
+
+            tr.innerHTML =
+              '<td data-label="Pemohon">' +
+              '<div class="applicant-cell">' +
+              '<span class="avatar-initials">' +
+              escapeHtml(initials(s.name)) +
+              "</span>" +
+              '<div class="min-w-0">' +
+              '<div class="name">' +
+              escapeHtml(s.name) +
+              "</div>" +
+              '<div class="meta">' +
+              escapeHtml(s.id) +
+              " &middot; " +
+              escapeHtml(s.email) +
+              "</div>" +
+              "</div>" +
+              "</div>" +
+              "</td>" +
+              '<td data-label="No. Kad Pengenalan">' +
+              escapeHtml(s.ic) +
+              "</td>" +
+              '<td data-label="Dokumen">' +
+              docChips +
+              "</td>" +
+              '<td data-label="Tarikh hantar">' +
+              formatDate(s.submitted) +
+              "</td>" +
+              '<td data-label="Status">' +
+              '<span class="status-badge ' +
+              statusClass(s.status) +
+              '">' +
+              statusLabel(s.status) +
+              "</span>" +
+              "</td>" +
+              '<td data-label="">' +
+              '<button type="button" class="btn btn-outline-primary btn-sm" data-review="' +
+              s.id +
+              '">' +
+              '<i class="bi bi-eye me-1"></i>Semak' +
+              "</button>" +
+              "</td>";
+
+            tbody.appendChild(tr);
+          });
+
+          refreshCounters();
+        }
+
+        /* ---- Tabs & stat cards ---- */
+        function setFilter(f) {
+          state.filter = f;
+          document.querySelectorAll(".filter-tab").forEach(function (t) {
+            t.classList.toggle("is-active", t.getAttribute("data-filter") === f);
+          });
+          document.querySelectorAll(".stat.clickable").forEach(function (c) {
+            c.classList.toggle("is-active", c.getAttribute("data-filter") === f);
+          });
+          renderList();
+        }
+
+        document.querySelectorAll(".filter-tab").forEach(function (t) {
+          t.addEventListener("click", function () {
+            setFilter(t.getAttribute("data-filter"));
+          });
+        });
+
+        document.querySelectorAll(".stat.clickable").forEach(function (c) {
+          c.addEventListener("click", function () {
+            setFilter(c.getAttribute("data-filter"));
+          });
+          c.addEventListener("keydown", function (e) {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              setFilter(c.getAttribute("data-filter"));
+            }
+          });
+        });
+
+        /* ---- Search ---- */
+        document
+          .getElementById("search-input")
+          .addEventListener("input", function () {
+            state.search = this.value;
+            renderList();
+          });
+
+        /* ---- Review modal ---- */
+        var reviewModalEl = document.getElementById("reviewModal");
+        var reviewModal = bootstrap.Modal.getOrCreateInstance(reviewModalEl);
+        var rejectNoteWrap = document.getElementById("reject-note-wrap");
+        var approveNoteWrap = document.getElementById("approve-note-wrap");
+
+        function renderReviewDocs(s) {
+          var wrap = document.getElementById("rv-docs");
+          wrap.innerHTML = "";
+
+          s.docs.forEach(function (d, i) {
+            var row = document.createElement("div");
+            row.className = "doc-preview";
+            row.innerHTML =
+              '<span class="doc-preview-icon"><i class="bi ' +
+              iconForFile(d.file) +
+              '"></i></span>' +
+              '<div class="doc-preview-body">' +
+              '<p class="doc-preview-name">' +
+              escapeHtml(d.label) +
+              (d.required
+                ? ' <span style="color:#dc2626;font-weight:700">*</span>'
+                : "") +
+              "</p>" +
+              '<div class="doc-preview-file">' +
+              escapeHtml(d.file) +
+              " &middot; " +
+              escapeHtml(d.size) +
+              "</div>" +
+              "</div>" +
+              '<div class="doc-preview-actions">' +
+              '<button type="button" class="btn-verdict" data-action="view" data-idx="' +
+              i +
+              '" title="Lihat dokumen"><i class="bi bi-box-arrow-up-right"></i></button>' +
+              '<button type="button" class="btn-verdict is-approve' +
+              (d.verdict === "approve" ? " is-active" : "") +
+              '" data-action="approve" data-idx="' +
+              i +
+              '" title="Sahkan dokumen ini"><i class="bi bi-check-lg"></i></button>' +
+              '<button type="button" class="btn-verdict is-reject' +
+              (d.verdict === "reject" ? " is-active" : "") +
+              '" data-action="reject" data-idx="' +
+              i +
+              '" title="Tolak dokumen ini"><i class="bi bi-x-lg"></i></button>' +
+              "</div>";
+            wrap.appendChild(row);
+          });
+        }
+
+        function openReview(id) {
+          var s = submissions.find(function (x) {
+            return x.id === id;
+          });
+          if (!s) return;
+
+          state.activeId = id;
+
+          document.getElementById("rv-name").textContent = s.name;
+          document.getElementById("rv-ic").textContent =
+            "No. Kad Pengenalan: " + s.ic;
+          document.getElementById("rv-fullname").textContent = s.name;
+          document.getElementById("rv-icno").textContent = s.ic;
+          document.getElementById("rv-address").textContent = s.address;
+          document.getElementById("rv-phone").textContent = s.phone;
+          document.getElementById("rv-email").textContent = s.email;
+
+          renderReviewDocs(s);
+
+          document.getElementById("reject-note").value = "";
+          document.getElementById("approve-note").value = "";
+          rejectNoteWrap.hidden = true;
+          approveNoteWrap.hidden = false;
+
+          reviewModal.show();
+        }
+
+        /* ---- Delegated click for review + doc actions ---- */
+        document.addEventListener("click", function (e) {
+          var openBtn = e.target.closest("[data-review]");
+          if (openBtn) {
+            openReview(openBtn.getAttribute("data-review"));
+            return;
+          }
+
+          var actionBtn = e.target.closest("[data-action]");
+          if (!actionBtn) return;
+
+          var s = submissions.find(function (x) {
+            return x.id === state.activeId;
+          });
+          if (!s) return;
+
+          var idx = parseInt(actionBtn.getAttribute("data-idx"), 10);
+          var action = actionBtn.getAttribute("data-action");
+          var doc = s.docs[idx];
+          if (!doc) return;
+
+          if (action === "view") {
+            // TODO: open file in new tab / preview
+            showToast("Pratonton dokumen: " + doc.file);
+            return;
+          }
+
+          if (action === "approve") {
+            doc.verdict = doc.verdict === "approve" ? null : "approve";
+          } else if (action === "reject") {
+            doc.verdict = doc.verdict === "reject" ? null : "reject";
+          }
+
+          renderReviewDocs(s);
+        });
+
+        /* ---- Approve / Reject whole submission ---- */
+        function showToast(msg) {
+          var t = document.getElementById("actionToast");
+          document.getElementById("actionToastMsg").textContent = msg;
+          bootstrap.Toast.getOrCreateInstance(t, { delay: 2500 }).show();
+        }
+
+        document
+          .getElementById("rv-approve-btn")
+          .addEventListener("click", function () {
+            var s = submissions.find(function (x) {
+              return x.id === state.activeId;
+            });
+            if (!s) return;
+
+            // All required docs must be approved
+            var missing = s.docs.filter(function (d) {
+              return d.required && d.verdict !== "approve";
+            });
+            if (missing.length) {
+              showToast(
+                "Sila sahkan semua dokumen wajib sebelum meluluskan.",
+              );
+              return;
+            }
+
+            s.status = "approved";
+            s.docs.forEach(function (d) {
+              if (d.verdict !== "reject") d.verdict = "approve";
+            });
+
+            reviewModal.hide();
+            renderList();
+            showToast("Profil " + s.name + " telah diluluskan.");
+          });
+
+        document
+          .getElementById("rv-reject-btn")
+          .addEventListener("click", function () {
+            var s = submissions.find(function (x) {
+              return x.id === state.activeId;
+            });
+            if (!s) return;
+
+            // Show reject note (first click reveals, second click confirms)
+            if (rejectNoteWrap.hidden) {
+              rejectNoteWrap.hidden = false;
+              approveNoteWrap.hidden = true;
+              document.getElementById("reject-note").focus();
+              return;
+            }
+
+            var reason = document.getElementById("reject-note").value.trim();
+            if (!reason) {
+              showToast("Sila masukkan sebab penolakan.");
+              document.getElementById("reject-note").focus();
+              return;
+            }
+
+            s.status = "rejected";
+            s.rejectReason = reason;
+
+            reviewModal.hide();
+            renderList();
+            showToast("Profil " + s.name + " telah ditolak.");
+          });
+
+        /* ---- Initial render ---- */
+        setFilter("pending");
+        refreshCounters();
+      })();
+    </script>
+  </body>
+</html>

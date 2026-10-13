@@ -1,0 +1,357 @@
+.create-shell .detail-header h1 {
+  font-size: 1.25rem;
+}
+.create-shell .head-avatar {
+  background: var(--color-primary-100);
+}
+
+.create-section {
+  margin-bottom: 1.5rem;
+}
+.create-section:last-child {
+  margin-bottom: 0;
+}
+.create-section h2 {
+  font-family: var(--font-serif, "Source Serif 4", Georgia, serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 0.35rem;
+}
+.create-section p.section-hint {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  margin: 0 0 1rem;
+}
+.create-section + .create-section {
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.create-side {
+  display: grid;
+  gap: 1rem;
+  align-content: start;
+}
+.create-tips {
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+  font-size: 0.82rem;
+  color: var(--color-text);
+  line-height: 1.55;
+}
+.create-tips h4 {
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin: 0 0 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--color-text);
+}
+.create-tips ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+.create-tips li {
+  margin-bottom: 0.35rem;
+}
+.create-tips li:last-child {
+  margin-bottom: 0;
+}
+
+/* ===== Entity type selector ===== */
+.type-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 575.98px) {
+  .type-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.type-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 1.1rem 1.15rem;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  cursor: pointer;
+  transition: 0.15s;
+}
+.type-card:hover {
+  border-color: var(--color-primary-400);
+  background: var(--color-primary-50);
+}
+.type-card input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.type-card .tc-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--color-primary-50);
+  color: var(--color-primary-600);
+  font-size: 1.25rem;
+  flex: none;
+  border: 1px solid var(--color-border);
+}
+.type-card .tc-body {
+  flex: 1;
+  min-width: 0;
+}
+.type-card .tc-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 0 0 0.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.type-card .tc-sub {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  margin: 0;
+  line-height: 1.45;
+}
+.type-card .tc-check {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  background: #fff;
+  display: grid;
+  place-items: center;
+  color: transparent;
+  font-size: 0.75rem;
+  transition: 0.15s;
+}
+.type-card:has(input:checked) {
+  border-color: var(--color-primary-600);
+  background: var(--color-primary-50);
+  box-shadow: 0 0 0 3px var(--color-primary-100);
+}
+.type-card:has(input:checked) .tc-icon {
+  background: var(--color-primary-600);
+  color: #fff;
+  border-color: var(--color-primary-600);
+}
+.type-card:has(input:checked) .tc-check {
+  background: var(--color-primary-600);
+  border-color: var(--color-primary-600);
+  color: #fff;
+}
+
+/* ===== Upload cards ===== */
+.upload-card {
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+  padding: 1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: 0.15s;
+}
+.upload-card:hover,
+.upload-card.is-dragover {
+  border-color: var(--color-primary-500);
+  background: var(--color-primary-50);
+}
+.upload-card .upload-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.upload-card .upload-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  color: var(--color-primary-600);
+  font-size: 1.1rem;
+  flex: none;
+  border: 1px solid var(--color-border);
+}
+.upload-card .upload-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+.upload-card .upload-sub {
+  font-size: 0.72rem;
+  color: var(--color-muted);
+  margin: 0.1rem 0 0;
+}
+.upload-card .upload-input {
+  display: block;
+  width: 100%;
+  font-size: 0.78rem;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: #fff;
+}
+
+/* ===== Save bar ===== */
+.create-save-bar {
+  position: sticky;
+  bottom: 1rem;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.15rem;
+  margin-top: 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+.create-save-bar .save-status {
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  flex: 1;
+  min-width: 12rem;
+}
+.create-save-bar .save-status strong {
+  display: block;
+  color: var(--color-text);
+  font-size: 0.82rem;
+  margin-bottom: 0.1rem;
+}
+.create-save-bar .save-status.is-ready {
+  color: #166534;
+}
+.create-save-bar .save-status.is-warning {
+  color: #b45309;
+}
+.create-save-bar .save-actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+/* ===== Badge ===== */
+.onboard-title .step-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.35rem;
+  height: 1.35rem;
+  padding: 0 0.45rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-left: 0.5rem;
+  background: var(--color-primary-50);
+  color: var(--color-primary-700);
+}
+.onboard-title .step-count.is-warn {
+  background: #fef3c7;
+  color: #92400e;
+}
+.onboard-title .step-count.is-active {
+  background: #dcfce7;
+  color: #166534;
+}
+
+/* ===== Type badge in header ===== */
+.type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+.type-badge-syarikat {
+  background: #dbeafe;
+  color: #1e40af;
+}
+.type-badge-individu {
+  background: #dcfce7;
+  color: #166534;
+}
+
+/* ===== Two-column layout inside a section ===== */
+.split-two {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 1.5rem;
+}
+@media (max-width: 991.98px) {
+  .split-two {
+    grid-template-columns: 1fr;
+  }
+}
+.split-two > .split-col {
+  min-width: 0;
+}
+
+/* ===== Profile auto-fill banner ===== */
+.profile-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid #bfdbfe;
+  border-radius: var(--radius-md);
+  background: #eff6ff;
+  color: #1e40af;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+.profile-banner i {
+  font-size: 1.15rem;
+  flex: none;
+  margin-top: 0.1rem;
+  color: #2563eb;
+}
+.profile-banner strong {
+  display: block;
+  color: #1e3a8a;
+  margin-bottom: 0.15rem;
+}
+.profile-banner a {
+  color: #1d4ed8;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* Read-only fields look softer */
+.form-control[readonly].is-profile-locked,
+textarea.form-control[readonly].is-profile-locked {
+  background: #f1f5f9;
+  color: #475569;
+  cursor: not-allowed;
+  border-color: #e2e8f0;
+}
+
+/* Make sure our [hidden] wins */
+[hidden] {
+  display: none !important;
+}

@@ -1,0 +1,1755 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/components.css" rel="stylesheet" />
+    <link href="css/dashboard.css" rel="stylesheet" />
+    <link href="css/view.css" rel="stylesheet" />
+    <link href="css/accordionBoard.css" rel="stylesheet" />
+    <link href="css/complete-account.css" rel="stylesheet" />
+    <link href="css/submissionModal.css" rel="stylesheet" />
+    <title>Mohon Lesen Aktiviti | Portal Pendaftaran Baja</title>
+
+    <style>
+      .create-shell .detail-header h1 {
+        font-size: 1.25rem;
+      }
+      .create-shell .head-avatar {
+        background: var(--color-primary-100);
+      }
+
+      .create-section {
+        margin-bottom: 1.5rem;
+      }
+      .create-section:last-child {
+        margin-bottom: 0;
+      }
+      .create-section h2 {
+        font-family: var(--font-serif, "Source Serif 4", Georgia, serif);
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--color-text);
+        margin: 0 0 0.35rem;
+      }
+      .create-section p.section-hint {
+        font-size: 0.8rem;
+        color: var(--color-muted);
+        margin: 0 0 1rem;
+      }
+      .create-section + .create-section {
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--color-border);
+      }
+
+      .create-side {
+        display: grid;
+        gap: 1rem;
+        align-content: start;
+      }
+      .create-tips {
+        padding: 1rem 1.1rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface-2);
+        font-size: 0.82rem;
+        color: var(--color-text);
+        line-height: 1.55;
+      }
+      .create-tips h4 {
+        font-size: 0.82rem;
+        font-weight: 700;
+        margin: 0 0 0.6rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        color: var(--color-text);
+      }
+      .create-tips ul {
+        margin: 0;
+        padding-left: 1.1rem;
+      }
+      .create-tips li {
+        margin-bottom: 0.35rem;
+      }
+      .create-tips li:last-child {
+        margin-bottom: 0;
+      }
+
+      .activity-activate {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        padding: 0.9rem 1.1rem;
+        border: 1.5px dashed var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface-2, #f8fafc);
+        cursor: pointer;
+        margin-bottom: 1.25rem;
+        transition: 0.15s;
+      }
+      .activity-activate:hover {
+        border-color: var(--color-primary-400);
+        background: var(--color-primary-50);
+      }
+      .activity-activate input {
+        margin-top: 0.25rem;
+        flex: none;
+        width: 1.1rem;
+        height: 1.1rem;
+        accent-color: var(--color-primary-600);
+      }
+      .activity-activate .aa-text {
+        flex: 1;
+        min-width: 0;
+      }
+      .activity-activate .aa-text strong {
+        display: block;
+        font-size: 0.88rem;
+        color: var(--color-text);
+        margin-bottom: 0.1rem;
+      }
+      .activity-activate .aa-text small {
+        font-size: 0.75rem;
+        color: var(--color-muted);
+      }
+      .activity-activate:has(input:checked) {
+        border-style: solid;
+        border-color: var(--color-primary-500);
+        background: var(--color-primary-50);
+      }
+      .activity-activate:has(input:checked) .aa-text strong {
+        color: var(--color-primary-800);
+      }
+
+      .upload-card {
+        border: 1px dashed var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface-2);
+        padding: 1rem 1.1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        transition: 0.15s;
+      }
+      .upload-card:hover,
+      .upload-card.is-dragover {
+        border-color: var(--color-primary-500);
+        background: var(--color-primary-50);
+      }
+      .upload-card .upload-head {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      .upload-card .upload-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: #fff;
+        color: var(--color-primary-600);
+        font-size: 1.1rem;
+        flex: none;
+        border: 1px solid var(--color-border);
+      }
+      .upload-card .upload-title {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--color-text);
+        margin: 0;
+      }
+      .upload-card .upload-sub {
+        font-size: 0.72rem;
+        color: var(--color-muted);
+        margin: 0.1rem 0 0;
+      }
+      .upload-card .upload-input {
+        display: block;
+        width: 100%;
+        font-size: 0.78rem;
+        padding: 0.4rem 0.5rem;
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      .create-save-bar {
+        position: sticky;
+        bottom: 1rem;
+        z-index: 20;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.85rem 1.15rem;
+        margin-top: 1rem;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      }
+      .create-save-bar .save-status {
+        font-size: 0.8rem;
+        color: var(--color-muted);
+        flex: 1;
+        min-width: 12rem;
+      }
+      .create-save-bar .save-status strong {
+        display: block;
+        color: var(--color-text);
+        font-size: 0.82rem;
+        margin-bottom: 0.1rem;
+      }
+      .create-save-bar .save-status.is-ready {
+        color: #166534;
+      }
+      .create-save-bar .save-status.is-warning {
+        color: #b45309;
+      }
+      .create-save-bar .save-actions {
+        display: flex;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+      }
+
+      .onboard-title .step-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 1.35rem;
+        height: 1.35rem;
+        padding: 0 0.45rem;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        margin-left: 0.5rem;
+        background: var(--color-primary-50);
+        color: var(--color-primary-700);
+      }
+      .onboard-title .step-count.is-warn {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .onboard-title .step-count.is-active {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      .onboard-icon.is-import {
+        background: #dbeafe;
+        color: #1e40af;
+      }
+      .onboard-icon.is-export {
+        background: #ede9fe;
+        color: #6d28d9;
+      }
+      .onboard-icon.is-manufacture {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .onboard-icon.is-seller {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <script>
+        try {
+          if (localStorage.getItem("sidebar-collapsed") === "1")
+            document.querySelector(".app").classList.add("is-collapsed");
+        } catch (e) {}
+      </script>
+
+      <!-- Bar sisi -->
+      <aside
+        class="sidebar offcanvas-lg offcanvas-start"
+        tabindex="-1"
+        id="sidebar"
+        aria-label="Navigasi utama"
+      >
+        <div class="sidebar-inner">
+          <div class="sidebar-head border-bottom pb-2">
+            <a href="#" class="brand" aria-label="Enakmen Baja Sabah">
+              <span class="brand-mark brand-mark--img">
+                <img src="logo/image.png" alt="" width="40" height="40" />
+              </span>
+              <span class="brand-text">Enakmen Baja Sabah</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-icon sidebar-toggle d-none d-lg-inline-grid"
+              id="sidebar-toggle"
+              aria-controls="sidebar"
+              aria-expanded="true"
+              aria-label="Tutup bar sisi"
+              title="Tutup bar sisi"
+            >
+              <i class="bi bi-layout-sidebar"></i>
+            </button>
+            <button
+              type="button"
+              class="btn-close d-lg-none"
+              data-bs-dismiss="offcanvas"
+              data-bs-target="#sidebar"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <nav class="d-grid gap-1">
+            <a
+              href="filled-dashboard.html"
+              class="side-link"
+              title="Papan pemuka"
+              ><i class="bi bi-house-door"></i
+              ><span class="side-label">Papan pemuka</span></a
+            >
+            <a href="#" class="side-link" title="Produk saya"
+              ><i class="bi bi-box-seam"></i
+              ><span class="side-label">Produk saya</span></a
+            >
+            <a href="#" class="side-link active" title="Lesen"
+              ><i class="bi bi-patch-check"></i
+              ><span class="side-label">Lesen</span></a
+            >
+            <a href="#" class="side-link" title="Pembayaran"
+              ><i class="bi bi-receipt"></i
+              ><span class="side-label">Pembayaran</span></a
+            >
+            <a href="#" class="side-link" title="Notis dan rayuan"
+              ><i class="bi bi-envelope-exclamation"></i
+              ><span class="side-label">Notis dan rayuan</span
+              ><span class="count pill pill-danger">0</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Akaun</div>
+          <nav class="d-grid gap-1 mb-3">
+            <a
+              href="company-profile.html"
+              class="side-link"
+              title="Profil organisasi"
+              ><i class="bi bi-building"></i
+              ><span class="side-label">Profil organisasi</span></a
+            >
+            <a href="#" class="side-link" title="Tetapan"
+              ><i class="bi bi-gear"></i
+              ><span class="side-label">Tetapan</span></a
+            >
+            <a href="index.html" class="side-link" title="Log keluar"
+              ><i class="bi bi-box-arrow-right"></i
+              ><span class="side-label">Log keluar</span></a
+            >
+          </nav>
+
+          <div class="side-user">
+            <span class="avatar">AH</span>
+            <div class="lh-sm side-user-text">
+              <div class="fw-semibold">Aisyah Hassan</div>
+              <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Utama -->
+      <div class="app-main">
+        <header class="topbar border-bottom">
+          <button
+            class="btn btn-icon d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebar"
+            aria-controls="sidebar"
+            aria-label="Buka menu"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+          <h1 class="h5 mb-0 me-2">Mohon lesen aktiviti</h1>
+          <div class="topbar-search d-none d-md-block input-icon">
+            <i class="bi bi-search"></i>
+            <input
+              type="search"
+              class="form-control"
+              placeholder="Cari produk, lesen atau permit"
+              aria-label="Cari"
+            />
+          </div>
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <button
+              class="btn btn-icon position-relative"
+              type="button"
+              aria-label="Pemberitahuan"
+            >
+              <i class="bi bi-bell"></i><span class="notif-dot"></span>
+            </button>
+
+            <div class="dropdown">
+              <button
+                type="button"
+                class="avatar avatar-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Menu pengguna"
+              >
+                AH
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end user-menu">
+                <li class="user-menu-head">
+                  <div class="fw-semibold">Aisyah Hassan</div>
+                  <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="company-profile.html"
+                    ><i class="bi bi-building me-2"></i>Profil organisasi</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-gear me-2"></i>Tetapan</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="index.html"
+                    ><i class="bi bi-box-arrow-right me-2"></i>Log keluar</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <main class="app-content p-3 p-md-4 p-xl-5">
+          <div class="detail-container">
+            <!-- ===== Top action bar ===== -->
+            <div class="detail-topbar">
+              <div class="detail-topbar-left">
+                <a href="lesen-saya.html" class="btn-back">
+                  <i class="bi bi-arrow-left"></i>Kembali
+                </a>
+              </div>
+
+              <div class="detail-topbar-right">
+                <button type="button" class="btn-back" id="save-draft-btn">
+                  <i class="bi bi-save"></i>Simpan draf
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  id="submit-btn"
+                  disabled
+                >
+                  <i class="bi bi-send-check"></i>Hantar untuk semakan
+                </button>
+                <button type="button" class="btn-nav-arrow" aria-label="Lagi">
+                  <i class="bi bi-three-dots"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- ===== Shell ===== -->
+            <div class="detail-shell create-shell mb-3">
+              <div class="detail-header">
+                <span class="head-avatar">
+                  <i class="bi bi-patch-check"></i>
+                </span>
+                <div class="head-info">
+                  <h1 id="form-title">Permohonan Lesen Aktiviti</h1>
+                  <div class="head-sub">
+                    <span class="avatar-mini">AH</span>
+                    <span>Aisyah Hassan</span>
+                    <span class="dot">·</span>
+                    <span id="form-sub">Rekod baharu · Belum disimpan</span>
+                  </div>
+                </div>
+                <div class="head-links">
+                  <a href="#" aria-label="Panduan permohonan">
+                    <i class="bi bi-question-circle"></i>
+                  </a>
+                </div>
+              </div>
+
+              <div class="info-strip">
+                <div class="strip-cell">
+                  <div class="strip-label">
+                    <i class="bi bi-hash"></i>No. Rujukan
+                  </div>
+                  <div class="strip-value" id="ref-value">—</div>
+                </div>
+
+                <div class="strip-cell">
+                  <div class="strip-label">
+                    <i class="bi bi-diagram-3"></i>Aktiviti Dipilih
+                  </div>
+                  <div class="strip-value" id="strip-activities">0</div>
+                </div>
+
+                <div class="strip-cell">
+                  <div class="strip-label">
+                    <i class="bi bi-paperclip"></i>Lampiran
+                  </div>
+                  <div class="strip-value" id="strip-attachments">0</div>
+                </div>
+
+                <div class="strip-cell">
+                  <div class="strip-label">
+                    <i class="bi bi-clipboard-pulse"></i>Status
+                  </div>
+                  <div class="strip-value">
+                    <span class="strip-pill is-info">
+                      <i class="bi bi-pencil-square"></i>Draf
+                    </span>
+                  </div>
+                </div>
+
+                <div class="strip-cell">
+                  <div class="strip-label">
+                    <i class="bi bi-flag"></i>Keutamaan
+                  </div>
+                  <div class="strip-value">
+                    <span class="strip-pill is-warning">Sederhana</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- =========================================================
+                 CARD: Pengimport (Lampiran sahaja)
+                 ========================================================= -->
+            <div class="onboard-card mb-3">
+              <div class="onboard-item" data-accordion="pengimport">
+                <button
+                  type="button"
+                  class="onboard-row as-button"
+                  aria-expanded="false"
+                  aria-controls="body-pengimport"
+                >
+                  <span class="onboard-icon is-import">
+                    <i class="bi bi-box-arrow-in-down"></i>
+                  </span>
+                  <div class="onboard-main">
+                    <h3 class="onboard-title">
+                      Pengimport
+                      <span class="step-count is-warn" id="pengimport-badge"
+                        >Tidak dipilih</span
+                      >
+                    </h3>
+                    <p class="onboard-desc">
+                      Lampiran sokongan untuk aktiviti Pengimport.
+                    </p>
+                  </div>
+                  <span class="onboard-action accordion-chevron">
+                    <i class="bi bi-chevron-down"></i>
+                  </span>
+                </button>
+
+                <div class="onboard-body" id="body-pengimport" hidden>
+                  <label class="activity-activate" for="act_pengimport">
+                    <input
+                      type="checkbox"
+                      id="act_pengimport"
+                      data-activity="pengimport"
+                    />
+                    <span class="aa-text">
+                      <strong>Aktifkan aktiviti Pengimport</strong>
+                      <small
+                        >Saya ingin memohon lesen Pengimport di bawah Enakmen
+                        Baja Sabah.</small
+                      >
+                    </span>
+                  </label>
+
+                  <div class="activity-fields" id="fields-pengimport" hidden>
+                    <div class="row g-4">
+                      <div class="col-lg-8">
+                        <div class="create-section">
+                          <h2>Lampiran Pengimport</h2>
+                          <p class="section-hint">
+                            Muat naik dokumen sokongan untuk aktiviti Pengimport.
+                          </p>
+
+                          <div class="row g-3">
+                            <div class="col-md-4">
+                              <div class="upload-card">
+                                <div class="upload-head">
+                                  <span class="upload-icon">
+                                    <i class="bi bi-file-earmark-text"></i>
+                                  </span>
+                                  <div>
+                                    <p class="upload-title">
+                                      Surat Kebenaran Import
+                                    </p>
+                                    <p class="upload-sub">
+                                      Permit / surat kelulusan
+                                    </p>
+                                  </div>
+                                </div>
+                                <input
+                                  type="file"
+                                  class="upload-input"
+                                  id="imp_letter"
+                                  accept=".pdf,.jpg,.jpeg,.png"
+                                  data-activity-file="pengimport"
+                                />
+                              </div>
+                            </div>
+
+                            <div class="col-md-4">
+                              <div class="upload-card">
+                                <div class="upload-head">
+                                  <span class="upload-icon">
+                                    <i class="bi bi-receipt"></i>
+                                  </span>
+                                  <div>
+                                    <p class="upload-title">
+                                      Invois / Bill of Lading
+                                    </p>
+                                    <p class="upload-sub">
+                                      Bukti transaksi import
+                                    </p>
+                                  </div>
+                                </div>
+                                <input
+                                  type="file"
+                                  class="upload-input"
+                                  id="imp_invoice"
+                                  accept=".pdf,.jpg,.jpeg,.png"
+                                  data-activity-file="pengimport"
+                                />
+                              </div>
+                            </div>
+
+                            <div class="col-md-4">
+                              <div class="upload-card">
+                                <div class="upload-head">
+                                  <span class="upload-icon">
+                                    <i class="bi bi-shield-check"></i>
+                                  </span>
+                                  <div>
+                                    <p class="upload-title">
+                                      Sijil Kuarantin / Fitosanitari
+                                    </p>
+                                    <p class="upload-sub">Jika berkenaan</p>
+                                  </div>
+                                </div>
+                                <input
+                                  type="file"
+                                  class="upload-input"
+                                  id="imp_quarantine"
+                                  accept=".pdf,.jpg,.jpeg,.png"
+                                  data-activity-file="pengimport"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-4">
+                        <div class="create-side">
+                          <div class="create-tips">
+                            <h4>
+                              <i class="bi bi-info-circle-fill"></i>Nota
+                              Pengimport
+                            </h4>
+                            <ul>
+                              <li>
+                                Sila muat naik sekurang-kurangnya satu lampiran
+                                untuk meneruskan.
+                              </li>
+                              <li>
+                                Sijil analisis (CoA) diperlukan untuk setiap
+                                produk yang diimport.
+                              </li>
+                              <li>
+                                Pastikan negara asal mematuhi keperluan
+                                fitosanitari Malaysia.
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- =========================================================
+                 CARD: Pengeksport (Lampiran sahaja)
+                 ========================================================= -->
+            <div class="onboard-card mb-3">
+              <div class="onboard-item" data-accordion="pengeksport">
+                <button
+                  type="button"
+                  class="onboard-row as-button"
+                  aria-expanded="false"
+                  aria-controls="body-pengeksport"
+                >
+                  <span class="onboard-icon is-export">
+                    <i class="bi bi-box-arrow-up-right"></i>
+                  </span>
+                  <div class="onboard-main">
+                    <h3 class="onboard-title">
+                      Pengeksport
+                      <span class="step-count is-warn" id="pengeksport-badge"
+                        >Tidak dipilih</span
+                      >
+                    </h3>
+                    <p class="onboard-desc">
+                      Lampiran sokongan untuk aktiviti Pengeksport.
+                    </p>
+                  </div>
+                  <span class="onboard-action accordion-chevron">
+                    <i class="bi bi-chevron-down"></i>
+                  </span>
+                </button>
+
+                <div class="onboard-body" id="body-pengeksport" hidden>
+                  <label class="activity-activate" for="act_pengeksport">
+                    <input
+                      type="checkbox"
+                      id="act_pengeksport"
+                      data-activity="pengeksport"
+                    />
+                    <span class="aa-text">
+                      <strong>Aktifkan aktiviti Pengeksport</strong>
+                      <small
+                        >Saya ingin memohon lesen Pengeksport di bawah Enakmen
+                        Baja Sabah.</small
+                      >
+                    </span>
+                  </label>
+
+                  <div class="activity-fields" id="fields-pengeksport" hidden>
+                    <div class="row g-4">
+                      <div class="col-lg-8">
+                        <div class="create-section">
+                          <h2>Lampiran Pengeksport</h2>
+                          <p class="section-hint">
+                            Muat naik dokumen sokongan untuk aktiviti
+                            Pengeksport.
+                          </p>
+
+                          <div class="row g-3">
+                            <div class="col-md-4">
+                              <div class="upload-card">
+                                <div class="upload-head">
+                                  <span class="upload-icon">
+                                    <i class="bi bi-file-earmark-text"></i>
+                                  </span>
+                                  <div>
+                                    <p class="upload-title">
+                                      Surat Kebenaran Eksport
+                                    </p>
+                                    <p class="upload-sub">Jika berkenaan</p>
+                                  </div>
+                                </div>
+                                <input
+                                  type="file"
+                                  class="upload-input"
+                                  id="exp_letter"
+                                  accept=".pdf,.jpg,.jpeg,.png"
+                                  data-activity-file="pengeksport"
+                                />
+                              </div>
+                            </div>
+
+                            <div class="col-md-4">
+                              <div class="upload-card">
+                                <div class="upload-head">
+                                  <span class="upload-icon">
+                                    <i class="bi bi-receipt"></i>
+                                  </span>
+                                  <div>
+                                    <p class="upload-title">
+                                      Invois / Packing List
+                                    </p>
+                                    <p class="upload-sub">
+                                      Bukti transaksi eksport
+                                    </p>
+                                  </div>
+                                </div>
+                                <input
+                                  type="file"
+                                  class="upload-input"
+                                  id="exp_invoice"
+                                  accept=".pdf,.jpg,.jpeg,.png"
+                                  data-activity-file="pengeksport"
+                                />
+                              </div>
+                            </div>
+
+                            <div class="col-md-4">
+                              <div class="upload-card">
+                                <div class="upload-head">
+                                  <span class="upload-icon">
+                                    <i class="bi bi-clipboard-check"></i>
+                                  </span>
+                                  <div>
+                                    <p class="upload-title">
+                                      Sijil Analisis (CoA)
+                                    </p>
+                                    <p class="upload-sub">
+                                      Untuk setiap produk dieksport
+                                    </p>
+                                  </div>
+                                </div>
+                                <input
+                                  type="file"
+                                  class="upload-input"
+                                  id="exp_coa"
+                                  accept=".pdf,.jpg,.jpeg,.png"
+                                  data-activity-file="pengeksport"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-4">
+                        <div class="create-side">
+                          <div class="create-tips">
+                            <h4>
+                              <i class="bi bi-info-circle-fill"></i>Nota
+                              Pengeksport
+                            </h4>
+                            <ul>
+                              <li>
+                                Sila muat naik sekurang-kurangnya satu lampiran
+                                untuk meneruskan.
+                              </li>
+                              <li>
+                                Pastikan produk mematuhi keperluan negara
+                                destinasi.
+                              </li>
+                              <li>
+                                Sijil fitosanitari mungkin diperlukan untuk
+                                produk organik.
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- =========================================================
+                 CARD: Pengilang (Lampiran sahaja)
+                 ========================================================= -->
+            <div class="onboard-card mb-3">
+              <div class="onboard-item" data-accordion="pengilang">
+                <button
+                  type="button"
+                  class="onboard-row as-button"
+                  aria-expanded="false"
+                  aria-controls="body-pengilang"
+                >
+                  <span class="onboard-icon is-manufacture">
+                    <i class="bi bi-gear-wide-connected"></i>
+                  </span>
+                  <div class="onboard-main">
+                    <h3 class="onboard-title">
+                      Pengilang
+                      <span class="step-count is-warn" id="pengilang-badge"
+                        >Tidak dipilih</span
+                      >
+                    </h3>
+                    <p class="onboard-desc">
+                      Lampiran sokongan untuk aktiviti Pengilang.
+                    </p>
+                  </div>
+                  <span class="onboard-action accordion-chevron">
+                    <i class="bi bi-chevron-down"></i>
+                  </span>
+                </button>
+
+                <div class="onboard-body" id="body-pengilang" hidden>
+                  <label class="activity-activate" for="act_pengilang">
+                    <input
+                      type="checkbox"
+                      id="act_pengilang"
+                      data-activity="pengilang"
+                    />
+                    <span class="aa-text">
+                      <strong>Aktifkan aktiviti Pengilang</strong>
+                      <small
+                        >Saya ingin memohon lesen Pengilang di bawah Enakmen
+                        Baja Sabah.</small
+                      >
+                    </span>
+                  </label>
+
+                  <div class="activity-fields" id="fields-pengilang" hidden>
+                    <div class="row g-4">
+                      <div class="col-lg-8">
+                        <div class="create-section">
+                          <h2>Lampiran Pengilang</h2>
+                          <p class="section-hint">
+                            Muat naik dokumen sokongan untuk aktiviti Pengilang.
+                          </p>
+
+                          <div class="row g-3">
+                            <div class="col-md-4">
+                              <div class="upload-card">
+                                <div class="upload-head">
+                                  <span class="upload-icon">
+                                    <i class="bi bi-award"></i>
+                                  </span>
+                                  <div>
+                                    <p class="upload-title">Lesen MIDA</p>
+                                    <p class="upload-sub">Jika berkenaan</p>
+                                  </div>
+                                </div>
+                                <input
+                                  type="file"
+                                  class="upload-input"
+                                  id="man_license"
+                                  accept=".pdf,.jpg,.jpeg,.png"
+                                  data-activity-file="pengilang"
+                                />
+                              </div>
+                            </div>
+
+                            <div class="col-md-4">
+                              <div class="upload-card">
+                                <div class="upload-head">
+                                  <span class="upload-icon">
+                                    <i class="bi bi-map"></i>
+                                  </span>
+                                  <div>
+                                    <p class="upload-title">Pelan Kilang</p>
+                                    <p class="upload-sub">Susun atur premis</p>
+                                  </div>
+                                </div>
+                                <input
+                                  type="file"
+                                  class="upload-input"
+                                  id="man_plan"
+                                  accept=".pdf,.jpg,.jpeg,.png"
+                                  data-activity-file="pengilang"
+                                />
+                              </div>
+                            </div>
+
+                            <div class="col-md-4">
+                              <div class="upload-card">
+                                <div class="upload-head">
+                                  <span class="upload-icon">
+                                    <i class="bi bi-clipboard-data"></i>
+                                  </span>
+                                  <div>
+                                    <p class="upload-title">
+                                      Laporan Kawalan Kualiti
+                                    </p>
+                                    <p class="upload-sub">Proses QC</p>
+                                  </div>
+                                </div>
+                                <input
+                                  type="file"
+                                  class="upload-input"
+                                  id="man_qc"
+                                  accept=".pdf,.jpg,.jpeg,.png"
+                                  data-activity-file="pengilang"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-4">
+                        <div class="create-side">
+                          <div class="create-tips">
+                            <h4>
+                              <i class="bi bi-info-circle-fill"></i>Nota
+                              Pengilang
+                            </h4>
+                            <ul>
+                              <li>
+                                Sila muat naik sekurang-kurangnya satu lampiran
+                                untuk meneruskan.
+                              </li>
+                              <li>
+                                Kilang mesti mematuhi piawaian keselamatan
+                                industri.
+                              </li>
+                              <li>
+                                Proses pengilangan akan disemak melalui lawatan
+                                tapak DOA.
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- =========================================================
+                 CARD: Penjual (Lampiran sahaja)
+                 ========================================================= -->
+            <div class="onboard-card mb-3">
+              <div class="onboard-item" data-accordion="penjual">
+                <button
+                  type="button"
+                  class="onboard-row as-button"
+                  aria-expanded="false"
+                  aria-controls="body-penjual"
+                >
+                  <span class="onboard-icon is-seller">
+                    <i class="bi bi-shop"></i>
+                  </span>
+                  <div class="onboard-main">
+                    <h3 class="onboard-title">
+                      Penjual
+                      <span class="step-count is-warn" id="penjual-badge"
+                        >Tidak dipilih</span
+                      >
+                    </h3>
+                    <p class="onboard-desc">
+                      Lampiran sokongan untuk aktiviti Penjual.
+                    </p>
+                  </div>
+                  <span class="onboard-action accordion-chevron">
+                    <i class="bi bi-chevron-down"></i>
+                  </span>
+                </button>
+
+                <div class="onboard-body" id="body-penjual" hidden>
+                  <label class="activity-activate" for="act_penjual">
+                    <input
+                      type="checkbox"
+                      id="act_penjual"
+                      data-activity="penjual"
+                    />
+                    <span class="aa-text">
+                      <strong>Aktifkan aktiviti Penjual</strong>
+                      <small
+                        >Saya ingin memohon lesen Penjual di bawah Enakmen Baja
+                        Sabah.</small
+                      >
+                    </span>
+                  </label>
+
+                  <div class="activity-fields" id="fields-penjual" hidden>
+                    <div class="row g-4">
+                      <div class="col-lg-8">
+                        <div class="create-section">
+                          <h2>Lampiran Penjual</h2>
+                          <p class="section-hint">
+                            Muat naik dokumen sokongan untuk aktiviti Penjual.
+                          </p>
+
+                          <div class="row g-3">
+                            <div class="col-md-4">
+                              <div class="upload-card">
+                                <div class="upload-head">
+                                  <span class="upload-icon">
+                                    <i class="bi bi-shop-window"></i>
+                                  </span>
+                                  <div>
+                                    <p class="upload-title">
+                                      Lesen Premis Perniagaan
+                                    </p>
+                                    <p class="upload-sub">
+                                      Dari pihak berkuasa tempatan
+                                    </p>
+                                  </div>
+                                </div>
+                                <input
+                                  type="file"
+                                  class="upload-input"
+                                  id="sel_premises_license"
+                                  accept=".pdf,.jpg,.jpeg,.png"
+                                  data-activity-file="penjual"
+                                />
+                              </div>
+                            </div>
+
+                            <div class="col-md-4">
+                              <div class="upload-card">
+                                <div class="upload-head">
+                                  <span class="upload-icon">
+                                    <i class="bi bi-image"></i>
+                                  </span>
+                                  <div>
+                                    <p class="upload-title">Gambar Premis</p>
+                                    <p class="upload-sub">
+                                      Pandangan depan dan stor
+                                    </p>
+                                  </div>
+                                </div>
+                                <input
+                                  type="file"
+                                  class="upload-input"
+                                  id="sel_photos"
+                                  accept=".pdf,.jpg,.jpeg,.png"
+                                  multiple
+                                  data-activity-file="penjual"
+                                />
+                              </div>
+                            </div>
+
+                            <div class="col-md-4">
+                              <div class="upload-card">
+                                <div class="upload-head">
+                                  <span class="upload-icon">
+                                    <i class="bi bi-receipt-cutoff"></i>
+                                  </span>
+                                  <div>
+                                    <p class="upload-title">
+                                      Senarai Pembekal
+                                    </p>
+                                    <p class="upload-sub">
+                                      Senarai pembekal produk
+                                    </p>
+                                  </div>
+                                </div>
+                                <input
+                                  type="file"
+                                  class="upload-input"
+                                  id="sel_suppliers"
+                                  accept=".pdf,.jpg,.jpeg,.png"
+                                  data-activity-file="penjual"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-lg-4">
+                        <div class="create-side">
+                          <div class="create-tips">
+                            <h4>
+                              <i class="bi bi-info-circle-fill"></i>Nota
+                              Penjual
+                            </h4>
+                            <ul>
+                              <li>
+                                Sila muat naik sekurang-kurangnya satu lampiran
+                                untuk meneruskan.
+                              </li>
+                              <li>
+                                Premis mesti mempunyai ruang simpanan yang
+                                sesuai.
+                              </li>
+                              <li>
+                                Produk yang dijual mesti berdaftar dengan DOA.
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- =========================================================
+                 CARD: Pengesahan
+                 ========================================================= -->
+            <div class="onboard-card mb-3">
+              <div class="onboard-item" data-accordion="confirm">
+                <button
+                  type="button"
+                  class="onboard-row as-button"
+                  aria-expanded="false"
+                  aria-controls="body-confirm"
+                >
+                  <span class="onboard-icon is-blue">
+                    <i class="bi bi-shield-check"></i>
+                  </span>
+                  <div class="onboard-main">
+                    <h3 class="onboard-title">
+                      Pengesahan
+                      <span class="step-count is-warn" id="confirm-badge"
+                        >2</span
+                      >
+                    </h3>
+                    <p class="onboard-desc">
+                      Semak ringkasan dan tanda pengakuan sebelum menghantar.
+                    </p>
+                  </div>
+                  <span class="onboard-action accordion-chevron">
+                    <i class="bi bi-chevron-down"></i>
+                  </span>
+                </button>
+
+                <div class="onboard-body" id="body-confirm" hidden>
+                  <div class="row g-4">
+                    <div class="col-lg-8">
+                      <div class="create-section">
+                        <h2>Ringkasan permohonan</h2>
+                        <p class="section-hint">
+                          Sila semak semula maklumat sebelum menghantar untuk
+                          semakan DOA.
+                        </p>
+
+                        <dl class="def-grid">
+                          <div class="full">
+                            <dt>Aktiviti Lesen Dipohon</dt>
+                            <dd id="sum_activities">—</dd>
+                          </div>
+                          <div class="full">
+                            <dt>Lampiran Mengikut Aktiviti</dt>
+                            <dd id="sum_attachments">—</dd>
+                          </div>
+                        </dl>
+                      </div>
+
+                      <div class="create-section">
+                        <label class="checklist-item">
+                          <input type="checkbox" id="confirm_true" />
+                          <span class="cl-text">
+                            <strong
+                              >Saya mengesahkan semua maklumat adalah
+                              benar</strong
+                            >
+                            <small
+                              >Memberikan maklumat palsu adalah satu kesalahan
+                              di bawah Enakmen Baja Sabah.</small
+                            >
+                          </span>
+                        </label>
+
+                        <label class="checklist-item mt-2">
+                          <input type="checkbox" id="confirm_review" />
+                          <span class="cl-text">
+                            <strong
+                              >Saya bersetuju permohonan ini disemak oleh
+                              DOA</strong
+                            >
+                            <small
+                              >Termasuk lawatan tapak premis jika
+                              diperlukan.</small
+                            >
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                      <div class="create-side">
+                        <div class="create-tips">
+                          <h4>
+                            <i class="bi bi-shield-check"></i>Sebelum hantar
+                          </h4>
+                          <ul>
+                            <li>
+                              Sekurang-kurangnya satu aktiviti telah
+                              diaktifkan.
+                            </li>
+                            <li>
+                              Sekurang-kurangnya satu lampiran dimuat naik untuk
+                              setiap aktiviti dipilih.
+                            </li>
+                            <li>
+                              Kedua-dua kotak pengakuan telah ditanda.
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ===== Save bar ===== -->
+            <div class="create-save-bar" id="save-bar">
+              <div class="save-status" id="save-status">
+                <strong>Draf belum disimpan</strong>
+                Aktifkan sekurang-kurangnya satu aktiviti untuk meneruskan.
+              </div>
+              <div class="save-actions">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-sm"
+                  id="reset-btn"
+                >
+                  Set semula
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary btn-sm"
+                  id="save-draft-bottom"
+                >
+                  <i class="bi bi-save me-1"></i>Simpan draf
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary btn-sm"
+                  id="submit-bottom"
+                  disabled
+                >
+                  <i class="bi bi-send-check me-1"></i>Hantar untuk semakan
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /* ===== Sidebar toggle ===== */
+      (function () {
+        var app = document.querySelector(".app");
+        var btn = app.querySelector("#sidebar-toggle");
+        var KEY = "sidebar-collapsed";
+        function sync() {
+          var collapsed = app.classList.contains("is-collapsed");
+          var label = collapsed ? "Buka bar sisi" : "Tutup bar sisi";
+          btn.setAttribute("aria-expanded", String(!collapsed));
+          btn.setAttribute("aria-label", label);
+          btn.title = label;
+        }
+        btn.addEventListener("click", function () {
+          app.classList.toggle("is-collapsed");
+          sync();
+          try {
+            localStorage.setItem(
+              KEY,
+              app.classList.contains("is-collapsed") ? "1" : "0",
+            );
+          } catch (e) {}
+        });
+        sync();
+      })();
+
+      /* ===== Accordion ===== */
+      (function () {
+        document.querySelectorAll(".onboard-card").forEach(function (card) {
+          var items = card.querySelectorAll(".onboard-item[data-accordion]");
+
+          items.forEach(function (item) {
+            var toggle = item.querySelector(".onboard-row.as-button");
+            var body = item.querySelector(".onboard-body");
+            if (!toggle) return;
+
+            toggle.addEventListener("click", function () {
+              var isOpen = item.classList.contains("is-open");
+
+              items.forEach(function (other) {
+                if (other === item) return;
+                other.classList.remove("is-open");
+                var t = other.querySelector(".onboard-row.as-button");
+                var b = other.querySelector(".onboard-body");
+                if (t) t.setAttribute("aria-expanded", "false");
+                if (b) b.hidden = true;
+              });
+
+              if (isOpen) {
+                item.classList.remove("is-open");
+                toggle.setAttribute("aria-expanded", "false");
+                if (body) body.hidden = true;
+              } else {
+                item.classList.add("is-open");
+                toggle.setAttribute("aria-expanded", "true");
+                if (body) body.hidden = false;
+              }
+            });
+          });
+        });
+      })();
+
+      /* =========================================================
+         License application workflow
+         ========================================================= */
+      (function () {
+        var ACTIVITIES = ["pengimport", "pengeksport", "pengilang", "penjual"];
+
+        var ACTIVITY_LABELS = {
+          pengimport: "Pengimport",
+          pengeksport: "Pengeksport",
+          pengilang: "Pengilang",
+          penjual: "Penjual",
+        };
+
+        /* -------- Refs -------- */
+        var confirmTrue = document.getElementById("confirm_true");
+        var confirmReview = document.getElementById("confirm_review");
+
+        var saveStatus = document.getElementById("save-status");
+        var saveDraftBtnTop = document.getElementById("save-draft-btn");
+        var saveDraftBtnBottom = document.getElementById("save-draft-bottom");
+        var submitBtnTop = document.getElementById("submit-btn");
+        var submitBtnBottom = document.getElementById("submit-bottom");
+        var resetBtn = document.getElementById("reset-btn");
+
+        var stripActivities = document.getElementById("strip-activities");
+        var stripAttachments = document.getElementById("strip-attachments");
+        var formSub = document.getElementById("form-sub");
+        var confirmBadge = document.getElementById("confirm-badge");
+
+        var sumActivities = document.getElementById("sum_activities");
+        var sumAttachments = document.getElementById("sum_attachments");
+
+        /* -------- Activity toggles -------- */
+        var activityCheckboxes = document.querySelectorAll(
+          'input[type="checkbox"][data-activity]',
+        );
+
+        function getActiveActivities() {
+          var result = [];
+          activityCheckboxes.forEach(function (cb) {
+            if (cb.checked) result.push(cb.getAttribute("data-activity"));
+          });
+          return result;
+        }
+
+        function syncActivityFields() {
+          ACTIVITIES.forEach(function (key) {
+            var cb = document.getElementById("act_" + key);
+            var fields = document.getElementById("fields-" + key);
+            if (!cb || !fields) return;
+            fields.hidden = !cb.checked;
+          });
+        }
+
+        activityCheckboxes.forEach(function (cb) {
+          cb.addEventListener("change", function () {
+            syncActivityFields();
+            if (cb.checked) {
+              var item = cb.closest(".onboard-item");
+              if (item && !item.classList.contains("is-open")) {
+                var toggle = item.querySelector(".onboard-row.as-button");
+                if (toggle) toggle.click();
+              }
+            }
+            updateAll();
+          });
+        });
+
+        /* -------- Per-activity completeness (attachments only) -------- */
+        function isActivityComplete(key) {
+          return attachmentCountFor(key) > 0;
+        }
+
+        function attachmentCountFor(key) {
+          var inputs = document.querySelectorAll(
+            '[data-activity-file="' + key + '"]',
+          );
+          var total = 0;
+          inputs.forEach(function (input) {
+            if (input.files && input.files.length) total += input.files.length;
+          });
+          return total;
+        }
+
+        function attachmentNamesFor(key) {
+          var inputs = document.querySelectorAll(
+            '[data-activity-file="' + key + '"]',
+          );
+          var names = [];
+          inputs.forEach(function (input) {
+            if (input.files && input.files.length) {
+              Array.prototype.forEach.call(input.files, function (f) {
+                names.push(f.name);
+              });
+            }
+          });
+          return names;
+        }
+
+        function totalAttachments() {
+          var total = 0;
+          ACTIVITIES.forEach(function (k) {
+            total += attachmentCountFor(k);
+          });
+          return total;
+        }
+
+        /* -------- Submit-state -------- */
+        function canSubmit() {
+          var active = getActiveActivities();
+          if (active.length === 0) return false;
+
+          for (var i = 0; i < active.length; i++) {
+            if (!isActivityComplete(active[i])) return false;
+          }
+
+          return confirmTrue.checked && confirmReview.checked;
+        }
+
+        /* -------- Live updates -------- */
+        function updateInfoStrip() {
+          var active = getActiveActivities();
+          stripActivities.textContent = String(active.length);
+          stripAttachments.textContent = String(totalAttachments());
+        }
+
+        function updateSummary() {
+          var active = getActiveActivities();
+          if (active.length === 0) {
+            sumActivities.textContent = "Tiada aktiviti dipilih";
+          } else {
+            sumActivities.textContent = active
+              .map(function (k) {
+                return ACTIVITY_LABELS[k];
+              })
+              .join(", ");
+          }
+
+          var lines = [];
+          active.forEach(function (k) {
+            var names = attachmentNamesFor(k);
+            if (names.length) {
+              lines.push(ACTIVITY_LABELS[k] + ": " + names.length + " fail");
+            } else {
+              lines.push(ACTIVITY_LABELS[k] + ": tiada lampiran");
+            }
+          });
+          sumAttachments.textContent = lines.length
+            ? lines.join(" · ")
+            : "Tiada lampiran";
+        }
+
+        function updateCardBadges() {
+          ACTIVITIES.forEach(function (key) {
+            var badge = document.getElementById(key + "-badge");
+            if (!badge) return;
+            var cb = document.getElementById("act_" + key);
+            if (!cb || !cb.checked) {
+              badge.textContent = "Tidak dipilih";
+              badge.classList.remove("is-warn", "is-active");
+              badge.classList.add("is-warn");
+              return;
+            }
+            var att = attachmentCountFor(key);
+            badge.textContent = att + " lampiran";
+            badge.classList.remove("is-warn");
+            badge.classList.add("is-active");
+          });
+
+          var confEmpty = 0;
+          if (!confirmTrue.checked) confEmpty++;
+          if (!confirmReview.checked) confEmpty++;
+          confirmBadge.textContent = confEmpty;
+          confirmBadge.classList.toggle("is-warn", confEmpty > 0);
+          confirmBadge.classList.toggle("is-active", confEmpty === 0);
+        }
+
+        function updateSaveBar() {
+          var active = getActiveActivities();
+          var submittable = canSubmit();
+
+          submitBtnTop.disabled = !submittable;
+          submitBtnBottom.disabled = !submittable;
+
+          var canDraft = active.length > 0;
+          saveDraftBtnTop.disabled = !canDraft;
+          saveDraftBtnBottom.disabled = !canDraft;
+
+          if (submittable) {
+            saveStatus.className = "save-status is-ready";
+            saveStatus.innerHTML =
+              "<strong>Sedia untuk dihantar</strong>Semua aktiviti yang dipilih telah lengkap. Hantar untuk semakan DOA.";
+          } else if (active.length === 0) {
+            saveStatus.className = "save-status";
+            saveStatus.innerHTML =
+              "<strong>Tiada aktiviti dipilih</strong>Pilih sekurang-kurangnya satu aktiviti lesen untuk meneruskan.";
+          } else {
+            var missing = active.filter(function (k) {
+              return !isActivityComplete(k);
+            });
+            if (missing.length) {
+              saveStatus.className = "save-status is-warning";
+              saveStatus.innerHTML =
+                "<strong>Lampiran belum lengkap</strong>Muat naik sekurang-kurangnya satu lampiran untuk: " +
+                missing
+                  .map(function (k) {
+                    return ACTIVITY_LABELS[k];
+                  })
+                  .join(", ") +
+                ".";
+            } else if (!(confirmTrue.checked && confirmReview.checked)) {
+              saveStatus.className = "save-status is-warning";
+              saveStatus.innerHTML =
+                "<strong>Sedia untuk draf</strong>Tandakan kedua-dua pengakuan pada kad Pengesahan untuk menghantar.";
+            }
+          }
+        }
+
+        function updateAll() {
+          syncActivityFields();
+          updateInfoStrip();
+          updateSummary();
+          updateSaveBar();
+          updateCardBadges();
+        }
+
+        /* -------- Field listeners -------- */
+        document
+          .querySelectorAll("[data-activity-field]")
+          .forEach(function (el) {
+            el.addEventListener("input", updateAll);
+          });
+
+        document
+          .querySelectorAll("[data-activity-file]")
+          .forEach(function (el) {
+            el.addEventListener("change", updateAll);
+          });
+
+        confirmTrue.addEventListener("change", updateAll);
+        confirmReview.addEventListener("change", updateAll);
+
+        /* -------- Open card -------- */
+        function openCard(name) {
+          var item = document.querySelector(
+            '.onboard-item[data-accordion="' + name + '"]',
+          );
+          if (!item) return;
+          if (item.classList.contains("is-open")) return;
+          var toggle = item.querySelector(".onboard-row.as-button");
+          if (toggle) toggle.click();
+        }
+
+        /* -------- Save draft -------- */
+        function saveDraft() {
+          var active = getActiveActivities();
+          if (active.length === 0) {
+            saveStatus.className = "save-status is-warning";
+            saveStatus.innerHTML =
+              "<strong>Tiada aktiviti dipilih</strong>Pilih sekurang-kurangnya satu aktiviti sebelum menyimpan draf.";
+            return;
+          }
+
+          formSub.textContent =
+            "Draf disimpan pada " +
+            new Date().toLocaleString("ms-MY", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+              hour: "numeric",
+              minute: "2-digit",
+            });
+
+          saveStatus.className = "save-status is-ready";
+          saveStatus.innerHTML =
+            "<strong>Draf disimpan</strong>Anda boleh kembali ke halaman ini pada bila-bila masa.";
+        }
+
+        saveDraftBtnTop.addEventListener("click", saveDraft);
+        saveDraftBtnBottom.addEventListener("click", saveDraft);
+
+        /* -------- Submit -------- */
+        function submitApplication() {
+          if (!canSubmit()) {
+            var active = getActiveActivities();
+            if (active.length === 0) return;
+            var missing = active.filter(function (k) {
+              return !isActivityComplete(k);
+            });
+            if (missing.length) {
+              openCard(missing[0]);
+              return;
+            }
+            openCard("confirm");
+            return;
+          }
+
+          var ref =
+            "LS/" +
+            new Date().getFullYear() +
+            "/" +
+            Math.floor(10000 + Math.random() * 89999);
+
+          document.getElementById("ref-value").textContent = ref;
+
+          submitBtnTop.disabled = true;
+          submitBtnBottom.disabled = true;
+          submitBtnTop.innerHTML = '<i class="bi bi-check-lg"></i>Dihantar';
+          submitBtnBottom.innerHTML =
+            '<i class="bi bi-check-lg me-1"></i>Dihantar';
+
+          saveStatus.className = "save-status is-ready";
+          saveStatus.innerHTML =
+            "<strong>Permohonan dihantar</strong>Rujukan: " +
+            ref +
+            ". Sila tunggu semakan DOA.";
+        }
+
+        submitBtnTop.addEventListener("click", submitApplication);
+        submitBtnBottom.addEventListener("click", submitApplication);
+
+        /* -------- Reset -------- */
+        resetBtn.addEventListener("click", function () {
+          if (
+            !confirm(
+              "Set semula borang? Semua maklumat yang telah diisi akan dipadam.",
+            )
+          )
+            return;
+
+          document
+            .querySelectorAll("[data-activity-field]")
+            .forEach(function (el) {
+              if (el) el.value = "";
+            });
+
+          document
+            .querySelectorAll("[data-activity-file]")
+            .forEach(function (el) {
+              if (el) el.value = "";
+            });
+
+          activityCheckboxes.forEach(function (cb) {
+            cb.checked = false;
+          });
+
+          confirmTrue.checked = false;
+          confirmReview.checked = false;
+
+          document.getElementById("ref-value").textContent = "—";
+          formSub.textContent = "Rekod baharu · Belum disimpan";
+
+          submitBtnTop.innerHTML =
+            '<i class="bi bi-send-check"></i>Hantar untuk semakan';
+          submitBtnBottom.innerHTML =
+            '<i class="bi bi-send-check me-1"></i>Hantar untuk semakan';
+
+          updateAll();
+        });
+
+        /* -------- Initial state -------- */
+        updateAll();
+      })();
+    </script>
+  </body>
+</html>
