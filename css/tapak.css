@@ -1,0 +1,331 @@
+/* ============================================================
+         ===== REVIEW BANNER =====
+         ============================================================ */
+.review-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+  color: #fff;
+  margin-bottom: 1.25rem;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 20px -8px rgba(29, 78, 216, 0.45);
+}
+.review-banner::before {
+  content: "";
+  position: absolute;
+  right: -60px;
+  top: -60px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.14),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+.review-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+}
+.review-banner > * {
+  position: relative;
+  z-index: 1;
+}
+.review-banner .rb-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 15px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  font-size: 1.55rem;
+  flex: none;
+  color: #fff;
+}
+.review-banner h2 {
+  font-family: var(--font-serif, "Source Serif 4", Georgia, serif);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0 0 0.3rem;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+.review-banner p {
+  font-size: 0.87rem;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.94);
+  line-height: 1.6;
+  max-width: 65ch;
+}
+
+/* ===== SUBMITTED BANNER ===== */
+.submitted-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 1rem 1.25rem;
+  border-radius: 12px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  margin-bottom: 1.25rem;
+  font-size: 0.83rem;
+  color: #1e3a8a;
+  line-height: 1.55;
+}
+.submitted-banner .sb-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #fff;
+  color: #1d4ed8;
+  display: grid;
+  place-items: center;
+  font-size: 1.1rem;
+  flex: none;
+  border: 1px solid #bfdbfe;
+}
+.submitted-banner strong {
+  display: block;
+  color: #1e3a8a;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+  font-size: 0.85rem;
+}
+
+/* ============================================================
+         ===== ASSESSMENT ACCORDION (Part III – Part VII) =====
+         ============================================================ */
+.assess-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.15rem;
+  background: var(--color-surface-2, #f8fafc);
+  border-bottom: 1px solid var(--color-border);
+}
+.assess-head .ah-part {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+  background: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  flex: none;
+}
+.assess-head .ah-section {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  margin-left: auto;
+  flex: none;
+  font-family: monospace;
+}
+
+.assess-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 0.95rem 1.15rem;
+  border-top: 1px solid var(--color-border);
+  flex-wrap: wrap;
+}
+.assess-row:first-of-type {
+  border-top: 0;
+}
+.assess-row .ar-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  font-size: 0.95rem;
+  flex: 0 0 auto;
+  background: var(--color-primary-50, #eff6ff);
+  color: var(--color-primary-700, #1d4ed8);
+  display: none;
+}
+.assess-row .ar-body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.assess-row .ar-name {
+  font-size: 0.86rem;
+  font-weight: 600;
+  margin: 0 0 0.15rem;
+  color: var(--color-text);
+  line-height: 1.35;
+}
+.assess-row .ar-desc {
+  font-size: 0.76rem;
+  color: var(--color-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+.assess-row .ar-ref {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--color-primary-800, #1e40af);
+  background: var(--color-primary-50, #eff6ff);
+  border-radius: 999px;
+  padding: 0.15rem 0.5rem;
+  margin-top: 0.35rem;
+}
+.assess-row .ar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 0 0 auto;
+  align-self: flex-start;
+}
+
+/* Rating group (Pass / Fail / N/A) */
+.ar-toggle {
+  display: inline-flex;
+  gap: 0.25rem;
+  border-radius: 999px;
+  background: var(--color-surface-2, #f3f4f6);
+  padding: 0.2rem;
+}
+.ar-toggle button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.32rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: white;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: 0.15s;
+  white-space: nowrap;
+}
+.ar-toggle button:hover {
+  color: var(--color-text);
+}
+.ar-toggle button[data-action="pass"].active,
+.assess-row[data-state="pass"] .ar-toggle button[data-action="pass"] {
+  background: #dcfce7;
+  border-color: #22c55e;
+  color: #166534;
+}
+.ar-toggle button[data-action="fail"].active,
+.assess-row[data-state="fail"] .ar-toggle button[data-action="fail"] {
+  background: #fee2e2;
+  border-color: #ef4444;
+  color: #991b1b;
+}
+.ar-toggle button[data-action="na"].active,
+.assess-row[data-state="na"] .ar-toggle button[data-action="na"] {
+  background: #e2e8f0;
+  border-color: #94a3b8;
+  color: #334155;
+}
+
+/* Note field */
+.ar-note {
+  flex: 0 0 100%;
+  width: 100%;
+  margin-top: 0.5rem;
+  padding-top: 0.55rem;
+  border-top: 1px dashed var(--color-border);
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+.ar-note i {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  margin-top: 0.55rem;
+  flex: none;
+}
+.ar-note textarea {
+  flex: 1;
+  font-size: 0.78rem;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: #fff;
+  resize: vertical;
+  min-height: 38px;
+}
+.ar-note textarea:focus {
+  outline: none;
+  border-color: var(--color-primary-400);
+  box-shadow: 0 0 0 3px var(--color-primary-100);
+}
+
+/* Failure indicator: show note when marked fail */
+.assess-row[data-state="fail"] .ar-note {
+  background: #fef2f2;
+  border-top-color: #fecaca;
+  border-radius: 8px;
+  padding: 0.6rem 0.7rem;
+  border-top-style: solid;
+}
+.assess-row[data-state="fail"] .ar-note i {
+  color: #dc2626;
+}
+
+/* Accordion badge count */
+.onboard-title .assess-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: var(--color-primary-50);
+  color: var(--color-primary-700);
+  border-radius: 999px;
+  padding: 0.18rem 0.55rem;
+  margin-left: 0.5rem;
+}
+.onboard-title .assess-count.is-warn {
+  background: #fef3c7;
+  color: #92400e;
+}
+.onboard-title .assess-count.is-done {
+  background: #dcfce7;
+  color: #166534;
+}
+
+/* Helpers */
+[hidden] {
+  display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 575.98px) {
+  .assess-row .ar-actions {
+    flex: 0 0 100%;
+    margin-top: 0.5rem;
+    padding-left: 2.95rem;
+  }
+  .ar-toggle {
+    width: 100%;
+  }
+  .ar-toggle button {
+    flex: 1;
+    justify-content: center;
+  }
+}

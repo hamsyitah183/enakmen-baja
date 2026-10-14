@@ -1,0 +1,930 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/components.css" rel="stylesheet" />
+    <link href="css/dashboard.css" rel="stylesheet" />
+    <title>Senarai Permit Khas | Portal Pendaftaran Baja</title>
+
+    <style>
+      /* ===== Permit list specific ===== */
+      .permit-filter-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+      }
+      .filter-tabs {
+        display: flex;
+        gap: 0.35rem;
+        flex-wrap: wrap;
+      }
+      .filter-tab {
+        border: 1px solid var(--color-border);
+        background: #fff;
+        color: var(--color-muted);
+        font-size: 0.78rem;
+        font-weight: 600;
+        padding: 0.4rem 0.85rem;
+        border-radius: 999px;
+        transition: 0.15s;
+      }
+      .filter-tab:hover {
+        border-color: var(--color-primary-400);
+        color: var(--color-primary-700);
+      }
+      .filter-tab.is-active {
+        background: var(--color-primary-600);
+        border-color: var(--color-primary-600);
+        color: #fff;
+      }
+      .filter-tab .tab-count {
+        font-weight: 700;
+        margin-left: 0.2rem;
+        opacity: 0.85;
+      }
+
+      /* Review table (matches admin style) */
+      .review-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+      .review-table thead th {
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--color-muted);
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid var(--color-border);
+        background: var(--color-surface-2, #f8fafc);
+        text-align: left;
+        white-space: nowrap;
+      }
+      .review-table tbody td {
+        padding: 0.9rem 1rem;
+        border-bottom: 1px solid var(--color-border);
+        font-size: 0.85rem;
+        color: var(--color-text);
+        vertical-align: middle;
+      }
+      .review-table tbody tr:last-child td {
+        border-bottom: 0;
+      }
+      .review-table tbody tr:hover {
+        background: var(--color-surface-2, #f8fafc);
+      }
+
+      /* Status badges */
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        padding: 0.28rem 0.65rem;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+      .status-pending {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .status-approved {
+        background: #dcfce7;
+        color: #166534;
+      }
+      .status-rejected {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+      .status-draft {
+        background: #e2e8f0;
+        color: #334155;
+      }
+
+      /* Applicant cell with avatar */
+      .applicant-cell {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        min-width: 0;
+      }
+      .avatar-initials {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-100);
+        color: var(--color-primary-800);
+        font-size: 0.78rem;
+        font-weight: 700;
+        flex: none;
+      }
+      .applicant-cell .name {
+        font-weight: 600;
+        line-height: 1.2;
+      }
+      .applicant-cell .meta {
+        font-size: 0.72rem;
+        color: var(--color-muted);
+      }
+
+      /* Purpose chip */
+      .purpose-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.68rem;
+        font-weight: 700;
+        padding: 0.2rem 0.55rem;
+        border-radius: 999px;
+        white-space: nowrap;
+        background: #e6f0fb;
+        color: #2b6cb0;
+      }
+
+      /* Item cell */
+      .item-cell {
+        font-size: 0.82rem;
+        color: var(--color-text);
+        line-height: 1.4;
+      }
+      .item-cell .item-count {
+        font-size: 0.72rem;
+        color: var(--color-muted);
+        display: block;
+        margin-top: 0.1rem;
+      }
+
+      /* Empty state */
+      .empty-state {
+        padding: 3.5rem 1.5rem;
+        text-align: center;
+      }
+      .empty-state i {
+        font-size: 2.4rem;
+        color: var(--color-primary-500);
+        opacity: 0.5;
+        margin-bottom: 0.75rem;
+        display: block;
+      }
+      .empty-state h3 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--color-text);
+        margin: 0 0 0.35rem;
+      }
+      .empty-state p {
+        font-size: 0.85rem;
+        color: var(--color-muted);
+        margin: 0 auto 1.25rem;
+        max-width: 420px;
+        line-height: 1.5;
+      }
+
+      /* Summary chips */
+      .permit-summary-strip {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 0.6rem;
+        margin-bottom: 1.25rem;
+      }
+      .permit-summary-chip {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface);
+        padding: 0.75rem 0.95rem;
+      }
+      .permit-summary-chip .label {
+        font-size: 0.7rem;
+        color: var(--color-muted);
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        margin-bottom: 0.2rem;
+      }
+      .permit-summary-chip .value {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: var(--color-text);
+        line-height: 1.1;
+      }
+
+      /* Responsive: stack table rows on small screens */
+      @media (max-width: 767.98px) {
+        .review-table thead {
+          display: none;
+        }
+        .review-table tbody tr {
+          display: block;
+          border-bottom: 1px solid var(--color-border);
+          padding: 0.75rem 0;
+        }
+        .review-table tbody td {
+          display: block;
+          border: 0;
+          padding: 0.25rem 1rem;
+        }
+        .review-table tbody td::before {
+          content: attr(data-label);
+          font-size: 0.68rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          color: var(--color-muted);
+          display: block;
+          margin-bottom: 0.15rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <script>
+        try {
+          if (localStorage.getItem("sidebar-collapsed") === "1")
+            document.querySelector(".app").classList.add("is-collapsed");
+        } catch (e) {}
+      </script>
+
+      <!-- ===== Sidebar ===== -->
+      <aside
+        class="sidebar offcanvas-lg offcanvas-start"
+        tabindex="-1"
+        id="sidebar"
+        aria-label="Navigasi utama"
+      >
+        <div class="sidebar-inner">
+          <div class="sidebar-head border-bottom pb-2">
+            <a href="#" class="brand" aria-label="Enakmen Baja Sabah">
+              <span class="brand-mark brand-mark--img">
+                <img src="logo/image.png" alt="" width="40" height="40" />
+              </span>
+              <span class="brand-text">Enakmen Baja Sabah</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-icon sidebar-toggle d-none d-lg-inline-grid"
+              id="sidebar-toggle"
+              aria-controls="sidebar"
+              aria-expanded="true"
+              aria-label="Tutup bar sisi"
+              title="Tutup bar sisi"
+            >
+              <i class="bi bi-layout-sidebar"></i>
+            </button>
+            <button
+              type="button"
+              class="btn-close d-lg-none"
+              data-bs-dismiss="offcanvas"
+              data-bs-target="#sidebar"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <nav class="d-grid gap-1">
+            <a
+              href="filled-dashboard.html"
+              class="side-link"
+              title="Papan pemuka"
+              ><i class="bi bi-house-door"></i
+              ><span class="side-label">Papan pemuka</span></a
+            >
+            <a href="#" class="side-link" title="Produk saya"
+              ><i class="bi bi-box-seam"></i
+              ><span class="side-label">Produk saya</span></a
+            >
+            <a href="#" class="side-link active" title="Permit Khas"
+              ><i class="bi bi-file-earmark-lock"></i
+              ><span class="side-label">Permit Khas</span></a
+            >
+            <a href="#" class="side-link" title="Lesen"
+              ><i class="bi bi-patch-check"></i
+              ><span class="side-label">Lesen</span></a
+            >
+            <a href="#" class="side-link" title="Pembayaran"
+              ><i class="bi bi-receipt"></i
+              ><span class="side-label">Pembayaran</span></a
+            >
+            <a href="#" class="side-link" title="Notis dan rayuan"
+              ><i class="bi bi-envelope-exclamation"></i
+              ><span class="side-label">Notis dan rayuan</span
+              ><span class="count pill pill-danger">0</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Akaun</div>
+          <nav class="d-grid gap-1 mb-3">
+            <a
+              href="company-profile.html"
+              class="side-link"
+              title="Profil organisasi"
+              ><i class="bi bi-building"></i
+              ><span class="side-label">Profil organisasi</span></a
+            >
+            <a href="#" class="side-link" title="Tetapan"
+              ><i class="bi bi-gear"></i
+              ><span class="side-label">Tetapan</span></a
+            >
+            <a href="index.html" class="side-link" title="Log keluar"
+              ><i class="bi bi-box-arrow-right"></i
+              ><span class="side-label">Log keluar</span></a
+            >
+          </nav>
+
+          <div class="side-user">
+            <span class="avatar">AH</span>
+            <div class="lh-sm side-user-text">
+              <div class="fw-semibold">Aisyah Hassan</div>
+              <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ===== Main ===== -->
+      <div class="app-main">
+        <header class="topbar border-bottom">
+          <button
+            class="btn btn-icon d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebar"
+            aria-controls="sidebar"
+            aria-label="Buka menu"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+          <h1 class="h5 mb-0 me-2">Permit Khas</h1>
+          <div class="topbar-search d-none d-md-block input-icon">
+            <i class="bi bi-search"></i>
+            <input
+              type="search"
+              class="form-control"
+              id="search-input"
+              placeholder="Cari no. rujukan, tujuan atau nama item"
+              aria-label="Cari"
+            />
+          </div>
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <button
+              class="btn btn-icon position-relative"
+              type="button"
+              aria-label="Pemberitahuan"
+            >
+              <i class="bi bi-bell"></i><span class="notif-dot"></span>
+            </button>
+
+            <div class="dropdown">
+              <button
+                type="button"
+                class="avatar avatar-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Menu pengguna"
+              >
+                AH
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end user-menu">
+                <li class="user-menu-head">
+                  <div class="fw-semibold">Aisyah Hassan</div>
+                  <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="company-profile.html"
+                    ><i class="bi bi-building me-2"></i>Profil organisasi</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-gear me-2"></i>Tetapan</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="index.html"
+                    ><i class="bi bi-box-arrow-right me-2"></i>Log keluar</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <main class="app-content p-5">
+          <!-- Hero -->
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4">
+            <div>
+              <h2 class="h4 mb-1">Senarai Permit Import Khas</h2>
+              <p class="text-muted-2 mb-0">
+                Semua permohonan permit import khas yang telah anda hantar.
+                Permit sah untuk satu konsainan dalam tempoh tiga bulan.
+              </p>
+            </div>
+            <a
+              href="permit-baharu.html"
+              class="btn btn-primary d-inline-flex align-items-center flex-shrink-0"
+            >
+              <i class="bi bi-plus-lg me-1"></i>Mohon permit baharu
+            </a>
+          </div>
+
+          <!-- Summary chips -->
+          <div class="permit-summary-strip" id="summary-strip">
+            <div class="permit-summary-chip">
+              <div class="label">
+                <i class="bi bi-hourglass-split"></i>Dalam semakan
+              </div>
+              <div class="value" id="count-pending">2</div>
+            </div>
+            <div class="permit-summary-chip">
+              <div class="label">
+                <i class="bi bi-patch-check-fill"></i>Diluluskan
+              </div>
+              <div class="value" id="count-approved">1</div>
+            </div>
+            <div class="permit-summary-chip">
+              <div class="label">
+                <i class="bi bi-x-circle"></i>Ditolak
+              </div>
+              <div class="value" id="count-rejected">0</div>
+            </div>
+            <div class="permit-summary-chip">
+              <div class="label">
+                <i class="bi bi-pencil-square"></i>Draf
+              </div>
+              <div class="value" id="count-draft">1</div>
+            </div>
+          </div>
+
+          <!-- Permit table -->
+          <section class="surface">
+            <div
+              class="surface-header flex-wrap gap-2"
+              style="padding: 1rem 1.25rem"
+            >
+              <div>
+                <h2 class="h6 mb-0">Senarai permohonan permit</h2>
+                <small class="text-muted-2" id="list-subtitle">
+                  Menunjukkan 4 permohonan
+                </small>
+              </div>
+              <div class="filter-tabs" id="filter-tabs">
+                <button
+                  type="button"
+                  class="filter-tab is-active"
+                  data-filter="all"
+                >
+                  Semua<span class="tab-count" id="tab-all">4</span>
+                </button>
+                <button type="button" class="filter-tab" data-filter="pending">
+                  Dalam Semakan<span class="tab-count" id="tab-pending"
+                    >2</span
+                  >
+                </button>
+                <button type="button" class="filter-tab" data-filter="approved">
+                  Diluluskan<span class="tab-count" id="tab-approved">1</span>
+                </button>
+                <button type="button" class="filter-tab" data-filter="rejected">
+                  Ditolak<span class="tab-count" id="tab-rejected">0</span>
+                </button>
+                <button type="button" class="filter-tab" data-filter="draft">
+                  Draf<span class="tab-count" id="tab-draft">1</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="review-table">
+                <thead>
+                  <tr>
+                    <th>Pemohon</th>
+                    <th>No. Rujukan</th>
+                    <th>Tujuan</th>
+                    <th>Item</th>
+                    <th>Tarikh Hantar</th>
+                    <th>Sah Sehingga</th>
+                    <th>Status</th>
+                    <th style="width: 1%"></th>
+                  </tr>
+                </thead>
+                <tbody id="permit-tbody"></tbody>
+              </table>
+            </div>
+
+            <div class="empty-state" id="empty-state" hidden>
+              <i class="bi bi-file-earmark-lock"></i>
+              <h3>Tiada permit ditemui</h3>
+              <p>
+                Anda belum menghantar sebarang permohonan permit import khas,
+                atau tiada permohonan dalam kategori ini.
+              </p>
+              <a
+                href="permit-baharu.html"
+                class="btn btn-primary d-inline-flex align-items-center"
+              >
+                <i class="bi bi-plus-lg me-1"></i>Mohon permit baharu
+              </a>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /* ===== Sidebar toggle ===== */
+      (function () {
+        var app = document.querySelector(".app");
+        var btn = app.querySelector("#sidebar-toggle");
+        var KEY = "sidebar-collapsed";
+        function sync() {
+          var collapsed = app.classList.contains("is-collapsed");
+          var label = collapsed ? "Buka bar sisi" : "Tutup bar sisi";
+          btn.setAttribute("aria-expanded", String(!collapsed));
+          btn.setAttribute("aria-label", label);
+          btn.title = label;
+        }
+        btn.addEventListener("click", function () {
+          app.classList.toggle("is-collapsed");
+          sync();
+          try {
+            localStorage.setItem(
+              KEY,
+              app.classList.contains("is-collapsed") ? "1" : "0",
+            );
+          } catch (e) {}
+        });
+        sync();
+      })();
+
+      /* =========================================================
+         Permit list
+         ========================================================= */
+      (function () {
+        // Mock data — replace with backend fetch
+        var permits = [
+          {
+            id: "PK-2026-10001",
+            applicantType: "Syarikat",
+            applicantName: "Borneo Agro Sdn Bhd",
+            purpose: "Sampel Pendaftaran",
+            items: [
+              { name: "Baja NPK 15-15-15", qty: "2 x 25kg" },
+              { name: "Baja Organik Premium", qty: "1 x 10kg" },
+            ],
+            submitted: "2026-10-12",
+            validUntil: "2027-01-12",
+            status: "pending",
+            attachments: 5,
+          },
+          {
+            id: "PK-2026-10002",
+            applicantType: "Syarikat",
+            applicantName: "Borneo Agro Sdn Bhd",
+            purpose: "Bahan Rujukan",
+            items: [{ name: "Sampel Urea Granular", qty: "3 x 1kg" }],
+            submitted: "2026-10-08",
+            validUntil: "2027-01-08",
+            status: "approved",
+            attachments: 4,
+          },
+          {
+            id: "PK-2026-10003",
+            applicantType: "Syarikat",
+            applicantName: "Borneo Agro Sdn Bhd",
+            purpose: "Penyelidikan",
+            items: [
+              { name: "Baja Mikronutrien ZB-Cu", qty: "1 x 5kg" },
+              { name: "Baja Cecair Formula X", qty: "2 x 1L" },
+            ],
+            submitted: "2026-10-14",
+            validUntil: "2027-01-14",
+            status: "pending",
+            attachments: 6,
+          },
+          {
+            id: "PK-2026-10004",
+            applicantType: "Syarikat",
+            applicantName: "Borneo Agro Sdn Bhd",
+            purpose: "—",
+            items: [{ name: "Baja Sebatian NPK", qty: "—" }],
+            submitted: "2026-10-14",
+            validUntil: "—",
+            status: "draft",
+            attachments: 2,
+          },
+        ];
+
+        var state = {
+          filter: "all",
+          search: "",
+        };
+
+        /* ---- Helpers ---- */
+        function statusLabel(s) {
+          return {
+            pending: "Dalam Semakan",
+            approved: "Diluluskan",
+            rejected: "Ditolak",
+            draft: "Draf",
+            expired: "Tamat Tempoh",
+          }[s] || s;
+        }
+
+        function statusClass(s) {
+          return {
+            pending: "status-pending",
+            approved: "status-approved",
+            rejected: "status-rejected",
+            draft: "status-draft",
+          }[s] || "status-draft";
+        }
+
+        function statusIcon(s) {
+          return {
+            pending: "bi-hourglass-split",
+            approved: "bi-patch-check-fill",
+            rejected: "bi-x-circle-fill",
+            draft: "bi-pencil-square",
+          }[s] || "bi-circle";
+        }
+
+        function formatDate(iso) {
+          if (!iso || iso === "—") return "—";
+          var d = new Date(iso + "T00:00:00");
+          if (isNaN(d)) return iso;
+          var months = [
+            "Jan",
+            "Feb",
+            "Mac",
+            "Apr",
+            "Mei",
+            "Jun",
+            "Jul",
+            "Ogo",
+            "Sep",
+            "Okt",
+            "Nov",
+            "Dis",
+          ];
+          return (
+            d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear()
+          );
+        }
+
+        function escapeHtml(s) {
+          return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+            return {
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            }[c];
+          });
+        }
+
+        function initials(name) {
+          return name
+            .split(" ")
+            .filter(Boolean)
+            .slice(0, 2)
+            .map(function (p) {
+              return p[0].toUpperCase();
+            })
+            .join("");
+        }
+
+        function purposeIcon(purpose) {
+          if (!purpose || purpose === "—") return "bi-dash";
+          var p = purpose.toLowerCase();
+          if (p.indexOf("pendidikan") !== -1) return "bi-mortarboard";
+          if (p.indexOf("penyelidikan") !== -1) return "bi-search";
+          if (p.indexOf("sampel") !== -1) return "bi-file-earmark-medical";
+          if (p.indexOf("rujukan") !== -1) return "bi-journals";
+          return "bi-tag";
+        }
+
+        /* ---- Filtering ---- */
+        function filtered() {
+          var q = state.search.trim().toLowerCase();
+          return permits.filter(function (p) {
+            if (state.filter !== "all" && p.status !== state.filter)
+              return false;
+            if (!q) return true;
+            var searchable = [
+              p.id,
+              p.applicantName,
+              p.purpose,
+              p.items
+                .map(function (i) {
+                  return i.name;
+                })
+                .join(" "),
+            ]
+              .join(" ")
+              .toLowerCase();
+            return searchable.indexOf(q) !== -1;
+          });
+        }
+
+        /* ---- Counting ---- */
+        function refreshCounts() {
+          var c = {
+            all: permits.length,
+            pending: 0,
+            approved: 0,
+            rejected: 0,
+            draft: 0,
+          };
+          permits.forEach(function (p) {
+            if (c[p.status] !== undefined) c[p.status]++;
+          });
+
+          document.getElementById("count-pending").textContent = c.pending;
+          document.getElementById("count-approved").textContent = c.approved;
+          document.getElementById("count-rejected").textContent = c.rejected;
+          document.getElementById("count-draft").textContent = c.draft;
+
+          document.getElementById("tab-all").textContent = c.all;
+          document.getElementById("tab-pending").textContent = c.pending;
+          document.getElementById("tab-approved").textContent = c.approved;
+          document.getElementById("tab-rejected").textContent = c.rejected;
+          document.getElementById("tab-draft").textContent = c.draft;
+        }
+
+        /* ---- Render table rows ---- */
+        function renderPermits() {
+          var tbody = document.getElementById("permit-tbody");
+          var empty = document.getElementById("empty-state");
+          var subtitle = document.getElementById("list-subtitle");
+          var rows = filtered();
+
+          tbody.innerHTML = "";
+
+          if (rows.length === 0) {
+            empty.hidden = false;
+          } else {
+            empty.hidden = true;
+          }
+
+          subtitle.textContent = "Menunjukkan " + rows.length + " permohonan";
+
+          rows.forEach(function (p) {
+            var tr = document.createElement("tr");
+
+            var isDraft = p.status === "draft";
+            var refText = isDraft
+              ? '<em style="color:var(--color-muted);font-size:0.78rem">Belum dihantar</em>'
+              : escapeHtml(p.id);
+
+            // Items cell
+            var itemsText;
+            if (p.items.length === 1) {
+              itemsText = escapeHtml(p.items[0].name);
+            } else {
+              itemsText =
+                escapeHtml(p.items[0].name) +
+                ' <span class="item-count">+' +
+                (p.items.length - 1) +
+                " lagi</span>";
+            }
+            var itemCountText =
+              p.items.length > 1
+                ? p.items.length + " item"
+                : "";
+
+            // Purpose chip
+            var purposeText =
+              p.purpose && p.purpose !== "—"
+                ? '<span class="purpose-chip"><i class="bi ' +
+                  purposeIcon(p.purpose) +
+                  '"></i>' +
+                  escapeHtml(p.purpose) +
+                  "</span>"
+                : '<span class="text-muted-2">—</span>';
+
+            // Actions
+            var actions = "";
+            if (isDraft) {
+              actions =
+                '<a href="permit-baharu.html?id=' +
+                encodeURIComponent(p.id) +
+                '" class="btn btn-primary btn-sm">' +
+                '<i class="bi bi-pencil me-1"></i>Sambung</a>';
+            } else if (p.status === "approved") {
+              actions =
+                '<a href="lihat-permit.html?id=' +
+                encodeURIComponent(p.id) +
+                '" class="btn btn-outline-primary btn-sm">' +
+                '<i class="bi bi-eye me-1"></i>Lihat</a>';
+            } else {
+              actions =
+                '<a href="lihat-permit.html?id=' +
+                encodeURIComponent(p.id) +
+                '" class="btn btn-outline-primary btn-sm">' +
+                '<i class="bi bi-eye me-1"></i>Lihat</a>';
+            }
+
+            tr.innerHTML =
+              '<td data-label="Pemohon">' +
+              '<div class="applicant-cell">' +
+              '<span class="avatar-initials">' +
+              escapeHtml(initials(p.applicantName)) +
+              "</span>" +
+              '<div class="min-w-0">' +
+              '<div class="name">' +
+              escapeHtml(p.applicantName) +
+              "</div>" +
+              '<div class="meta">' +
+              escapeHtml(p.applicantType) +
+              "</div>" +
+              "</div>" +
+              "</div>" +
+              "</td>" +
+              '<td data-label="No. Rujukan">' +
+              refText +
+              "</td>" +
+              '<td data-label="Tujuan">' +
+              purposeText +
+              "</td>" +
+              '<td data-label="Item">' +
+              '<div class="item-cell">' +
+              itemsText +
+              "</div>" +
+              "</td>" +
+              '<td data-label="Tarikh Hantar">' +
+              formatDate(p.submitted) +
+              "</td>" +
+              '<td data-label="Sah Sehingga">' +
+              (p.validUntil === "—"
+                ? '<span class="text-muted-2">—</span>'
+                : formatDate(p.validUntil)) +
+              "</td>" +
+              '<td data-label="Status">' +
+              '<span class="status-badge ' +
+              statusClass(p.status) +
+              '">' +
+              '<i class="bi ' +
+              statusIcon(p.status) +
+              '"></i>' +
+              statusLabel(p.status) +
+              "</span>" +
+              "</td>" +
+              '<td data-label="">' +
+              actions +
+              "</td>";
+
+            tbody.appendChild(tr);
+          });
+
+          refreshCounts();
+        }
+
+        /* ---- Filters ---- */
+        document.querySelectorAll(".filter-tab").forEach(function (t) {
+          t.addEventListener("click", function () {
+            document.querySelectorAll(".filter-tab").forEach(function (x) {
+              x.classList.remove("is-active");
+            });
+            t.classList.add("is-active");
+            state.filter = t.getAttribute("data-filter");
+            renderPermits();
+          });
+        });
+
+        document
+          .getElementById("search-input")
+          .addEventListener("input", function () {
+            state.search = this.value;
+            renderPermits();
+          });
+
+        /* ---- Init ---- */
+        renderPermits();
+      })();
+    </script>
+  </body>
+</html>

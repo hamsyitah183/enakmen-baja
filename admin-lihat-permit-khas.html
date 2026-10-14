@@ -1,0 +1,1421 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/components.css" rel="stylesheet" />
+    <link href="css/dashboard.css" rel="stylesheet" />
+    <link href="css/view.css" rel="stylesheet" />
+    <title>Semakan Permit Khas | Pentadbir</title>
+
+    <style>
+      /* ===== Admin-specific on top of view.css ===== */
+      .admin-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        background: linear-gradient(135deg, #7c3aed, #4f46e5);
+        color: #fff;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 0.25rem 0.6rem;
+        border-radius: 999px;
+      }
+
+      /* Type chip */
+      .type-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        font-size: 0.68rem;
+        font-weight: 700;
+        padding: 0.2rem 0.55rem;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+      .type-syarikat {
+        background: #dbeafe;
+        color: #1e40af;
+      }
+      .type-individu {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      /* Purpose pill */
+      .purpose-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 0.3rem 0.7rem;
+        border-radius: 999px;
+        background: #e6f0fb;
+        color: #2b6cb0;
+      }
+
+      /* Item block */
+      .permit-items {
+        display: grid;
+        gap: 0.75rem;
+      }
+      .permit-item-row {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface);
+        padding: 0.9rem 1rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.85rem;
+        transition: 0.15s;
+      }
+      .permit-item-row:hover {
+        border-color: var(--color-primary-300);
+      }
+      .permit-item-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(
+          135deg,
+          var(--color-primary-50) 0%,
+          #eef2ff 100%
+        );
+        color: var(--color-primary-700);
+        font-size: 1.05rem;
+        flex: none;
+        border: 1px solid var(--color-border);
+      }
+      .permit-item-body {
+        flex: 1;
+        min-width: 0;
+      }
+      .permit-item-name {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--color-text);
+        margin: 0 0 0.15rem;
+        line-height: 1.3;
+      }
+      .permit-item-meta {
+        font-size: 0.74rem;
+        color: var(--color-muted);
+        margin: 0;
+        line-height: 1.5;
+      }
+      .permit-item-qty {
+        flex: none;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: var(--color-primary-800);
+        background: var(--color-primary-100);
+        padding: 0.25rem 0.6rem;
+        border-radius: 999px;
+        white-space: nowrap;
+      }
+
+      /* Applicant box in side column */
+      .applicant-box {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 1rem 1.15rem;
+        background: var(--color-surface-2);
+      }
+      .applicant-box-head {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--color-muted);
+        margin-bottom: 0.65rem;
+      }
+      .applicant-box-head i {
+        color: var(--color-primary-600);
+      }
+      .applicant-box .a-name {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: var(--color-text);
+        margin: 0 0 0.15rem;
+      }
+      .applicant-box .a-type {
+        font-size: 0.75rem;
+        color: var(--color-muted);
+        margin: 0;
+      }
+
+      /* Validity box */
+      .validity-box {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 1rem 1.15rem;
+        background: linear-gradient(
+          135deg,
+          var(--color-primary-50) 0%,
+          #eef2ff 100%
+        );
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+      }
+      .validity-box .vb-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: #fff;
+        color: var(--color-primary-700);
+        font-size: 1.15rem;
+        flex: none;
+        border: 1px solid var(--color-border);
+      }
+      .validity-box .vb-label {
+        font-size: 0.68rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        font-weight: 700;
+        color: var(--color-muted);
+        margin: 0 0 0.15rem;
+      }
+      .validity-box .vb-value {
+        font-size: 0.92rem;
+        font-weight: 700;
+        color: var(--color-text);
+        margin: 0;
+      }
+
+      /* Doc verification rows */
+      .doc-preview {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 0.75rem 0.85rem;
+        background: var(--color-surface);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.5rem;
+        transition: 0.15s;
+      }
+      .doc-preview:last-child {
+        margin-bottom: 0;
+      }
+      .doc-preview:hover {
+        border-color: var(--color-primary-400);
+      }
+      .doc-preview-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-50);
+        color: var(--color-primary-600);
+        font-size: 1.05rem;
+        flex: none;
+        border: 1px solid var(--color-border);
+      }
+      .doc-preview-body {
+        flex: 1;
+        min-width: 0;
+      }
+      .doc-preview-name {
+        font-size: 0.82rem;
+        font-weight: 600;
+        margin: 0;
+        line-height: 1.3;
+      }
+      .doc-preview-file {
+        font-size: 0.72rem;
+        color: var(--color-muted);
+        word-break: break-all;
+      }
+      .doc-preview-actions {
+        display: flex;
+        gap: 0.35rem;
+        flex: none;
+      }
+      .btn-verdict {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+        border: 1px solid var(--color-border);
+        background: #fff;
+        display: grid;
+        place-items: center;
+        font-size: 0.9rem;
+        color: var(--color-muted);
+        transition: 0.15s;
+      }
+      .btn-verdict:hover {
+        border-color: var(--color-primary-400);
+        color: var(--color-primary-700);
+      }
+      .btn-verdict.is-approve.is-active {
+        background: #dcfce7;
+        border-color: #22c55e;
+        color: #166534;
+      }
+      .btn-verdict.is-reject.is-active {
+        background: #fee2e2;
+        border-color: #ef4444;
+        color: #991b1b;
+      }
+
+      /* Notice banner */
+      .permit-banner {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.85rem;
+        padding: 1rem 1.15rem;
+        border: 1px solid #bfdbfe;
+        border-radius: var(--radius-md);
+        background: #eff6ff;
+        color: #1e40af;
+        font-size: 0.85rem;
+        line-height: 1.55;
+        margin-bottom: 1.25rem;
+      }
+      .permit-banner i {
+        font-size: 1.15rem;
+        flex: none;
+        margin-top: 0.1rem;
+        color: #2563eb;
+      }
+      .permit-banner strong {
+        display: block;
+        color: #1e3a8a;
+        margin-bottom: 0.15rem;
+      }
+
+      /* Sticky approval bar */
+      .approval-bar {
+        position: sticky;
+        bottom: 1rem;
+        z-index: 20;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.95rem 1.25rem;
+        margin-top: 1.25rem;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      }
+      .approval-bar .ap-status {
+        flex: 1;
+        min-width: 12rem;
+        font-size: 0.82rem;
+        color: var(--color-muted);
+      }
+      .approval-bar .ap-status strong {
+        display: block;
+        color: var(--color-text);
+        font-size: 0.85rem;
+        margin-bottom: 0.1rem;
+      }
+      .approval-bar .ap-status.is-ready {
+        color: #166534;
+      }
+      .approval-bar .ap-status.is-warning {
+        color: #b45309;
+      }
+      .approval-bar .ap-actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      /* Reject note box */
+      .reject-note {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface-2, #f8fafc);
+        padding: 0.85rem 1rem;
+        margin-top: 1rem;
+      }
+      .reject-note textarea {
+        font-size: 0.82rem;
+      }
+
+      /* Attach card colours */
+      .attach-icon.is-pdf {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+      .attach-icon.is-img {
+        background: #ede9fe;
+        color: #6d28d9;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <script>
+        try {
+          if (localStorage.getItem("sidebar-collapsed") === "1")
+            document.querySelector(".app").classList.add("is-collapsed");
+        } catch (e) {}
+      </script>
+
+      <!-- ===== Sidebar (Admin) ===== -->
+      <aside
+        class="sidebar offcanvas-lg offcanvas-start"
+        tabindex="-1"
+        id="sidebar"
+        aria-label="Navigasi utama"
+      >
+        <div class="sidebar-inner">
+          <div class="sidebar-head border-bottom pb-2">
+            <a href="index.html" class="brand" aria-label="Enakmen Baja Sabah">
+              <span class="brand-mark brand-mark--img">
+                <img src="logo/image.png" alt="" width="40" height="40" />
+              </span>
+              <span class="brand-text">Enakmen Baja Sabah</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-icon sidebar-toggle d-none d-lg-inline-grid"
+              id="sidebar-toggle"
+              aria-controls="sidebar"
+              aria-expanded="true"
+              aria-label="Tutup bar sisi"
+              title="Tutup bar sisi"
+            >
+              <i class="bi bi-layout-sidebar"></i>
+            </button>
+            <button
+              type="button"
+              class="btn-close d-lg-none"
+              data-bs-dismiss="offcanvas"
+              data-bs-target="#sidebar"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <div class="px-3 py-2 mb-2">
+            <span class="admin-badge">
+              <i class="bi bi-shield-lock-fill"></i>Pentadbir
+            </span>
+          </div>
+
+          <nav class="d-grid gap-1">
+            <a href="admin-dashboard.html" class="side-link" title="Papan pemuka admin"
+              ><i class="bi bi-house-door"></i
+              ><span class="side-label">Papan pemuka</span></a
+            >
+            <a href="admin-review.html" class="side-link" title="Semakan dokumen"
+              ><i class="bi bi-clipboard-check"></i
+              ><span class="side-label">Semakan dokumen</span></a
+            >
+            <a href="admin-review-produk.html" class="side-link" title="Semakan produk"
+              ><i class="bi bi-box-seam"></i
+              ><span class="side-label">Semakan produk</span></a
+            >
+            <a href="admin-review-lesen.html" class="side-link" title="Semakan lesen"
+              ><i class="bi bi-patch-check"></i
+              ><span class="side-label">Semakan lesen</span></a
+            >
+            <a href="admin-review-entiti.html" class="side-link" title="Semakan entiti"
+              ><i class="bi bi-diagram-3"></i
+              ><span class="side-label">Semakan entiti</span></a
+            >
+            <a href="admin-review-permit.html" class="side-link active" title="Semakan permit khas"
+              ><i class="bi bi-file-earmark-lock"></i
+              ><span class="side-label">Semakan permit khas</span></a
+            >
+            <a href="#" class="side-link" title="Pengguna"
+              ><i class="bi bi-people"></i
+              ><span class="side-label">Pengguna</span></a
+            >
+            <a href="#" class="side-link" title="Laporan"
+              ><i class="bi bi-bar-chart"></i
+              ><span class="side-label">Laporan</span></a
+            >
+            <a href="#" class="side-link" title="Log audit"
+              ><i class="bi bi-journal-text"></i
+              ><span class="side-label">Log audit</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Akaun</div>
+          <nav class="d-grid gap-1 mb-3">
+            <a href="#" class="side-link" title="Tetapan sistem"
+              ><i class="bi bi-gear"></i
+              ><span class="side-label">Tetapan sistem</span></a
+            >
+            <a href="login.html" class="side-link" title="Log keluar"
+              ><i class="bi bi-box-arrow-right"></i
+              ><span class="side-label">Log keluar</span></a
+            >
+          </nav>
+
+          <div class="side-user">
+            <span class="avatar">AD</span>
+            <div class="lh-sm side-user-text">
+              <div class="fw-semibold">Admin DOA</div>
+              <small class="text-muted-2">Pegawai Semakan</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ===== Main ===== -->
+      <div class="app-main">
+        <header class="topbar border-bottom">
+          <button
+            class="btn btn-icon d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebar"
+            aria-controls="sidebar"
+            aria-label="Buka menu"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+          <h1 class="h5 mb-0 me-2">Semakan permit khas</h1>
+          <div class="topbar-search d-none d-md-block input-icon">
+            <i class="bi bi-search"></i>
+            <input
+              type="search"
+              class="form-control"
+              placeholder="Cari produk, lesen atau permit"
+              aria-label="Cari"
+            />
+          </div>
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <button
+              class="btn btn-icon position-relative"
+              type="button"
+              aria-label="Pemberitahuan"
+            >
+              <i class="bi bi-bell"></i><span class="notif-dot"></span>
+            </button>
+            <div class="dropdown">
+              <button
+                type="button"
+                class="avatar avatar-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Menu pengguna"
+              >
+                AD
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end user-menu">
+                <li class="user-menu-head">
+                  <div class="fw-semibold">Admin DOA</div>
+                  <small class="text-muted-2">Pegawai Semakan</small>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-gear me-2"></i>Tetapan</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="login.html"
+                    ><i class="bi bi-box-arrow-right me-2"></i>Log keluar</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <main class="app-content p-3 p-md-4 p-xl-5">
+          <div class="detail-container">
+            <!-- ===== Top action bar ===== -->
+            <div class="detail-topbar">
+              <div class="detail-topbar-left">
+                <a href="admin-review-permit.html" class="btn-back">
+                  <i class="bi bi-arrow-left"></i>Kembali
+                </a>
+              </div>
+
+              <div class="detail-topbar-right">
+                <button type="button" class="btn-back" id="print-btn">
+                  <i class="bi bi-printer"></i>Cetak ringkasan
+                </button>
+                <button type="button" class="btn-nav-arrow" aria-label="Lagi">
+                  <i class="bi bi-three-dots"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- ===== Main shell ===== -->
+            <div class="detail-shell">
+              <!-- Header -->
+              <div class="detail-header">
+                <span class="head-avatar">
+                  <i class="bi bi-file-earmark-lock"></i>
+                </span>
+                <div class="head-info">
+                  <h1 id="permit-heading">Permit Import Khas · Borneo Agro Sdn Bhd</h1>
+                  <div class="head-sub">
+                    <span class="avatar-mini">AD</span>
+                    <span>Admin DOA</span>
+                    <span class="dot">·</span>
+                    <span>Dihantar pada 12 Okt 2026</span>
+                  </div>
+                </div>
+                <div class="head-links">
+                  <a href="#" aria-label="Pautan dokumen">
+                    <i class="bi bi-file-earmark-text"></i>
+                  </a>
+                  <a href="#" aria-label="Perakuan">
+                    <i class="bi bi-patch-check-fill"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Info strip -->
+              <div class="info-strip">
+                <div class="strip-cell">
+                  <div class="strip-label">
+                    <i class="bi bi-hash"></i>No. Rujukan
+                  </div>
+                  <div class="strip-value" id="p-ref">PK/2026/10001</div>
+                </div>
+
+                <div class="strip-cell">
+                  <div class="strip-label">
+                    <i class="bi bi-person-badge"></i>Jenis Pemohon
+                  </div>
+                  <div class="strip-value">
+                    <span
+                      class="type-chip type-syarikat"
+                      id="p-applicant-type"
+                      ><i class="bi bi-building"></i>Syarikat</span
+                    >
+                  </div>
+                </div>
+
+                <div class="strip-cell">
+                  <div class="strip-label">
+                    <i class="bi bi-box-seam"></i>Item
+                  </div>
+                  <div class="strip-value" id="p-item-count">2 item</div>
+                </div>
+
+                <div class="strip-cell">
+                  <div class="strip-label">
+                    <i class="bi bi-clipboard-pulse"></i>Status
+                  </div>
+                  <div class="strip-value">
+                    <span class="strip-pill is-warning" id="p-status">
+                      <i class="bi bi-hourglass-split"></i>Dalam Semakan
+                    </span>
+                  </div>
+                </div>
+
+                <div class="strip-cell">
+                  <div class="strip-label">
+                    <i class="bi bi-flag"></i>Keutamaan
+                  </div>
+                  <div class="strip-value">
+                    <span class="strip-pill is-warning">Sederhana</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ===== Tabs ===== -->
+              <div class="detail-tabs" role="tablist">
+                <button
+                  type="button"
+                  class="detail-tab active"
+                  role="tab"
+                  data-tab="overview"
+                >
+                  <i class="bi bi-house-door"></i>Ringkasan
+                </button>
+                <button
+                  type="button"
+                  class="detail-tab"
+                  role="tab"
+                  data-tab="details"
+                >
+                  <i class="bi bi-info-circle"></i>Butiran Pemohon
+                </button>
+                <button
+                  type="button"
+                  class="detail-tab"
+                  role="tab"
+                  data-tab="docs"
+                >
+                  <i class="bi bi-shield-check"></i>Dokumen Sokongan
+                  <span class="tab-count" id="docs-tab-count">7</span>
+                </button>
+                <button
+                  type="button"
+                  class="detail-tab"
+                  role="tab"
+                  data-tab="activity"
+                >
+                  <i class="bi bi-activity"></i>Log Aktiviti
+                  <span class="tab-count">4</span>
+                </button>
+              </div>
+
+              <!-- ============ TAB PANEL: Ringkasan ============ -->
+              <div class="detail-panel active" data-panel="overview">
+                <div class="permit-banner">
+                  <i class="bi bi-info-circle-fill"></i>
+                  <div>
+                    <strong>Semakan permit khas</strong>
+                    Sahkan semua dokumen sokongan pada tab
+                    <strong>Dokumen Sokongan</strong> sebelum meluluskan atau
+                    menolak permohonan ini. Permit sah untuk
+                    <strong>1 konsainan</strong> dalam tempoh
+                    <strong>3 bulan</strong> sahaja.
+                  </div>
+                </div>
+
+                <div class="panel-grid">
+                  <!-- Left: items + purpose -->
+                  <div>
+                    <div class="panel-section">
+                      <h2 class="panel-title">Item untuk diimport</h2>
+                      <p class="panel-desc" id="p-item-desc">
+                        2 item telah disenaraikan dalam permohonan ini.
+                      </p>
+
+                      <div class="permit-items" id="permit-items">
+                        <div class="permit-item-row">
+                          <span class="permit-item-icon">
+                            <i class="bi bi-box"></i>
+                          </span>
+                          <div class="permit-item-body">
+                            <p class="permit-item-name">
+                              Baja NPK 15-15-15
+                            </p>
+                            <p class="permit-item-meta">
+                              <strong>Kategori:</strong> Baja Campuran &middot;
+                              <strong>Formulasi:</strong> N 15%, P₂O₅ 15%, K₂O
+                              15%
+                            </p>
+                          </div>
+                          <span class="permit-item-qty">2 × 25kg</span>
+                        </div>
+
+                        <div class="permit-item-row">
+                          <span class="permit-item-icon">
+                            <i class="bi bi-box"></i>
+                          </span>
+                          <div class="permit-item-body">
+                            <p class="permit-item-name">
+                              Baja Organik Premium
+                            </p>
+                            <p class="permit-item-meta">
+                              <strong>Kategori:</strong> Baja Organik &middot;
+                              <strong>Mikroorganisma:</strong> Azotobacter,
+                              Rhizobium
+                            </p>
+                          </div>
+                          <span class="permit-item-qty">1 × 10kg</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="panel-section">
+                      <h2 class="panel-title">Tujuan pengimportan</h2>
+                      <p class="panel-desc">
+                        Tujuan permohonan dan kaedah pelupusan lebihan bahan
+                        yang diisytiharkan oleh pemohon.
+                      </p>
+
+                      <dl class="def-grid">
+                        <div>
+                          <dt>Tujuan Import</dt>
+                          <dd>
+                            <span class="purpose-pill">
+                              <i class="bi bi-file-earmark-medical"></i>Sampel
+                              Pendaftaran
+                            </span>
+                          </dd>
+                        </div>
+                        <div>
+                          <dt>Tempoh Sah</dt>
+                          <dd>3 bulan · 1 konsainan</dd>
+                        </div>
+                        <div class="full">
+                          <dt>Kaedah Pelupusan</dt>
+                          <dd>Pelupusan oleh pihak berkuasa</dd>
+                        </div>
+                        <div class="full">
+                          <dt>Lokasi Pelupusan</dt>
+                          <dd>Universiti Malaysia Sabah (UMS)</dd>
+                        </div>
+                      </dl>
+                    </div>
+                  </div>
+
+                  <!-- Right: sidebar stack -->
+                  <div class="panel-side">
+                    <div class="applicant-box">
+                      <div class="applicant-box-head">
+                        <i class="bi bi-person-badge"></i>Pemohon
+                      </div>
+                      <p class="a-name">Borneo Agro Sdn Bhd</p>
+                      <p class="a-type">Syarikat &middot; SSM 202101234567</p>
+                    </div>
+
+                    <div class="validity-box">
+                      <span class="vb-icon">
+                        <i class="bi bi-calendar-check"></i>
+                      </span>
+                      <div>
+                        <p class="vb-label">Sah sehingga</p>
+                        <p class="vb-value" id="p-validity">
+                          12 Januari 2027
+                        </p>
+                      </div>
+                    </div>
+
+                    <div class="quick-stats">
+                      <div class="quick-stat">
+                        <div class="qs-label">Tarikh Hantar</div>
+                        <div class="qs-value" style="font-size: 0.85rem">
+                          12 Okt 2026
+                        </div>
+                      </div>
+                      <div class="quick-stat">
+                        <div class="qs-label">Lampiran</div>
+                        <div class="qs-value" style="font-size: 0.85rem">
+                          7 dokumen
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ============ TAB PANEL: Butiran Pemohon ============ -->
+              <div class="detail-panel" data-panel="details">
+                <div class="panel-section">
+                  <h2 class="panel-title">Maklumat Permohonan</h2>
+                  <dl class="def-grid">
+                    <div>
+                      <dt>No. Rujukan</dt>
+                      <dd id="d-ref">PK/2026/10001</dd>
+                    </div>
+                    <div>
+                      <dt>Tarikh Dihantar</dt>
+                      <dd>12 Oktober 2026, 2:45 PM</dd>
+                    </div>
+                    <div>
+                      <dt>Status</dt>
+                      <dd id="d-status">Dalam Semakan</dd>
+                    </div>
+                    <div>
+                      <dt>Sah Sehingga</dt>
+                      <dd>12 Januari 2027</dd>
+                    </div>
+                  </dl>
+                </div>
+
+                <div class="panel-section">
+                  <h2 class="panel-title">Maklumat Pemohon</h2>
+                  <dl class="def-grid">
+                    <div>
+                      <dt>Nama Syarikat</dt>
+                      <dd>Borneo Agro Sdn Bhd</dd>
+                    </div>
+                    <div>
+                      <dt>No. Pendaftaran SSM</dt>
+                      <dd>202101234567</dd>
+                    </div>
+                    <div>
+                      <dt>Tamat Tempoh SSM</dt>
+                      <dd>30 Jun 2027</dd>
+                    </div>
+                    <div>
+                      <dt>No. Lesen Berniaga</dt>
+                      <dd>BL-2024-001</dd>
+                    </div>
+                    <div>
+                      <dt>Nombor Telefon</dt>
+                      <dd>+60 88 123 456</dd>
+                    </div>
+                    <div>
+                      <dt>Alamat E-mel</dt>
+                      <dd>admin@borneoagro.com</dd>
+                    </div>
+                    <div class="full">
+                      <dt>Alamat Premis Berdaftar</dt>
+                      <dd>
+                        Lot 5, Jalan Industri 3, Kawasan Perindustrian Kota
+                        Kinabalu, 88450 Kota Kinabalu, Sabah
+                      </dd>
+                    </div>
+                  </dl>
+                </div>
+
+                <div class="panel-section">
+                  <h2 class="panel-title">Wakil Syarikat</h2>
+                  <dl class="def-grid">
+                    <div>
+                      <dt>Nama Wakil</dt>
+                      <dd>Aisyah Hassan</dd>
+                    </div>
+                    <div>
+                      <dt>No. Kad Pengenalan</dt>
+                      <dd>900101-12-3456</dd>
+                    </div>
+                    <div>
+                      <dt>Jawatan</dt>
+                      <dd>Pengarah Urusan</dd>
+                    </div>
+                    <div>
+                      <dt>Nombor Telefon</dt>
+                      <dd>+60 12-345 6789</dd>
+                    </div>
+                  </dl>
+                </div>
+              </div>
+
+              <!-- ============ TAB PANEL: Dokumen Sokongan ============ -->
+              <div class="detail-panel" data-panel="docs">
+                <h2 class="panel-title">Dokumen sokongan</h2>
+                <p class="panel-desc" style="margin-bottom: 1.25rem">
+                  Sahkan setiap dokumen dengan butang
+                  <i class="bi bi-check-lg"></i> (lulus) atau
+                  <i class="bi bi-x-lg"></i> (tolak). Semua dokumen wajib perlu
+                  disahkan sebelum permohonan boleh diluluskan.
+                </p>
+
+                <div id="rv-docs"></div>
+              </div>
+
+              <!-- ============ TAB PANEL: Log Aktiviti ============ -->
+              <div class="detail-panel" data-panel="activity">
+                <h2 class="panel-title">Log Aktiviti Permit</h2>
+
+                <div class="activity-log">
+                  <div class="log-day">
+                    <i class="bi bi-calendar-week"></i>
+                    Rabu, 14 Oktober 2026
+                  </div>
+
+                  <div class="log-item">
+                    <span class="log-badge is-info">
+                      <i class="bi bi-clipboard-check"></i>
+                    </span>
+                    <div class="log-body">
+                      <p class="log-title">
+                        <span class="log-actor">Admin DOA</span>
+                        memulakan semakan permohonan permit
+                      </p>
+                      <p class="log-sub">
+                        Menyemak kelengkapan item dan dokumen sokongan
+                      </p>
+                    </div>
+                    <span class="log-time">9:15 AM</span>
+                  </div>
+
+                  <div class="log-item">
+                    <span class="log-badge">
+                      <i class="bi bi-file-earmark-check"></i>
+                    </span>
+                    <div class="log-body">
+                      <p class="log-title">Permohonan diterima oleh sistem</p>
+                      <p class="log-sub">
+                        Rujukan <strong>PK/2026/10001</strong> dijana
+                      </p>
+                    </div>
+                    <span class="log-time">8:00 AM</span>
+                  </div>
+
+                  <div class="log-day">
+                    <i class="bi bi-calendar-week"></i>
+                    Isnin, 12 Oktober 2026
+                  </div>
+
+                  <div class="log-item">
+                    <span class="log-badge is-warning">
+                      <i class="bi bi-arrow-repeat"></i>
+                    </span>
+                    <div class="log-body">
+                      <p class="log-title">
+                        <span class="log-actor">Aisyah Hassan</span>
+                        mengemas kini dokumen sokongan
+                      </p>
+                      <p class="log-sub">
+                        Surat Aku Janji Pelupusan ditambah
+                      </p>
+                    </div>
+                    <span class="log-time">4:10 PM</span>
+                  </div>
+
+                  <div class="log-item">
+                    <span class="log-badge is-success">
+                      <i class="bi bi-plus-circle"></i>
+                    </span>
+                    <div class="log-body">
+                      <p class="log-title">
+                        <span class="log-actor">Aisyah Hassan</span>
+                        menghantar permohonan permit
+                      </p>
+                      <p class="log-sub">
+                        2 item disenaraikan · 7 dokumen sokongan dimuat naik
+                      </p>
+                    </div>
+                    <span class="log-time">2:45 PM</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ===== Sticky approval bar ===== -->
+            <div class="approval-bar" id="approval-bar">
+              <div class="ap-status" id="ap-status">
+                <strong>Sahkan semua dokumen untuk meneruskan</strong>
+                Tandakan lulus pada setiap dokumen wajib sebelum meluluskan
+                permit.
+              </div>
+              <div class="ap-actions">
+                <button
+                  type="button"
+                  class="btn btn-outline-danger"
+                  id="ap-reject-btn"
+                >
+                  <i class="bi bi-x-lg me-1"></i>Tolak permit
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  id="ap-approve-btn"
+                  disabled
+                >
+                  <i class="bi bi-check-lg me-1"></i>Luluskan permit
+                </button>
+              </div>
+            </div>
+
+            <!-- Reject reason -->
+            <div class="reject-note" id="reject-note-wrap" hidden>
+              <label
+                class="form-label"
+                for="reject-note"
+                style="font-size: 0.78rem; font-weight: 600"
+              >
+                Sebab penolakan <span class="text-danger">*</span>
+              </label>
+              <textarea
+                class="form-control"
+                id="reject-note"
+                rows="3"
+                placeholder="cth. Dokumen sokongan tidak lengkap. Sila muat naik semula."
+              ></textarea>
+              <div class="d-flex gap-2 justify-content-end mt-2">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-sm"
+                  id="reject-cancel"
+                >
+                  Batal
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger btn-sm"
+                  id="reject-confirm"
+                >
+                  <i class="bi bi-x-lg me-1"></i>Sahkan tolak
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div
+      class="toast-container position-fixed bottom-0 end-0 p-3"
+      style="z-index: 1080"
+    >
+      <div
+        id="actionToast"
+        class="toast align-items-center text-bg-dark border-0"
+        role="alert"
+        aria-live="assertive"
+        aria-atomic="true"
+      >
+        <div class="d-flex">
+          <div class="toast-body" id="actionToastMsg">Tindakan disimpan.</div>
+          <button
+            type="button"
+            class="btn-close btn-close-white me-2 m-auto"
+            data-bs-dismiss="toast"
+            aria-label="Tutup"
+          ></button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /* ===== Sidebar toggle ===== */
+      (function () {
+        var app = document.querySelector(".app");
+        var btn = app.querySelector("#sidebar-toggle");
+        var KEY = "sidebar-collapsed";
+        function sync() {
+          var collapsed = app.classList.contains("is-collapsed");
+          var label = collapsed ? "Buka bar sisi" : "Tutup bar sisi";
+          btn.setAttribute("aria-expanded", String(!collapsed));
+          btn.setAttribute("aria-label", label);
+          btn.title = label;
+        }
+        btn.addEventListener("click", function () {
+          app.classList.toggle("is-collapsed");
+          sync();
+          try {
+            localStorage.setItem(
+              KEY,
+              app.classList.contains("is-collapsed") ? "1" : "0",
+            );
+          } catch (e) {}
+        });
+        sync();
+      })();
+
+      /* ===== Tabs ===== */
+      (function () {
+        var tabs = document.querySelectorAll(".detail-tab");
+        var panels = document.querySelectorAll(".detail-panel");
+
+        tabs.forEach(function (tab) {
+          tab.addEventListener("click", function () {
+            var target = tab.getAttribute("data-tab");
+            tabs.forEach(function (t) {
+              t.classList.toggle("active", t === tab);
+            });
+            panels.forEach(function (p) {
+              p.classList.toggle(
+                "active",
+                p.getAttribute("data-panel") === target,
+              );
+            });
+          });
+        });
+      })();
+
+      /* =========================================================
+         Single permit review
+         ========================================================= */
+      (function () {
+        /* ---- Current permit (mock) ---- */
+        var permit = {
+          id: "PK-2026-10001",
+          status: "pending",
+          docs: [
+            {
+              key: "ssm_cert",
+              label: "Sijil Pendaftaran Syarikat",
+              file: "sijil_ssm.pdf",
+              size: "412 KB",
+              required: true,
+              verdict: null,
+            },
+            {
+              key: "business_license",
+              label: "Lesen Perniagaan",
+              file: "lesen_niaga.pdf",
+              size: "780 KB",
+              required: true,
+              verdict: null,
+            },
+            {
+              key: "rep_ic",
+              label: "Kad Pengenalan Wakil",
+              file: "ic_aisyah.pdf",
+              size: "290 KB",
+              required: true,
+              verdict: null,
+            },
+            {
+              key: "rep_authority",
+              label: "Surat Kuasa Wakil Syarikat",
+              file: "surat_kuasa.pdf",
+              size: "340 KB",
+              required: true,
+              verdict: null,
+            },
+            {
+              key: "institution_letter",
+              label: "Surat Pengesahan Institusi",
+              file: "surat_ums.pdf",
+              size: "220 KB",
+              required: true,
+              verdict: null,
+            },
+            {
+              key: "research_proposal",
+              label: "Proposal Penyelidikan",
+              file: "proposal_ums.pdf",
+              size: "1.2 MB",
+              required: true,
+              verdict: null,
+            },
+            {
+              key: "disposal_letter",
+              label: "Surat Aku Janji Pelupusan",
+              file: "aku_janji.pdf",
+              size: "260 KB",
+              required: true,
+              verdict: null,
+            },
+          ],
+        };
+
+        /* ---- Refs ---- */
+        var docsWrap = document.getElementById("rv-docs");
+        var docsTabCount = document.getElementById("docs-tab-count");
+        var apStatus = document.getElementById("ap-status");
+        var apApproveBtn = document.getElementById("ap-approve-btn");
+        var apRejectBtn = document.getElementById("ap-reject-btn");
+        var rejectWrap = document.getElementById("reject-note-wrap");
+        var rejectNote = document.getElementById("reject-note");
+        var rejectCancel = document.getElementById("reject-cancel");
+        var rejectConfirm = document.getElementById("reject-confirm");
+
+        /* ---- Helpers ---- */
+        function iconForFile(name) {
+          var ext = (name || "").split(".").pop().toLowerCase();
+          if (ext === "pdf") return "bi-file-earmark-pdf";
+          if (["jpg", "jpeg", "png", "gif", "webp"].indexOf(ext) !== -1)
+            return "bi-file-earmark-image";
+          return "bi-file-earmark";
+        }
+
+        function escapeHtml(s) {
+          return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+            return {
+              "&": "&amp;",
+              "<": "&lt;",
+              ">": "&gt;",
+              '"': "&quot;",
+              "'": "&#39;",
+            }[c];
+          });
+        }
+
+        /* ---- Render doc list ---- */
+        function renderDocs() {
+          docsWrap.innerHTML = "";
+
+          permit.docs.forEach(function (doc, di) {
+            var row = document.createElement("div");
+            row.className = "doc-preview";
+            row.innerHTML =
+              '<span class="doc-preview-icon"><i class="bi ' +
+              iconForFile(doc.file) +
+              '"></i></span>' +
+              '<div class="doc-preview-body">' +
+              '<p class="doc-preview-name">' +
+              escapeHtml(doc.label) +
+              (doc.required
+                ? ' <span style="color:#dc2626;font-weight:700">*</span>'
+                : "") +
+              "</p>" +
+              '<div class="doc-preview-file">' +
+              escapeHtml(doc.file) +
+              " &middot; " +
+              escapeHtml(doc.size) +
+              "</div>" +
+              "</div>" +
+              '<div class="doc-preview-actions">' +
+              '<button type="button" class="btn-verdict" data-action="view" data-di="' +
+              di +
+              '" title="Lihat dokumen"><i class="bi bi-box-arrow-up-right"></i></button>' +
+              '<button type="button" class="btn-verdict is-approve' +
+              (doc.verdict === "approve" ? " is-active" : "") +
+              '" data-action="approve" data-di="' +
+              di +
+              '" title="Sahkan dokumen ini"><i class="bi bi-check-lg"></i></button>' +
+              '<button type="button" class="btn-verdict is-reject' +
+              (doc.verdict === "reject" ? " is-active" : "") +
+              '" data-action="reject" data-di="' +
+              di +
+              '" title="Tolak dokumen ini"><i class="bi bi-x-lg"></i></button>' +
+              "</div>";
+            docsWrap.appendChild(row);
+          });
+
+          docsTabCount.textContent = permit.docs.length;
+        }
+
+        /* ---- Approval state ---- */
+        function updateApprovalState() {
+          var requiredDocs = permit.docs.filter(function (d) {
+            return d.required;
+          });
+
+          var requiredApproved = requiredDocs.filter(function (d) {
+            return d.verdict === "approve";
+          }).length;
+
+          var hasRejected = permit.docs.some(function (d) {
+            return d.verdict === "reject";
+          });
+
+          var allApproved =
+            requiredDocs.every(function (d) {
+              return d.verdict === "approve";
+            }) && !hasRejected;
+
+          apApproveBtn.disabled = !allApproved;
+
+          if (allApproved) {
+            apStatus.className = "ap-status is-ready";
+            apStatus.innerHTML =
+              "<strong>Sedia untuk diluluskan</strong>Semua dokumen wajib telah disahkan. Anda boleh luluskan permit ini.";
+          } else if (hasRejected) {
+            apStatus.className = "ap-status is-warning";
+            apStatus.innerHTML =
+              "<strong>Ada dokumen ditolak</strong>Terdapat dokumen yang ditolak. Sila tukar atau tolak permohonan ini secara keseluruhan.";
+          } else {
+            apStatus.className = "ap-status is-warning";
+            apStatus.innerHTML =
+              "<strong>" +
+              requiredApproved +
+              " / " +
+              requiredDocs.length +
+              " dokumen disahkan</strong>Sahkan semua dokumen wajib sebelum meluluskan permit.";
+          }
+        }
+
+        /* ---- Doc actions ---- */
+        docsWrap.addEventListener("click", function (e) {
+          var btn = e.target.closest("[data-action]");
+          if (!btn) return;
+
+          var di = parseInt(btn.getAttribute("data-di"), 10);
+          var action = btn.getAttribute("data-action");
+          var doc = permit.docs[di];
+          if (!doc) return;
+
+          if (action === "view") {
+            showToast("Pratonton dokumen: " + doc.file);
+            return;
+          }
+
+          if (action === "approve") {
+            doc.verdict = doc.verdict === "approve" ? null : "approve";
+          } else if (action === "reject") {
+            doc.verdict = doc.verdict === "reject" ? null : "reject";
+          }
+
+          renderDocs();
+          updateApprovalState();
+        });
+
+        /* ---- Approve ---- */
+        apApproveBtn.addEventListener("click", function () {
+          if (apApproveBtn.disabled) return;
+
+          permit.status = "approved";
+          document.getElementById("p-status").outerHTML =
+            '<span class="strip-pill is-success" id="p-status">' +
+            '<i class="bi bi-patch-check-fill"></i>Diluluskan</span>';
+          document.getElementById("d-status").textContent = "Diluluskan";
+
+          apApproveBtn.disabled = true;
+          apApproveBtn.innerHTML = '<i class="bi bi-check-lg me-1"></i>Diluluskan';
+          apRejectBtn.disabled = true;
+
+          apStatus.className = "ap-status is-ready";
+          apStatus.innerHTML =
+            "<strong>Permit telah diluluskan</strong>Permit " +
+            permit.id +
+            " kini aktif. Pemohon akan dimaklumkan melalui e-mel.";
+
+          showToast("Permit " + permit.id + " telah diluluskan.");
+        });
+
+        /* ---- Reject ---- */
+        apRejectBtn.addEventListener("click", function () {
+          rejectWrap.hidden = false;
+          rejectNote.focus();
+        });
+
+        rejectCancel.addEventListener("click", function () {
+          rejectWrap.hidden = true;
+          rejectNote.value = "";
+        });
+
+        rejectConfirm.addEventListener("click", function () {
+          var reason = rejectNote.value.trim();
+          if (!reason) {
+            showToast("Sila masukkan sebab penolakan.");
+            rejectNote.focus();
+            return;
+          }
+
+          permit.status = "rejected";
+          permit.rejectReason = reason;
+
+          document.getElementById("p-status").outerHTML =
+            '<span class="strip-pill is-danger" id="p-status">' +
+            '<i class="bi bi-x-circle-fill"></i>Ditolak</span>';
+          document.getElementById("d-status").textContent = "Ditolak";
+
+          apRejectBtn.disabled = true;
+          apApproveBtn.disabled = true;
+          rejectWrap.hidden = true;
+
+          apStatus.className = "ap-status is-warning";
+          apStatus.innerHTML =
+            "<strong>Permit telah ditolak</strong>Sebab: " +
+            reason;
+
+          showToast("Permit " + permit.id + " telah ditolak.");
+        });
+
+        /* ---- Toast ---- */
+        function showToast(msg) {
+          var t = document.getElementById("actionToast");
+          document.getElementById("actionToastMsg").textContent = msg;
+          bootstrap.Toast.getOrCreateInstance(t, { delay: 2500 }).show();
+        }
+
+        /* ---- Print ---- */
+        document
+          .getElementById("print-btn")
+          .addEventListener("click", function () {
+            window.print();
+          });
+
+        /* ---- Init ---- */
+        renderDocs();
+        updateApprovalState();
+      })();
+    </script>
+  </body>
+</html>

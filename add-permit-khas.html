@@ -1,0 +1,2610 @@
+<!doctype html>
+<html lang="ms">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/base.css" rel="stylesheet" />
+    <link href="css/components.css" rel="stylesheet" />
+    <link href="css/dashboard.css" rel="stylesheet" />
+    <link href="css/view.css" rel="stylesheet" />
+    <link href="css/accordionBoard.css" rel="stylesheet" />
+    <link href="css/complete-account.css" rel="stylesheet" />
+    <link href="css/submissionModal.css" rel="stylesheet" />
+    <title>Mohon Permit Import Khas | Portal Pendaftaran Baja</title>
+
+    <style>
+      .create-shell .detail-header h1 {
+        font-size: 1.25rem;
+      }
+      .create-shell .head-avatar {
+        background: var(--color-primary-100);
+      }
+
+      .create-section {
+        margin-bottom: 1.5rem;
+      }
+      .create-section:last-child {
+        margin-bottom: 0;
+      }
+      .create-section h2 {
+        font-family: var(--font-serif, "Source Serif 4", Georgia, serif);
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--color-text);
+        margin: 0 0 0.35rem;
+      }
+      .create-section p.section-hint {
+        font-size: 0.8rem;
+        color: var(--color-muted);
+        margin: 0 0 1rem;
+      }
+      .create-section + .create-section {
+        padding-top: 1.25rem;
+        border-top: 1px solid var(--color-border);
+      }
+
+      .create-side {
+        display: grid;
+        gap: 1rem;
+        align-content: start;
+      }
+      .create-tips {
+        padding: 1rem 1.1rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface-2);
+        font-size: 0.82rem;
+        color: var(--color-text);
+        line-height: 1.55;
+      }
+      .create-tips h4 {
+        font-size: 0.82rem;
+        font-weight: 700;
+        margin: 0 0 0.6rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        color: var(--color-text);
+      }
+      .create-tips ul {
+        margin: 0;
+        padding-left: 1.1rem;
+      }
+      .create-tips li {
+        margin-bottom: 0.35rem;
+      }
+      .create-tips li:last-child {
+        margin-bottom: 0;
+      }
+
+      /* Applicant type selector */
+      .type-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.85rem;
+        margin-bottom: 1.5rem;
+      }
+      @media (max-width: 575.98px) {
+        .type-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .type-card {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        gap: 0.85rem;
+        padding: 1.1rem 1.15rem;
+        border: 1.5px solid var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface);
+        cursor: pointer;
+        transition: 0.15s;
+      }
+      .type-card:hover {
+        border-color: var(--color-primary-400);
+        background: var(--color-primary-50);
+      }
+      .type-card input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .type-card .tc-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-50);
+        color: var(--color-primary-600);
+        font-size: 1.25rem;
+        flex: none;
+        border: 1px solid var(--color-border);
+      }
+      .type-card .tc-body {
+        flex: 1;
+        min-width: 0;
+      }
+      .type-card .tc-title {
+        font-size: 0.92rem;
+        font-weight: 700;
+        color: var(--color-text);
+        margin: 0 0 0.15rem;
+      }
+      .type-card .tc-sub {
+        font-size: 0.75rem;
+        color: var(--color-muted);
+        margin: 0;
+        line-height: 1.45;
+      }
+      .type-card .tc-check {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 2px solid var(--color-border);
+        background: #fff;
+        display: grid;
+        place-items: center;
+        color: transparent;
+        font-size: 0.75rem;
+        transition: 0.15s;
+      }
+      .type-card:has(input:checked) {
+        border-color: var(--color-primary-600);
+        background: var(--color-primary-50);
+        box-shadow: 0 0 0 3px var(--color-primary-100);
+      }
+      .type-card:has(input:checked) .tc-icon {
+        background: var(--color-primary-600);
+        color: #fff;
+        border-color: var(--color-primary-600);
+      }
+      .type-card:has(input:checked) .tc-check {
+        background: var(--color-primary-600);
+        border-color: var(--color-primary-600);
+        color: #fff;
+      }
+
+      /* Upload cards */
+      .upload-card {
+        border: 1px dashed var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface-2);
+        padding: 1rem 1.1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        transition: 0.15s;
+      }
+      .upload-card:hover,
+      .upload-card.is-dragover {
+        border-color: var(--color-primary-500);
+        background: var(--color-primary-50);
+      }
+      .upload-card .upload-head {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      .upload-card .upload-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        display: grid;
+        place-items: center;
+        background: #fff;
+        color: var(--color-primary-600);
+        font-size: 1.1rem;
+        flex: none;
+        border: 1px solid var(--color-border);
+      }
+      .upload-card .upload-title {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--color-text);
+        margin: 0;
+      }
+      .upload-card .upload-sub {
+        font-size: 0.72rem;
+        color: var(--color-muted);
+        margin: 0.1rem 0 0;
+      }
+      .upload-card .upload-input {
+        display: block;
+        width: 100%;
+        font-size: 0.78rem;
+        padding: 0.4rem 0.5rem;
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+        background: #fff;
+      }
+
+      /* Save bar */
+      .create-save-bar {
+        position: sticky;
+        bottom: 1rem;
+        z-index: 20;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.85rem 1.15rem;
+        margin-top: 1rem;
+        background: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-lg);
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      }
+      .create-save-bar .save-status {
+        font-size: 0.8rem;
+        color: var(--color-muted);
+        flex: 1;
+        min-width: 12rem;
+      }
+      .create-save-bar .save-status strong {
+        display: block;
+        color: var(--color-text);
+        font-size: 0.82rem;
+        margin-bottom: 0.1rem;
+      }
+      .create-save-bar .save-status.is-ready {
+        color: #166534;
+      }
+      .create-save-bar .save-status.is-warning {
+        color: #b45309;
+      }
+      .create-save-bar .save-actions {
+        display: flex;
+        gap: 0.4rem;
+        flex-wrap: wrap;
+      }
+
+      /* Badge */
+      .onboard-title .step-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 1.35rem;
+        height: 1.35rem;
+        padding: 0 0.45rem;
+        border-radius: 999px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        margin-left: 0.5rem;
+        background: var(--color-primary-50);
+        color: var(--color-primary-700);
+      }
+      .onboard-title .step-count.is-warn {
+        background: #fef3c7;
+        color: #92400e;
+      }
+      .onboard-title .step-count.is-active {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      /* Purpose radio tiles */
+      .purpose-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 0.6rem;
+      }
+      .purpose-tile {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        align-items: flex-start;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        padding: 0.9rem 1rem;
+        background: var(--color-surface);
+        cursor: pointer;
+        transition: 0.15s;
+        height: 100%;
+      }
+      .purpose-tile:hover {
+        border-color: var(--color-primary-200);
+        background: var(--color-surface-2);
+      }
+      .purpose-tile .icon-chip {
+        width: 34px;
+        height: 34px;
+        font-size: 0.9rem;
+      }
+      .purpose-tile .tile-title {
+        font-weight: 600;
+        font-size: 0.82rem;
+        color: var(--color-text);
+      }
+      .btn-check:checked + .purpose-tile {
+        border-color: var(--color-primary-500);
+        background: var(--color-primary-50);
+        box-shadow: 0 0 0 1px var(--color-primary-500);
+      }
+
+      /* Notice */
+      .permit-notice {
+        border: 1px solid var(--color-warning-bg);
+        background: var(--color-warning-bg);
+        border-radius: var(--radius-md);
+        padding: 1rem 1.15rem;
+        display: flex;
+        gap: 0.75rem;
+        align-items: flex-start;
+      }
+      .permit-notice i {
+        color: var(--color-warning);
+        font-size: 1.15rem;
+        flex: none;
+        margin-top: 0.05rem;
+      }
+      .permit-notice h4 {
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin: 0 0 0.3rem;
+        color: var(--color-warning);
+      }
+      .permit-notice p {
+        font-size: 0.78rem;
+        margin: 0;
+        color: var(--color-text);
+        line-height: 1.5;
+      }
+
+      /* Item list */
+      .permit-item-list {
+        display: grid;
+        gap: 0.55rem;
+      }
+      .permit-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 0.75rem 0.95rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        background: var(--color-surface);
+      }
+      .permit-item .item-title {
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: var(--color-text);
+        margin: 0;
+      }
+      .permit-item .item-sub {
+        font-size: 0.72rem;
+        color: var(--color-muted);
+        margin: 0.15rem 0 0;
+      }
+      .permit-item .item-side {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        flex: none;
+      }
+      .permit-empty {
+        text-align: center;
+        padding: 1.75rem 1rem;
+        color: var(--color-muted);
+        border: 1.5px dashed var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface-2);
+      }
+      .permit-empty i {
+        font-size: 1.6rem;
+        color: var(--color-primary-500);
+        display: block;
+        margin-bottom: 0.35rem;
+      }
+
+      /* Disclaimer */
+      .permit-disclaimer {
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface-2);
+        padding: 1rem 1.15rem;
+        font-size: 0.82rem;
+        color: var(--color-text);
+        line-height: 1.55;
+        max-height: 240px;
+        overflow-y: auto;
+        margin-bottom: 1rem;
+      }
+      .permit-disclaimer ol {
+        margin: 0;
+        padding-left: 1.25rem;
+      }
+      .permit-disclaimer li + li {
+        margin-top: 0.4rem;
+      }
+      .permit-disclaimer li::marker {
+        color: var(--color-primary-600);
+        font-weight: 600;
+      }
+
+      /* Checklist item */
+      .checklist-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.6rem;
+        font-size: 0.85rem;
+        color: var(--color-text);
+        cursor: pointer;
+        padding: 0.75rem 0.9rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-md);
+        background: var(--color-surface);
+      }
+      .checklist-item input {
+        margin-top: 0.2rem;
+        flex: none;
+      }
+      .checklist-item .cl-text {
+        display: flex;
+        flex-direction: column;
+        gap: 0.15rem;
+      }
+      .checklist-item .cl-text strong {
+        font-weight: 600;
+      }
+      .checklist-item .cl-text small {
+        font-size: 0.75rem;
+        color: var(--color-muted);
+      }
+
+      /* Item modal upload placeholder */
+      .upload-placeholder {
+        border: 1.5px dashed var(--color-primary-200);
+        border-radius: var(--radius-md);
+        padding: 1rem 0.9rem;
+        background: var(--color-surface-2);
+        text-align: center;
+        cursor: pointer;
+        transition: 0.15s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.3rem;
+        margin: 0;
+      }
+      .upload-placeholder:hover {
+        border-color: var(--color-primary-500);
+        background: var(--color-primary-50);
+      }
+      .upload-placeholder .upload-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        background: var(--color-surface);
+        color: var(--color-primary-600);
+        font-size: 1rem;
+      }
+      .upload-placeholder .upload-text {
+        font-size: 0.78rem;
+        color: var(--color-text);
+      }
+      .upload-placeholder .upload-text strong {
+        color: var(--color-primary-700);
+      }
+      .upload-placeholder .upload-hint {
+        font-size: 0.68rem;
+        color: var(--color-muted);
+      }
+
+      .file-list {
+        display: grid;
+        gap: 0.4rem;
+        margin-top: 0.5rem;
+      }
+      .file-list:empty {
+        display: none;
+      }
+      .file-item {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.45rem 0.65rem;
+        border: 1px solid var(--color-border);
+        border-radius: var(--radius-sm);
+        background: var(--color-surface);
+        font-size: 0.75rem;
+      }
+      .file-item .file-icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
+        display: grid;
+        place-items: center;
+        background: var(--color-primary-50);
+        color: var(--color-primary-600);
+        flex: none;
+      }
+      .file-item .file-name {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .file-item .file-size {
+        color: var(--color-muted);
+        font-size: 0.68rem;
+        flex: none;
+      }
+      .file-item .file-remove {
+        color: var(--color-muted);
+        background: none;
+        border: 0;
+        padding: 0.15rem 0.3rem;
+        border-radius: 4px;
+      }
+      .file-item .file-remove:hover {
+        color: var(--color-danger);
+        background: var(--color-danger-bg);
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <script>
+        try {
+          if (localStorage.getItem("sidebar-collapsed") === "1")
+            document.querySelector(".app").classList.add("is-collapsed");
+        } catch (e) {}
+      </script>
+
+      <!-- Bar sisi -->
+      <aside
+        class="sidebar offcanvas-lg offcanvas-start"
+        tabindex="-1"
+        id="sidebar"
+        aria-label="Navigasi utama"
+      >
+        <div class="sidebar-inner">
+          <div class="sidebar-head border-bottom pb-2">
+            <a href="#" class="brand" aria-label="Enakmen Baja Sabah">
+              <span class="brand-mark brand-mark--img">
+                <img src="logo/image.png" alt="" width="40" height="40" />
+              </span>
+              <span class="brand-text">Enakmen Baja Sabah</span>
+            </a>
+            <button
+              type="button"
+              class="btn btn-icon sidebar-toggle d-none d-lg-inline-grid"
+              id="sidebar-toggle"
+              aria-controls="sidebar"
+              aria-expanded="true"
+              aria-label="Tutup bar sisi"
+              title="Tutup bar sisi"
+            >
+              <i class="bi bi-layout-sidebar"></i>
+            </button>
+            <button
+              type="button"
+              class="btn-close d-lg-none"
+              data-bs-dismiss="offcanvas"
+              data-bs-target="#sidebar"
+              aria-label="Tutup"
+            ></button>
+          </div>
+
+          <nav class="d-grid gap-1">
+            <a
+              href="filled-dashboard.html"
+              class="side-link"
+              title="Papan pemuka"
+              ><i class="bi bi-house-door"></i
+              ><span class="side-label">Papan pemuka</span></a
+            >
+            <a href="#" class="side-link" title="Produk saya"
+              ><i class="bi bi-box-seam"></i
+              ><span class="side-label">Produk saya</span></a
+            >
+            <a href="#" class="side-link active" title="Permit Khas"
+              ><i class="bi bi-file-earmark-lock"></i
+              ><span class="side-label">Permit Khas</span></a
+            >
+            <a href="#" class="side-link" title="Lesen"
+              ><i class="bi bi-patch-check"></i
+              ><span class="side-label">Lesen</span></a
+            >
+            <a href="#" class="side-link" title="Pembayaran"
+              ><i class="bi bi-receipt"></i
+              ><span class="side-label">Pembayaran</span></a
+            >
+            <a href="#" class="side-link" title="Notis dan rayuan"
+              ><i class="bi bi-envelope-exclamation"></i
+              ><span class="side-label">Notis dan rayuan</span
+              ><span class="count pill pill-danger">0</span></a
+            >
+          </nav>
+
+          <div class="nav-group-label">Akaun</div>
+          <nav class="d-grid gap-1 mb-3">
+            <a
+              href="company-profile.html"
+              class="side-link"
+              title="Profil organisasi"
+              ><i class="bi bi-building"></i
+              ><span class="side-label">Profil organisasi</span></a
+            >
+            <a href="#" class="side-link" title="Tetapan"
+              ><i class="bi bi-gear"></i
+              ><span class="side-label">Tetapan</span></a
+            >
+            <a href="index.html" class="side-link" title="Log keluar"
+              ><i class="bi bi-box-arrow-right"></i
+              ><span class="side-label">Log keluar</span></a
+            >
+          </nav>
+
+          <div class="side-user">
+            <span class="avatar">AH</span>
+            <div class="lh-sm side-user-text">
+              <div class="fw-semibold">Aisyah Hassan</div>
+              <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Utama -->
+      <div class="app-main">
+        <header class="topbar border-bottom">
+          <button
+            class="btn btn-icon d-lg-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebar"
+            aria-controls="sidebar"
+            aria-label="Buka menu"
+          >
+            <i class="bi bi-list"></i>
+          </button>
+          <h1 class="h5 mb-0 me-2">Mohon permit import khas</h1>
+          <div class="topbar-search d-none d-md-block input-icon">
+            <i class="bi bi-search"></i>
+            <input
+              type="search"
+              class="form-control"
+              placeholder="Cari produk, lesen atau permit"
+              aria-label="Cari"
+            />
+          </div>
+          <div class="ms-auto d-flex align-items-center gap-2">
+            <button
+              class="btn btn-icon position-relative"
+              type="button"
+              aria-label="Pemberitahuan"
+            >
+              <i class="bi bi-bell"></i><span class="notif-dot"></span>
+            </button>
+
+            <div class="dropdown">
+              <button
+                type="button"
+                class="avatar avatar-btn"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                aria-label="Menu pengguna"
+              >
+                AH
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end user-menu">
+                <li class="user-menu-head">
+                  <div class="fw-semibold">Aisyah Hassan</div>
+                  <small class="text-muted-2">Borneo Agro Sdn Bhd</small>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item" href="company-profile.html"
+                    ><i class="bi bi-building me-2"></i>Profil organisasi</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#"
+                    ><i class="bi bi-gear me-2"></i>Tetapan</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="index.html"
+                    ><i class="bi bi-box-arrow-right me-2"></i>Log keluar</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </header>
+
+        <main class="app-content p-3 p-md-4 p-xl-5">
+          <div class="detail-container">
+            <!-- ===== Top action bar ===== -->
+            <div class="detail-topbar">
+              <div class="detail-topbar-left">
+                <a href="permit-saya.html" class="btn-back">
+                  <i class="bi bi-arrow-left"></i>Kembali
+                </a>
+              </div>
+
+              <div class="detail-topbar-right">
+                <button type="button" class="btn-back" id="save-draft-btn">
+                  <i class="bi bi-save"></i>Simpan draf
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  id="submit-btn"
+                  disabled
+                >
+                  <i class="bi bi-send-check"></i>Hantar untuk semakan
+                </button>
+                <button type="button" class="btn-nav-arrow" aria-label="Lagi">
+                  <i class="bi bi-three-dots"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- ===== Shell ===== -->
+            <div class="detail-shell create-shell mb-3">
+              <div class="detail-header">
+                <span class="head-avatar">
+                  <i class="bi bi-file-earmark-lock"></i>
+                </span>
+                <div class="head-info">
+                  <h1 id="form-title">Permit Import Khas baru</h1>
+                  <div class="head-sub">
+                    <span class="avatar-mini">AH</span>
+                    <span>Aisyah Hassan</span>
+                    <span class="dot">·</span>
+                    <span id="form-sub">Rekod baharu · Belum disimpan</span>
+                  </div>
+                </div>
+                <div class="head-links">
+                  <a href="#" aria-label="Panduan permohonan permit">
+                    <i class="bi bi-question-circle"></i>
+                  </a>
+                </div>
+              </div>
+
+              <div class="info-strip">
+                <div class="strip-cell">
+                  <div class="strip-label">
+                    <i class="bi bi-hash"></i>No. Rujukan
+                  </div>
+                  <div class="strip-value" id="ref-value">—</div>
+                </div>
+
+                <div class="strip-cell">
+                  <div class="strip-label">
+                    <i class="bi bi-tag"></i>Jenis Pemohon
+                  </div>
+                  <div class="strip-value" id="strip-type">—</div>
+                </div>
+
+                <div class="strip-cell">
+                  <div class="strip-label">
+                    <i class="bi bi-box-seam"></i>Item
+                  </div>
+                  <div class="strip-value" id="strip-items">0</div>
+                </div>
+
+                <div class="strip-cell">
+                  <div class="strip-label">
+                    <i class="bi bi-paperclip"></i>Lampiran
+                  </div>
+                  <div class="strip-value" id="strip-attachments">0</div>
+                </div>
+
+                <div class="strip-cell">
+                  <div class="strip-label">
+                    <i class="bi bi-clipboard-pulse"></i>Status
+                  </div>
+                  <div class="strip-value">
+                    <span class="strip-pill is-info">
+                      <i class="bi bi-pencil-square"></i>Draf
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- =========================================================
+                 CARD 1: Maklumat Pemohon
+                 ========================================================= -->
+            <div class="onboard-card mb-3">
+              <div class="onboard-item is-open" data-accordion="applicant">
+                <button
+                  type="button"
+                  class="onboard-row as-button"
+                  aria-expanded="true"
+                  aria-controls="body-applicant"
+                >
+                  <span class="onboard-icon is-green">
+                    <i class="bi bi-person-badge"></i>
+                  </span>
+                  <div class="onboard-main">
+                    <h3 class="onboard-title">
+                      Maklumat Pemohon
+                      <span class="step-count is-warn" id="applicant-badge"
+                        >Wajib</span
+                      >
+                    </h3>
+                    <p class="onboard-desc">
+                      Jenis pemohon, butiran syarikat atau individu, dan wakil.
+                    </p>
+                  </div>
+                  <span class="onboard-action accordion-chevron">
+                    <i class="bi bi-chevron-down"></i>
+                  </span>
+                </button>
+
+                <div class="onboard-body" id="body-applicant">
+                  <div class="row g-4">
+                    <div class="col-lg-8">
+                      <div class="create-section">
+                        <h2>Jenis pemohon</h2>
+                        <p class="section-hint">
+                          Pilih sama ada permohonan ini dibuat atas nama syarikat
+                          atau individu.
+                        </p>
+
+                        <div class="type-grid">
+                          <label class="type-card" for="at-company">
+                            <input
+                              type="radio"
+                              name="applicant_type"
+                              id="at-company"
+                              value="company"
+                              checked
+                            />
+                            <span class="tc-icon">
+                              <i class="bi bi-building"></i>
+                            </span>
+                            <div class="tc-body">
+                              <p class="tc-title">Syarikat</p>
+                              <p class="tc-sub">
+                                Pemohon berdaftar dengan SSM. Memerlukan wakil
+                                syarikat.
+                              </p>
+                            </div>
+                            <span class="tc-check"
+                              ><i class="bi bi-check-lg"></i
+                            ></span>
+                          </label>
+
+                          <label class="type-card" for="at-individual">
+                            <input
+                              type="radio"
+                              name="applicant_type"
+                              id="at-individual"
+                              value="individual"
+                            />
+                            <span class="tc-icon">
+                              <i class="bi bi-person"></i>
+                            </span>
+                            <div class="tc-body">
+                              <p class="tc-title">Individu</p>
+                              <p class="tc-sub">
+                                Individu yang memohon atas nama sendiri.
+                              </p>
+                            </div>
+                            <span class="tc-check"
+                              ><i class="bi bi-check-lg"></i
+                            ></span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <!-- ============ COMPANY ============ -->
+                      <div id="form-company">
+                        <div class="create-section">
+                          <h2>Butiran syarikat</h2>
+                          <p class="section-hint">
+                            Maklumat syarikat seperti yang didaftarkan dengan
+                            SSM.
+                          </p>
+
+                          <div class="row g-3">
+                            <div class="col-md-6">
+                              <label class="form-label" for="company_name"
+                                >Nama Syarikat
+                                <span class="text-danger">*</span></label
+                              >
+                              <input class="form-control" id="company_name" />
+                            </div>
+                            <div class="col-md-6">
+                              <label class="form-label" for="ssm_no"
+                                >Nombor Pendaftaran Syarikat (SSM)
+                                <span class="text-danger">*</span></label
+                              >
+                              <input class="form-control" id="ssm_no" />
+                            </div>
+                            <div class="col-md-6">
+                              <label class="form-label" for="ssm_expiry"
+                                >Tamat Tempoh SSM</label
+                              >
+                              <input
+                                type="date"
+                                class="form-control"
+                                id="ssm_expiry"
+                              />
+                            </div>
+                            <div class="col-md-6">
+                              <label class="form-label" for="business_license_no"
+                                >Nombor Lesen Berniaga</label
+                              >
+                              <input
+                                class="form-control"
+                                id="business_license_no"
+                              />
+                            </div>
+                            <div class="col-md-6">
+                              <label
+                                class="form-label"
+                                for="business_license_expiry"
+                                >Tamat Tempoh Lesen Berniaga</label
+                              >
+                              <input
+                                class="form-control"
+                                id="business_license_expiry"
+                                value="31 Disember"
+                                readonly
+                              />
+                              <div class="form-text">Setiap 31 Disember.</div>
+                            </div>
+                            <div class="col-md-6">
+                              <label class="form-label" for="mida_no"
+                                >Nombor Lesen Pengilang (MIDA)
+                                <span class="text-muted-2 small"
+                                  >– jika berkaitan</span
+                                ></label
+                              >
+                              <input class="form-control" id="mida_no" />
+                            </div>
+                            <div class="col-md-6">
+                              <label class="form-label" for="ica10_no"
+                                >Nombor Surat Pengecualian (ICA 10)</label
+                              >
+                              <input class="form-control" id="ica10_no" />
+                            </div>
+                            <div class="col-12">
+                              <label class="form-label" for="premises_address"
+                                >Alamat Premis Berdaftar / Operasi
+                                <span class="text-danger">*</span></label
+                              >
+                              <textarea
+                                class="form-control"
+                                id="premises_address"
+                                rows="2"
+                              ></textarea>
+                            </div>
+                            <div class="col-md-6">
+                              <label class="form-label" for="company_phone"
+                                >Nombor Telefon Syarikat
+                                <span class="text-danger">*</span></label
+                              >
+                              <input
+                                type="tel"
+                                class="form-control"
+                                id="company_phone"
+                                placeholder="+60"
+                              />
+                            </div>
+                            <div class="col-md-6">
+                              <label class="form-label" for="company_email"
+                                >Alamat E-mel Syarikat
+                                <span class="text-danger">*</span></label
+                              >
+                              <input
+                                type="email"
+                                class="form-control"
+                                id="company_email"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="create-section">
+                          <h2>Wakil syarikat</h2>
+                          <p class="section-hint">
+                            Individu yang bertanggungjawab ke atas permohonan
+                            ini.
+                          </p>
+
+                          <div class="row g-3">
+                            <div class="col-md-6">
+                              <label class="form-label" for="pic_name"
+                                >Nama Wakil Syarikat
+                                <span class="text-danger">*</span></label
+                              >
+                              <input class="form-control" id="pic_name" />
+                            </div>
+                            <div class="col-md-6">
+                              <label class="form-label" for="pic_ic"
+                                >No. KP Wakil Syarikat
+                                <span class="text-danger">*</span></label
+                              >
+                              <input class="form-control" id="pic_ic" />
+                            </div>
+                            <div class="col-md-6">
+                              <label class="form-label" for="pic_role"
+                                >Jawatan Wakil Syarikat
+                                <span class="text-danger">*</span></label
+                              >
+                              <input
+                                class="form-control"
+                                id="pic_role"
+                                placeholder="cth. Pengarah"
+                              />
+                            </div>
+                            <div class="col-md-6">
+                              <label class="form-label" for="pic_phone"
+                                >Nombor Telefon Wakil Syarikat</label
+                              >
+                              <input
+                                type="tel"
+                                class="form-control"
+                                id="pic_phone"
+                                placeholder="+60"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- ============ INDIVIDUAL ============ -->
+                      <div id="form-individual" hidden>
+                        <div class="create-section">
+                          <h2>Butiran pemohon</h2>
+                          <p class="section-hint">
+                            Maklumat peribadi seperti dalam kad pengenalan.
+                          </p>
+
+                          <div class="row g-3">
+                            <div class="col-md-6">
+                              <label class="form-label" for="full_name"
+                                >Nama Penuh Pemohon
+                                <span class="text-danger">*</span></label
+                              >
+                              <input class="form-control" id="full_name" />
+                            </div>
+                            <div class="col-md-6">
+                              <label class="form-label" for="ic_no"
+                                >Nombor Kad Pengenalan
+                                <span class="text-danger">*</span></label
+                              >
+                              <input class="form-control" id="ic_no" />
+                            </div>
+                            <div class="col-md-6">
+                              <label
+                                class="form-label"
+                                for="correspondence_address"
+                                >Alamat Surat-menyurat</label
+                              >
+                              <textarea
+                                class="form-control"
+                                id="correspondence_address"
+                                rows="2"
+                              ></textarea>
+                            </div>
+                            <div class="col-md-6">
+                              <label
+                                class="form-label"
+                                for="residential_address"
+                                >Alamat Kediaman</label
+                              >
+                              <textarea
+                                class="form-control"
+                                id="residential_address"
+                                rows="2"
+                              ></textarea>
+                            </div>
+                            <div class="col-md-6">
+                              <label class="form-label" for="mobile_phone"
+                                >Nombor Telefon Bimbit
+                                <span class="text-danger">*</span></label
+                              >
+                              <input
+                                type="tel"
+                                class="form-control"
+                                id="mobile_phone"
+                                placeholder="+60"
+                              />
+                            </div>
+                            <div class="col-md-6">
+                              <label class="form-label" for="individual_email"
+                                >Alamat E-mel
+                                <span class="text-danger">*</span></label
+                              >
+                              <input
+                                type="email"
+                                class="form-control"
+                                id="individual_email"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                      <div class="create-side">
+                        <div class="create-tips">
+                          <h4>
+                            <i class="bi bi-lightbulb-fill"></i>Panduan ringkas
+                          </h4>
+                          <ul>
+                            <li>
+                              Pilih <strong>Syarikat</strong> jika permohonan
+                              atas nama syarikat berdaftar.
+                            </li>
+                            <li>
+                              Untuk syarikat, wakil bertanggungjawab mesti
+                              dinyatakan.
+                            </li>
+                            <li>
+                              Semua medan bertanda
+                              <span class="text-danger">*</span> adalah wajib.
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- =========================================================
+                 CARD 2: Item untuk diimport
+                 ========================================================= -->
+            <div class="onboard-card mb-3">
+              <div class="onboard-item" data-accordion="items">
+                <button
+                  type="button"
+                  class="onboard-row as-button"
+                  aria-expanded="false"
+                  aria-controls="body-items"
+                >
+                  <span class="onboard-icon is-blue">
+                    <i class="bi bi-box-seam"></i>
+                  </span>
+                  <div class="onboard-main">
+                    <h3 class="onboard-title">
+                      Item untuk diimport
+                      <span class="step-count is-warn" id="items-badge">0</span>
+                    </h3>
+                    <p class="onboard-desc">
+                      Tambah setiap item baja, baja tambahan atau bahan mentah.
+                    </p>
+                  </div>
+                  <span class="onboard-action accordion-chevron">
+                    <i class="bi bi-chevron-down"></i>
+                  </span>
+                </button>
+
+                <div class="onboard-body" id="body-items" hidden>
+                  <div class="create-section">
+                    <div
+                      class="d-flex align-items-start justify-content-between gap-2 mb-3 flex-wrap"
+                    >
+                      <div>
+                        <h2>Senarai item</h2>
+                        <p class="section-hint mb-0" id="item-desc">
+                          Belum ada item ditambah.
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        class="btn btn-primary btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#itemModal"
+                      >
+                        <i class="bi bi-plus-lg me-1"></i>Tambah item
+                      </button>
+                    </div>
+
+                    <div class="permit-item-list" id="item-list"></div>
+                    <div class="permit-empty" id="item-empty">
+                      <i class="bi bi-inbox"></i>
+                      <p class="mb-0 small">Belum ada item ditambah.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- =========================================================
+                 CARD 3: Tujuan Pengimportan
+                 ========================================================= -->
+            <div class="onboard-card mb-3">
+              <div class="onboard-item" data-accordion="purpose">
+                <button
+                  type="button"
+                  class="onboard-row as-button"
+                  aria-expanded="false"
+                  aria-controls="body-purpose"
+                >
+                  <span class="onboard-icon is-amber">
+                    <i class="bi bi-bullseye"></i>
+                  </span>
+                  <div class="onboard-main">
+                    <h3 class="onboard-title">
+                      Tujuan Pengimportan
+                      <span class="step-count is-warn" id="purpose-badge"
+                        >Wajib</span
+                      >
+                    </h3>
+                    <p class="onboard-desc">
+                      Nyatakan tujuan dan kaedah pelupusan lebihan bahan.
+                    </p>
+                  </div>
+                  <span class="onboard-action accordion-chevron">
+                    <i class="bi bi-chevron-down"></i>
+                  </span>
+                </button>
+
+                <div class="onboard-body" id="body-purpose" hidden>
+                  <div class="create-section">
+                    <h2>Tujuan import</h2>
+                    <p class="section-hint">
+                      Pilih satu tujuan utama untuk import ini.
+                    </p>
+
+                    <div class="purpose-grid mb-3">
+                      <input
+                        type="radio"
+                        class="btn-check"
+                        name="import_purpose"
+                        id="p-education"
+                        value="Pendidikan"
+                        checked
+                      />
+                      <label class="purpose-tile" for="p-education">
+                        <span class="icon-chip"
+                          ><i class="bi bi-mortarboard"></i
+                        ></span>
+                        <span class="tile-title">Pendidikan</span>
+                      </label>
+
+                      <input
+                        type="radio"
+                        class="btn-check"
+                        name="import_purpose"
+                        id="p-research"
+                        value="Penyelidikan"
+                      />
+                      <label class="purpose-tile" for="p-research">
+                        <span class="icon-chip"
+                          ><i class="bi bi-search"></i
+                        ></span>
+                        <span class="tile-title">Penyelidikan</span>
+                      </label>
+
+                      <input
+                        type="radio"
+                        class="btn-check"
+                        name="import_purpose"
+                        id="p-sample"
+                        value="Sampel Pendaftaran"
+                      />
+                      <label class="purpose-tile" for="p-sample">
+                        <span class="icon-chip"
+                          ><i class="bi bi-file-earmark-medical"></i
+                        ></span>
+                        <span class="tile-title">Sampel Pendaftaran</span>
+                      </label>
+
+                      <input
+                        type="radio"
+                        class="btn-check"
+                        name="import_purpose"
+                        id="p-reference"
+                        value="Bahan Rujukan"
+                      />
+                      <label class="purpose-tile" for="p-reference">
+                        <span class="icon-chip"
+                          ><i class="bi bi-journals"></i
+                        ></span>
+                        <span class="tile-title">Bahan Rujukan</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="create-section">
+                    <h2>Kaedah &amp; lokasi pelupusan</h2>
+                    <p class="section-hint">
+                      Nyatakan bagaimana dan di mana lebihan bahan akan
+                      dilupuskan.
+                    </p>
+
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <label class="form-label" for="disposal_method"
+                          >Kaedah pelupusan lebihan bahan
+                          <span class="text-danger">*</span></label
+                        >
+                        <input
+                          class="form-control"
+                          id="disposal_method"
+                          placeholder="cth. Pelupusan oleh pihak berkuasa"
+                        />
+                      </div>
+                      <div class="col-md-6">
+                        <label class="form-label" for="disposal_location"
+                          >Lokasi pelupusan lebihan bahan
+                          <span class="text-danger">*</span></label
+                        >
+                        <input
+                          class="form-control"
+                          id="disposal_location"
+                          placeholder="cth. Nama institusi / premis"
+                        />
+                      </div>
+                      <div class="col-12">
+                        <div class="permit-notice">
+                          <i class="bi bi-info-circle-fill"></i>
+                          <div>
+                            <h4>Nota penting</h4>
+                            <p>
+                              Permit ini sah untuk
+                              <strong>satu (1) konsainan sahaja</strong> dalam
+                              tempoh <strong>tiga (3) bulan</strong>. Pemohon
+                              bertanggungjawab mematuhi semua syarat di bawah
+                              Enakmen Baja Sabah dan tidak boleh memindahkan
+                              bahan kepada pihak ketiga.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- =========================================================
+                 CARD 4: Dokumen Sokongan
+                 ========================================================= -->
+            <div class="onboard-card mb-3">
+              <div class="onboard-item" data-accordion="docs">
+                <button
+                  type="button"
+                  class="onboard-row as-button"
+                  aria-expanded="false"
+                  aria-controls="body-docs"
+                >
+                  <span class="onboard-icon is-amber">
+                    <i class="bi bi-paperclip"></i>
+                  </span>
+                  <div class="onboard-main">
+                    <h3 class="onboard-title">
+                      Dokumen Sokongan
+                      <span class="step-count is-warn" id="docs-badge">0</span>
+                    </h3>
+                    <p class="onboard-desc">
+                      Dokumen sokongan untuk semakan oleh Pegawai Pertanian.
+                    </p>
+                  </div>
+                  <span class="onboard-action accordion-chevron">
+                    <i class="bi bi-chevron-down"></i>
+                  </span>
+                </button>
+
+                <div class="onboard-body" id="body-docs" hidden>
+                  <!-- ============ COMPANY DOCS ============ -->
+                  <div id="docs-company">
+                    <div class="create-section">
+                      <h2>Dokumen syarikat</h2>
+                      <p class="section-hint">
+                        Sijil SSM, lesen perniagaan, dan dokumen wakil.
+                      </p>
+
+                      <div class="row g-3">
+                        <div class="col-md-6">
+                          <div class="upload-card">
+                            <div class="upload-head">
+                              <span class="upload-icon">
+                                <i class="bi bi-file-earmark-text"></i>
+                              </span>
+                              <div>
+                                <p class="upload-title">
+                                  Sijil Pendaftaran Syarikat
+                                  <span class="text-danger">*</span>
+                                </p>
+                                <p class="upload-sub">Sijil SSM terkini</p>
+                              </div>
+                            </div>
+                            <input
+                              type="file"
+                              class="upload-input"
+                              id="doc_ssm_cert"
+                              accept=".pdf,.jpg,.jpeg,.png"
+                              data-doc="ssm_cert"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="upload-card">
+                            <div class="upload-head">
+                              <span class="upload-icon">
+                                <i class="bi bi-file-earmark-check"></i>
+                              </span>
+                              <div>
+                                <p class="upload-title">
+                                  Lesen Perniagaan
+                                  <span class="text-danger">*</span>
+                                </p>
+                                <p class="upload-sub">
+                                  Lesen perniagaan yang sah
+                                </p>
+                              </div>
+                            </div>
+                            <input
+                              type="file"
+                              class="upload-input"
+                              id="doc_business_license"
+                              accept=".pdf,.jpg,.jpeg,.png"
+                              data-doc="business_license"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="upload-card">
+                            <div class="upload-head">
+                              <span class="upload-icon">
+                                <i class="bi bi-award"></i>
+                              </span>
+                              <div>
+                                <p class="upload-title">
+                                  Lesen Pengilang (MIDA)
+                                  <span class="text-muted-2 small"
+                                    >– jika berkaitan</span
+                                  >
+                                </p>
+                                <p class="upload-sub">
+                                  Untuk pengilang berlesen MIDA
+                                </p>
+                              </div>
+                            </div>
+                            <input
+                              type="file"
+                              class="upload-input"
+                              id="doc_mida"
+                              accept=".pdf,.jpg,.jpeg,.png"
+                              data-doc="mida"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="upload-card">
+                            <div class="upload-head">
+                              <span class="upload-icon">
+                                <i class="bi bi-shield-check"></i>
+                              </span>
+                              <div>
+                                <p class="upload-title">
+                                  Surat Pengecualian (ICA 10)
+                                  <span class="text-muted-2 small"
+                                    >– jika ada</span
+                                  >
+                                </p>
+                                <p class="upload-sub">
+                                  Alternatif kepada Lesen MIDA
+                                </p>
+                              </div>
+                            </div>
+                            <input
+                              type="file"
+                              class="upload-input"
+                              id="doc_ica10"
+                              accept=".pdf,.jpg,.jpeg,.png"
+                              data-doc="ica10"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="upload-card">
+                            <div class="upload-head">
+                              <span class="upload-icon">
+                                <i class="bi bi-person-vcard"></i>
+                              </span>
+                              <div>
+                                <p class="upload-title">
+                                  Kad Pengenalan Wakil Syarikat
+                                  <span class="text-danger">*</span>
+                                </p>
+                                <p class="upload-sub">
+                                  IC wakil yang diberi kuasa
+                                </p>
+                              </div>
+                            </div>
+                            <input
+                              type="file"
+                              class="upload-input"
+                              id="doc_rep_ic"
+                              accept=".pdf,.jpg,.jpeg,.png"
+                              data-doc="rep_ic"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="upload-card">
+                            <div class="upload-head">
+                              <span class="upload-icon">
+                                <i class="bi bi-file-earmark-medical"></i>
+                              </span>
+                              <div>
+                                <p class="upload-title">
+                                  Surat Kuasa Wakil Syarikat
+                                  <span class="text-danger">*</span>
+                                </p>
+                                <p class="upload-sub">
+                                  Surat kuasa rasmi dari syarikat
+                                </p>
+                              </div>
+                            </div>
+                            <input
+                              type="file"
+                              class="upload-input"
+                              id="doc_rep_authority"
+                              accept=".pdf,.jpg,.jpeg,.png"
+                              data-doc="rep_authority"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ============ INDIVIDUAL DOCS ============ -->
+                  <div id="docs-individual" hidden>
+                    <div class="create-section">
+                      <h2>Dokumen pemohon</h2>
+                      <p class="section-hint">
+                        Kad pengenalan dan lesen perniagaan.
+                      </p>
+
+                      <div class="row g-3">
+                        <div class="col-md-6">
+                          <div class="upload-card">
+                            <div class="upload-head">
+                              <span class="upload-icon">
+                                <i class="bi bi-person-vcard"></i>
+                              </span>
+                              <div>
+                                <p class="upload-title">
+                                  Salinan Kad Pengenalan
+                                  <span class="text-danger">*</span>
+                                </p>
+                                <p class="upload-sub">Depan & belakang</p>
+                              </div>
+                            </div>
+                            <input
+                              type="file"
+                              class="upload-input"
+                              id="doc_ic"
+                              accept=".pdf,.jpg,.jpeg,.png"
+                              data-doc="ic"
+                            />
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <div class="upload-card">
+                            <div class="upload-head">
+                              <span class="upload-icon">
+                                <i class="bi bi-file-earmark-check"></i>
+                              </span>
+                              <div>
+                                <p class="upload-title">
+                                  Salinan Lesen Perniagaan
+                                  <span class="text-danger">*</span>
+                                </p>
+                                <p class="upload-sub">Jika ada</p>
+                              </div>
+                            </div>
+                            <input
+                              type="file"
+                              class="upload-input"
+                              id="doc_business_license_ind"
+                              accept=".pdf,.jpg,.jpeg,.png"
+                              data-doc="business_license_ind"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- ============ PURPOSE DOCS ============ -->
+                  <div class="create-section">
+                    <h2>Dokumen tujuan pengimportan</h2>
+                    <p class="section-hint">
+                      Wajib untuk semua permohonan permit import khas.
+                    </p>
+
+                    <div class="row g-3">
+                      <div class="col-md-4">
+                        <div class="upload-card">
+                          <div class="upload-head">
+                            <span class="upload-icon">
+                              <i class="bi bi-file-earmark-text"></i>
+                            </span>
+                            <div>
+                              <p class="upload-title">
+                                Surat Pengesahan Institusi
+                                <span class="text-danger">*</span>
+                              </p>
+                              <p class="upload-sub">
+                                Dari institusi pendidikan / penyelidikan
+                              </p>
+                            </div>
+                          </div>
+                          <input
+                            type="file"
+                            class="upload-input"
+                            id="doc_institution_letter"
+                            accept=".pdf,.jpg,.jpeg,.png"
+                            data-doc="institution_letter"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="upload-card">
+                          <div class="upload-head">
+                            <span class="upload-icon">
+                              <i class="bi bi-journals"></i>
+                            </span>
+                            <div>
+                              <p class="upload-title">
+                                Proposal Penyelidikan
+                                <span class="text-danger">*</span>
+                              </p>
+                              <p class="upload-sub">
+                                Jika berkaitan dengan penyelidikan
+                              </p>
+                            </div>
+                          </div>
+                          <input
+                            type="file"
+                            class="upload-input"
+                            id="doc_research_proposal"
+                            accept=".pdf,.jpg,.jpeg,.png"
+                            data-doc="research_proposal"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="col-md-4">
+                        <div class="upload-card">
+                          <div class="upload-head">
+                            <span class="upload-icon">
+                              <i class="bi bi-recycle"></i>
+                            </span>
+                            <div>
+                              <p class="upload-title">
+                                Surat Aku Janji Pelupusan
+                                <span class="text-danger">*</span>
+                              </p>
+                              <p class="upload-sub">
+                                Aku janji pelupusan lebihan bahan
+                              </p>
+                            </div>
+                          </div>
+                          <input
+                            type="file"
+                            class="upload-input"
+                            id="doc_disposal_letter"
+                            accept=".pdf,.jpg,.jpeg,.png"
+                            data-doc="disposal_letter"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- =========================================================
+                 CARD 5: Perakuan & Hantar
+                 ========================================================= -->
+            <div class="onboard-card mb-3">
+              <div class="onboard-item" data-accordion="declaration">
+                <button
+                  type="button"
+                  class="onboard-row as-button"
+                  aria-expanded="false"
+                  aria-controls="body-declaration"
+                >
+                  <span class="onboard-icon is-blue">
+                    <i class="bi bi-shield-check"></i>
+                  </span>
+                  <div class="onboard-main">
+                    <h3 class="onboard-title">
+                      Perakuan Pemohon
+                      <span class="step-count is-warn" id="declaration-badge"
+                        >2</span
+                      >
+                    </h3>
+                    <p class="onboard-desc">
+                      Baca dan setuju dengan pengakuan sebelum menghantar.
+                    </p>
+                  </div>
+                  <span class="onboard-action accordion-chevron">
+                    <i class="bi bi-chevron-down"></i>
+                  </span>
+                </button>
+
+                <div class="onboard-body" id="body-declaration" hidden>
+                  <div class="row g-4">
+                    <div class="col-lg-8">
+                      <div class="create-section">
+                        <h2>Pengakuan pemohon permit import khas</h2>
+                        <p class="section-hint">
+                          Sila baca dengan teliti sebelum menghantar permohonan.
+                        </p>
+
+                        <div class="permit-disclaimer">
+                          <ol>
+                            <li>
+                              Saya mengaku bahawa semua maklumat yang diberikan
+                              adalah
+                              <strong>benar, tepat dan lengkap</strong>.
+                            </li>
+                            <li>
+                              Saya faham bahawa permit ini hanya sah untuk
+                              <strong>satu (1) konsainan</strong> dalam tempoh
+                              <strong>tiga (3) bulan</strong> dan tidak boleh
+                              dipindah milik.
+                            </li>
+                            <li>
+                              Saya bersetuju mematuhi semua syarat dan peraturan
+                              di bawah Enakmen Baja Sabah, termasuk kaedah
+                              pelupusan lebihan bahan yang dinyatakan.
+                            </li>
+                            <li>
+                              Saya faham bahawa memberikan maklumat palsu atau
+                              menyalahgunakan permit ini adalah suatu
+                              <strong>kesalahan</strong> di bawah Enakmen.
+                            </li>
+                            <li>
+                              Saya bersetuju dengan
+                              <a href="#">terma penggunaan</a> dan
+                              <a href="#">notis privasi</a> portal ini.
+                            </li>
+                          </ol>
+                        </div>
+                      </div>
+
+                      <div class="create-section">
+                        <label class="checklist-item">
+                          <input type="checkbox" id="decl_truth" />
+                          <span class="cl-text">
+                            <strong
+                              >Saya mengaku semua maklumat adalah
+                              benar</strong
+                            >
+                            <small
+                              >Memberikan maklumat palsu adalah satu kesalahan
+                              di bawah Enakmen Baja Sabah.</small
+                            >
+                          </span>
+                        </label>
+
+                        <label class="checklist-item mt-2">
+                          <input type="checkbox" id="decl_terms" />
+                          <span class="cl-text">
+                            <strong
+                              >Saya bersetuju dengan terma dan syarat
+                              permit</strong
+                            >
+                            <small
+                              >Termasuk syarat satu konsainan dan pelupusan
+                              lebihan bahan.</small
+                            >
+                          </span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                      <div class="create-side">
+                        <div class="create-tips">
+                          <h4>
+                            <i class="bi bi-shield-check"></i>Sebelum hantar
+                          </h4>
+                          <ul>
+                            <li>Semua medan wajib telah diisi.</li>
+                            <li>Sekurang-kurangnya satu item ditambah.</li>
+                            <li>Dokumen sokongan wajib dimuat naik.</li>
+                            <li>Kedua-dua pengakuan telah ditanda.</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ===== Save bar ===== -->
+            <div class="create-save-bar" id="save-bar">
+              <div class="save-status" id="save-status">
+                <strong>Draf belum disimpan</strong>
+                Pilih jenis pemohon dan isi maklumat untuk meneruskan.
+              </div>
+              <div class="save-actions">
+                <button
+                  type="button"
+                  class="btn btn-outline-secondary btn-sm"
+                  id="reset-btn"
+                >
+                  Set semula
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary btn-sm"
+                  id="save-draft-bottom"
+                >
+                  <i class="bi bi-save me-1"></i>Simpan draf
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-primary btn-sm"
+                  id="submit-bottom"
+                  disabled
+                >
+                  <i class="bi bi-send-check me-1"></i>Hantar untuk semakan
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         Modal: Tambah item
+         ========================================================= -->
+    <div class="modal fade" id="itemModal" tabindex="-1" aria-hidden="true">
+      <div
+        class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable"
+      >
+        <div class="modal-content">
+          <form id="item-form" novalidate>
+            <div class="modal-header">
+              <h5 class="modal-title">Tambah item</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Tutup"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="i_name"
+                    >Nama Dagangan (Jenama)
+                    <span class="text-danger">*</span></label
+                  >
+                  <input class="form-control" id="i_name" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="i_category"
+                    >Kategori Item <span class="text-danger">*</span></label
+                  >
+                  <select class="form-select" id="i_category" required>
+                    <option value="">Pilih kategori</option>
+                    <option>Baja</option>
+                    <option>Baja Tunggal</option>
+                    <option>Baja Campuran</option>
+                    <option>Baja Sebatian</option>
+                    <option>Baja Organik</option>
+                    <option>Baja Mikronutrien</option>
+                    <option>Baja Tambahan</option>
+                    <option>Bahan Mentah</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="i_formula"
+                    >Formulasi / Komposisi Kandungan Nutrien</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="i_formula"
+                    rows="2"
+                    placeholder="cth. N 15%, P2O5 15%, K2O 15%"
+                  ></textarea>
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="i_form">Bentuk Baja</label>
+                  <select class="form-select" id="i_form">
+                    <option value="">Pilih bentuk</option>
+                    <option>Butiran (Granular)</option>
+                    <option>Serbuk (Powder)</option>
+                    <option>Cecair (Liquid)</option>
+                    <option>Tablet</option>
+                    <option>Lain-lain</option>
+                  </select>
+                </div>
+                <div class="col-md-6" id="i_micro_group" hidden>
+                  <label class="form-label" for="i_micro"
+                    >Jenis Mikroorganisma
+                    <span class="text-muted-2">(Baja Organik)</span></label
+                  >
+                  <input
+                    class="form-control"
+                    id="i_micro"
+                    placeholder="cth. Azotobacter, Rhizobium"
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="i_supplier"
+                    >Nama Pengilang / Pembekal Asal</label
+                  >
+                  <input class="form-control" id="i_supplier" />
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="i_supplier_addr"
+                    >Alamat Pengilang / Pembekal Asal</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="i_supplier_addr"
+                    rows="2"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="create-section" style="margin-top: 1.5rem">
+                <h2>Lampiran item</h2>
+                <p class="section-hint">
+                  MSDS/SDS, CoA, dan gambar pembungkusan.
+                </p>
+
+                <div class="row g-3">
+                  <div class="col-md-4">
+                    <div class="upload-card">
+                      <div class="upload-head">
+                        <span class="upload-icon">
+                          <i class="bi bi-file-earmark-medical"></i>
+                        </span>
+                        <div>
+                          <p class="upload-title">MSDS / SDS</p>
+                          <p class="upload-sub">Lembaran data keselamatan</p>
+                        </div>
+                      </div>
+                      <input
+                        type="file"
+                        class="upload-input"
+                        id="i_msds"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="upload-card">
+                      <div class="upload-head">
+                        <span class="upload-icon">
+                          <i class="bi bi-file-earmark-check"></i>
+                        </span>
+                        <div>
+                          <p class="upload-title">
+                            Certificate of Analysis (CoA)
+                          </p>
+                          <p class="upload-sub">Sijil analisis produk</p>
+                        </div>
+                      </div>
+                      <input
+                        type="file"
+                        class="upload-input"
+                        id="i_coa"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="upload-card">
+                      <div class="upload-head">
+                        <span class="upload-icon">
+                          <i class="bi bi-image"></i>
+                        </span>
+                        <div>
+                          <p class="upload-title">Gambar Pembungkusan</p>
+                          <p class="upload-sub">Imej label dan bungkusan</p>
+                        </div>
+                      </div>
+                      <input
+                        type="file"
+                        class="upload-input"
+                        id="i_packaging"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                data-bs-dismiss="modal"
+              >
+                Batal
+              </button>
+              <button type="submit" class="btn btn-primary">Tambah item</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      /* ===== Sidebar toggle ===== */
+      (function () {
+        var app = document.querySelector(".app");
+        var btn = app.querySelector("#sidebar-toggle");
+        var KEY = "sidebar-collapsed";
+        function sync() {
+          var collapsed = app.classList.contains("is-collapsed");
+          var label = collapsed ? "Buka bar sisi" : "Tutup bar sisi";
+          btn.setAttribute("aria-expanded", String(!collapsed));
+          btn.setAttribute("aria-label", label);
+          btn.title = label;
+        }
+        btn.addEventListener("click", function () {
+          app.classList.toggle("is-collapsed");
+          sync();
+          try {
+            localStorage.setItem(
+              KEY,
+              app.classList.contains("is-collapsed") ? "1" : "0",
+            );
+          } catch (e) {}
+        });
+        sync();
+      })();
+
+      /* ===== Accordion ===== */
+      (function () {
+        document.querySelectorAll(".onboard-card").forEach(function (card) {
+          var items = card.querySelectorAll(".onboard-item[data-accordion]");
+
+          items.forEach(function (item) {
+            var toggle = item.querySelector(".onboard-row.as-button");
+            var body = item.querySelector(".onboard-body");
+            if (!toggle) return;
+
+            toggle.addEventListener("click", function () {
+              var isOpen = item.classList.contains("is-open");
+
+              items.forEach(function (other) {
+                if (other === item) return;
+                other.classList.remove("is-open");
+                var t = other.querySelector(".onboard-row.as-button");
+                var b = other.querySelector(".onboard-body");
+                if (t) t.setAttribute("aria-expanded", "false");
+                if (b) b.hidden = true;
+              });
+
+              if (isOpen) {
+                item.classList.remove("is-open");
+                toggle.setAttribute("aria-expanded", "false");
+                if (body) body.hidden = true;
+              } else {
+                item.classList.add("is-open");
+                toggle.setAttribute("aria-expanded", "true");
+                if (body) body.hidden = false;
+              }
+            });
+          });
+        });
+      })();
+
+      /* =========================================================
+         Permit workflow
+         ========================================================= */
+      (function () {
+        /* -------- Refs -------- */
+        var formTitle = document.getElementById("form-title");
+        var formSub = document.getElementById("form-sub");
+        var stripType = document.getElementById("strip-type");
+        var stripItems = document.getElementById("strip-items");
+        var stripAttachments = document.getElementById("strip-attachments");
+
+        var applicantBadge = document.getElementById("applicant-badge");
+        var itemsBadge = document.getElementById("items-badge");
+        var purposeBadge = document.getElementById("purpose-badge");
+        var docsBadge = document.getElementById("docs-badge");
+        var declarationBadge = document.getElementById("declaration-badge");
+
+        var saveStatus = document.getElementById("save-status");
+        var saveDraftBtnTop = document.getElementById("save-draft-btn");
+        var saveDraftBtnBottom = document.getElementById("save-draft-bottom");
+        var submitBtnTop = document.getElementById("submit-btn");
+        var submitBtnBottom = document.getElementById("submit-bottom");
+        var resetBtn = document.getElementById("reset-btn");
+
+        var formCompany = document.getElementById("form-company");
+        var formIndividual = document.getElementById("form-individual");
+        var docsCompany = document.getElementById("docs-company");
+        var docsIndividual = document.getElementById("docs-individual");
+
+        var declTruth = document.getElementById("decl_truth");
+        var declTerms = document.getElementById("decl_terms");
+
+        /* -------- Applicant type -------- */
+        var typeRadios = document.querySelectorAll(
+          'input[name="applicant_type"]',
+        );
+        function getType() {
+          var checked = document.querySelector(
+            'input[name="applicant_type"]:checked',
+          );
+          return checked ? checked.value : "company";
+        }
+
+        function syncApplicantType() {
+          var isCompany = getType() === "company";
+          formCompany.hidden = !isCompany;
+          formIndividual.hidden = isCompany;
+          docsCompany.hidden = !isCompany;
+          docsIndividual.hidden = isCompany;
+          stripType.textContent = isCompany ? "Syarikat" : "Individu";
+          formTitle.textContent = isCompany
+            ? "Permit Import Khas baru"
+            : "Permit Import Khas (Individu)";
+          updateAll();
+        }
+        typeRadios.forEach(function (r) {
+          r.addEventListener("change", syncApplicantType);
+        });
+
+        /* =========================================================
+           Item list
+           ========================================================= */
+        var items = [];
+        var itemForm = document.getElementById("item-form");
+        var itemListEl = document.getElementById("item-list");
+        var itemEmptyEl = document.getElementById("item-empty");
+        var itemDescEl = document.getElementById("item-desc");
+        var itemMicroGroup = document.getElementById("i_micro_group");
+        var itemCategory = document.getElementById("i_category");
+
+        itemCategory.addEventListener("change", function () {
+          itemMicroGroup.hidden = itemCategory.value !== "Baja Organik";
+        });
+
+        function renderItems() {
+          itemListEl.innerHTML = "";
+          if (items.length === 0) {
+            itemEmptyEl.hidden = false;
+            itemDescEl.textContent = "Belum ada item ditambah.";
+            return;
+          }
+          itemEmptyEl.hidden = true;
+          itemDescEl.textContent = items.length + " item ditambah.";
+
+          items.forEach(function (it, i) {
+            var row = document.createElement("div");
+            row.className = "permit-item";
+            row.innerHTML =
+              '<div class="flex-grow-1 min-w-0">' +
+              '<div class="item-title">' +
+              it.name +
+              "</div>" +
+              '<div class="item-sub">' +
+              it.category +
+              (it.form ? " &middot; " + it.form : "") +
+              (it.formula ? " &middot; " + it.formula : "") +
+              "</div>" +
+              "</div>" +
+              '<div class="item-side">' +
+              '<button type="button" class="btn btn-icon" data-remove-item="' +
+              i +
+              '" aria-label="Buang"><i class="bi bi-trash"></i></button>' +
+              "</div>";
+            itemListEl.appendChild(row);
+          });
+        }
+
+        itemForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          var name = document.getElementById("i_name").value.trim();
+          var cat = document.getElementById("i_category").value;
+          if (!name || !cat) return;
+
+          items.push({
+            name: name,
+            category: cat,
+            formula: document.getElementById("i_formula").value.trim(),
+            form: document.getElementById("i_form").value,
+            micro: document.getElementById("i_micro").value.trim(),
+            supplier: document.getElementById("i_supplier").value.trim(),
+            supplierAddr: document
+              .getElementById("i_supplier_addr")
+              .value.trim(),
+            msds: (document.getElementById("i_msds").files[0] || {}).name || "",
+            coa: (document.getElementById("i_coa").files[0] || {}).name || "",
+            packaging:
+              (document.getElementById("i_packaging").files[0] || {}).name ||
+              "",
+          });
+
+          itemForm.reset();
+          itemMicroGroup.hidden = true;
+
+          bootstrap.Modal.getInstance(
+            document.getElementById("itemModal"),
+          ).hide();
+          renderItems();
+          updateAll();
+        });
+
+        itemListEl.addEventListener("click", function (e) {
+          var b = e.target.closest("[data-remove-item]");
+          if (!b) return;
+          items.splice(parseInt(b.getAttribute("data-remove-item"), 10), 1);
+          renderItems();
+          updateAll();
+        });
+
+        /* =========================================================
+           Attachment counting
+           ========================================================= */
+        function countAttachments() {
+          var total = 0;
+          document.querySelectorAll("[data-doc]").forEach(function (input) {
+            if (input.closest("[hidden]")) return;
+            if (input.files && input.files.length)
+              total += input.files.length;
+          });
+          // Item attachments
+          items.forEach(function (it) {
+            if (it.msds) total++;
+            if (it.coa) total++;
+            if (it.packaging) total++;
+          });
+          return total;
+        }
+
+        /* =========================================================
+           Completeness checks
+           ========================================================= */
+        function isApplicantComplete() {
+          var type = getType();
+          if (type === "company") {
+            return !!(
+              document.getElementById("company_name").value.trim() &&
+              document.getElementById("ssm_no").value.trim() &&
+              document.getElementById("premises_address").value.trim() &&
+              document.getElementById("company_phone").value.trim() &&
+              document.getElementById("company_email").value.trim() &&
+              document.getElementById("pic_name").value.trim() &&
+              document.getElementById("pic_ic").value.trim() &&
+              document.getElementById("pic_role").value.trim()
+            );
+          }
+          return !!(
+            document.getElementById("full_name").value.trim() &&
+            document.getElementById("ic_no").value.trim() &&
+            document.getElementById("mobile_phone").value.trim() &&
+            document.getElementById("individual_email").value.trim()
+          );
+        }
+
+        function isPurposeComplete() {
+          return !!(
+            document.getElementById("disposal_method").value.trim() &&
+            document.getElementById("disposal_location").value.trim()
+          );
+        }
+
+        function isDocsComplete() {
+          var requiredIds = [];
+          if (getType() === "company") {
+            requiredIds = [
+              "doc_ssm_cert",
+              "doc_business_license",
+              "doc_rep_ic",
+              "doc_rep_authority",
+            ];
+          } else {
+            requiredIds = ["doc_ic", "doc_business_license_ind"];
+          }
+          // Purpose docs (always required)
+          requiredIds.push(
+            "doc_institution_letter",
+            "doc_research_proposal",
+            "doc_disposal_letter",
+          );
+
+          for (var i = 0; i < requiredIds.length; i++) {
+            var el = document.getElementById(requiredIds[i]);
+            if (!el || !el.files.length) return false;
+          }
+          return true;
+        }
+
+        function canSubmit() {
+          return (
+            isApplicantComplete() &&
+            items.length > 0 &&
+            isPurposeComplete() &&
+            isDocsComplete() &&
+            declTruth.checked &&
+            declTerms.checked
+          );
+        }
+
+        /* =========================================================
+           Live updates
+           ========================================================= */
+        function updateBadges() {
+          applicantBadge.textContent = isApplicantComplete()
+            ? "Selesai"
+            : "Wajib";
+          applicantBadge.classList.toggle(
+            "is-warn",
+            !isApplicantComplete(),
+          );
+          applicantBadge.classList.toggle(
+            "is-active",
+            isApplicantComplete(),
+          );
+
+          itemsBadge.textContent = items.length;
+          itemsBadge.classList.toggle("is-warn", items.length === 0);
+          itemsBadge.classList.toggle("is-active", items.length > 0);
+
+          purposeBadge.textContent = isPurposeComplete()
+            ? "Selesai"
+            : "Wajib";
+          purposeBadge.classList.toggle("is-warn", !isPurposeComplete());
+          purposeBadge.classList.toggle("is-active", isPurposeComplete());
+
+          var atts = countAttachments();
+          docsBadge.textContent = atts;
+          docsBadge.classList.toggle("is-warn", atts === 0);
+          docsBadge.classList.toggle("is-active", atts > 0);
+
+          var declEmpty = 0;
+          if (!declTruth.checked) declEmpty++;
+          if (!declTerms.checked) declEmpty++;
+          declarationBadge.textContent = declEmpty;
+          declarationBadge.classList.toggle("is-warn", declEmpty > 0);
+          declarationBadge.classList.toggle("is-active", declEmpty === 0);
+        }
+
+        function updateInfoStrip() {
+          stripItems.textContent = String(items.length);
+          stripAttachments.textContent = String(countAttachments());
+        }
+
+        function updateSaveBar() {
+          var app = isApplicantComplete();
+          var pur = isPurposeComplete();
+          var docs = isDocsComplete();
+          var submittable = canSubmit();
+
+          submitBtnTop.disabled = !submittable;
+          submitBtnBottom.disabled = !submittable;
+
+          var canDraft = app || items.length > 0;
+          saveDraftBtnTop.disabled = !canDraft;
+          saveDraftBtnBottom.disabled = !canDraft;
+
+          if (submittable) {
+            saveStatus.className = "save-status is-ready";
+            saveStatus.innerHTML =
+              "<strong>Sedia untuk dihantar</strong>Semua maklumat dan lampiran telah lengkap. Hantar untuk semakan DOA.";
+          } else if (!app) {
+            saveStatus.className = "save-status";
+            saveStatus.innerHTML =
+              "<strong>Maklumat pemohon belum lengkap</strong>Lengkapkan butiran pemohon terlebih dahulu.";
+          } else if (items.length === 0) {
+            saveStatus.className = "save-status is-warning";
+            saveStatus.innerHTML =
+              "<strong>Tiada item ditambah</strong>Tambah sekurang-kurangnya satu item untuk diimport.";
+          } else if (!pur) {
+            saveStatus.className = "save-status is-warning";
+            saveStatus.innerHTML =
+              "<strong>Tujuan pengimportan belum lengkap</strong>Nyatakan kaedah dan lokasi pelupusan bahan.";
+          } else if (!docs) {
+            saveStatus.className = "save-status is-warning";
+            saveStatus.innerHTML =
+              "<strong>Dokumen sokongan belum lengkap</strong>Muat naik semua dokumen wajib.";
+          } else if (!(declTruth.checked && declTerms.checked)) {
+            saveStatus.className = "save-status is-warning";
+            saveStatus.innerHTML =
+              "<strong>Sedia untuk draf</strong>Tandakan kedua-dua pengakuan pada kad Perakuan untuk menghantar.";
+          }
+        }
+
+        function updateAll() {
+          updateInfoStrip();
+          updateBadges();
+          updateSaveBar();
+        }
+
+        /* -------- Listeners -------- */
+        document
+          .querySelectorAll(".form-control, .form-select, textarea")
+          .forEach(function (el) {
+            el.addEventListener("input", updateAll);
+            el.addEventListener("change", updateAll);
+          });
+
+        document.querySelectorAll("[data-doc]").forEach(function (el) {
+          el.addEventListener("change", updateAll);
+        });
+
+        document
+          .querySelectorAll('input[name="import_purpose"]')
+          .forEach(function (el) {
+            el.addEventListener("change", updateAll);
+          });
+
+        declTruth.addEventListener("change", updateAll);
+        declTerms.addEventListener("change", updateAll);
+
+        /* -------- Open card -------- */
+        function openCard(name) {
+          var item = document.querySelector(
+            '.onboard-item[data-accordion="' + name + '"]',
+          );
+          if (!item) return;
+          if (item.classList.contains("is-open")) return;
+          var toggle = item.querySelector(".onboard-row.as-button");
+          if (toggle) toggle.click();
+        }
+
+        /* -------- Save draft -------- */
+        function saveDraft() {
+          formSub.textContent =
+            "Draf disimpan pada " +
+            new Date().toLocaleString("ms-MY", {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+              hour: "numeric",
+              minute: "2-digit",
+            });
+
+          saveStatus.className = "save-status is-ready";
+          saveStatus.innerHTML =
+            "<strong>Draf disimpan</strong>Anda boleh kembali ke halaman ini pada bila-bila masa.";
+        }
+
+        saveDraftBtnTop.addEventListener("click", saveDraft);
+        saveDraftBtnBottom.addEventListener("click", saveDraft);
+
+        /* -------- Submit -------- */
+        function submitApplication() {
+          if (!canSubmit()) {
+            if (!isApplicantComplete()) {
+              openCard("applicant");
+            } else if (items.length === 0) {
+              openCard("items");
+            } else if (!isPurposeComplete()) {
+              openCard("purpose");
+            } else if (!isDocsComplete()) {
+              openCard("docs");
+            } else {
+              openCard("declaration");
+            }
+            return;
+          }
+
+          var ref =
+            "PK/" +
+            new Date().getFullYear() +
+            "/" +
+            Math.floor(10000 + Math.random() * 89999);
+
+          document.getElementById("ref-value").textContent = ref;
+
+          submitBtnTop.disabled = true;
+          submitBtnBottom.disabled = true;
+          submitBtnTop.innerHTML = '<i class="bi bi-check-lg"></i>Dihantar';
+          submitBtnBottom.innerHTML =
+            '<i class="bi bi-check-lg me-1"></i>Dihantar';
+
+          saveStatus.className = "save-status is-ready";
+          saveStatus.innerHTML =
+            "<strong>Permohonan dihantar</strong>Rujukan: " +
+            ref +
+            ". Sila tunggu semakan DOA.";
+        }
+
+        submitBtnTop.addEventListener("click", submitApplication);
+        submitBtnBottom.addEventListener("click", submitApplication);
+
+        /* -------- Reset -------- */
+        resetBtn.addEventListener("click", function () {
+          if (
+            !confirm(
+              "Set semula borang? Semua maklumat yang telah diisi akan dipadam.",
+            )
+          )
+            return;
+
+          document
+            .querySelectorAll(
+              ".form-control:not([readonly]), .form-select, textarea",
+            )
+            .forEach(function (el) {
+              el.value = "";
+            });
+
+          document.querySelectorAll("[data-doc]").forEach(function (el) {
+            el.value = "";
+          });
+
+          items = [];
+          renderItems();
+
+          document.getElementById("at-company").checked = true;
+          document.getElementById("p-education").checked = true;
+          declTruth.checked = false;
+          declTerms.checked = false;
+
+          document.getElementById("ref-value").textContent = "—";
+          formSub.textContent = "Rekod baharu · Belum disimpan";
+
+          submitBtnTop.innerHTML =
+            '<i class="bi bi-send-check"></i>Hantar untuk semakan';
+          submitBtnBottom.innerHTML =
+            '<i class="bi bi-send-check me-1"></i>Hantar untuk semakan';
+
+          syncApplicantType();
+          updateAll();
+        });
+
+        /* -------- Init -------- */
+        syncApplicantType();
+        renderItems();
+        updateAll();
+      })();
+    </script>
+  </body>
+</html>
